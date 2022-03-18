@@ -11,7 +11,7 @@ function BannerPager(props) {
           <Banner
           title={banner.category}
           image={banner.image}
-          discount={props.discount}
+          discount={banner.discount}
           endTime={banner.endTime}></Banner>
         </View>
       ))}
