@@ -26,8 +26,7 @@ function HomeScreen() {
       <FlatList
         ListHeaderComponent={
           <BannerPager
-            style={styles.banner}
-            bannerList={BANNER_DUMMY_DATA}></BannerPager>
+            style={styles.banner}></BannerPager>
         }
         ListFooterComponent={
           <View>
