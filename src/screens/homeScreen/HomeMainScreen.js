@@ -1,26 +1,33 @@
-import React from 'react';
+import React, { useLayoutEffect } from 'react';
 import {Text, View, StyleSheet, ScrollView, FlatList} from 'react-native';
 import CategoryHolder from '../../components/CategoryHolder';
 import {TITLE_SIZE} from '../../constants/fontsize';
 import {useSelector, useDispatch} from 'react-redux';
 import Card from '../../components/UI/Card';
-import Banner from '../../components/Banner';
+import Banner from '../../components/UI/Banner';
 import {
+  BANNER_DUMMY_DATA,
   PRODUCT_DUMMY_DATA,
 } from '../../dummy_database/dummy-data';
+import BannerPager from '../../components/BannerPager';
+import { useNavigation } from '@react-navigation/native';
 
 function HomeScreen() {
+  const navigation = useNavigation();
+
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      title: 'Homeee'
+    });
+  },)
   return (
     <View style={styles.screen}>
       <FlatList
         ListHeaderComponent={
-          <Banner
+          <BannerPager
             style={styles.banner}
-            title={'Cá nục'}
-            discount={30}
-            image={
-              'https://image-us.24h.com.vn/upload/1-2019/images/2019-02-22/1550810773-63-loai-trung-ca-duoc-vi-nhu-3-1550800928-width640height401.jpg'
-            }></Banner>
+            bannerList={BANNER_DUMMY_DATA}></BannerPager>
         }
         ListFooterComponent={
           <View>
