@@ -6,6 +6,7 @@ platform :ios, '12.0'
 
 target 'TaketeShop_FrontEnd' do
   use_expo_modules!
+
   post_integrate do |installer|
     begin
       expo_patch_react_imports!(installer)
@@ -21,7 +22,6 @@ target 'TaketeShop_FrontEnd' do
     :hermes_enabled => false
   )
 
-  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
   target 'TaketeShop_FrontEndTests' do
     inherit! :complete
