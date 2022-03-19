@@ -1,6 +1,7 @@
-import React, { useLayoutEffect } from 'react';
+import React, {useLayoutEffect} from 'react';
 import {Text, View, StyleSheet, ScrollView, FlatList} from 'react-native';
 import CategoryHolder from '../../components/CategoryHolder';
+import {Searchbar, IconButton} from 'react-native-paper';
 import {TITLE_SIZE} from '../../constants/fontsize';
 import {useSelector, useDispatch} from 'react-redux';
 import Card from '../../components/UI/Card';
@@ -10,24 +11,51 @@ import {
   PRODUCT_DUMMY_DATA,
 } from '../../dummy_database/dummy-data';
 import BannerPager from '../../components/BannerPager';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
+import Colors from '../../constants/Colors';
+import SearchPage from './SearchPage';
 
 function HomeScreen() {
   const navigation = useNavigation();
+  const [searchQuery, setSearchQuery] = React.useState('');
 
+  const onChangeSearch = query => setSearchQuery(query);
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      title: 'Homeee'
+      title: '',
+      color: 'black',
+      headerTitle: props => (
+        <View style={styles.headerBar}>
+          <Searchbar
+            style={styles.searchBar}
+            placeholder="Nhập để tìm..."
+            onChangeText={onChangeSearch}
+            value={searchQuery}></Searchbar>
+          <IconButton
+            icon="facebook-messenger"
+            onPress={() => alert('This is a Message button!')}
+            color={Colors.iconColor}
+          />
+          <IconButton
+            icon="bell"
+            onPress={() => alert('This is a Notify button!')}
+            color={Colors.iconColor}
+          />
+        </View>
+      ),
+      headerStyle: styles.header,
     });
-  },)
+  });
+  if (searchQuery != '') {
+    return (
+      <SearchPage keyword={searchQuery}/>
+    );
+  }
   return (
     <View style={styles.screen}>
       <FlatList
-        ListHeaderComponent={
-          <BannerPager
-            style={styles.banner}></BannerPager>
-        }
+        ListHeaderComponent={<BannerPager style={styles.banner}></BannerPager>}
         ListFooterComponent={
           <View>
             <View style={styles.container}>
@@ -68,6 +96,25 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
   },
+  header: {
+    backgroundColor: Colors.primaryColor,
+  },
+  headerBar: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    width: '30%',
+    height: '100%',
+    marginLeft: '23%',
+    marginRight: '3%',
+  },
+  searchBar: {
+    justifyContent: 'flex-start',
+    width: '100%',
+    height: '100%',
+    backgroundColor: Colors.primaryColor,
+  },
+
   banner: {
     height: 200,
   },

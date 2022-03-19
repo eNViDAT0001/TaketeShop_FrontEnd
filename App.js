@@ -4,8 +4,9 @@ import * as Font from 'expo-font';
 import AppNavigator from './src/navigation/AppNavigator';
 import {Provider} from 'react-redux'
 import {createStore, combineReducers} from 'redux'
+import { LogBox } from "react-native";
 
-
+LogBox.ignoreLogs(["EventEmitter.removeListener"]);
 const rootReducer = combineReducers({
 
 });
