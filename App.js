@@ -7,6 +7,7 @@ import {createStore, combineReducers} from 'redux'
 import { LogBox } from "react-native";
 
 LogBox.ignoreLogs(["EventEmitter.removeListener"]);
+
 const rootReducer = combineReducers({
 
 });

@@ -1,4 +1,4 @@
-import React, {useLayoutEffect} from 'react';
+import React, {useEffect, useLayoutEffect} from 'react';
 import {Text, View, StyleSheet, ScrollView, FlatList} from 'react-native';
 import CategoryHolder from '../../components/CategoryHolder';
 import {Searchbar, IconButton} from 'react-native-paper';
@@ -21,36 +21,34 @@ function HomeScreen() {
 
   const onChangeSearch = query => setSearchQuery(query);
 
-  useLayoutEffect(() => {
+  useLayoutEffect(err => {
     navigation.setOptions({
       title: '',
       color: 'black',
-      headerTitle: props => (
+      headerTitle: () => (
         <View style={styles.headerBar}>
           <Searchbar
             style={styles.searchBar}
             placeholder="Nhập để tìm..."
             onChangeText={onChangeSearch}
             value={searchQuery}></Searchbar>
-          <IconButton
-            icon="facebook-messenger"
-            onPress={() => alert('This is a Message button!')}
-            color={Colors.iconColor}
-          />
-          <IconButton
-            icon="bell"
-            onPress={() => alert('This is a Notify button!')}
-            color={Colors.iconColor}
-          />
+            <IconButton
+              icon="facebook-messenger"
+              onPress={() => alert('This is a Message button!')}
+              color={Colors.iconColor}
+            />
+            <IconButton
+              icon="bell"
+              onPress={() => alert('This is a Notify button!')}
+              color={Colors.iconColor}
+            />
         </View>
       ),
       headerStyle: styles.header,
     });
   });
   if (searchQuery != '') {
-    return (
-      <SearchPage keyword={searchQuery}/>
-    );
+    return <SearchPage keyword={searchQuery} />;
   }
   return (
     <View style={styles.screen}>
@@ -102,14 +100,18 @@ const styles = StyleSheet.create({
   headerBar: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'flex-end',
-    width: '30%',
+    justifyContent: 'flex-start',
+    width: '100%',
     height: '100%',
-    marginLeft: '23%',
-    marginRight: '3%',
   },
   searchBar: {
+    width: '73%',
+    height: '100%',
+    backgroundColor: Colors.primaryColor,
+  },
+  iconHeader: {
     justifyContent: 'flex-start',
+    flexDirection: 'row',
     width: '100%',
     height: '100%',
     backgroundColor: Colors.primaryColor,
