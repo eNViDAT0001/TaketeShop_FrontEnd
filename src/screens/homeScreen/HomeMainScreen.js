@@ -9,6 +9,9 @@ import Banner from '../../components/UI/Banner';
 import {
   BANNER_DUMMY_DATA,
   PRODUCT_DUMMY_DATA,
+  ONSALES_DUMMY_DATA,
+  BESTSELLER_DUMMY_DATA,
+  FORYOU_DUMMY_DATA,
 } from '../../dummy_database/dummy-data';
 import BannerPager from '../../components/BannerPager';
 import {useNavigation} from '@react-navigation/native';
@@ -63,7 +66,7 @@ function HomeScreen() {
                   title={'Giảm giá'}
                   horizontal={true}
                   numColum={1}
-                  itemList={PRODUCT_DUMMY_DATA}
+                  itemList={ONSALES_DUMMY_DATA}
                 />
               </Card>
               <Card style={styles.cardContainer}>
@@ -72,7 +75,7 @@ function HomeScreen() {
                   title={'Bán chạy'}
                   horizontal={true}
                   numColum={1}
-                  itemList={PRODUCT_DUMMY_DATA}
+                  itemList={BESTSELLER_DUMMY_DATA}
                 />
               </Card>
               <Card style={styles.cardContainer}>
@@ -81,7 +84,7 @@ function HomeScreen() {
                   title={'Dành cho bạn'}
                   horizontal={false}
                   numColum={2}
-                  itemList={PRODUCT_DUMMY_DATA}
+                  itemList={FORYOU_DUMMY_DATA}
                 />
               </Card>
             </View>

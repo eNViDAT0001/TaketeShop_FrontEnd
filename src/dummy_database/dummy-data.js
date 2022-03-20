@@ -8,11 +8,46 @@ export const BANNER_DUMMY_DATA = [
 ]
 
 export const PRODUCT_DUMMY_DATA = [
-  new ProductModel(1, 1, 1, "Trứng cá", "Thơm ngon khó cưỡng", 200000, 20, 50),
-  new ProductModel(2, 1, 1, "Trứng cá", "Thơm ngon khó cưỡng", 200000, 30, 25),
-  new ProductModel(3, 1, 1, "Trứng cá", "Thơm ngon khó cưỡng", 200000, 24, 65),
-  new ProductModel(4, 1, 1, "Trứng cá", "Thơm ngon khó cưỡng", 200000, 50, 17),
-  new ProductModel(5, 2, 1, "Trứng cá", "Thơm ngon khó cưỡng", 200000, 25, 13),
+  new ProductModel(1, 1, 1, "Tôm Xanh", "Thơm ngon khó cưỡng", 200000, 20, 50),
+  new ProductModel(2, 1, 1, "Cá hồi tươi", "Thơm ngon khó cưỡng", 200000, 30, 25),
+  new ProductModel(3, 1, 1, "Tôm đỏ", "Thơm ngon khó cưỡng", 200000, 24, 65),
+  new ProductModel(4, 1, 1, "Sư tử biển", "Thơm ngon khó cưỡng", 200000, 50, 17),
+  new ProductModel(5, 2, 1, "hải cẩu", "Thơm ngon khó cưỡng", 200000, 25, 13),
+  new ProductModel(6, 2, 1, "Trứng cá", "Thơm ngon khó cưỡng", 200000, 12, 18),
+  new ProductModel(7, 2, 1, "Trứng cá", "Thơm ngon khó cưỡng", 200000, 42, 14),
+  new ProductModel(8, 2, 1, "Trứng cá", "Thơm ngon khó cưỡng", 200000, 25, 35),
+  new ProductModel(9, 2, 1, "Trứng cá", "Thơm ngon khó cưỡng", 200000, 52, 65),
+]
+
+export const ONSALES_DUMMY_DATA = [
+  new ProductModel(1, 1, 1, "Tôm Xanh", "Thơm ngon khó cưỡng", 200000, 20, 50),
+  new ProductModel(2, 1, 1, "Cá hồi tươi", "Thơm ngon khó cưỡng", 200000, 30, 25),
+  new ProductModel(3, 1, 1, "Tôm đỏ", "Thơm ngon khó cưỡng", 200000, 24, 65),
+  new ProductModel(4, 1, 1, "Sư tử biển", "Thơm ngon khó cưỡng", 200000, 50, 17),
+  new ProductModel(5, 2, 1, "hải cẩu", "Thơm ngon khó cưỡng", 200000, 25, 13),
+  new ProductModel(6, 2, 1, "Trứng cá", "Thơm ngon khó cưỡng", 200000, 12, 18),
+  new ProductModel(7, 2, 1, "Trứng cá", "Thơm ngon khó cưỡng", 200000, 42, 14),
+  new ProductModel(8, 2, 1, "Trứng cá", "Thơm ngon khó cưỡng", 200000, 25, 35),
+  new ProductModel(9, 2, 1, "Trứng cá", "Thơm ngon khó cưỡng", 200000, 52, 65),
+]
+
+export const BESTSELLER_DUMMY_DATA = [
+  new ProductModel(1, 1, 1, "Tôm Xanh", "Thơm ngon khó cưỡng", 200000, 20, 50),
+  new ProductModel(2, 1, 1, "Cá hồi tươi", "Thơm ngon khó cưỡng", 200000, 30, 25),
+  new ProductModel(3, 1, 1, "Tôm đỏ", "Thơm ngon khó cưỡng", 200000, 24, 65),
+  new ProductModel(4, 1, 1, "Sư tử biển", "Thơm ngon khó cưỡng", 200000, 50, 17),
+  new ProductModel(5, 2, 1, "hải cẩu", "Thơm ngon khó cưỡng", 200000, 25, 13),
+  new ProductModel(6, 2, 1, "Trứng cá", "Thơm ngon khó cưỡng", 200000, 12, 18),
+  new ProductModel(7, 2, 1, "Trứng cá", "Thơm ngon khó cưỡng", 200000, 42, 14),
+  new ProductModel(8, 2, 1, "Trứng cá", "Thơm ngon khó cưỡng", 200000, 25, 35),
+  new ProductModel(9, 2, 1, "Trứng cá", "Thơm ngon khó cưỡng", 200000, 52, 65),
+]
+export const FORYOU_DUMMY_DATA = [
+  new ProductModel(1, 1, 1, "Tôm Xanh", "Thơm ngon khó cưỡng", 200000, 20, 50),
+  new ProductModel(2, 1, 1, "Cá hồi tươi", "Thơm ngon khó cưỡng", 200000, 30, 25),
+  new ProductModel(3, 1, 1, "Tôm đỏ", "Thơm ngon khó cưỡng", 200000, 24, 65),
+  new ProductModel(4, 1, 1, "Sư tử biển", "Thơm ngon khó cưỡng", 200000, 50, 17),
+  new ProductModel(5, 2, 1, "hải cẩu", "Thơm ngon khó cưỡng", 200000, 25, 13),
   new ProductModel(6, 2, 1, "Trứng cá", "Thơm ngon khó cưỡng", 200000, 12, 18),
   new ProductModel(7, 2, 1, "Trứng cá", "Thơm ngon khó cưỡng", 200000, 42, 14),
   new ProductModel(8, 2, 1, "Trứng cá", "Thơm ngon khó cưỡng", 200000, 25, 35),
