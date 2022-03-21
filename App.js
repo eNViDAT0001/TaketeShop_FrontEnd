@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import AppLoading from 'expo-app-loading';
 import * as Font from 'expo-font';
-import AppNavigator from './src/navigation/AppNavigator';
 import {Provider} from 'react-redux'
 import {createStore, combineReducers} from 'redux'
 import { LogBox, StatusBar } from "react-native";
 import Colors from './src/constants/Colors';
+import AppNavigator from './src/navigation/AppNavigator.js';
 
 LogBox.ignoreLogs(["EventEmitter.removeListener"]);
 

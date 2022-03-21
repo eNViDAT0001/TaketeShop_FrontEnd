@@ -11,3 +11,5 @@ export const CART_MAIN_SCREEN = "CartMainScreen";
 export const HISTORY_MAIN_SCREEN = "HistoryMainScreen";
 export const ACCOUNT_MAIN_SCREEN = "AccountMainScreen";
 
+export const BOTTOMBAR_NAVIGATOR = "BottomBarNavigator";
+
