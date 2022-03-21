@@ -21,7 +21,7 @@ function ShopItems(props) {
   return (
     <View style={{... styles.screen, ...props.style}}>
       <Card style={styles.product}>
-        <View style={styles.touchable}>
+        <View>
           <TouchableCmp onPress={props.onSelect} useForeground>
             <View style={{padding: 10}}>
               <View style={styles.imageContainer}>
