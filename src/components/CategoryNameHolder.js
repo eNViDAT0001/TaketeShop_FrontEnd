@@ -8,7 +8,7 @@ import {
   Platform,
 } from 'react-native';
 import {Text} from 'react-native-paper';
-import Card from './Card';
+import Card from './UI/Card';
 
 function CategoryNameHolder(props) {
   let TouchableCmp = TouchableOpacity;
@@ -30,7 +30,7 @@ function CategoryNameHolder(props) {
                 onPress={() => onClickCategoryHandler(itemData.item)}
                 useForeground>
                 <View style={styles.touchSize}>
-                  <Text>{itemData.item}</Text>
+                  <Text style={styles.title}>{itemData.item}</Text>
                 </View>
               </TouchableCmp>
             </Card>

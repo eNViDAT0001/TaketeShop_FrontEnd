@@ -3,7 +3,7 @@ import {View, FlatList, StyleSheet} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import CategoryHolder from '../../components/CategoryHolder';
 import Card from '../../components/UI/Card';
-import CategoryNameHolder from '../../components/UI/CategoryNameHolder';
+import CategoryNameHolder from '../../components/CategoryNameHolder';
 import {
   FORYOU_DUMMY_DATA,
   ONSALES_DUMMY_DATA,

@@ -7,23 +7,16 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
-import Colors from '../constants/Colors';
-import ShopItems from './ShopItems';
 import { useNavigation } from '@react-navigation/native';
 import { CATEGORY_DETAIL_SCREEN } from '../constants/NavigatorIndex';
-function CategoryHolder(props) {
+import Colors from '../../constants/Colors';
+function CategoryDetailScreen(props) {
   return (
     <View style={{...styles.container, ...props.style}}>
-      <TouchableOpacity activeOpacity={0.8} onPress={props.onCategorySelect}>
-        <View style={styles.header}>
-          <Text style={styles.title}> {props.title}</Text>
-          <Text style={styles.expand}>Xem thêm... </Text>
-        </View>
-      </TouchableOpacity>
       <FlatList
         style={styles.itemList}
-        horizontal={props.horizontal}
-        numColumns={props.numColum}
+        horizontal={false}
+        numColumns={2}
         data={props.itemList}
         renderItem={itemData => (
           <ShopItems
@@ -59,4 +52,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CategoryHolder;
+export default CategoryDetailScreen;

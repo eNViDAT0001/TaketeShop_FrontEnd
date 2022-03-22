@@ -10,6 +10,8 @@ export const SHOP_MAIN_SCREEN = "ShopMainScreen";
 export const CART_MAIN_SCREEN = "CartMainScreen";
 export const HISTORY_MAIN_SCREEN = "HistoryMainScreen";
 export const ACCOUNT_MAIN_SCREEN = "AccountMainScreen";
+export const PRODUCT_SCREEN = "ProductScreen";
+export const CATEGORY_DETAIL_SCREEN = "ProductScreen";
 
 export const BOTTOMBAR_NAVIGATOR = "BottomBarNavigator";
 

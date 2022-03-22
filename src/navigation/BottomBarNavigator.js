@@ -39,6 +39,8 @@ function BottomBarNavigator() {
             ),
           }}
         />
+
+        
       </TabNavigator.Navigator>
   );
 }

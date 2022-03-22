@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {View, StyleSheet} from 'react-native';
 import CategoryHolder from '../../components/CategoryHolder';
 import Card from '../../components/UI/Card';
@@ -10,13 +10,19 @@ import {
 } from '../../dummy_database/dummy-data';
 import BannerPager from '../../components/BannerPager';
 import Colors from '../../constants/Colors';
+import { useNavigation } from '@react-navigation/native';
+import { CATEGORY_DETAIL_SCREEN } from '../../constants/NavigatorIndex';
 function HomePage() {
+
+  const categoryClick = () => useNavigation().navigate(CATEGORY_DETAIL_SCREEN);
+  
   return (
     <View>
     <BannerPager style={styles.banner}></BannerPager>
     <View style={styles.container}>
       <Card style={styles.cardContainer}>
         <CategoryHolder
+          onCategorySelect={useNavigation().navigate(CATEGORY_DETAIL_SCREEN)}
           style={styles.bestSeller}
           title={'Giảm giá'}
           horizontal={true}
