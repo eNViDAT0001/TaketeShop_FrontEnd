@@ -5,6 +5,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import Colors from '../../constants/Colors';
 import SearchPage from './SearchPage';
 import HomePage from './HomePage';
+import { SEARCH_BAR_HEIGHT } from '../../constants/fontsize';
 
 function HomeMainScreen() {
   const [searchQuery, setSearchQuery] = React.useState('');
@@ -58,7 +59,7 @@ const styles = StyleSheet.create({
   },
   searchBar: {
     width: '70%',
-    height: '100%',
+    height: SEARCH_BAR_HEIGHT,
     backgroundColor: Colors.primaryColor,
   },
 });

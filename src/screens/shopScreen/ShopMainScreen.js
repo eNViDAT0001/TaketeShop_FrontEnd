@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, KeyboardAvoidingView} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import SearchPage from '../homeScreen/SearchPage';
 import ShopPage from './ShopPage';
 import Colors from '../../constants/Colors';
 import { Searchbar } from 'react-native-paper';
+import { SEARCH_BAR_HEIGHT } from '../../constants/fontsize';
 
 function ShopMainScreen(props) {
   const navigation = useNavigation();
@@ -22,7 +23,8 @@ function ShopMainScreen(props) {
         style={styles.searchBar}
         placeholder="Nhập để tìm..."
         onChangeText={onChangeSearch}
-        value={searchQuery}></Searchbar>
+        value={searchQuery}
+        in></Searchbar>
        {Page}
     </View>
   );
@@ -39,9 +41,8 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   searchBar: {
-    flex: 2,
     width: '100%',
-    height: '100%',
+    height: SEARCH_BAR_HEIGHT,
     borderRadius: 0,
     backgroundColor: Colors.primaryColor,
   },
