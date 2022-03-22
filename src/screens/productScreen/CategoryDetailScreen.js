@@ -1,15 +1,10 @@
 import React from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {
-  StyleSheet,
-  Text,
-  FlatList,
-  View,
-  TouchableOpacity,
-} from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { CATEGORY_DETAIL_SCREEN } from '../constants/NavigatorIndex';
+import {StyleSheet, FlatList, View} from 'react-native';
+
 import Colors from '../../constants/Colors';
+import ShopItems from '../../components/ShopItems';
+import { ONSALES_DUMMY_DATA } from '../../dummy_database/dummy-data';
 function CategoryDetailScreen(props) {
   return (
     <View style={{...styles.container, ...props.style}}>
@@ -17,7 +12,7 @@ function CategoryDetailScreen(props) {
         style={styles.itemList}
         horizontal={false}
         numColumns={2}
-        data={props.itemList}
+        data={ONSALES_DUMMY_DATA}
         renderItem={itemData => (
           <ShopItems
             item={itemData.item}

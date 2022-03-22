@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useLayoutEffect } from 'react';
+import { Card } from 'react-native-paper'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {
   StyleSheet,
@@ -12,6 +13,12 @@ import ShopItems from './ShopItems';
 import { useNavigation } from '@react-navigation/native';
 import { CATEGORY_DETAIL_SCREEN } from '../constants/NavigatorIndex';
 function CategoryHolder(props) {
+  const navigation = useNavigation();
+
+
+
+
+
   return (
     <View style={{...styles.container, ...props.style}}>
       <TouchableOpacity activeOpacity={0.8} onPress={props.onCategorySelect}>

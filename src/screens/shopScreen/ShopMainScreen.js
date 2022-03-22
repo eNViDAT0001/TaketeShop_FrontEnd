@@ -1,32 +1,29 @@
 import React, {useState} from 'react';
-import {View, FlatList, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
-import CategoryHolder from '../../components/CategoryHolder';
-import Card from '../../components/UI/Card';
-import CategoryNameHolder from '../../components/CategoryNameHolder';
-import {
-  FORYOU_DUMMY_DATA,
-  ONSALES_DUMMY_DATA,
-} from '../../dummy_database/dummy-data';
+import {useNavigation} from '@react-navigation/native';
+import SearchPage from '../homeScreen/SearchPage';
+import ShopPage from './ShopPage';
+import Colors from '../../constants/Colors';
+import { Searchbar } from 'react-native-paper';
 
 function ShopMainScreen(props) {
+  const navigation = useNavigation();
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const [categoryHolder, setCategoryHolder] = useState('');
-  const onClickCategoryHandler = category => {
-    setCategoryHolder(category);
-  };
+  const onChangeSearch = query => setSearchQuery(query);
+
+  const Page =
+    searchQuery === '' ? <ShopPage style={styles.page}/> : <SearchPage style={styles.page} keyword={searchQuery} />;
+
   return (
     <View style={styles.screen}>
-      <CategoryNameHolder
-        style={styles.nameHolder}
-        onSelect={onClickCategoryHandler}></CategoryNameHolder>
-      <CategoryHolder
-        style={styles.categoryHolder}
-        title={categoryHolder}
-        horizontal={false}
-        numColum={2}
-        itemList={FORYOU_DUMMY_DATA}
-      />
+      <Searchbar
+        style={styles.searchBar}
+        placeholder="Nhập để tìm..."
+        onChangeText={onChangeSearch}
+        value={searchQuery}></Searchbar>
+       {Page}
     </View>
   );
 }
@@ -34,18 +31,19 @@ function ShopMainScreen(props) {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: 'column',
   },
-  cardContainer: {
-    marginVertical: 5,
-    elevation: 0,
+  page: {
+    flex: 23,
+    height: '100%',
+    width: '100%',
+  },
+  searchBar: {
+    flex: 2,
+    width: '100%',
+    height: '100%',
     borderRadius: 0,
-  },
-  nameHolder: {
-    flex: 3,
-  },
-  categoryHolder: {
-    flex: 10,
+    backgroundColor: Colors.primaryColor,
   },
 });
 

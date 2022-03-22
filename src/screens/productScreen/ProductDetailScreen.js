@@ -5,6 +5,7 @@ function ProductDetailScreen(props) {
   return (
     <View style={styles.screen}>
       <Text>DetailScreen</Text>
+
     </View>
   );
 }

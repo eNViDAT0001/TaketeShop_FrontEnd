@@ -14,6 +14,8 @@ function HomeMainScreen() {
   const Page =
     searchQuery === '' ? <HomePage /> : <SearchPage keyword={searchQuery} />;
 
+
+
   return (
     <View style={styles.screen}>
       <FlatList
@@ -55,7 +57,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primaryColor,
   },
   searchBar: {
-    width: '73%',
+    width: '70%',
     height: '100%',
     backgroundColor: Colors.primaryColor,
   },

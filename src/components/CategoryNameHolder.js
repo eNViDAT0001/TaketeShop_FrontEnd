@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   card: {
     flex: 1,
     margin: 10,
-    marginTop: 23,
+    marginTop: 3,
     marginRight: 0
   },
   cardContainer: {
