@@ -6917,6 +6917,11 @@
     "prop-types" "^15.5.8"
     "sprintf-js" "^1.1.1"
 
+"react-native-element-dropdown@^1.8.4":
+  "integrity" "sha512-TbUk3s88QEvk5vrswgMOqa9OWANGBbMwvvix9drR9wyJMBpX8TcADh98ULLOJM7LhP9Fw2KGdcon3u94w+cPXA=="
+  "resolved" "https://registry.npmjs.org/react-native-element-dropdown/-/react-native-element-dropdown-1.8.4.tgz"
+  "version" "1.8.4"
+
 "react-native-gesture-handler@*", "react-native-gesture-handler@^2.3.2", "react-native-gesture-handler@>= 1.0.0":
   "integrity" "sha512-ibcYWHMiDbioUcaAMuw3/Taz3mYn0fJz0q2KnGX1hWpLNz/x/E5/BzKB+T3ycwAm1dQEgPgHWpaZ8eqO/EVFlw=="
   "resolved" "https://registry.npmjs.org/react-native-gesture-handler/-/react-native-gesture-handler-2.3.2.tgz"
