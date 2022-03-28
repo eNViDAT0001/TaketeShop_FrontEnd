@@ -5,10 +5,12 @@ import {StyleSheet, FlatList, View, Text} from 'react-native';
 import Colors from '../../constants/Colors';
 import ShopItems from '../../components/ShopItems';
 import { ONSALES_DUMMY_DATA } from '../../dummy_database/dummy-data';
-const INCREASE = '1';
-const DECREASE = '2';
-const DATE_CATCH = '3';
+const BESTSELLER = 'BESTSELLER';
+const INCREASE = 'INCREASE';
+const DECREASE = 'DECREASE';
+const DATE_CATCH = 'DATE_CATCH';
 const data = [
+  { label: 'Mua nhiều', value: BESTSELLER },
   { label: 'Giá tăng dần', value: INCREASE },
   { label: 'Giá giảm dần', value: DECREASE },
   { label: 'Ngày đánh bắt', value: DATE_CATCH },
@@ -25,7 +27,7 @@ function CategoryDetailScreen(props) {
           selectedTextStyle={styles.selectedTextStyle}
           iconStyle={styles.iconStyle}
           data={data}
-          maxHeight={180}
+          maxHeight={230}
           labelField="label"
           valueField="value"
           placeholder={!isFocus ? 'Lọc...' : '...'}
