@@ -1,44 +1,33 @@
 import React from 'react';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
-import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {HOME_NAVIGATOR, SHOP_NAVIGATOR} from '../constants/NavigatorIndex';
-import HomeNavigator from './homeNav/HomeNavigator';
-import {ICON_SIZE} from '../constants/fontsize';
-import Colors from '../constants/Colors';
-import ShopNavigator from './shopNav/ShopNavigator';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import {BOTTOMBAR_NAVIGATOR,START_MAIN_SCREEN,LOGIN_MAIN_SCREEN} from '../constants/NavigatorIndex';
+import BottomBarNavigator from './BottomBarNavigator';
+import LoginScreen from '../screens/Login_screen/LoginScreen';
 
-const TabNavigator = createMaterialBottomTabNavigator();
+const StackNavigator = createNativeStackNavigator();
 function AppNavigator() {
   return (
     <NavigationContainer>
-      <TabNavigator.Navigator
-        activeColor={Colors.iconColor}
-        initialRouteName={HOME_NAVIGATOR}
-        barStyle={{backgroundColor: Colors.primaryColor}}>
-        <TabNavigator.Screen
-          name={HOME_NAVIGATOR}
-          component={HomeNavigator}
-          options={{
-            tabBarLabel: 'Home',
-            tabBarIcon: ({ color }) => (
-              <MaterialCommunityIcons name="home" color={color} size={26} />
-            ),
-          }}
-        />
+      <StackNavigator.Navigator initialRouteName={LOGIN_MAIN_SCREEN}>
 
-        <TabNavigator.Screen
-          name={SHOP_NAVIGATOR}
-          component={ShopNavigator}
+      <StackNavigator.Screen
+          name={LOGIN_MAIN_SCREEN}
+          component={LoginScreen}
           options={{
-            tabBarLabel: 'Shop',
-            tabBarIcon: ({ color }) => (
-              <MaterialCommunityIcons name="storefront" color={color} size={26} />
-            ),
-          }}
-        />
-      </TabNavigator.Navigator>
+            headerShown: false,
+          }}></StackNavigator.Screen>
+
+          
+        <StackNavigator.Screen
+          name={BOTTOMBAR_NAVIGATOR}
+          component={BottomBarNavigator}
+          options={{
+            headerShown: false,
+          }}></StackNavigator.Screen>
+
+        
+      </StackNavigator.Navigator>
     </NavigationContainer>
   );
 }

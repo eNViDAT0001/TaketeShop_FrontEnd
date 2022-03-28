@@ -21,9 +21,9 @@ function ShopItems(props) {
   return (
     <View style={{... styles.screen, ...props.style}}>
       <Card style={styles.product}>
-        <View style={styles.touchable}>
+        <View>
           <TouchableCmp onPress={props.onSelect} useForeground>
-            <View>
+            <View style={{padding: 10}}>
               <View style={styles.imageContainer}>
                 <Image style={styles.image} source={{uri: props.item.image}} />
               </View>
@@ -50,6 +50,7 @@ function ShopItems(props) {
 const styles = StyleSheet.create({
   screen:{
     flex: 1,
+
   },
   product: {
     flex: 1,

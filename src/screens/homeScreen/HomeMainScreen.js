@@ -1,67 +1,45 @@
-import React, { useLayoutEffect } from 'react';
-import {Text, View, StyleSheet, ScrollView, FlatList} from 'react-native';
-import CategoryHolder from '../../components/CategoryHolder';
-import {TITLE_SIZE} from '../../constants/fontsize';
+import React from 'react';
+import {View, StyleSheet, FlatList} from 'react-native';
+import {Searchbar, IconButton} from 'react-native-paper';
 import {useSelector, useDispatch} from 'react-redux';
-import Card from '../../components/UI/Card';
-import Banner from '../../components/UI/Banner';
-import {
-  BANNER_DUMMY_DATA,
-  PRODUCT_DUMMY_DATA,
-} from '../../dummy_database/dummy-data';
-import BannerPager from '../../components/BannerPager';
-import { useNavigation } from '@react-navigation/native';
-
-function HomeScreen() {
-  const navigation = useNavigation();
+import Colors from '../../constants/Colors';
+import SearchPage from './SearchPage';
+import HomePage from './HomePage';
 
 
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      title: 'Homeee'
-    });
-  },)
+function HomeMainScreen() {
+  const [searchQuery, setSearchQuery] = React.useState('');
+
+  const onChangeSearch = query => setSearchQuery(query);
+
+  const Page =
+    searchQuery === '' ? <HomePage /> : <SearchPage keyword={searchQuery} />;
+
   return (
     <View style={styles.screen}>
       <FlatList
         ListHeaderComponent={
-          <BannerPager
-            style={styles.banner}
-            bannerList={BANNER_DUMMY_DATA}></BannerPager>
-        }
-        ListFooterComponent={
           <View>
-            <View style={styles.container}>
-              <Card style={styles.cardContainer}>
-                <CategoryHolder
-                  style={styles.bestSeller}
-                  title={'Giảm giá'}
-                  horizontal={true}
-                  numColum={1}
-                  itemList={PRODUCT_DUMMY_DATA}
-                />
-              </Card>
-              <Card style={styles.cardContainer}>
-                <CategoryHolder
-                  style={styles.bestSeller}
-                  title={'Bán chạy'}
-                  horizontal={true}
-                  numColum={1}
-                  itemList={PRODUCT_DUMMY_DATA}
-                />
-              </Card>
-              <Card style={styles.cardContainer}>
-                <CategoryHolder
-                  style={styles.forYou}
-                  title={'Dành cho bạn'}
-                  horizontal={false}
-                  numColum={2}
-                  itemList={PRODUCT_DUMMY_DATA}
-                />
-              </Card>
+            <View style={styles.headerBar}>
+              <Searchbar
+                style={styles.searchBar}
+                placeholder="Nhập để tìm..."
+                onChangeText={onChangeSearch}
+                value={searchQuery}></Searchbar>
+              <IconButton
+                icon="cards-heart-outline"
+                onPress={() => alert('This is a Message button!')}
+                color={Colors.iconColor}
+              />
+              <IconButton
+                icon="bell-outline"
+                onPress={() => alert('This is a Notify button!')}
+                color={Colors.iconColor}
+              />
             </View>
           </View>
-        }></FlatList>
+        }
+        ListFooterComponent={Page}></FlatList>
     </View>
   );
 }
@@ -69,23 +47,19 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
   },
-  banner: {
-    height: 200,
-  },
-  cardContainer: {
-    marginVertical: 5,
-    elevation: 0,
-    borderRadius: 0,
-  },
-  bestSeller: {
-    height: '300%',
-  },
-  onSales: {
-    height: '300%',
-  },
-  forYou: {
+  headerBar: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    width: '100%',
     height: '100%',
+    backgroundColor: Colors.primaryColor,
+  },
+  searchBar: {
+    width: '73%',
+    height: '100%',
+    backgroundColor: Colors.primaryColor,
   },
 });
 
-export default HomeScreen;
+export default HomeMainScreen;

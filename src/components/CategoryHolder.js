@@ -1,4 +1,5 @@
 import React from 'react';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {
   StyleSheet,
   Text,
