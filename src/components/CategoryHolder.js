@@ -28,6 +28,7 @@ function CategoryHolder(props) {
         </View>
       </TouchableOpacity>
       <FlatList
+        keyExtractor={(item, index) => item.productID}
         style={styles.itemList}
         horizontal={props.horizontal}
         numColumns={props.numColum}

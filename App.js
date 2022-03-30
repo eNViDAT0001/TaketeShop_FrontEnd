@@ -2,7 +2,8 @@ import React, {useState} from 'react';
 import AppLoading from 'expo-app-loading';
 import * as Font from 'expo-font';
 import {Provider} from 'react-redux'
-import {createStore, combineReducers} from 'redux'
+import {createStore, combineReducers, applyMiddleware} from 'redux';
+import ReduxThunk from 'redux-thunk'
 import { LogBox, StatusBar } from "react-native";
 import Colors from './src/constants/Colors';
 import AppNavigator from './src/navigation/AppNavigator.js';
@@ -40,7 +41,7 @@ const rootReducer = combineReducers({
 
 });
 
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
 
 
 const fetchFonts = () => {

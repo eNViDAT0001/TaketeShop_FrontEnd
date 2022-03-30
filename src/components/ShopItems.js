@@ -15,7 +15,7 @@ import Card from './UI/Card';
 
 function ShopItems(props) {
   const navigation = useNavigation();
-  const onItemClick = () => navigation.navigate(PRODUCT_DETAIL_SCREEN);
+  const onItemClick = () => navigation.navigate(PRODUCT_DETAIL_SCREEN, {product: props.item});
   let TouchableCmp = TouchableOpacity;
 
   if (Platform.OS === 'android' && Platform.Version >= 21) {
