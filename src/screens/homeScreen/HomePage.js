@@ -13,13 +13,13 @@ import {useNavigation} from '@react-navigation/native';
 import {CATEGORY_DETAIL_SCREEN} from '../../constants/NavigatorIndex';
 function HomePage(props) {
   const navigation = useNavigation();
-  const onSelectedCategory = () => navigation.navigate(CATEGORY_DETAIL_SCREEN);
+  const onSelectedCategory = (category, title) => navigation.navigate(CATEGORY_DETAIL_SCREEN, {title: title, ...category});
 
   
 
   return (
     <View>
-      <BannerPager style={styles.banner}></BannerPager>
+      <BannerPager style={styles.banner} onBannerPress={onSelectedCategory}></BannerPager>
       <View style={styles.container}>
         <Card style={styles.cardContainer}>
           <CategoryHolder

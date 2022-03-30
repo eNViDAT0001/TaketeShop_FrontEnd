@@ -1,4 +1,5 @@
 class BannerModel{
+    categoryID = 1;
     constructor(id, category, discount, endTime, image){
         this.id = id;
         this.category = category;

@@ -1,11 +1,27 @@
+import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {Image, Text, View, ImageBackground, StyleSheet} from 'react-native';
+import {
+  Image,
+  Text,
+  View,
+  ImageBackground,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 import Countdown from 'react-native-countdown-component';
 import Colors from '../../constants/Colors';
+import {CATEGORY_DETAIL_SCREEN} from '../../constants/NavigatorIndex';
 
 function Banner(props) {
+  const navigation = useNavigation();
+  const onClickHandler = () => {
+    navigation.navigate(CATEGORY_DETAIL_SCREEN)
+  }
   return (
-    <View style={{...styles.container, ...props.style}}>
+    <TouchableOpacity
+      style={{...styles.container, ...props.style}}
+      activeOpacity={1}
+      onPress={onClickHandler}>
       <ImageBackground
         style={styles.image}
         source={{
@@ -24,7 +40,7 @@ function Banner(props) {
           </View>
         </View>
       </ImageBackground>
-    </View>
+    </TouchableOpacity>
   );
 }
 const styles = StyleSheet.create({
@@ -69,7 +85,7 @@ const styles = StyleSheet.create({
     textShadowOffset: {height: 3, width: 3},
     textShadowRadius: 1,
   },
-  countdownContainer:{
+  countdownContainer: {
     flex: 1,
     alignItems: 'flex-start',
     justifyContent: 'flex-end',
