@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, KeyboardAvoidingView} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import SearchPage from '../homeScreen/SearchPage';

@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {
   StyleSheet,
@@ -10,12 +10,13 @@ import {
   Platform,
 } from 'react-native';
 import Colors from '../constants/Colors';
-import { PRODUCT_DETAIL_SCREEN} from '../constants/NavigatorIndex';
+import {PRODUCT_DETAIL_SCREEN} from '../constants/NavigatorIndex';
 import Card from './UI/Card';
 
 function ShopItems(props) {
   const navigation = useNavigation();
-  const onItemClick = () => navigation.navigate(PRODUCT_DETAIL_SCREEN, {product: props.item});
+  const onItemClick = () =>
+    navigation.navigate(PRODUCT_DETAIL_SCREEN, {product: props.item});
   let TouchableCmp = TouchableOpacity;
 
   if (Platform.OS === 'android' && Platform.Version >= 21) {
@@ -23,7 +24,7 @@ function ShopItems(props) {
   }
 
   return (
-    <View style={{... styles.screen, ...props.style}}>
+    <View style={{...styles.screen, ...props.style}}>
       <Card style={styles.product}>
         <View>
           <TouchableCmp onPress={onItemClick} useForeground>
@@ -52,9 +53,8 @@ function ShopItems(props) {
   );
 }
 const styles = StyleSheet.create({
-  screen:{
+  screen: {
     flex: 1,
-
   },
   product: {
     flex: 1,

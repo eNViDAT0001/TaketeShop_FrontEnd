@@ -1,11 +1,22 @@
 import {useNavigation, useRoute} from '@react-navigation/native';
 import React, {useLayoutEffect} from 'react';
-import {StyleSheet, View, Text, Image, ScrollView, Button} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  ScrollView,
+  Button,
+  TouchableOpacity,
+} from 'react-native';
 import {IconButton} from 'react-native-paper';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import StarRating from 'react-native-star-rating';
+import CategoryHolder from '../../components/CategoryHolder';
+import Comment from '../../components/Comment';
 import Card from '../../components/UI/Card';
 import Colors from '../../constants/Colors';
-
+import {BESTSELLER_DUMMY_DATA} from '../../dummy_database/dummy-data';
+// import {Rating} from 'react-native-ratings';
 function ProductDetailScreen(props) {
   const navigation = useNavigation();
   const route = useRoute();
@@ -16,7 +27,7 @@ function ProductDetailScreen(props) {
       headerTitle: product.name,
       headerStyle: {
         position: 'relative',
-        zIndex: 10,
+        zIndex: 1,
       },
       headerTransparent: true,
       headerRight: () => (
@@ -48,26 +59,62 @@ function ProductDetailScreen(props) {
             }}></Image>
         </View>
         <View style={styles.title}>
-          <Text>Product Name</Text>
-          <Text>Product Rating</Text>
-          <View style={styles.price}>
-            <Text>Product Price</Text>
-            <Text>Product True Price</Text>
-            <Text>Product Discount</Text>
+          <Text style={styles.titleText}>Product Name</Text>
+          <View style={styles.ratingContainer}>
+            <StarRating
+              disabled={true}
+              starSize={18}
+              containerStyle={styles.rating}
+              emptyStar={'star'}
+              fullStar={'star'}
+              halfStar={'star-half'}
+              maxStars={5}
+              rating={4}
+              fullStarColor={'#FFDF00'}
+            />
+            <Text style={styles.ratingCount}>(Rating Count)</Text>
+          </View>
+          <View style={styles.priceContainer}>
+            <Text style={styles.priceText}>Product Price đ</Text>
+            <View style={styles.discountContainer}>
+              <Text style={styles.truePriceText}>Product True Price đ</Text>
+              <Text style={styles.discountText}> -Product Discount% </Text>
+            </View>
           </View>
         </View>
         <View style={styles.descriptionContainer}>
-          <Text>Description Container</Text>
+          <Text style={styles.descripHeader}>Description</Text>
+          <Text style={styles.description}>
+            This is speciasdfsadfsadfdsfdsafdsafdsfdsfdsfdsfdsfdsafsdfdsafsafd
+          </Text>
         </View>
-        <View style={styles.commandContainer}>
-          <Text>Command</Text>
+        <View style={styles.commentContainer}>
+          <TouchableOpacity
+            activeOpacity={0.9}
+            onPress={props.onCategorySelect}>
+            <View style={styles.headerComment}>
+              <Text style={styles.titleComment}> Bình luận về sản phẩm</Text>
+              <Text style={styles.expandComment}> {'>'} </Text>
+            </View>
+            <Comment></Comment>
+          </TouchableOpacity>
         </View>
-        <View style={styles.ForYouContainer}>
-          <Text>Bạn có thể thích</Text>
-        </View>
+        <Card style={styles.cardContainer}>
+          <CategoryHolder
+            onCategorySelect={() => console.log('click click')}
+            style={styles.bestSeller}
+            title={'Bạn cũng có thể thích'}
+            horizontal={true}
+            numColum={1}
+            itemList={BESTSELLER_DUMMY_DATA}
+          />
+        </Card>
       </ScrollView>
       <Card style={styles.bottomBar}>
-        <Button style={styles.bottomButton} color={Colors.primaryColor} title="Chọn Mua"></Button>
+        <Button
+          style={styles.bottomButton}
+          color={Colors.primaryColor}
+          title="Chọn Mua"></Button>
       </Card>
     </View>
   );
@@ -87,13 +134,110 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-  price: {
-    flexDirection: 'row',
+  title: {
+    flex: 1,
+    backgroundColor: Colors.backgroundColor,
   },
-  bottomBar:{
-    height: 60,
-    padding: 10,
+
+  ratingContainer: {
+    flexDirection: 'row',
+    marginHorizontal: 5,
+  },
+  rating: {
+    justifyContent: 'flex-start',
+  },
+  ratingCount: {
+    fontSize: 15,
+  },
+  titleText: {
+    flex: 1,
+    fontSize: 20,
+    marginHorizontal: 5,
+  },
+  priceContainer: {
+    justifyContent: 'flex-end',
+    marginHorizontal: 5,
+  },
+  priceText: {
+    fontSize: 20,
+    color: Colors.accentColor,
+    fontWeight: 'bold',
+  },
+  discountContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  truePriceText: {
+    fontSize: 15,
+    textDecorationLine: 'line-through',
+    marginRight: 10,
+  },
+  discountText: {
+    fontSize: 18,
+    borderColor: Colors.accentColor,
+    color: Colors.accentColor,
+    borderWidth: 1,
+    borderRadius: 5,
+    backgroundColor: '#FFCDD2',
+  },
+  descriptionContainer: {
+    flex: 1,
+    backgroundColor: Colors.backgroundColor,
+    marginVertical: 5,
+    padding: 5,
+    width: '100%',
+  },
+  descripHeader: {
+    fontSize: 18,
+    marginBottom: 0,
+  },
+  description: {
+    fontSize: 15,
+    width: '100%',
+    backgroundColor: Colors.backgroundColor,
+  },
+  cardContainer: {
+    marginVertical: 5,
+    height: '100%',
+    elevation: 0,
     borderRadius: 0,
   },
+  commentContainer: {
+    backgroundColor: Colors.backgroundColor,
+    marginTop: 5,
+  },
+  comment: {
+    height: '100%',
+    width: '100%',
+  },
+  headerComment: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-end',
+  },
+  titleComment: {
+    fontFamily: 'open-sans-bold',
+    fontSize: 20,
+    color: Colors.primaryColor,
+  },
+  expandComment: {
+    fontFamily: 'open-sans-bold',
+    fontSize: 18,
+    color: '#FF9C40',
+  },
+  bottomBar: {
+    height: 60,
+    padding: 10,
+    marginTop: 5,
+    borderRadius: 0,
+    alignContent: 'stretch',
+  },
+  bottomButton:{
+    flex: 1,
+    height: '100%',
+    width: '100%',
+    textAlign: 'center',
+    textAlignVertical: 'center',
+  }
 });
 export default ProductDetailScreen;

@@ -13,6 +13,7 @@ function BannerPager(props) {
   //     if (bannerIndex > BANNER_DUMMY_DATA.length - 1) setBannerIndex(0);
   //   }, 2000);
   // };
+
   return (
     <PagerView
       style={{...props.style}}

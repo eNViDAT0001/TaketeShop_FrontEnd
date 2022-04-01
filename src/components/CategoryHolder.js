@@ -11,7 +11,6 @@ import {
 import Colors from '../constants/Colors';
 import ShopItems from './ShopItems';
 import { useNavigation } from '@react-navigation/native';
-import { CATEGORY_DETAIL_SCREEN } from '../constants/NavigatorIndex';
 function CategoryHolder(props) {
   return (
     <View style={{...styles.container, ...props.style}}>
@@ -48,7 +47,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: 'open-sans-bold',
-    fontSize: 22,
+    fontSize: 20,
     color: Colors.primaryColor,
   },
   expand: {
