@@ -2,7 +2,8 @@ import React from 'react';
 import {StyleSheet, Image, Text, View, FlatList} from 'react-native';
 import {Card} from 'react-native-paper';
 import StarRating from 'react-native-star-rating';
-const IMAGE_TEMP = 'https://cms.dmpcdn.com/article/2021/04/02/a1ca8540-936b-11eb-8b27-db7c51a78b67_original.jpg'
+const IMAGE_TEMP =
+  'https://cms.dmpcdn.com/article/2021/04/02/a1ca8540-936b-11eb-8b27-db7c51a78b67_original.jpg';
 function Comment(props) {
   return (
     <View style={{...styles.screen, ...props.style}}>
@@ -13,7 +14,7 @@ function Comment(props) {
         <View style={styles.nameContainer}>
           <Text style={styles.name}>Name</Text>
           <StarRating
-          type={'star'}
+            type={'star'}
             disabled={true}
             starSize={18}
             containerStyle={styles.rating}
@@ -22,21 +23,24 @@ function Comment(props) {
             halfStar={'star-half'}
             maxStars={5}
             rating={3}
+            emptyStarColor={'#EBF0FF'}
             fullStarColor={'#FFDF00'}
           />
         </View>
       </View>
-      <Text style={styles.comment}>Commentasdfsadfadsfdsafadsfsadfsadfsadfasdfadsfasdfsadfadsfadsfdsafdsafdsafdsafadsfadsfasdfdsaf Descriptions</Text>
+      <Text style={styles.comment}>
+        This is some comment that you will never care descriptions
+      </Text>
       <FlatList
-        data={[{imagePath: 'abc'}]}
+        data={[1, 2, 3, 4, 5]}
         style={styles.imageList}
         horizontal={true}
         renderItem={itemData => (
-          <Card style={styles.commentImageContainer}>
+          <View style={styles.commentImageContainer}>
             <Image
               style={styles.commentImage}
               source={{uri: IMAGE_TEMP}}></Image>
-          </Card>
+          </View>
         )}></FlatList>
       <Text style={styles.createTime}>Create Time</Text>
     </View>
@@ -79,13 +83,16 @@ const styles = StyleSheet.create({
     fontSize: 15,
     margin: 5,
   },
-  imageList: {},
+  imageList: {
+    height: 100,
+  },
   commentImageContainer: {
-    flex: 1,
-    marginVertical: 5,
-    borderRadius: 0,
-    height: '100%',
-    width: '100%',
+    marginHorizontal: 5,
+    borderRadius: 10,
+    borderWidth: 1,
+    height: 100,
+    width: 70,
+    overflow: 'hidden',
   },
   commentImage: {
     height: '100%',
@@ -94,7 +101,7 @@ const styles = StyleSheet.create({
   createTime: {
     justifyContent: 'flex-start',
     fontSize: 13,
-    marginHorizontal: 5
+    marginHorizontal: 5,
   },
 });
 

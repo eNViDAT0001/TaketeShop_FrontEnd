@@ -6,8 +6,9 @@ import {
   Text,
   Image,
   ScrollView,
-  Button,
+  TouchableNativeFeedback,
   TouchableOpacity,
+  Platform
 } from 'react-native';
 import {IconButton} from 'react-native-paper';
 import StarRating from 'react-native-star-rating';
@@ -15,12 +16,17 @@ import CategoryHolder from '../../components/CategoryHolder';
 import Comment from '../../components/Comment';
 import Card from '../../components/UI/Card';
 import Colors from '../../constants/Colors';
+import { COMMENT_SCREEN } from '../../constants/NavigatorIndex';
 import {BESTSELLER_DUMMY_DATA} from '../../dummy_database/dummy-data';
 // import {Rating} from 'react-native-ratings';
 function ProductDetailScreen(props) {
   const navigation = useNavigation();
   const route = useRoute();
   const product = route.params.product;
+
+  const onCommentPress = () => {
+    navigation.navigate(COMMENT_SCREEN)
+  }
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -48,6 +54,12 @@ function ProductDetailScreen(props) {
       ),
     });
   });
+
+  let TouchableCmp = TouchableOpacity;
+
+  if (Platform.OS === 'android' && Platform.Version >= 21) {
+    TouchableCmp = TouchableNativeFeedback;
+  }
   return (
     <View style={styles.screen}>
       <ScrollView>
@@ -70,6 +82,7 @@ function ProductDetailScreen(props) {
               halfStar={'star-half'}
               maxStars={5}
               rating={4}
+              emptyStarColor={'#EBF0FF'}
               fullStarColor={'#FFDF00'}
             />
             <Text style={styles.ratingCount}>(Rating Count)</Text>
@@ -91,7 +104,7 @@ function ProductDetailScreen(props) {
         <View style={styles.commentContainer}>
           <TouchableOpacity
             activeOpacity={0.9}
-            onPress={props.onCategorySelect}>
+            onPress={onCommentPress}>
             <View style={styles.headerComment}>
               <Text style={styles.titleComment}> Bình luận về sản phẩm</Text>
               <Text style={styles.expandComment}> {'>'} </Text>
@@ -111,10 +124,9 @@ function ProductDetailScreen(props) {
         </Card>
       </ScrollView>
       <Card style={styles.bottomBar}>
-        <Button
-          style={styles.bottomButton}
-          color={Colors.primaryColor}
-          title="Chọn Mua"></Button>
+        <TouchableOpacity style={styles.bottomButton} >
+          <Text style={styles.bottomText}>Chọn Mua</Text>
+        </TouchableOpacity>
       </Card>
     </View>
   );
@@ -198,7 +210,6 @@ const styles = StyleSheet.create({
   },
   cardContainer: {
     marginVertical: 5,
-    height: '100%',
     elevation: 0,
     borderRadius: 0,
   },
@@ -226,18 +237,22 @@ const styles = StyleSheet.create({
     color: '#FF9C40',
   },
   bottomBar: {
-    height: 60,
-    padding: 10,
-    marginTop: 5,
+    height: 50,
+    padding: 5,
     borderRadius: 0,
-    alignContent: 'stretch',
   },
-  bottomButton:{
+  bottomButton: {
     flex: 1,
-    height: '100%',
-    width: '100%',
-    textAlign: 'center',
-    textAlignVertical: 'center',
-  }
+    alignItems:'center',
+    justifyContent:'center',    
+    backgroundColor:Colors.primaryColor,
+    borderRadius: 5,
+    borderWidth: 1,
+  },
+  bottomText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: 'white',
+  },
 });
 export default ProductDetailScreen;

@@ -11,6 +11,8 @@ export const CART_MAIN_SCREEN = "CartMainScreen";
 export const HISTORY_MAIN_SCREEN = "HistoryMainScreen";
 export const ACCOUNT_MAIN_SCREEN = "AccountMainScreen";
 export const PRODUCT_DETAIL_SCREEN = "ProductDetailScreen";
+export const COMMENT_SCREEN = "CommentScreen";
+export const ADD_COMMENT_SCREEN = "AddCommentDetailScreen";
 export const CATEGORY_DETAIL_SCREEN = "CategoryDetailScreen";
 
 export const BOTTOM_BAR_NAVIGATOR = "BottomBarNavigator";
