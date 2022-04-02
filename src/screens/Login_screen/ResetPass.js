@@ -60,7 +60,7 @@ function ResetPass() {
         </Text>
       </TouchableOpacity>
     </SafeAreaView >
-
+   
   );
 }
 
