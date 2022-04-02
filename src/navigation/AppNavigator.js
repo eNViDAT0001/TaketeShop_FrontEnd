@@ -6,6 +6,7 @@ import {
   BOTTOM_BAR_NAVIGATOR,
   CATEGORY_DETAIL_SCREEN,
   COMMENT_SCREEN,
+  LOGIN_NAVIGATOR,
   PRODUCT_DETAIL_SCREEN,
 } from '../constants/NavigatorIndex';
 import BottomBarNavigator from './BottomBarNavigator';
@@ -14,17 +15,25 @@ import ProductDetailScreen from '../screens/productScreen/ProductDetailScreen';
 import CommentScreen from '../screens/productScreen/CommentScreen';
 import AddCommentScreen from '../screens/productScreen/AddCommentScreen';
 import Colors from '../constants/Colors';
+import LoginNavigator from './LoginNavigator';
 const StackNavigator = createNativeStackNavigator();
 function AppNavigator() {
   return (
     <NavigationContainer>
       <StackNavigator.Navigator
-        initialRouteName={BOTTOM_BAR_NAVIGATOR}
+        initialRouteName={LOGIN_NAVIGATOR}
         options={{
           headerStyle: {
             backgroundColor: Colors.primaryColor,
           },
         }}>
+        <StackNavigator.Screen
+          name={LOGIN_NAVIGATOR}
+          component={LoginNavigator}
+          options={{
+            headerShown: false,
+          }}></StackNavigator.Screen>
+
         <StackNavigator.Screen
           name={BOTTOM_BAR_NAVIGATOR}
           component={BottomBarNavigator}
@@ -52,6 +61,7 @@ function AppNavigator() {
           options={{
             headerTitle: 'Đánh giá',
           }}></StackNavigator.Screen>
+          
         <StackNavigator.Screen
           name={ADD_COMMENT_SCREEN}
           component={AddCommentScreen}

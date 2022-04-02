@@ -3,8 +3,12 @@ export const SHOP_NAVIGATOR = "ShopNavigator";
 export const CART_NAVIGATOR = "CartNavigator";
 export const HISTORY_NAVIGATOR = "HistoryNavigator";
 export const ACCOUNT_NAVIGATOR = "AccountNavigator";
+export const LOGIN_NAVIGATOR = "LoginNavigator";
+export const PROFILE_NAVIGATOR = "ProfileNavigation";
 
 
+export const LOGIN_MAIN_SCREEN = "LoginScreen";
+export const FORGOT_PASSWORD_SCREEN = "ForgotPassword";
 export const HOME_MAIN_SCREEN = "HomeMainScreen";
 export const SHOP_MAIN_SCREEN = "ShopMainScreen";
 export const CART_MAIN_SCREEN = "CartMainScreen";
