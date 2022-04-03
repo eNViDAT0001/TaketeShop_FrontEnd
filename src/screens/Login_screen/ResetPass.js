@@ -54,7 +54,7 @@ function ResetPass() {
       </Button>
       <TouchableOpacity
         style={styles.containertext}
-        onPress={() => navigation.goBack(LOGIN_MAIN_SCREEN)} >
+        onPress={() => navigation.goBack()} >
         <Text style={styles.text2}>
           Quay lại đăng nhập
         </Text>

@@ -69,9 +69,10 @@ function App() {
 
   return ( 
     <Provider store={store}>
+
       <StatusBar
+        style="auto" 
         animated={true}
-        backgroundColor={Colors.primaryColor}
         showHideTransition={'fade'}/>
       <AppNavigator></AppNavigator>
     </Provider>

@@ -6,7 +6,6 @@ import Button1 from '../../store/actions/button';
 import { TextInput, Button, Colors, IconButton } from 'react-native-paper';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { LOGIN_MAIN_SCREEN } from '../../constants/NavigatorIndex';
-import SignUpScreen from './SignUp';
 
 
 function ForgotPassword() {
@@ -49,7 +48,7 @@ function ForgotPassword() {
                     Không có tài khoản ?
                 </Text>
                 <TouchableOpacity
-                     onPress={() => navigation.navigate(SignUpScreen)} >
+                     onPress={() => navigation.navigate('SignUpScreen')} >
                     <Text style={styles.text2}>
                         Đăng ký
                     </Text>

@@ -10,7 +10,6 @@ import SignUpScreen from '../screens/Login_screen/SignUp';
 const Stack = createNativeStackNavigator();
 
 function LoginNavigator(props) {
-    const [text, onChangeText] = React.useState(null);
 
     return (
         <Stack.Navigator initialRouteName={LOGIN_MAIN_SCREEN}>

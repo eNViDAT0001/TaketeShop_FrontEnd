@@ -7,7 +7,6 @@ import {
   TouchableNativeFeedback,
   Platform,
 } from 'react-native';
-import {Button} from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Colors from '../../constants/Colors';
 
@@ -52,14 +51,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 5,
     flex: 1,
-  },
-  containert: {
-    flexDirection: 'row',
-    backgroundColor: '#ffff',
-    alignItems: 'center',
-  },
-  containerbt: {
-    flexDirection: 'row',
   },
   expandContainer: {
     flex: 1,

@@ -1,8 +1,6 @@
 import React from 'react';
 import { View, Image, StyleSheet, document } from 'react-native'
 
-//import 'react-slideshow-image/dist/styles.css'
-
 function ImageShow() {
 
     const images = ["../../assets/images/logo1.png",

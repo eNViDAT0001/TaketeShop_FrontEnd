@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primaryColor,
   },
   searchBar: {
-    width: '70%',
+    width: '75%',
     height: SEARCH_BAR_HEIGHT,
     backgroundColor: Colors.primaryColor,
   },

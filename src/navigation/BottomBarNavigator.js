@@ -3,13 +3,17 @@ import {createMaterialBottomTabNavigator} from '@react-navigation/material-botto
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {
   ACCOUNT_NAVIGATOR,
+  CART_MAIN_SCREEN,
   HOME_MAIN_SCREEN,
+  ORDER_MAIN_SCREEN,
   SHOP_MAIN_SCREEN,
 } from '../constants/NavigatorIndex';
 import Colors from '../constants/Colors';
 import ShopMainScreen from '../screens/shopScreen/ShopMainScreen';
 import HomeMainScreen from '../screens/homeScreen/HomeMainScreen';
 import AccountNavigator from './AccountNavigator';
+import CartMainScreen from '../screens/cartScreen/CartMainScreen';
+import OrderMainScreen from '../screens/orderScreen/OrderMainScreen';
 
 const TabNavigator = createMaterialBottomTabNavigator();
 function BottomBarNavigator() {
@@ -36,6 +40,25 @@ function BottomBarNavigator() {
           tabBarLabel: 'Shop',
           tabBarIcon: ({color}) => (
             <MaterialCommunityIcons name="storefront" color={color} size={26} />
+          ),
+        }}
+      />
+      <TabNavigator.Screen
+        name={CART_MAIN_SCREEN}
+        component={CartMainScreen}
+        options={{
+          tabBarLabel: 'Cart',
+          tabBarIcon: ({color}) => (
+            <MaterialCommunityIcons name="cart" color={color} size={26} />
+          ),
+        }}
+      /><TabNavigator.Screen
+        name={ORDER_MAIN_SCREEN}
+        component={OrderMainScreen}
+        options={{
+          tabBarLabel: 'Order',
+          tabBarIcon: ({color}) => (
+            <MaterialCommunityIcons name="archive-clock" color={color} size={26} />
           ),
         }}
       />
