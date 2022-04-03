@@ -4,13 +4,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import Form1 from '../../navigation/LoginNavigator';
 //import Button1 from '../../store/actions/button';
 import { TextInput, Button, Colors, IconButton } from 'react-native-paper';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-//import ImageShow from '../../components/ImageShow'
+import { useNavigation } from '@react-navigation/native';
 import ForgotPassword from './ForgotPassword';
 import { LOGIN_MAIN_SCREEN } from '../../constants/NavigatorIndex';
 
-
+//sdfdsfdsfdsf
 function ResetPass() {
   const navigation = useNavigation()
   const [resetcode, setResetcode] = React.useState("");
