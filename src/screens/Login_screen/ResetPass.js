@@ -48,8 +48,11 @@ function ResetPass() {
       </Button>
       <TouchableOpacity
         style={styles.containertext}
+<<<<<<< HEAD
         onPress={() => navigation.goBack()} >
+=======
         onPress={() => navigation.popToTop()} >
+>>>>>>> Account
         <Text style={styles.text2}>
           Quay lại đăng nhập
         </Text>

@@ -7,6 +7,7 @@ import ProfileNavigation from './ProfileNavigation'
 const Stack = createNativeStackNavigator();
 
 function AccountNavigator() {
+<<<<<<< HEAD
 
     return (
         <Stack.Navigator initialRouteName={AccountMainScreen}>
@@ -15,6 +16,7 @@ function AccountNavigator() {
               options={{ headerShown: false }}
               component={AccountMainScreen}>
             </Stack.Screen>
+=======
   const [text, onChangeText] = React.useState(null);
 
   return (
@@ -24,6 +26,7 @@ function AccountNavigator() {
         options={{ headerShown: false }}
         component={AccountMainScreen}>
       </Stack.Screen>
+>>>>>>> Account
 
       <Stack.Screen
         name={PROFILE_NAVIGATOR}
