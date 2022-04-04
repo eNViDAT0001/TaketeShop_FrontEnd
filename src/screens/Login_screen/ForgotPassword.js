@@ -1,12 +1,9 @@
 import React from 'react';
 import { Text, StyleSheet, View, SafeAreaView, Image, TouchableOpacity } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux';
-import Form1 from '../../navigation/LoginNavigator';
-import Button1 from '../../store/actions/button';
 import { TextInput, Button, Colors, IconButton } from 'react-native-paper';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { LOGIN_MAIN_SCREEN } from '../../constants/NavigatorIndex';
-import SignUpScreen from './SignUp';
 
 
 function ForgotPassword() {
@@ -37,7 +34,7 @@ function ForgotPassword() {
                     Đã nhớ lại mật khẩu ?
                 </Text>
                 <TouchableOpacity
-                    onPress={() => navigation.goBack(LOGIN_MAIN_SCREEN)} >
+                    onPress={() => navigation.popToTop()} >
                     <Text style={styles.text2}>
                         Đăng nhập
                     </Text>
@@ -49,7 +46,7 @@ function ForgotPassword() {
                     Không có tài khoản ?
                 </Text>
                 <TouchableOpacity
-                     onPress={() => navigation.navigate(SignUpScreen)} >
+                     onPress={() => navigation.navigate('SignUpScreen')} >
                     <Text style={styles.text2}>
                         Đăng ký
                     </Text>

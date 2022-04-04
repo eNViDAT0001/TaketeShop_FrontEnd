@@ -23,7 +23,7 @@ function Profile(props) {
              <Form1
                 icons='gender-male-female'
                 titletext='Gender'
-                onPress={() => { navigation.navigate(Gender) }}
+                onPress={() => { navigation.navigate('Gender') }}
                 titletext2='xcvjkz'
             />
             <Form1

@@ -1,14 +1,10 @@
 import React from 'react';
 import { Text, StyleSheet, View, SafeAreaView, Image, TouchableOpacity } from 'react-native'
-import { useSelector, useDispatch } from 'react-redux';
-import Form1 from '../../navigation/LoginNavigator';
-//import Button1 from '../../store/actions/button';
+//import { useSelector, useDispatch } from 'react-redux';
 import { TextInput, Button, Colors, IconButton } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
-import ForgotPassword from './ForgotPassword';
-import { LOGIN_MAIN_SCREEN } from '../../constants/NavigatorIndex';
 
-//sdfdsfdsfdsf
+
 function ResetPass() {
   const navigation = useNavigation()
   const [resetcode, setResetcode] = React.useState("");
@@ -52,7 +48,7 @@ function ResetPass() {
       </Button>
       <TouchableOpacity
         style={styles.containertext}
-        onPress={() => navigation.goBack(LOGIN_MAIN_SCREEN)} >
+        onPress={() => navigation.popToTop()} >
         <Text style={styles.text2}>
           Quay lại đăng nhập
         </Text>

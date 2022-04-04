@@ -19,7 +19,7 @@ function Form1(props) {
   }
   return (
     <View style={{...styles.container, ...props.style}}>
-      <TouchableCmp onPress={() => console.log('Press Ahihi')}>
+      <TouchableCmp onPress={props.onPress}>
         <View style={styles.titleContainer}>
           <MaterialCommunityIcons
             name={props.icons}

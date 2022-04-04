@@ -5,6 +5,7 @@ import LoginScreen from '../screens/Login_screen/LoginScreen';
 import ForgotPassword from '../screens/Login_screen/ForgotPassword';
 import ResetPass from '../screens/Login_screen/ResetPass';
 import SignUpScreen from '../screens/Login_screen/SignUp';
+//import SuccesScreen from '../screens/Login_screen/SuccesScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -34,6 +35,10 @@ function LoginNavigator(props) {
               name ={"SignUpScreen"} 
               component={SignUpScreen}>
             </Stack.Screen>
+            {/* <Stack.Screen
+              name ={"SuccesScreen"} 
+              component={SuccesScreen}>
+            </Stack.Screen> */}
 
             
            

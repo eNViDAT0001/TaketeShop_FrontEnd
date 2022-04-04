@@ -9,29 +9,26 @@ import ProfileNavigation from './ProfileNavigation'
 const Stack = createNativeStackNavigator();
 
 function AccountNavigator() {
-    const [text, onChangeText] = React.useState(null);
+  const [text, onChangeText] = React.useState(null);
 
-    return (
-        <Stack.Navigator initialRouteName={AccountMainScreen}>
-            <Stack.Screen
-              name ={"AccountMainScreen"} 
-              options={{ headerShown: false }}
-              component={AccountMainScreen}>
-            </Stack.Screen>
+  return (
+    <Stack.Navigator initialRouteName={AccountMainScreen}>
+      <Stack.Screen
+        name={"AccountMainScreen"}
+        options={{ headerShown: false }}
+        component={AccountMainScreen}>
+      </Stack.Screen>
 
-            <Stack.Screen
-              name ={PROFILE_NAVIGATOR} 
-              options={{ headerShown: false }}
-              component={ProfileNavigation}>
-            </Stack.Screen>
+      <Stack.Screen
+        name={PROFILE_NAVIGATOR}
+        options={{ headerShown: false }}
+        component={ProfileNavigation}>
+      </Stack.Screen>
 
-           
 
-            
-           
-        </Stack.Navigator>
+    </Stack.Navigator>
 
-    );
+  );
 
 }
 

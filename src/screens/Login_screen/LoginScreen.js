@@ -3,8 +3,6 @@ import { Text, StyleSheet, View, SafeAreaView, Image, TouchableOpacity } from 'r
 import { useSelector, useDispatch } from 'react-redux';
 import { TextInput, Button, Colors, IconButton } from 'react-native-paper';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
-import ForgotPassword from './ForgotPassword';
-import SignUpScreen from './SignUp';
 import { FORGOT_PASSWORD_SCREEN, BOTTOM_BAR_NAVIGATOR } from '../../constants/NavigatorIndex';
 import ImageShow from '../../components/ImageShow';
 
