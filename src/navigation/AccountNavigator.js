@@ -15,20 +15,26 @@ function AccountNavigator() {
               options={{ headerShown: false }}
               component={AccountMainScreen}>
             </Stack.Screen>
+  const [text, onChangeText] = React.useState(null);
 
-            <Stack.Screen
-              name ={PROFILE_NAVIGATOR} 
-              options={{ headerShown: false }}
-              component={ProfileNavigation}>
-            </Stack.Screen>
+  return (
+    <Stack.Navigator initialRouteName={AccountMainScreen}>
+      <Stack.Screen
+        name={"AccountMainScreen"}
+        options={{ headerShown: false }}
+        component={AccountMainScreen}>
+      </Stack.Screen>
 
-           
+      <Stack.Screen
+        name={PROFILE_NAVIGATOR}
+        options={{ headerShown: false }}
+        component={ProfileNavigation}>
+      </Stack.Screen>
 
-            
-           
-        </Stack.Navigator>
 
-    );
+    </Stack.Navigator>
+
+  );
 
 }
 

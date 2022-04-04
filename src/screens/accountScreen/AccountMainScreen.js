@@ -3,14 +3,8 @@ import { View, StyleSheet, FlatList, Text, ScrollView } from 'react-native';
 import { Searchbar, IconButton } from 'react-native-paper';
 import { useSelector, useDispatch } from 'react-redux';
 import Colors from '../../constants/Colors';
-import HomePage from '../homeScreen/HomePage';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Form1 from './Form';
-import LoginNavigator from '../../navigation/LoginNavigator';
-import Profile from '../ProfileScreen/ProfileScreen';
-import SupportScreen from './SupportScreen';
-import ProfileNavigation from '../../navigation/ProfileNavigation'
 import { PROFILE_NAVIGATOR } from '../../constants/NavigatorIndex';
 
 

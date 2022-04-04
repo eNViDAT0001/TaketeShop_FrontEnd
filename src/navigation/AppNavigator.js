@@ -8,6 +8,7 @@ import {
   COMMENT_SCREEN,
   LOGIN_NAVIGATOR,
   PRODUCT_DETAIL_SCREEN,
+  PROFILE_NAVIGATOR,
 } from '../constants/NavigatorIndex';
 import BottomBarNavigator from './BottomBarNavigator';
 import CategoryDetailScreen from '../screens/productScreen/CategoryDetailScreen';
@@ -16,6 +17,7 @@ import CommentScreen from '../screens/productScreen/CommentScreen';
 import AddCommentScreen from '../screens/productScreen/AddCommentScreen';
 import Colors from '../constants/Colors';
 import LoginNavigator from './LoginNavigator';
+import ProfileNavigation from './ProfileNavigation';
 const StackNavigator = createNativeStackNavigator();
 function AppNavigator() {
   return (
@@ -33,6 +35,13 @@ function AppNavigator() {
           options={{
             headerShown: false,
           }}></StackNavigator.Screen>
+          
+          {/* <StackNavigator.Screen
+          name={PROFILE_NAVIGATOR}
+          component={ProfileNavigation}
+          options={{
+            headerShown: false,
+          }}></StackNavigator.Screen> */}
 
         <StackNavigator.Screen
           name={BOTTOM_BAR_NAVIGATOR}

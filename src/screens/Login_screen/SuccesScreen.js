@@ -4,41 +4,22 @@ import { Text, StyleSheet, View, SafeAreaView, Image, TouchableOpacity } from 'r
 
 function SuccesScreen(props) {
 
-    return {
-        < SafeAreaView style = { styles.container } >
-        < View style={styles.imageContainer} >
-            <Image style={styles.logo}
+    return (
+        <View style={styles.container} >
+            <Image
                 style={styles.logo}
                 source={{
-                    uri: "../../../assets/images/succes.png"
-                }} />
-        </ >
-        
-        
-        </SafeAreaView >
-        < View style={styles.imageContainer} >
-            <Image style={styles.logo}
-                style={styles.logo}
-                source={{
-                    uri: images[currentImage]
-                }} />
-        </ >
-
-        if (props == 1){
-
-
-        }
-
-
-}
-
-
+                    uri: '../../../assets/images/succes.png'
+                }}
+            ></Image>
+        </View>
+    );
 }
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#ffff',
-      },
+    },
     imageContainer: {
         justifyContent: 'center',
         alignItems: 'center',
