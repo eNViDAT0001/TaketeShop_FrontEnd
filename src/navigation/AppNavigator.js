@@ -2,6 +2,8 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
 import {
+  ADDRESS_SCREEN,
+  ADD_ADDRESS_SCREEN,
   ADD_COMMENT_SCREEN,
   BOTTOM_BAR_NAVIGATOR,
   CATEGORY_DETAIL_SCREEN,
@@ -18,6 +20,8 @@ import AddCommentScreen from '../screens/productScreen/AddCommentScreen';
 import Colors from '../constants/Colors';
 import LoginNavigator from './LoginNavigator';
 import ProfileNavigation from './ProfileNavigation';
+import AddressScreen from '../screens/addressScreen/AddressScreen';
+import AddAddressPage from '../screens/addressScreen/AddAddressPage';
 const StackNavigator = createNativeStackNavigator();
 function AppNavigator() {
   return (
@@ -48,6 +52,7 @@ function AppNavigator() {
           component={BottomBarNavigator}
           options={{
             headerShown: false,
+            
           }}></StackNavigator.Screen>
 
         <StackNavigator.Screen
@@ -76,6 +81,19 @@ function AppNavigator() {
           component={AddCommentScreen}
           options={{
             headerTitle: 'Viết đánh giá',
+          }}></StackNavigator.Screen>
+          <StackNavigator.Screen
+          name={ADDRESS_SCREEN}
+          component={AddressScreen}
+          options={{
+            headerShown: false
+          }}></StackNavigator.Screen>
+          <StackNavigator.Screen
+          name={ADD_ADDRESS_SCREEN}
+          component={AddAddressPage}
+          options={{
+            headerTitle: 'Thêm Địa Chỉ',
+            headerShown: false,
           }}></StackNavigator.Screen>
       </StackNavigator.Navigator>
     </NavigationContainer>

@@ -37,6 +37,7 @@ function BottomBarNavigator() {
         name={SHOP_MAIN_SCREEN}
         component={ShopMainScreen}
         options={{
+          
           tabBarLabel: 'Shop',
           tabBarIcon: ({color}) => (
             <MaterialCommunityIcons name="storefront" color={color} size={26} />

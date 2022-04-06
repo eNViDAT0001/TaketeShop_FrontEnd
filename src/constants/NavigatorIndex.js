@@ -18,6 +18,10 @@ export const PRODUCT_DETAIL_SCREEN = "ProductDetailScreen";
 export const COMMENT_SCREEN = "CommentScreen";
 export const ADD_COMMENT_SCREEN = "AddCommentDetailScreen";
 export const CATEGORY_DETAIL_SCREEN = "CategoryDetailScreen";
+export const ADDRESS_SCREEN ="AddressScreen";
+export const ADD_ADDRESS_SCREEN ="AddAddressScreen";
+export const SUCCESS_SCREEN ="SuccessScreen";
+
 
 export const BOTTOM_BAR_NAVIGATOR = "BottomBarNavigator";
 

@@ -6,6 +6,7 @@ import Rating from 'react-native-star-rating';
 import Card from '../../components/UI/Card';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Colors from '../../constants/Colors';
+
 const IMAGE_TEMP = 'https://kangaroovietnam.vn/Uploads/sinh-to-bo.jpg';
 function AddCommentScreen(props) {
   const [star, setStar] = useState(0);
