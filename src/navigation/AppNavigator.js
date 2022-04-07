@@ -11,6 +11,7 @@ import {
   LOGIN_NAVIGATOR,
   PRODUCT_DETAIL_SCREEN,
   PROFILE_NAVIGATOR,
+  SUCCESS_SCREEN,
 } from '../constants/NavigatorIndex';
 import BottomBarNavigator from './BottomBarNavigator';
 import CategoryDetailScreen from '../screens/productScreen/CategoryDetailScreen';
@@ -22,6 +23,7 @@ import LoginNavigator from './LoginNavigator';
 import ProfileNavigation from './ProfileNavigation';
 import AddressScreen from '../screens/addressScreen/AddressScreen';
 import AddAddressPage from '../screens/addressScreen/AddAddressPage';
+import SuccessScreen from '../screens/addressScreen/SuccessScreen';
 const StackNavigator = createNativeStackNavigator();
 function AppNavigator() {
   return (
@@ -39,8 +41,8 @@ function AppNavigator() {
           options={{
             headerShown: false,
           }}></StackNavigator.Screen>
-          
-          {/* <StackNavigator.Screen
+
+        {/* <StackNavigator.Screen
           name={PROFILE_NAVIGATOR}
           component={ProfileNavigation}
           options={{
@@ -52,7 +54,6 @@ function AppNavigator() {
           component={BottomBarNavigator}
           options={{
             headerShown: false,
-            
           }}></StackNavigator.Screen>
 
         <StackNavigator.Screen
@@ -75,22 +76,28 @@ function AppNavigator() {
           options={{
             headerTitle: 'Đánh giá',
           }}></StackNavigator.Screen>
-          
+
         <StackNavigator.Screen
           name={ADD_COMMENT_SCREEN}
           component={AddCommentScreen}
           options={{
             headerTitle: 'Viết đánh giá',
           }}></StackNavigator.Screen>
-          <StackNavigator.Screen
+        <StackNavigator.Screen
           name={ADDRESS_SCREEN}
           component={AddressScreen}
           options={{
-            headerShown: false
+            headerShown: false,
           }}></StackNavigator.Screen>
-          <StackNavigator.Screen
+        <StackNavigator.Screen
           name={ADD_ADDRESS_SCREEN}
           component={AddAddressPage}
+          options={{
+            headerShown: false,
+          }}></StackNavigator.Screen>
+        <StackNavigator.Screen
+          name={SUCCESS_SCREEN}
+          component={SuccessScreen}
           options={{
             headerTitle: 'Thêm Địa Chỉ',
             headerShown: false,

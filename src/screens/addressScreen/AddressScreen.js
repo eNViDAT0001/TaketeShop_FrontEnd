@@ -6,7 +6,11 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Address from '../../components/Address';
 import Header from '../../components/UI/Header';
 import Colors from '../../constants/Colors';
+import { useNavigation } from '@react-navigation/native';
+import { ADD_ADDRESS_SCREEN } from '../../constants/NavigatorIndex';
 function AddressScreen() {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.screen}>
         <FlatList
@@ -18,7 +22,7 @@ function AddressScreen() {
                 icon={'plus'}
                 color={Colors.iconColor}
                 size={26}
-                onPress={() => console.log('luv luv')}
+                onPress={() => navigation.navigate(ADD_ADDRESS_SCREEN)}
               />
             </Header>
           }
