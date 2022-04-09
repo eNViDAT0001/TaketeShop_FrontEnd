@@ -19,11 +19,11 @@ function AccountNavigator() {
         component={AccountMainScreen}>
       </Stack.Screen>
 
-      <Stack.Screen
+      {/* <Stack.Screen
         name={PROFILE_NAVIGATOR}
         options={{ headerShown: false }}
         component={ProfileNavigation}>
-      </Stack.Screen>
+      </Stack.Screen> */}
 
 
     </Stack.Navigator>

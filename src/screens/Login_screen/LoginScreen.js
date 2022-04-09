@@ -26,9 +26,6 @@ function LoginScreen() {
       </View>
 
 
-
-
-
       <View style={styles.containertextinput}>
         <TextInput
           label="username"
@@ -163,7 +160,6 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     borderRadius: 10,
     color: '#4f5160'
-
   },
   bottom: {
     bottom: '-5%',

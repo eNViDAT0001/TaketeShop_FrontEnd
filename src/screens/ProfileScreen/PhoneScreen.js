@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Text, StyleSheet, View, Image, TouchableOpacity } from 'react-native'
 import { TextInput, Button, Colors, IconButton } from 'react-native-paper';
-//import FormText from '../accountScreen/FormText';
-import { Dropdown } from 'react-native-element-dropdown';
 import { useNavigation } from '@react-navigation/native';
 
 const data = [
@@ -10,28 +8,19 @@ const data = [
     { label: 'Nữ', value: '2' },
 ];
 
-function Gender(props) {
-    const [value, setValue] = useState(null);
+function Phone(props) {
+    const [phonenumber, setPhonenumber] = React.useState("");
     const navigation = useNavigation()
     return (
         <View style={styles.screen}>
             <View style={styles.screen1}>
                 <Text style={styles.text}>
-                    Giới tính</Text>
-                <Dropdown
-                    style={styles.dropdown}
-                    placeholderStyle={styles.placeholderStyle}
-                    selectedTextStyle={styles.selectedTextStyle}
-                    iconStyle={styles.iconStyle}
-                    data={data}
-                    maxHeight={130}
-                    labelField="label"
-                    valueField="value"
-                    placeholder={'Giới tính'}
-                    value={value}
-                    onChange={item => {
-                        setValue(item.value);
-                    }}
+                    Số điện thoại</Text>
+                <TextInput
+                    label="Số điện thoại"
+                    mode='outlined'
+                    value={phonenumber}
+                    onChangeText={phonenumber => setPhonenumber(phonenumber)}
                 />
             </View>
 
@@ -57,8 +46,8 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#ffff',
     },
-    screen1 : {
-        flex:  14,
+    screen1: {
+        flex: 14,
     },
     text: {
         fontSize: 30,
@@ -108,7 +97,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
     button: {
-        flex: 1,       
+        flex: 1,
         bottom: 10,
         padding: 15,
         marginVertical: 15,
@@ -117,4 +106,4 @@ const styles = StyleSheet.create({
     },
 
 });
-export default Gender;
+export default Phone;

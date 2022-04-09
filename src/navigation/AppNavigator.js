@@ -23,7 +23,7 @@ function AppNavigator() {
   return (
     <NavigationContainer>
       <StackNavigator.Navigator
-        initialRouteName={LOGIN_NAVIGATOR}
+        initialRouteName={PROFILE_NAVIGATOR}
         options={{
           headerStyle: {
             backgroundColor: Colors.primaryColor,
@@ -36,12 +36,12 @@ function AppNavigator() {
             headerShown: false,
           }}></StackNavigator.Screen>
           
-          {/* <StackNavigator.Screen
+          <StackNavigator.Screen
           name={PROFILE_NAVIGATOR}
           component={ProfileNavigation}
           options={{
             headerShown: false,
-          }}></StackNavigator.Screen> */}
+          }}></StackNavigator.Screen>
 
         <StackNavigator.Screen
           name={BOTTOM_BAR_NAVIGATOR}
