@@ -6,6 +6,7 @@ import {
   CART_MAIN_SCREEN,
   HOME_MAIN_SCREEN,
   ORDER_MAIN_SCREEN,
+  ORDER_NAVIGATOR,
   SHOP_MAIN_SCREEN,
 } from '../constants/NavigatorIndex';
 import Colors from '../constants/Colors';
@@ -13,7 +14,7 @@ import ShopMainScreen from '../screens/shopScreen/ShopMainScreen';
 import HomeMainScreen from '../screens/homeScreen/HomeMainScreen';
 import AccountNavigator from './AccountNavigator';
 import CartMainScreen from '../screens/cartScreen/CartMainScreen';
-import OrderMainScreen from '../screens/orderScreen/OrderMainScreen';
+import OrderNavigator from './OrderNavigator';
 
 const TabNavigator = createMaterialBottomTabNavigator();
 function BottomBarNavigator() {
@@ -54,8 +55,8 @@ function BottomBarNavigator() {
           ),
         }}
       /><TabNavigator.Screen
-        name={ORDER_MAIN_SCREEN}
-        component={OrderMainScreen}
+        name={ORDER_NAVIGATOR}
+        component={OrderNavigator}
         options={{
           tabBarLabel: 'Order',
           tabBarIcon: ({color}) => (

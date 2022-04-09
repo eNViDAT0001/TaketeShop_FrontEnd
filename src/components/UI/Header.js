@@ -9,11 +9,13 @@ const Header = props => {
   return (
     <View style={styles.header}>
       <View style={styles.headerLeft}>
-        <IconButton
-          icon={'arrow-left'}
-          color={'white'}
-          size={25}
-          onPress={() => navigation.goBack()}></IconButton>
+        {!props.back ? (
+          <IconButton
+            icon={'arrow-left'}
+            color={'white'}
+            size={25}
+            onPress={() => navigation.goBack()}></IconButton>
+        ) : <View style={{margin: 5}}></View>}
         <Text style={styles.title}>{props.title}</Text>
       </View>
       <View style={styles.headerRight}>{props.children}</View>

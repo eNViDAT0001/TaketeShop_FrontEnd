@@ -237,8 +237,8 @@ const styles = StyleSheet.create({
     color: '#FF9C40',
   },
   bottomBar: {
-    height: 50,
-    padding: 5,
+    height: 60,
+    padding: 10,
     borderRadius: 0,
   },
   bottomButton: {
