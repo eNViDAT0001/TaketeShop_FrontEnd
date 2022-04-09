@@ -23,7 +23,7 @@ function OrderNavigator() {
         initialRouteName={ORDER_CONFIRM_PAGE}
         screenOptions={{
           tabBarScrollEnabled: true,
-          tabBarLabelStyle: {fontSize: 12},
+          tabBarLabelStyle: {fontSize: 14},
           tabBarStyle: {backgroundColor: Colors.backgroundColor, height: 50, width: '100%'},
         }}>
         <Tab.Screen

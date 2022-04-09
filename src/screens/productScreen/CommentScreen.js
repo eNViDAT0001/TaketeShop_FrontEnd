@@ -10,9 +10,10 @@ import {
   TouchableNativeFeedback,
   Platform,
 } from 'react-native';
-import { Button } from 'react-native-paper';
+import {Button} from 'react-native-paper';
 import Comment from '../../components/Comment';
 import Card from '../../components/UI/Card';
+import Header from '../../components/UI/Header';
 import Colors from '../../constants/Colors';
 import {ADD_COMMENT_SCREEN} from '../../constants/NavigatorIndex';
 
@@ -32,38 +33,41 @@ function CommentScreen(props) {
       data={[1, 2, 3, 4, 5]}
       renderItem={itemData => <Comment data={itemData.item}></Comment>}
       ListHeaderComponent={
-        <ScrollView horizontal={true} style={styles.header}>
-          <TouchableCmp useForeground onPress={() => console.log("Clickkk")}>
-            <Card style={styles.filterItems}>
-              <Text style={styles.filterText}>Tất cả sản phẩm</Text>
-            </Card>
-          </TouchableCmp>
-          <TouchableCmp useForeground>
-            <Card style={styles.filterItems}>
-              <Text style={styles.filterText}>1 Sao</Text>
-            </Card>
-          </TouchableCmp>
-          <TouchableCmp useForeground>
-            <Card style={styles.filterItems}>
-              <Text style={styles.filterText}>2 Sao</Text>
-            </Card>
-          </TouchableCmp >
-          <TouchableCmp useForeground>
-            <Card style={styles.filterItems}>
-              <Text style={styles.filterText}>3 Sao</Text>
-            </Card>
-          </TouchableCmp>
-          <TouchableCmp useForeground>
-            <Card style={styles.filterItems}>
-              <Text style={styles.filterText}>4 Sao</Text>
-            </Card>
-          </TouchableCmp>
-          <TouchableCmp useForeground>
-            <Card style={styles.filterItems}>
-              <Text style={styles.filterText}>5 Sao</Text>
-            </Card>
-          </TouchableCmp>
-        </ScrollView>
+        <View style={{flex: 1}}>
+          <Header title={'Đánh giá'}></Header>
+          <ScrollView horizontal={true} style={styles.header}>
+            <TouchableCmp useForeground onPress={() => console.log('Clickkk')}>
+              <Card style={styles.filterItems}>
+                <Text style={styles.filterText}>Tất cả sản phẩm</Text>
+              </Card>
+            </TouchableCmp>
+            <TouchableCmp useForeground>
+              <Card style={styles.filterItems}>
+                <Text style={styles.filterText}>1 Sao</Text>
+              </Card>
+            </TouchableCmp>
+            <TouchableCmp useForeground>
+              <Card style={styles.filterItems}>
+                <Text style={styles.filterText}>2 Sao</Text>
+              </Card>
+            </TouchableCmp>
+            <TouchableCmp useForeground>
+              <Card style={styles.filterItems}>
+                <Text style={styles.filterText}>3 Sao</Text>
+              </Card>
+            </TouchableCmp>
+            <TouchableCmp useForeground>
+              <Card style={styles.filterItems}>
+                <Text style={styles.filterText}>4 Sao</Text>
+              </Card>
+            </TouchableCmp>
+            <TouchableCmp useForeground>
+              <Card style={styles.filterItems}>
+                <Text style={styles.filterText}>5 Sao</Text>
+              </Card>
+            </TouchableCmp>
+          </ScrollView>
+        </View>
       }
       ListFooterComponent={
         <View style={styles.bottomBar}>

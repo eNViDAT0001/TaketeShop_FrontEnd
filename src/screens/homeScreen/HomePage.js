@@ -26,7 +26,7 @@ function HomePage(props) {
             onCategorySelect={onSelectedCategory}
             style={styles.bestSeller}
             title={'Giảm giá'}
-            horizontal={true}
+            horizontal={true}z
             numColum={1}
             itemList={ONSALES_DUMMY_DATA}
           />

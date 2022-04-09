@@ -1,16 +1,10 @@
-import React, { useLayoutEffect } from 'react';
-import { Card } from 'react-native-paper'
+import React, {useLayoutEffect} from 'react';
+import {Card} from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {
-  StyleSheet,
-  Text,
-  FlatList,
-  View,
-  TouchableOpacity,
-} from 'react-native';
+import {StyleSheet, Text, FlatList, View, TouchableOpacity} from 'react-native';
 import Colors from '../constants/Colors';
 import ShopItems from './ShopItems';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 function CategoryHolder(props) {
   return (
     <View style={{...styles.container, ...props.style}}>

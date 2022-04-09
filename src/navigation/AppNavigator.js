@@ -9,6 +9,7 @@ import {
   CATEGORY_DETAIL_SCREEN,
   COMMENT_SCREEN,
   LOGIN_NAVIGATOR,
+  NOTIFICATION_SCREEN,
   PRODUCT_DETAIL_SCREEN,
   PROFILE_NAVIGATOR,
   SUCCESS_SCREEN,
@@ -20,10 +21,10 @@ import CommentScreen from '../screens/productScreen/CommentScreen';
 import AddCommentScreen from '../screens/productScreen/AddCommentScreen';
 import Colors from '../constants/Colors';
 import LoginNavigator from './LoginNavigator';
-import ProfileNavigation from './ProfileNavigation';
 import AddressScreen from '../screens/addressScreen/AddressScreen';
 import AddAddressPage from '../screens/addressScreen/AddAddressPage';
 import SuccessScreen from '../screens/addressScreen/SuccessScreen';
+import NotificationScreen from '../screens/homeScreen/NotificationScreen';
 const StackNavigator = createNativeStackNavigator();
 function AppNavigator() {
   return (
@@ -75,6 +76,7 @@ function AppNavigator() {
           component={CommentScreen}
           options={{
             headerTitle: 'Đánh giá',
+            headerShown: false,
           }}></StackNavigator.Screen>
 
         <StackNavigator.Screen
@@ -82,6 +84,7 @@ function AppNavigator() {
           component={AddCommentScreen}
           options={{
             headerTitle: 'Viết đánh giá',
+            headerShown: false,
           }}></StackNavigator.Screen>
         <StackNavigator.Screen
           name={ADDRESS_SCREEN}
@@ -100,6 +103,12 @@ function AppNavigator() {
           component={SuccessScreen}
           options={{
             headerTitle: 'Thêm Địa Chỉ',
+            headerShown: false,
+          }}></StackNavigator.Screen><StackNavigator.Screen
+          name={NOTIFICATION_SCREEN}
+          component={NotificationScreen}
+          options={{
+            headerTitle: 'Thông báo',
             headerShown: false,
           }}></StackNavigator.Screen>
       </StackNavigator.Navigator>

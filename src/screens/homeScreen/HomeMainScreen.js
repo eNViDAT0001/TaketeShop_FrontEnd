@@ -6,8 +6,11 @@ import Colors from '../../constants/Colors';
 import SearchPage from './SearchPage';
 import HomePage from './HomePage';
 import { SEARCH_BAR_HEIGHT } from '../../constants/fontsize';
+import { useNavigation } from '@react-navigation/native';
+import { NOTIFICATION_SCREEN } from '../../constants/NavigatorIndex';
 
 function HomeMainScreen() {
+  const navigation = useNavigation();
   const [searchQuery, setSearchQuery] = React.useState('');
 
   const onChangeSearch = query => setSearchQuery(query);
@@ -15,6 +18,7 @@ function HomeMainScreen() {
   const Page =
     searchQuery === '' ? <HomePage /> : <SearchPage keyword={searchQuery} />;
 
+  const onNotifyClickHandler = () => navigation.navigate(NOTIFICATION_SCREEN);
 
 
   return (
@@ -35,7 +39,7 @@ function HomeMainScreen() {
               />
               <IconButton
                 icon="bell-outline"
-                onPress={() => alert('This is a Notify button!')}
+                onPress={onNotifyClickHandler}
                 color={Colors.iconColor}
               />
             </View>
