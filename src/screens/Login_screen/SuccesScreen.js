@@ -1,28 +1,25 @@
 import React from 'react';
-import { Text, StyleSheet, View, SafeAreaView, Image, TouchableOpacity } from 'react-native'
-
+import { Text, StyleSheet, View, SafeAreaView, Image } from 'react-native'
+import { useNavigation } from '@react-navigation/native';
 
 function SuccesScreen(props) {
-
+    const navigation = useNavigation()
     return (
-        <View style={styles.container} >
-            <Image
-                style={styles.logo}
-                source={{
-                    uri: '../../../assets/images/succes.png'
-                }}
-            ></Image>
+
+        <View style={styles.container}
+            onTouchEnd={() => navigation.navigate('LoginScreen')}>
+
+            <Text>asdasfaf</Text>
+
         </View>
+
+
     );
 }
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#ffff',
-    },
-    imageContainer: {
-        justifyContent: 'center',
-        alignItems: 'center',
     },
     logo: {
         width: 400,

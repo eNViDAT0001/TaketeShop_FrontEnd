@@ -14,40 +14,41 @@ import ChangePassword from '../screens/ProfileScreen/ChangePassword';
 const Stack = createNativeStackNavigator();
 
 function ProfileNavigation() {
-    const [text, onChangeText] = React.useState(null);
+  const [text, onChangeText] = React.useState(null);
 
-    return (
-        <Stack.Navigator initialRouteName={'Profile'}>
-            <Stack.Screen
-              name ={"Profile"}               
-              component={Profile}>
-            </Stack.Screen>       
-            <Stack.Screen
-              name ={"Gender"}                                     
-              component={Gender}>
-            </Stack.Screen>    
-            <Stack.Screen
-              name ={"Birth"}               
-              component={BirthScreen}>
-            </Stack.Screen>  
-            <Stack.Screen
-              name ={"Email"}               
-              component={Email}>
-            </Stack.Screen>   
-            <Stack.Screen
-              name ={"Phone number"}               
-              component={Phone}>
-            </Stack.Screen>   
-            <Stack.Screen
-              name ={"Change Password"}               
-              component={ChangePassword}>
-            </Stack.Screen>          
+  return (
+    <Stack.Navigator initialRouteName={'Profile'}>
+      <Stack.Screen
+        name={"Profile"}
+        options={{ headerShown: false, }}
+        component={Profile}>
+      </Stack.Screen>
+      <Stack.Screen
+        name={"Gender"}
+        component={Gender}>
+      </Stack.Screen>
+      <Stack.Screen
+        name={"Birth"}
+        component={BirthScreen}>
+      </Stack.Screen>
+      <Stack.Screen
+        name={"Email"}
+        component={Email}>
+      </Stack.Screen>
+      <Stack.Screen
+        name={"Phone number"}
+        component={Phone}>
+      </Stack.Screen>
+      <Stack.Screen
+        name={"Change Password"}
+        component={ChangePassword}>
+      </Stack.Screen>
 
-            
-           
-        </Stack.Navigator>
 
-    );
+
+    </Stack.Navigator>
+
+  );
 
 }
 

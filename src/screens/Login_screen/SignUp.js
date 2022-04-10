@@ -48,7 +48,7 @@ function SignUpScreen() {
         style={styles.button}
         mode="contained"
         color='#4f5160'
-        onPress={() => console.log('Pressed')}>
+        onPress={() => navigation.navigate('SuccesScreen')}>
         Đăng ký
       </Button>
       <View style={styles.containertext}>

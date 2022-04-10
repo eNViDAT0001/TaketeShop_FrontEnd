@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useRoute } from 'react';
 import { Text, StyleSheet, View, Image, TouchableOpacity } from 'react-native'
 import { TextInput, Button, Colors, IconButton } from 'react-native-paper';
 //import FormText from '../accountScreen/FormText';
@@ -57,8 +57,8 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#ffff',
     },
-    screen1 : {
-        flex:  14,
+    screen1: {
+        flex: 14,
     },
     text: {
         fontSize: 30,
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
     button: {
-        flex: 1,       
+        flex: 1,
         bottom: 10,
         padding: 15,
         marginVertical: 15,

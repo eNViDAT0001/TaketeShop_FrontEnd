@@ -23,7 +23,7 @@ function AppNavigator() {
   return (
     <NavigationContainer>
       <StackNavigator.Navigator
-        initialRouteName={PROFILE_NAVIGATOR}
+        initialRouteName={LOGIN_NAVIGATOR}
         options={{
           headerStyle: {
             backgroundColor: Colors.primaryColor,

@@ -4,18 +4,35 @@ import { TextInput, Button, Colors, IconButton } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 
 function ChangePassword(props) {
-    const [email, setEmail] = React.useState("");
+    const [oldpass, setOldpass] = React.useState("");
+    const [newpass, setNewpass] = React.useState("");
+    const [confirmpass, setConfirmpass] = React.useState("");    
     const navigation = useNavigation()
     return (
         <View style={styles.screen}>
             <View style={styles.screen1}>
                 <Text style={styles.text}>
-                    Email</Text>
+                    Đổi mật khẩu</Text>
                 <TextInput
-                    label="Email"
+                    label="Nhập mật khẩu hiện tại"
+                    style = {styles.textinput}
                     mode='outlined'
-                    value={email}
-                    onChangeText={email => setEmail(email)}
+                    value={oldpass}
+                    onChangeText={oldpass => setOldpass(oldpass)}
+                />
+                 <TextInput
+                    label="Nhập mật khẩu mới"
+                    style = {styles.textinput}
+                    mode='outlined'
+                    value={newpass}
+                    onChangeText={newpass => setNewpass(newpass)}
+                />
+                  <TextInput
+                    label="Xác nhận mật khẩu mới"
+                    style = {styles.textinput}
+                    mode='outlined'
+                    value={confirmpass}
+                    onChangeText={confirmpass => setConfirmpass(confirmpass)}
                 />
             </View>
 
@@ -47,6 +64,9 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 30,
         color: 'black',
+    },
+    textinput :{
+        marginVertical: 5 ,               
     },
     dropdown: {
         top: 10,

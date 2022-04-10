@@ -9,8 +9,12 @@ import Gender from './Gender';
 
 function Profile(props) {
     const navigation = useNavigation()
-    const [sex, setSex] = useState(null);
+    const [sex, setSex] = useState('null');
+    const [birth, setBirth] = useState('null');
+    //const [sex, setSex] = useState('null');
+    
     return (
+        
         <ScrollView style={styles.container}>
             <View style={styles.containeravatar}>
                 <Avatar.Image size={100} source={require('../../../assets/images/avatar.jpg')} />
