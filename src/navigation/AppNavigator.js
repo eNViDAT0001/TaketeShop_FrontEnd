@@ -25,6 +25,7 @@ import AddressScreen from '../screens/addressScreen/AddressScreen';
 import AddAddressPage from '../screens/addressScreen/AddAddressPage';
 import SuccessScreen from '../screens/addressScreen/SuccessScreen';
 import NotificationScreen from '../screens/homeScreen/NotificationScreen';
+import ProfileNavigation from './ProfileNavigation';
 const StackNavigator = createNativeStackNavigator();
 function AppNavigator() {
   return (
@@ -42,13 +43,8 @@ function AppNavigator() {
           options={{
             headerShown: false,
           }}></StackNavigator.Screen>
-<<<<<<< HEAD
 
-        {/* <StackNavigator.Screen
-=======
-          
           <StackNavigator.Screen
->>>>>>> Account
           name={PROFILE_NAVIGATOR}
           component={ProfileNavigation}
           options={{

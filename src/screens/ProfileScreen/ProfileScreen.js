@@ -5,6 +5,7 @@ import { TextInput, Button, Colors, IconButton } from 'react-native-paper';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { Avatar } from 'react-native-paper';
 import Gender from './Gender';
+import Header from '../../components/UI/Header';
 
 
 function Profile(props) {
@@ -16,6 +17,7 @@ function Profile(props) {
     return (
         
         <ScrollView style={styles.container}>
+            <Header title="Thông tin cá nhân"></Header>
             <View style={styles.containeravatar}>
                 <Avatar.Image size={100} source={require('../../../assets/images/avatar.jpg')} />
                 <View>
@@ -62,7 +64,6 @@ function Profile(props) {
 
 const styles = StyleSheet.create({
     container: {
-        top : 10,
         flex: 1,
         backgroundColor: '#ffff',        
     },
@@ -70,7 +71,8 @@ const styles = StyleSheet.create({
        
         backgroundColor: '#ffff',
         alignContent: 'center',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        padding: 10
     },
     text1: {
         fontSize: 35,

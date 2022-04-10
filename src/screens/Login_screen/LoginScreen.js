@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Text, StyleSheet, View, SafeAreaView, Image, TouchableOpacity } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux';
-import { TextInput, Button, Colors, IconButton } from 'react-native-paper';
+import { TextInput, Button, IconButton } from 'react-native-paper';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { FORGOT_PASSWORD_SCREEN, BOTTOM_BAR_NAVIGATOR } from '../../constants/NavigatorIndex';
 import ImageShow from '../../components/ImageShow';
+import Colors from '../../constants/Colors';
+
 
 function LoginScreen() {
   const navigation = useNavigation()
@@ -49,13 +51,17 @@ function LoginScreen() {
         </View>
 
 
-        <Button
-          style={styles.button}
-          mode="contained"
-          color='#667eea'
-          onPress={() => navigation.navigate(BOTTOM_BAR_NAVIGATOR)}>
-          Đăng nhập
-        </Button>
+        <View style={styles.buttonContainer}>
+          <Button
+            mode="contained"
+            contentStyle={styles.buttonText}
+            style={styles.button}
+            color={Colors.primaryColor}
+            labelStyle={{fontSize: 20}}
+            onPress={() => navigation.navigate(BOTTOM_BAR_NAVIGATOR)}>
+              Đăng nhập
+          </Button>
+        </View>
 
         <View style={styles.containertext}>
           <Text style={styles.text1}>
@@ -103,7 +109,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'space-between',
-    backgroundColor: '#ffff',
+    backgroundColor: Colors.backgroundColor,
     padding: 10,
   },
   containertextinput: {
@@ -119,7 +125,7 @@ const styles = StyleSheet.create({
   },
   ggfb: {
     flexDirection: 'row',
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
   text1: {
     marginLeft: 100,
@@ -134,10 +140,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   imageContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
     width: '100%',
-    height: 300,
+    flex: 1,
+    overflow: 'hidden'
   },
   logo: {
     width: '100%',
@@ -161,11 +166,16 @@ const styles = StyleSheet.create({
     color: "black",
     fontSize: 22,
   },
-  button: {
-    padding: 15,
-    marginVertical: 5,
+  buttonContainer: {
+    margin: 5,
     borderRadius: 10,
     color: '#4f5160'
+  },
+  button: {
+    height: 50,
+  },
+  buttonText: {
+    height: '100%',
   },
   bottom: {
     justifyContent: 'flex-end',

@@ -12,22 +12,6 @@ import ChangePassword from '../screens/ProfileScreen/ChangePassword';
 const Stack = createNativeStackNavigator();
 
 function ProfileNavigation() {
-<<<<<<< HEAD
-
-    return (
-        <Stack.Navigator initialRouteName={'Profile'}>
-            <Stack.Screen
-              name ={"Profile"}               
-              component={Profile}>
-            </Stack.Screen>       
-            <Stack.Screen
-              name ={"Gender"}               
-              component={Gender}>
-            </Stack.Screen>             
-        </Stack.Navigator>
-
-    );
-=======
   const [text, onChangeText] = React.useState(null);
 
   return (
@@ -63,7 +47,6 @@ function ProfileNavigation() {
     </Stack.Navigator>
 
   );
->>>>>>> Account
 
 }
 
