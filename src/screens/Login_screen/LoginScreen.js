@@ -15,64 +15,62 @@ function LoginScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-
-      {/* <View style={styles.imageContainer}>
-        <Image style={styles.logo}
-          style={styles.logo}
-          source={require('../../../assets/images/logo1.png')} />
-      </View> */}
       <View style={styles.imageContainer}>
-        <ImageShow style={styles.logo} />
+        <Image
+          style={styles.logo}
+          source={require('../../../assets/images/logo1.png')}
+        ></Image>
       </View>
+      <View>
+
+        <View style={styles.containertextinput}>
+          <TextInput
+            label="username"
+            mode='outlined'
+            value={username}
+            onChangeText={username => setUsername(username)}
+          />
+
+          <TextInput
+            label="password"
+            mode='outlined'
+            value={password}
+            secureTextEntry={true}
+            onChangeText={password => setPassword(password)}
+          />
+        </View>
+        <View style={styles.forgotpasscontainer}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate(FORGOT_PASSWORD_SCREEN)}
+          >
+            <Text style={styles.press}
+            > Quên mật khẩu ?</Text>
+          </TouchableOpacity>
+        </View>
 
 
+        <Button
+          style={styles.button}
+          mode="contained"
+          color='#667eea'
+          onPress={() => navigation.navigate(BOTTOM_BAR_NAVIGATOR)}>
+          Đăng nhập
+        </Button>
 
-
-
-      <View style={styles.containertextinput}>
-        <TextInput
-          label="username"
-          mode='outlined'
-          value={username}
-          onChangeText={username => setUsername(username)}
-        />
-
-        <TextInput
-          label="password"
-          mode='outlined'
-          value={password}
-          secureTextEntry={true}
-          onChangeText={password => setPassword(password)}
-        />
-      </View>
-
-      <TouchableOpacity
-        onPress={() => navigation.navigate(FORGOT_PASSWORD_SCREEN)}
-      >
-        <Text style={styles.press}
-        > Quên mật khẩu ?</Text>
-      </TouchableOpacity>
-
-      <Button
-        style={styles.button}
-        mode="contained"
-        color='#667eea'
-        onPress={() => navigation.navigate(BOTTOM_BAR_NAVIGATOR)}>
-        Đăng nhập
-      </Button>
-
-      <View style={styles.containertext}>
-        <Text style={styles.text1}>
-          Không có tài khoản ?
-        </Text>
-
-        <TouchableOpacity
-          onPress={() => navigation.navigate('SignUpScreen')}  >
-          <Text style={styles.text2}>
-            Đăng ký
+        <View style={styles.containertext}>
+          <Text style={styles.text1}>
+            Không có tài khoản ?
           </Text>
-        </TouchableOpacity>
-      </View>
+
+          <TouchableOpacity
+            onPress={() => navigation.navigate('SignUpScreen')}  >
+            <Text style={styles.text2}>
+              Đăng ký
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+      </View >
 
       <View style={styles.bottom}>
         <Text style={styles.text3}>
@@ -85,13 +83,13 @@ function LoginScreen() {
             size={20}
             onPress={() => console.log('Pressed')}
           />
-           <IconButton
+          <IconButton
             icon="facebook"
             color={Colors.blue500}
             size={20}
             onPress={() => console.log('Pressed')}
           />
-         
+
         </View>
 
       </View>
@@ -104,7 +102,9 @@ function LoginScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'space-between',
     backgroundColor: '#ffff',
+    padding: 10,
   },
   containertextinput: {
     padding: 15,
@@ -112,6 +112,10 @@ const styles = StyleSheet.create({
   containertext: {
     flexDirection: 'row',
     alignSelf: 'center'
+  },
+  text3: {
+    color: "black",
+    fontSize: 20,
   },
   ggfb: {
     flexDirection: 'row',
@@ -129,17 +133,15 @@ const styles = StyleSheet.create({
     color: "blue",
     fontSize: 20,
   },
-  text3: {
-    color: "black",
-    fontSize: 20,
-  },
   imageContainer: {
     justifyContent: 'center',
     alignItems: 'center',
+    width: '100%',
+    height: 300,
   },
   logo: {
-    width: 400,
-    height: 320,
+    width: '100%',
+    height: '100%',
   },
 
   input: {
@@ -149,9 +151,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
   },
-
+  forgotpasscontainer: {
+    alignItems: 'flex-end',
+  },
   press: {
-    textAlign: 'right',
     padding: 10,
     fontWeight: 'bold',
     textDecorationLine: 'underline',
@@ -163,10 +166,9 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     borderRadius: 10,
     color: '#4f5160'
-
   },
   bottom: {
-    bottom: '-5%',
+    justifyContent: 'flex-end',
     alignSelf: 'center',
   },
 });

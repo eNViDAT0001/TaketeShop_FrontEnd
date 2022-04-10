@@ -1,37 +1,38 @@
-import React, { useState,useRoute } from 'react';
+import React, { useState } from 'react';
 import { Text, StyleSheet, View, Image, TouchableOpacity } from 'react-native'
 import { TextInput, Button, Colors, IconButton } from 'react-native-paper';
-//import FormText from '../accountScreen/FormText';
-import { Dropdown } from 'react-native-element-dropdown';
 import { useNavigation } from '@react-navigation/native';
 
-const data = [
-    { label: 'Nam', value: '1' },
-    { label: 'Nữ', value: '2' },
-];
-
-function Gender(props) {
-    const [value, setValue] = useState(null);
+function ChangePassword(props) {
+    const [oldpass, setOldpass] = React.useState("");
+    const [newpass, setNewpass] = React.useState("");
+    const [confirmpass, setConfirmpass] = React.useState("");    
     const navigation = useNavigation()
     return (
         <View style={styles.screen}>
             <View style={styles.screen1}>
                 <Text style={styles.text}>
-                    Giới tính</Text>
-                <Dropdown
-                    style={styles.dropdown}
-                    placeholderStyle={styles.placeholderStyle}
-                    selectedTextStyle={styles.selectedTextStyle}
-                    iconStyle={styles.iconStyle}
-                    data={data}
-                    maxHeight={130}
-                    labelField="label"
-                    valueField="value"
-                    placeholder={'Giới tính'}
-                    value={value}
-                    onChange={item => {
-                        setValue(item.value);
-                    }}
+                    Đổi mật khẩu</Text>
+                <TextInput
+                    label="Nhập mật khẩu hiện tại"
+                    style = {styles.textinput}
+                    mode='outlined'
+                    value={oldpass}
+                    onChangeText={oldpass => setOldpass(oldpass)}
+                />
+                 <TextInput
+                    label="Nhập mật khẩu mới"
+                    style = {styles.textinput}
+                    mode='outlined'
+                    value={newpass}
+                    onChangeText={newpass => setNewpass(newpass)}
+                />
+                  <TextInput
+                    label="Xác nhận mật khẩu mới"
+                    style = {styles.textinput}
+                    mode='outlined'
+                    value={confirmpass}
+                    onChangeText={confirmpass => setConfirmpass(confirmpass)}
                 />
             </View>
 
@@ -63,6 +64,9 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 30,
         color: 'black',
+    },
+    textinput :{
+        marginVertical: 5 ,               
     },
     dropdown: {
         top: 10,
@@ -117,4 +121,4 @@ const styles = StyleSheet.create({
     },
 
 });
-export default Gender;
+export default ChangePassword;

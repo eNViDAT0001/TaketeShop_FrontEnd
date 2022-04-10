@@ -1,5 +1,5 @@
-import React from 'react';
-import { Text, StyleSheet, View, SafeAreaView, Image, TouchableOpacity } from 'react-native'
+import React, { useState } from 'react';
+import { Text, StyleSheet, View, SafeAreaView, Image, TouchableOpacity,ScrollView } from 'react-native'
 import Form1 from '../accountScreen/Form'
 import { TextInput, Button, Colors, IconButton } from 'react-native-paper';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
@@ -8,10 +8,14 @@ import Gender from './Gender';
 
 
 function Profile(props) {
-      const navigation = useNavigation()
-
+    const navigation = useNavigation()
+    const [sex, setSex] = useState('null');
+    const [birth, setBirth] = useState('null');
+    //const [sex, setSex] = useState('null');
+    
     return (
-        <View style={styles.container}>
+        
+        <ScrollView style={styles.container}>
             <View style={styles.containeravatar}>
                 <Avatar.Image size={100} source={require('../../../assets/images/avatar.jpg')} />
                 <View>
@@ -24,31 +28,31 @@ function Profile(props) {
                 icons='gender-male-female'
                 titletext='Gender'
                 onPress={() => { navigation.navigate('Gender') }}
-                titletext2='xcvjkz'
+                titletext2= {sex}
             />
             <Form1
                 icons='calendar-month'
                 titletext='Birth day'
-                onPress={() => { navigation.navigate() }}                
+                onPress={() => { navigation.navigate('Birth') }}                
             />
               <Form1
                 icons='email'
                 titletext='Email'
-                onPress={() => { navigation.navigate() }}                
+                onPress={() => { navigation.navigate('Email') }}                
             />
               <Form1
                 icons='cellphone'
                 titletext='Phone number'
-                onPress={() => { navigation.navigate() }}                
+                onPress={() => { navigation.navigate('Phone number') }}                
             />
               <Form1
                 icons='lock'
                 titletext='Change password'
-                onPress={() => { navigation.navigate() }}                
+                onPress={() => { navigation.navigate('Change Password') }}                
             />
             
 
-        </View>
+        </ScrollView>
 
 
 
@@ -58,13 +62,11 @@ function Profile(props) {
 
 const styles = StyleSheet.create({
     container: {
-        top: 10,
+        top : 10,
         flex: 1,
-        backgroundColor: '#ffff',
-        //alignContent: 'center',
+        backgroundColor: '#ffff',        
     },
-    containeravatar: {
-        //paddingVertical: 10,
+    containeravatar: {   
        
         backgroundColor: '#ffff',
         alignContent: 'center',

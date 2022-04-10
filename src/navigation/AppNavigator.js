@@ -42,13 +42,18 @@ function AppNavigator() {
           options={{
             headerShown: false,
           }}></StackNavigator.Screen>
+<<<<<<< HEAD
 
         {/* <StackNavigator.Screen
+=======
+          
+          <StackNavigator.Screen
+>>>>>>> Account
           name={PROFILE_NAVIGATOR}
           component={ProfileNavigation}
           options={{
             headerShown: false,
-          }}></StackNavigator.Screen> */}
+          }}></StackNavigator.Screen>
 
         <StackNavigator.Screen
           name={BOTTOM_BAR_NAVIGATOR}

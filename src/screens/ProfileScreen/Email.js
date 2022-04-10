@@ -1,37 +1,21 @@
-import React, { useState,useRoute } from 'react';
+import React, { useState } from 'react';
 import { Text, StyleSheet, View, Image, TouchableOpacity } from 'react-native'
 import { TextInput, Button, Colors, IconButton } from 'react-native-paper';
-//import FormText from '../accountScreen/FormText';
-import { Dropdown } from 'react-native-element-dropdown';
 import { useNavigation } from '@react-navigation/native';
 
-const data = [
-    { label: 'Nam', value: '1' },
-    { label: 'Nữ', value: '2' },
-];
-
-function Gender(props) {
-    const [value, setValue] = useState(null);
+function Email(props) {
+    const [email, setEmail] = React.useState("");
     const navigation = useNavigation()
     return (
         <View style={styles.screen}>
             <View style={styles.screen1}>
                 <Text style={styles.text}>
-                    Giới tính</Text>
-                <Dropdown
-                    style={styles.dropdown}
-                    placeholderStyle={styles.placeholderStyle}
-                    selectedTextStyle={styles.selectedTextStyle}
-                    iconStyle={styles.iconStyle}
-                    data={data}
-                    maxHeight={130}
-                    labelField="label"
-                    valueField="value"
-                    placeholder={'Giới tính'}
-                    value={value}
-                    onChange={item => {
-                        setValue(item.value);
-                    }}
+                    Email</Text>
+                <TextInput
+                    label="Email"
+                    mode='outlined'
+                    value={email}
+                    onChangeText={email => setEmail(email)}
                 />
             </View>
 
@@ -117,4 +101,4 @@ const styles = StyleSheet.create({
     },
 
 });
-export default Gender;
+export default Email;

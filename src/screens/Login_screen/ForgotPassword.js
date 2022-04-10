@@ -26,7 +26,7 @@ function ForgotPassword() {
                 style={styles.button}
                 mode="contained"
                 color='#667eea'
-                onPress={() => console.log('Pressed')}>
+                onPress={() => navigation.navigate('SuccesScreen')}>
                 Xác nhận email
             </Button>
             <View style={styles.containertext}>

@@ -1,11 +1,20 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
-import { Button } from 'react-native-paper';
+import { Button,TextInput } from 'react-native-paper';
 
-function Form2(props) {
+function FormText(props) {
     return (
         <View style={styles.container}>
-            <Button
+            <TextInput
+            label={props.label}
+            value={props.value}
+            
+
+            >
+
+
+            </TextInput>
+            {/* <Button
                 icon={props.icons}
                 mode="contained"
                 color='white'
@@ -15,7 +24,7 @@ function Form2(props) {
                 contentStyle={styles.icon}
             >
                 {props.titletext}
-            </Button>
+            </Button> */}
         </View>
     );
 }
@@ -41,4 +50,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Form2;
+export default FormText;

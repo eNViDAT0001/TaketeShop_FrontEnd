@@ -17,10 +17,18 @@ function AccountNavigator() {
         options={{headerShown: false}}
         component={AccountMainScreen}></Stack.Screen>
 
-      <Stack.Screen
+      {/* <Stack.Screen
         name={PROFILE_NAVIGATOR}
+<<<<<<< HEAD
         options={{headerShown: false}}
         component={ProfileNavigation}></Stack.Screen>
+=======
+        options={{ headerShown: false }}
+        component={ProfileNavigation}>
+      </Stack.Screen> */}
+
+
+>>>>>>> Account
     </Stack.Navigator>
   );
 }
