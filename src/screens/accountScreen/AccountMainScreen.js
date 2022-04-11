@@ -5,8 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Colors from '../../constants/Colors';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import Form1 from './Form';
-import { PROFILE_NAVIGATOR } from '../../constants/NavigatorIndex';
-
+import { ADDRESS_SCREEN,ADD_ADDRESS_SCREEN,PROFILE_NAVIGATOR} from '../../constants/NavigatorIndex';
 
 
 function AccountMainScreen() {
@@ -25,7 +24,7 @@ function AccountMainScreen() {
              styles={styles.itemsContainer}
                 icons='map-marker'
                 titletext='Address'
-                //onPress={() => navigation.navigate()}
+                onPress={() => navigation.navigate(ADDRESS_SCREEN)}
             />
 
             <Form1
@@ -38,7 +37,7 @@ function AccountMainScreen() {
              styles={styles.itemsContainer}
                 icons='face-agent'
                 titletext='Support'
-               // onPress={() => navigation.navigate('SupportScreen')}
+                onPress={() => navigation.navigate('ChatScreen')}
             />
 
             <Form1
