@@ -114,6 +114,7 @@ const styles = StyleSheet.create({
   },
   containertextinput: {
     padding: 15,
+    paddingBottom: 5
   },
   containertext: {
     flexDirection: 'row',
@@ -155,9 +156,10 @@ const styles = StyleSheet.create({
   },
   forgotpasscontainer: {
     alignItems: 'flex-end',
+    marginBottom: 10,
+    marginRight: 5
   },
   press: {
-    padding: 10,
     fontWeight: 'bold',
     textDecorationLine: 'underline',
     color: "black",
