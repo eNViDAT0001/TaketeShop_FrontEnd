@@ -22,13 +22,18 @@ function ForgotPassword() {
                     onChangeText={email => setEmail(email)}
                 />
             </View>
-            <Button
-                style={styles.button}
-                mode="contained"
-                color='#667eea'
-                onPress={() => navigation.navigate('SuccesScreen')}>
-                Xác nhận email
-            </Button>
+            <View style={styles.buttonContainer}>
+                <Button
+                    mode="contained"
+                    contentStyle={styles.buttonText}
+                    style={styles.button}
+                    
+                    labelStyle={{ fontSize: 20 }}
+                    onPress={() => navigation.navigate('SuccesScreen')}>
+                    Đăng ký
+                </Button>
+            </View>
+
             <View style={styles.containertext}>
                 <Text style={styles.text1}>
                     Đã nhớ lại mật khẩu ?
@@ -46,7 +51,7 @@ function ForgotPassword() {
                     Không có tài khoản ?
                 </Text>
                 <TouchableOpacity
-                     onPress={() => navigation.navigate('SignUpScreen')} >
+                    onPress={() => navigation.navigate('SignUpScreen')} >
                     <Text style={styles.text2}>
                         Đăng ký
                     </Text>
@@ -60,6 +65,7 @@ function ForgotPassword() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        padding: 10,
         backgroundColor: '#ffff',
     },
     containertext: {
@@ -101,12 +107,18 @@ const styles = StyleSheet.create({
     login: {
         top: 130
     },
-    button: {
-        color: '#4f5160',
-        top: 200,
-        padding: 15,
-        marginVertical: 5,
-        borderRadius: 10,
+    buttonContainer: {
+       
+        margin: 5,
+        borderRadius: 20,
     },
+    button: {        
+        height: 50,
+        borderRadius: 10,
+        top: 170,
+    },
+    buttonText: {
+        height: '100%',
+    },    
 });
 export default ForgotPassword;
