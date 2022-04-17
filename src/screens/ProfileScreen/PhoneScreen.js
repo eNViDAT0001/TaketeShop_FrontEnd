@@ -19,6 +19,8 @@ function Phone(props) {
                 <Text style={styles.text}>
                     Số điện thoại</Text>
                 <TextInput
+                    keyboardType='numeric'
+                    maxLength={10}
                     label="Số điện thoại"
                     mode='outlined'
                     value={phonenumber}
