@@ -25,14 +25,16 @@ function SignUpScreen() {
         />
         <TextInput
           style = {{marginBottom: 10}}
-          label="New Password"
+          label="Password"
           mode='outlined'
+          secureTextEntry={true}
           value={password}          
           onChangeText={password => setPassword(password)}
         />
         <TextInput
          style = {{marginBottom: 10}}
           label="Confirm password"
+          secureTextEntry={true}
           mode='outlined'
           value={confirmpassword}
           onChangeText={confirmpassword => setConfirmpassword(confirmpassword)}
@@ -44,19 +46,23 @@ function SignUpScreen() {
           onChangeText={email => setEmail(email)}
         />
       </View>
-      <Button
-        style={styles.button}
-        mode="contained"
-        color='#4f5160'
-        onPress={() => navigation.navigate('SuccesScreen')}>
-        Đăng ký
-      </Button>
+      <View style={styles.buttonContainer}>
+          <Button
+            mode="contained"
+            contentStyle={styles.buttonText}
+            style={styles.button}
+            color='#4f5160'
+            labelStyle={{fontSize: 20}}
+            onPress={() => navigation.navigate('SuccesScreen')}>
+              Đăng ký
+          </Button>
+        </View>      
       <View style={styles.containertext}>
         <Text style={styles.text1}>
          Đã có tài khoản ?
         </Text>
         <TouchableOpacity
-          onPress={() => navigation.goBack(LOGIN_MAIN_SCREEN)} >
+          onPress={() => navigation.navigate(LOGIN_MAIN_SCREEN)} >
           <Text style={styles.text2}>
             Đăng nhập
           </Text>
@@ -70,6 +76,7 @@ function SignUpScreen() {
 
 const styles = StyleSheet.create({
     container: {
+      padding: 10,
       flex: 1,
       backgroundColor: '#fffff',
     },
@@ -107,12 +114,25 @@ const styles = StyleSheet.create({
     signup: {
       top: 130
     },
-    button: {
-      top: 200,
-      padding: 15,
-      marginVertical: 5,
-      borderRadius: 10,
+    buttonContainer: {
+      margin: 5,
+      borderRadius: 20,
+      color: '#4f5160'
     },
+    button: {
+      height: 50,
+      borderRadius: 10,
+      top : 170,
+    },
+    buttonText: {
+      height: '100%',
+    },
+    // button: {
+    //   top: 200,
+    //   padding: 15,
+    //   marginVertical: 5,
+    //   borderRadius: 10,
+    // },
   });
 
 export default SignUpScreen;
