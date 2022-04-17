@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Text, StyleSheet, View, Image, TouchableOpacity } from 'react-native'
-import { TextInput, Button, Colors, IconButton } from 'react-native-paper';
+import { TextInput, Button, IconButton } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import Header from '../../components/UI/Header';
+import Colors from '../../constants/Colors';
 function Email(props) {
     const [email, setEmail] = React.useState("");
     const navigation = useNavigation()
@@ -10,11 +11,11 @@ function Email(props) {
         <View style={styles.screen}>
             <Header title="Thay đổi email"></Header>
             <View style={styles.screen1}>
-                <Text style={styles.text}>
-                    Email</Text>
                 <TextInput
                     label="Email"
                     mode='outlined'
+                    placeholder={"Mời nhập email"}
+                    style={{backgroundColor: Colors.backgroundColor}}
                     value={email}
                     onChangeText={email => setEmail(email)}
                 />

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Text, StyleSheet, View, Image, TouchableOpacity } from 'react-native'
-import { TextInput, Button, Colors, IconButton } from 'react-native-paper';
+import { TextInput, Button, IconButton } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import Header from '../../components/UI/Header';
+import Colors from '../../constants/Colors';
 
 const data = [
     { label: 'Nam', value: '1' },
@@ -16,12 +17,12 @@ function Phone(props) {
         <View style={styles.screen}>
             <Header title="Thay đổi số điện thoại"></Header>
             <View style={styles.screen1}>
-                <Text style={styles.text}>
-                    Số điện thoại</Text>
                 <TextInput
                     keyboardType='numeric'
                     maxLength={10}
                     label="Số điện thoại"
+                    placeholder={"Mời nhập số điện thoại"}
+                    style={{backgroundColor: Colors.backgroundColor}}
                     mode='outlined'
                     value={phonenumber}
                     onChangeText={phonenumber => setPhonenumber(phonenumber)}
@@ -56,6 +57,7 @@ const styles = StyleSheet.create({
     screen1: {
         padding: 10,
         flex: 14,
+        backgroundColor: Colors.backgroundColor
     },
     text: {
         fontSize: 30,

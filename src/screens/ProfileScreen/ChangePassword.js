@@ -12,8 +12,6 @@ function ChangePassword(props) {
         <View style={styles.screen}>
             <Header title="Thay đổi mật khẩu"></Header>
             <View style={styles.screen1}>
-                <Text style={styles.text}>
-                    Đổi mật khẩu</Text>
                 <TextInput
                     label="Nhập mật khẩu hiện tại"
                     style={styles.textinput}

@@ -17,8 +17,6 @@ function Gender(props) {
         <View style={styles.screen}>
             <Header title="Thay đổi giới tính"></Header>
             <View style={styles.screen1}>
-                <Text style={styles.text}>
-                    Giới tính</Text>
                 <Dropdown
                     style={styles.dropdown}
                     placeholderStyle={styles.placeholderStyle}
@@ -28,7 +26,7 @@ function Gender(props) {
                     maxHeight={130}
                     labelField="label"
                     valueField="value"
-                    placeholder={'Giới tính'}
+                    placeholder={'Chọn giới tính...'}
                     value={value}
                     onChange={item => {
                         setValue(item.value);                        

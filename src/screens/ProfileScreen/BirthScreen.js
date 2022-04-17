@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Text, StyleSheet, View, Image, TouchableOpacity } from 'react-native'
-import { Button, Colors, IconButton, TextInput } from 'react-native-paper';
+import { Button, IconButton, TextInput } from 'react-native-paper';
 import FormText from '../accountScreen/FormText';
 import CalendarPicker from 'react-native-calendar-picker';
 import { useNavigation } from '@react-navigation/native';
 import Header from '../../components/UI/Header';
+import Colors from '../../constants/Colors';
 
 function BirthScreen(props) {
     const navigation = useNavigation()
@@ -17,8 +18,6 @@ function BirthScreen(props) {
         <View style={styles.screen}>
             <Header title="Thay đổi ngày sinh"></Header>
             <View style={styles.screen1}>
-                <Text style={styles.text}>
-                    Birth Day</Text>
 
                 <View style={styles.Daytextcontainer}>
                     <Text style={styles.Daytext}>
@@ -66,7 +65,7 @@ const styles = StyleSheet.create({
         flex: 14,
     },
     Daytextcontainer: {
-        backgroundColor: '#e7e7e7',        
+        backgroundColor: Colors.backgroundColor,        
         borderColor : 'black',
         borderWidth : 1,
         height: 40,
