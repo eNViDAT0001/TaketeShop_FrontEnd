@@ -18,6 +18,7 @@ function ChangePassword(props) {
                     label="Nhập mật khẩu hiện tại"
                     style={styles.textinput}
                     mode='outlined'
+                    secureTextEntry={true}
                     value={oldpass}
                     onChangeText={oldpass => setOldpass(oldpass)}
                 />
@@ -25,6 +26,7 @@ function ChangePassword(props) {
                     label="Nhập mật khẩu mới"
                     style={styles.textinput}
                     mode='outlined'
+                    secureTextEntry={true}
                     value={newpass}
                     onChangeText={newpass => setNewpass(newpass)}
                 />
@@ -32,6 +34,7 @@ function ChangePassword(props) {
                     label="Xác nhận mật khẩu mới"
                     style={styles.textinput}
                     mode='outlined'
+                    secureTextEntry={true}
                     value={confirmpass}
                     onChangeText={confirmpass => setConfirmpass(confirmpass)}
                 />
