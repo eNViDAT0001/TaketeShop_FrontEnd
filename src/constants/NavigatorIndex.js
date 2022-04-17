@@ -31,3 +31,4 @@ export const ORDER_CANCEL_PAGE ="OrderCancelPage";
 
 export const BOTTOM_BAR_NAVIGATOR = "BottomBarNavigator";
 
+export const CHAT_SCREEN = "ChatScreen";

@@ -23,22 +23,27 @@ function ProfileNavigation() {
       </Stack.Screen>
       <Stack.Screen
         name={"Gender"}
+        options={{ headerShown: false, }}
         component={Gender}>
       </Stack.Screen>
       <Stack.Screen
         name={"Birth"}
+        options={{ headerShown: false, }}
         component={BirthScreen}>
       </Stack.Screen>
       <Stack.Screen
         name={"Email"}
+        options={{ headerShown: false, }}
         component={Email}>
       </Stack.Screen>
       <Stack.Screen
         name={"Phone number"}
+        options={{ headerShown: false, }}
         component={Phone}>
       </Stack.Screen>
       <Stack.Screen
         name={"Change Password"}
+        options={{ headerShown: false, }}
         component={ChangePassword}>
       </Stack.Screen>
 

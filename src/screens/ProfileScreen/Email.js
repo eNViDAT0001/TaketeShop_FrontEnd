@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { Text, StyleSheet, View, Image, TouchableOpacity } from 'react-native'
 import { TextInput, Button, Colors, IconButton } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
-
+import Header from '../../components/UI/Header';
 function Email(props) {
     const [email, setEmail] = React.useState("");
     const navigation = useNavigation()
     return (
         <View style={styles.screen}>
+            <Header title="Thay đổi email"></Header>
             <View style={styles.screen1}>
                 <Text style={styles.text}>
                     Email</Text>
@@ -19,14 +20,17 @@ function Email(props) {
                 />
             </View>
 
-            <Button
-                style={styles.button}
-                mode="contained"
-                color='#667eea'
-                onPress={() => navigation.goBack()}
-            >
-                Confirm
-            </Button>
+            <View style={styles.buttonContainer}>
+                <Button
+                    mode="contained"
+                    contentStyle={styles.buttonText}
+                    style={styles.button}
+                    color='#4F5160'
+                    labelStyle={{ fontSize: 20 }}
+                    onPress={() => navigation.goBack()}>
+                    Confirm
+                </Button>
+            </View>
         </View>
 
 
@@ -42,6 +46,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#ffff',
     },
     screen1: {
+        padding: 10,
         flex: 14,
     },
     text: {
@@ -91,13 +96,16 @@ const styles = StyleSheet.create({
         height: 40,
         fontSize: 16,
     },
-    button: {
-        flex: 1,
-        bottom: 10,
-        padding: 15,
-        marginVertical: 15,
-        borderRadius: 10,
+    buttonContainer: {
+        margin: 5,
+        borderRadius: 40,
         color: '#4f5160'
+    },
+    button: {
+        height: 50,
+    },
+    buttonText: {
+        height: '100%',
     },
 
 });

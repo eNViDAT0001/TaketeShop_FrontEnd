@@ -1,58 +1,70 @@
 import React, { useState } from 'react';
-import { Text, StyleSheet, View, SafeAreaView, Image, TouchableOpacity,ScrollView } from 'react-native'
+import { Text, StyleSheet, View, SafeAreaView, Image, TouchableOpacity, ScrollView } from 'react-native'
 import Form1 from '../accountScreen/Form'
 import { TextInput, Button, Colors, IconButton } from 'react-native-paper';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { Avatar } from 'react-native-paper';
 import Gender from './Gender';
 import Header from '../../components/UI/Header';
-
+import { ADDRESS_SCREEN, ADD_ADDRESS_SCREEN } from '../../constants/NavigatorIndex';
 
 function Profile(props) {
     const navigation = useNavigation()
-    const [sex, setSex] = useState('null');
-    const [birth, setBirth] = useState('null');
-    //const [sex, setSex] = useState('null');
-    
+    const [sex, setSex] = useState('Chưa xác định');
+    const [birth, setBirth] = useState('Chưa xác định');
+    const [email, setEmail] = useState('@Miku');
+    const [phonenumber, setPhonenumber] = useState('Chưa xác định');
+    const [img, setImage] = useState('../../../assets/images/logo1.png');
     return (
-        
+
         <ScrollView style={styles.container}>
             <Header title="Thông tin cá nhân"></Header>
             <View style={styles.containeravatar}>
-                <Avatar.Image size={100} source={require('../../../assets/images/avatar.jpg')} />
+                <TouchableOpacity>
+                    <Avatar.Image
+                        size={100}
+                        source={require('../../../assets/images/avatar.jpg')}
+
+                    />
+                </TouchableOpacity>
+
                 <View>
                     <Text style={styles.text1} > Miku</Text>
-                    <Text style={styles.text2} > @Miku</Text>
+                    <Text style={styles.text2} > {email}</Text>
                 </View>
 
             </View>
-             <Form1
+            <Form1
                 icons='gender-male-female'
                 titletext='Gender'
                 onPress={() => { navigation.navigate('Gender') }}
-                titletext2= {sex}
+                titletext2={sex}
             />
             <Form1
                 icons='calendar-month'
                 titletext='Birth day'
-                onPress={() => { navigation.navigate('Birth') }}                
+                onPress={() => { navigation.navigate('Birth') }}
+                titletext2={birth}
             />
-              <Form1
+            <Form1
                 icons='email'
                 titletext='Email'
-                onPress={() => { navigation.navigate('Email') }}                
+                onPress={() => { navigation.navigate('Email') }}
+                titletext2={email}
             />
-              <Form1
+            <Form1
                 icons='cellphone'
                 titletext='Phone number'
-                onPress={() => { navigation.navigate('Phone number') }}                
+                onPress={() => { navigation.navigate('Phone number') }}
+                titletext2={phonenumber}
             />
-              <Form1
+            <Form1
                 icons='lock'
                 titletext='Change password'
-                onPress={() => { navigation.navigate('Change Password') }}                
+                onPress={() => { navigation.navigate('Change Password') }}
+                titletext2={'*******'}
             />
-            
+
 
         </ScrollView>
 
@@ -65,10 +77,10 @@ function Profile(props) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#ffff',        
+        backgroundColor: '#ffff',
     },
-    containeravatar: {   
-       
+    containeravatar: {
+
         backgroundColor: '#ffff',
         alignContent: 'center',
         flexDirection: 'row',

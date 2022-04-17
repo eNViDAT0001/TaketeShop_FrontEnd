@@ -85,13 +85,13 @@ function LoginScreen() {
         <View style={styles.ggfb}>
           <IconButton
             icon="google"
-            color={Colors.red500}
+            color= "red"
             size={20}
             onPress={() => console.log('Pressed')}
           />
           <IconButton
             icon="facebook"
-            color={Colors.blue500}
+            color= "blue"
             size={20}
             onPress={() => console.log('Pressed')}
           />
@@ -123,10 +123,7 @@ const styles = StyleSheet.create({
     color: "black",
     fontSize: 20,
   },
-  ggfb: {
-    flexDirection: 'row',
-    alignSelf: 'center',
-  },
+ 
   text1: {
     marginLeft: 100,
     color: "black",
@@ -168,7 +165,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     margin: 5,
-    borderRadius: 10,
+    borderRadius: 20,
     color: '#4f5160'
   },
   button: {
@@ -179,6 +176,10 @@ const styles = StyleSheet.create({
   },
   bottom: {
     justifyContent: 'flex-end',
+    alignSelf: 'center',
+  },
+   ggfb: {
+    flexDirection: 'row',
     alignSelf: 'center',
   },
 });

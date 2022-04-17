@@ -1,9 +1,9 @@
-import React, { useState,useRoute } from 'react';
-import { Text, StyleSheet, View, Image, TouchableOpacity } from 'react-native'
-import { TextInput, Button, Colors, IconButton } from 'react-native-paper';
-//import FormText from '../accountScreen/FormText';
+import React, { useState, useRoute } from 'react';
+import { Text, StyleSheet, View, Image,  TouchableOpacity } from 'react-native'
+import { TextInput, Colors, IconButton ,Button} from 'react-native-paper';
 import { Dropdown } from 'react-native-element-dropdown';
 import { useNavigation } from '@react-navigation/native';
+import Header from '../../components/UI/Header';
 
 const data = [
     { label: 'Nam', value: '1' },
@@ -15,6 +15,7 @@ function Gender(props) {
     const navigation = useNavigation()
     return (
         <View style={styles.screen}>
+            <Header title="Thay đổi giới tính"></Header>
             <View style={styles.screen1}>
                 <Text style={styles.text}>
                     Giới tính</Text>
@@ -30,19 +31,21 @@ function Gender(props) {
                     placeholder={'Giới tính'}
                     value={value}
                     onChange={item => {
-                        setValue(item.value);
+                        setValue(item.value);                        
                     }}
                 />
             </View>
-
-            <Button
-                style={styles.button}
-                mode="contained"
-                color='#667eea'
-                onPress={() => navigation.goBack()}
-            >
-                Confirm
-            </Button>
+            <View style={styles.buttonContainer}>
+                <Button
+                    mode="contained"
+                    contentStyle={styles.buttonText}
+                    style={styles.button}
+                    color='#4F5160'
+                    labelStyle={{ fontSize: 20 }}
+                    onPress={() => navigation.navigate('Profile')}>
+                    Confirm
+                </Button>
+            </View> 
         </View>
 
 
@@ -58,6 +61,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#ffff',
     },
     screen1: {
+        padding: 10,
         flex: 14,
     },
     text: {
@@ -80,10 +84,7 @@ const styles = StyleSheet.create({
     itemList: {
         flex: 4,
     },
-
-    icon: {
-        marginRight: 5,
-    },
+   
     label: {
         position: 'absolute',
         backgroundColor: 'white',
@@ -107,13 +108,16 @@ const styles = StyleSheet.create({
         height: 40,
         fontSize: 16,
     },
-    button: {
-        flex: 1,
-        bottom: 10,
-        padding: 15,
-        marginVertical: 15,
-        borderRadius: 10,
+    buttonContainer: {
+        margin: 5,
+        borderRadius: 40,
         color: '#4f5160'
+    },
+    button: {
+        height: 50,
+    },
+    buttonText: {
+        height: '100%',
     },
 
 });
