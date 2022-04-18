@@ -27,7 +27,7 @@ function BottomBarNavigator() {
         name={HOME_MAIN_SCREEN}
         component={HomeMainScreen}
         options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: 'Trang Chủ',
           tabBarIcon: ({color}) => (
             <MaterialCommunityIcons name="home" color={color} size={26} />
           ),
@@ -39,7 +39,7 @@ function BottomBarNavigator() {
         component={ShopMainScreen}
         options={{
           
-          tabBarLabel: 'Shop',
+          tabBarLabel: 'Cửa Hàng',
           tabBarIcon: ({color}) => (
             <MaterialCommunityIcons name="storefront" color={color} size={26} />
           ),
@@ -49,7 +49,7 @@ function BottomBarNavigator() {
         name={CART_MAIN_SCREEN}
         component={CartMainScreen}
         options={{
-          tabBarLabel: 'Cart',
+          tabBarLabel: 'Giỏ Hàng',
           tabBarIcon: ({color}) => (
             <MaterialCommunityIcons name="cart" color={color} size={26} />
           ),
@@ -58,7 +58,7 @@ function BottomBarNavigator() {
         name={ORDER_NAVIGATOR}
         component={OrderNavigator}
         options={{
-          tabBarLabel: 'Order',
+          tabBarLabel: 'Đơn Hàng',
           tabBarIcon: ({color}) => (
             <MaterialCommunityIcons name="archive-clock" color={color} size={26} />
           ),
@@ -69,7 +69,7 @@ function BottomBarNavigator() {
         name={ACCOUNT_NAVIGATOR}
         component={AccountNavigator}
         options={{
-          tabBarLabel: 'Account',
+          tabBarLabel: 'Tài Khoản',
           tabBarIcon: ({color}) => (
             <MaterialCommunityIcons name="account" color={color} size={26} />
           ),

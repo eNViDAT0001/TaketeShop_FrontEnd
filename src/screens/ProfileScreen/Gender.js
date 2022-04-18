@@ -41,7 +41,7 @@ function Gender(props) {
                     color='#4F5160'
                     labelStyle={{ fontSize: 20 }}
                     onPress={() => navigation.navigate('Profile')}>
-                    Confirm
+                    Xác nhận
                 </Button>
             </View> 
         </View>

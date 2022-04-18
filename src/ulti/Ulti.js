@@ -26,3 +26,27 @@ export const removeVietnameseTones = (str) => {
     str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`|-|{|}|\||\\/g," ");
     return str;
 }
+export const convertWeekToVietnamese= (str) => {
+    if (str === 'Mon') return "Thứ hai";
+    if (str === 'Tue') return "Thứ ba";
+    if (str === 'Wed') return "Thứ tư";
+    if (str === 'Thu') return "Thứ năm";
+    if (str === 'Fri') return "Thứ sáu";
+    if (str === 'Sat') return "Thứ bảy";
+    if (str === 'Sun') return "Chủ nhật";
+}
+
+export const convertMonthToVietnamese= (str) => {
+    if (str === 'Jan') return "1";
+    if (str === 'Feb') return "2";
+    if (str === 'Mar') return "3";
+    if (str === 'Apr') return "4";
+    if (str === 'May') return "5";
+    if (str === 'Jun') return "6";
+    if (str === 'Jul') return "7";
+    if (str === 'Aug') return "8";
+    if (str === 'Sep') return "9";
+    if (str === 'Oct') return "10";
+    if (str === 'Nov') return "11";
+    if (str === 'Dec') return "12";
+}

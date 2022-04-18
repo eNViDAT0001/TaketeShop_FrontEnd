@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Text, StyleSheet, View, Image, TouchableOpacity } from 'react-native'
-import { TextInput, Button, Colors, IconButton } from 'react-native-paper';
+import { TextInput, Button,} from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import Header from '../../components/UI/Header';
+import Colors from '../../constants/Colors';
+
 function ChangePassword(props) {
     const [oldpass, setOldpass] = React.useState("");
     const [newpass, setNewpass] = React.useState("");
@@ -13,7 +15,9 @@ function ChangePassword(props) {
             <Header title="Thay đổi mật khẩu"></Header>
             <View style={styles.screen1}>
                 <TextInput
-                    label="Nhập mật khẩu hiện tại"
+                    label="Mật khẩu hiện tại"
+                    placeholder={"Mời nhập mật khẩu hiện tại"}
+                    
                     style={styles.textinput}
                     mode='outlined'
                     secureTextEntry={true}
@@ -21,7 +25,8 @@ function ChangePassword(props) {
                     onChangeText={oldpass => setOldpass(oldpass)}
                 />
                 <TextInput
-                    label="Nhập mật khẩu mới"
+                    label="Mật khẩu mới"
+                    placeholder={"Mời nhập mật khẩu mới"}
                     style={styles.textinput}
                     mode='outlined'
                     secureTextEntry={true}
@@ -30,6 +35,7 @@ function ChangePassword(props) {
                 />
                 <TextInput
                     label="Xác nhận mật khẩu mới"
+                    placeholder={"Xác nhận lại mật khẩu mới"}
                     style={styles.textinput}
                     mode='outlined'
                     secureTextEntry={true}
@@ -46,7 +52,7 @@ function ChangePassword(props) {
                     color='#4F5160'
                     labelStyle={{ fontSize: 20 }}
                     onPress={() => navigation.goBack()}>
-                    Confirm
+                    Xác nhận
                 </Button>
             </View>
         </View>
@@ -73,6 +79,7 @@ const styles = StyleSheet.create({
     },
     textinput: {
         marginVertical: 5,
+        backgroundColor: Colors.backgroundColor
     },
     dropdown: {
         top: 10,

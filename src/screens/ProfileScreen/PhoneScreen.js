@@ -32,7 +32,7 @@ function Phone(props) {
                     color='#4F5160'
                     labelStyle={{ fontSize: 20 }}
                     onPress={() => navigation.goBack()}>
-                    Confirm
+                    Xác nhận
                 </Button>
             </View>
         </View>

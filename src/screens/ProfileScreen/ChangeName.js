@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Text, StyleSheet, View, Image, TouchableOpacity } from 'react-native'
-import { TextInput, Button, Colors, IconButton } from 'react-native-paper';
+import { TextInput, Button,} from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import Header from '../../components/UI/Header';
+import Colors from '../../constants/Colors';
+
 
 
 function ChangeName(props) {
@@ -10,12 +12,12 @@ function ChangeName(props) {
     const navigation = useNavigation()
     return (
         <View style={styles.screen}>
-            <Header title="Thay đổi số điện thoại"></Header>
+            <Header title="Thay đổi tên hiển thị"></Header>
             <View style={styles.screen1}>
-                <Text style={styles.text}>
-                    Tên đăng nhập</Text>
                 <TextInput                    
-                    label="Tên đăng nhập"
+                    label="Tên hiển thị"
+                    placeholder={"Mời nhập tên hiển thị"}
+                    style={{backgroundColor: Colors.backgroundColor}}
                     mode='outlined'
                     value={name}
                     onChangeText={name => setName(name)}
@@ -30,7 +32,7 @@ function ChangeName(props) {
                     color='#4F5160'
                     labelStyle={{ fontSize: 20 }}
                     onPress={() => navigation.goBack()}>
-                    Confirm
+                    Xác nhận
                 </Button>
             </View>
         </View>
@@ -50,6 +52,7 @@ const styles = StyleSheet.create({
     screen1: {
         padding: 10,
         flex: 14,
+        backgroundColor: Colors.backgroundColor,
     },
     text: {
         fontSize: 30,
