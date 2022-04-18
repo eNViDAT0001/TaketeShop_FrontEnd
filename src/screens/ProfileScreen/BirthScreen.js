@@ -6,28 +6,34 @@ import CalendarPicker from 'react-native-calendar-picker';
 import {useNavigation} from '@react-navigation/native';
 import Header from '../../components/UI/Header';
 import Colors from '../../constants/Colors';
-import {convertWeekToVietnamese, convertMonthToVietnamese} from '../../ulti/Ulti'
+import {
+  convertWeekToVietnamese,
+  convertMonthToVietnamese,
+} from '../../ulti/Ulti';
 function BirthScreen(props) {
   const navigation = useNavigation();
   const [date, setDate] = useState('');
   const [displayDay, setDisplayDay] = useState([]);
 
-  const  onDateChange = async (day) => {
+  const onDateChange = async day => {
     await setDate(day);
   };
 
   useLayoutEffect(() => {
     setDisplayDay(date.toString().split(' '));
+  }, [date]);
 
-  }, [date])
-  
   return (
     <View style={styles.screen}>
       <Header title="Thay đổi ngày sinh"></Header>
       <View style={styles.screen1}>
         <View style={styles.Daytextcontainer}>
           <Text style={styles.Daytext}>
-            {date ? `${convertWeekToVietnamese(displayDay[0])} ${displayDay[2]}/${convertMonthToVietnamese(displayDay[1])}/${displayDay[3]}` : 'Vui lòng chọn ngày'}
+            {date
+              ? `${convertWeekToVietnamese(displayDay[0])} ${
+                  displayDay[2]
+                }/${convertMonthToVietnamese(displayDay[1])}/${displayDay[3]}`
+              : 'Vui lòng chọn ngày'}
           </Text>
         </View>
 
@@ -56,7 +62,6 @@ function BirthScreen(props) {
               'Tháng Mười Một',
               'Tháng Mười Hai',
             ]}
-            
             selectYearTitle={'Chọn năm'}
             selectMonthTitle={'Chọn tháng trong năm '}
             previousTitle="Trước"
@@ -112,16 +117,16 @@ const styles = StyleSheet.create({
     fontSize: 40,
     color: 'black',
   },
-    buttonContainer: {
-        margin: 5,
-        borderRadius: 40,
-        color: '#4f5160'
-    },
-    button: {
-        height: 50,
-    },
-    buttonText: {
-        height: '100%',
-    },
+  buttonContainer: {
+    margin: 5,
+    borderRadius: 40,
+    color: '#4f5160',
+  },
+  button: {
+    height: 50,
+  },
+  buttonText: {
+    height: '100%',
+  },
 });
 export default BirthScreen;
