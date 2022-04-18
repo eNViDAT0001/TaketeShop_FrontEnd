@@ -10,6 +10,7 @@ import { ADDRESS_SCREEN, ADD_ADDRESS_SCREEN } from '../../constants/NavigatorInd
 
 function Profile(props) {
     const navigation = useNavigation()
+    const [name, setName] = useState('MiKu');
     const [sex, setSex] = useState('Chưa xác định');
     const [birth, setBirth] = useState('Chưa xác định');
     const [email, setEmail] = useState('@Miku');
@@ -29,11 +30,17 @@ function Profile(props) {
                 </TouchableOpacity>
 
                 <View>
-                    <Text style={styles.text1} > Miku</Text>
+                    <Text style={styles.text1} > {name}</Text>
                     <Text style={styles.text2} > {email}</Text>
                 </View>
 
             </View>
+            <Form1
+                icons='account'
+                titletext='Name'
+                onPress={() => { navigation.navigate('ChangeName') }}
+                titletext2={name}
+            />
             <Form1
                 icons='gender-male-female'
                 titletext='Gender'

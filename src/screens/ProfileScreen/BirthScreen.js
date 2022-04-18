@@ -11,6 +11,7 @@ function BirthScreen(props) {
   const navigation = useNavigation();
   const [StartDate, setStartDate] = React.useState('');
 
+<<<<<<< HEAD
   const onDateChange = date => {
     setStartDate(date);
   };
@@ -22,6 +23,67 @@ function BirthScreen(props) {
           <Text style={styles.Daytext}>
             {StartDate ? StartDate.toString() : 'Vui lòng chọn ngày'}
           </Text>
+=======
+    const onDateChange = (date) => {
+        setStartDate(date);
+    }
+    return (
+        <View style={styles.screen}>
+            <Header title="Thay đổi ngày sinh"></Header>
+            <View style={styles.screen1}>
+
+                <View style={styles.Daytextcontainer}>
+                    <Text style={styles.Daytext}>
+                        {StartDate ? StartDate.toString() : 'Vui lòng chọn ngày'}
+                    </Text>
+                </View>
+
+                <View style={styles.calen}>
+                    <CalendarPicker
+                        onDateChange={onDateChange}
+                        weekdays={
+                            [
+                                'Thứ 2',
+                                'Thứ 3',
+                                'Thứ 4',
+                                'Thứ 5',
+                                'Thứ 6',
+                                'Thứ 7',
+                                'Chủ nhật'
+                            ]}
+                        months={[
+                            'Tháng 1',
+                            'Tháng 2',
+                            'Tháng 3',
+                            'Tháng 4',
+                            'Tháng 5',
+                            'Tháng 6',
+                            'Tháng 7',
+                            'Tháng 8',
+                            'Tháng 9',
+                            'Tháng 10',
+                            'Tháng 11',
+                            'Tháng 12',
+                        ]}
+                        previousTitle="Tháng trước"
+                        nextTitle="Tháng tiếp theo"
+                        todayBackgroundColor="#2196f3"
+                    />
+                </View>
+            </View>
+
+            <View style={styles.buttonContainer}>
+                <Button
+                    mode="contained"
+                    contentStyle={styles.buttonText}
+                    style={styles.button}
+                    color='#4F5160'
+                    labelStyle={{ fontSize: 20 }}
+                    onPress={() => navigation.goBack()}>
+                    Confirm
+                </Button>
+            </View>
+>>>>>>> Account
         </View>
 
         <View style={styles.calen}>
@@ -73,6 +135,7 @@ function BirthScreen(props) {
 }
 
 const styles = StyleSheet.create({
+<<<<<<< HEAD
   screen: {
     flex: 1,
     backgroundColor: '#ffff',
@@ -101,6 +164,53 @@ const styles = StyleSheet.create({
     fontSize: 40,
     color: 'black',
   },
+=======
+    screen: {
+        flex: 1,
+        backgroundColor: '#ffff',
+    },
+    calen: {
+        top : 40,
+        flex: 14,
+    },
+    screen1: {
+        top : 30,
+        padding: 10,
+        flex: 14,
+    },
+    Daytextcontainer: {
+        
+        backgroundColor: '#e7e7e7',
+        borderColor: 'black',
+        borderWidth: 1,
+        height: 40,
+        justifyContent: 'center'
+    },
+    Daytext: {
+        left: 5,
+        fontSize: 20,
+        color: '#4f5160',
+    },
+    calendar: {
+
+    },
+    text: {
+        fontSize: 40,
+        color: 'black',
+    },
+
+    buttonContainer: {
+        margin: 5,
+        borderRadius: 40,
+        color: '#4f5160'
+    },
+    button: {
+        height: 50,
+    },
+    buttonText: {
+        height: '100%',
+    },
+>>>>>>> Account
 
   buttonContainer: {
     margin: 5,
