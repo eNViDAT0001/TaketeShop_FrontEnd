@@ -17,8 +17,6 @@ function BirthScreen(props) {
         <View style={styles.screen}>
             <Header title="Thay đổi ngày sinh"></Header>
             <View style={styles.screen1}>
-                <Text style={styles.text}>
-                    Birth Day</Text>
 
                 <View style={styles.Daytextcontainer}>
                     <Text style={styles.Daytext}>
@@ -31,15 +29,15 @@ function BirthScreen(props) {
                         onDateChange={onDateChange}
                         weekdays={
                             [
-                              'Thứ 2', 
-                              'Thứ 3', 
-                              'Thứ 4', 
-                              'Thứ 5', 
-                              'Thứ 6', 
-                              'Thứ 7', 
-                              'Chủ nhật'
+                                'Thứ 2',
+                                'Thứ 3',
+                                'Thứ 4',
+                                'Thứ 5',
+                                'Thứ 6',
+                                'Thứ 7',
+                                'Chủ nhật'
                             ]}
-                          months={[
+                        months={[
                             'Tháng 1',
                             'Tháng 2',
                             'Tháng 3',
@@ -52,10 +50,10 @@ function BirthScreen(props) {
                             'Tháng 10',
                             'Tháng 11',
                             'Tháng 12',
-                          ]}
-                          previousTitle="Tháng trước"
-                          nextTitle="Tháng tiếp theo"
-                          todayBackgroundColor="#2196f3"
+                        ]}
+                        previousTitle="Tháng trước"
+                        nextTitle="Tháng tiếp theo"
+                        todayBackgroundColor="#2196f3"
                     />
                 </View>
             </View>
@@ -86,18 +84,21 @@ const styles = StyleSheet.create({
         backgroundColor: '#ffff',
     },
     calen: {
+        top : 40,
         flex: 14,
     },
     screen1: {
+        top : 30,
         padding: 10,
         flex: 14,
     },
     Daytextcontainer: {
-        backgroundColor: '#e7e7e7',        
-        borderColor : 'black',
-        borderWidth : 1,
+        
+        backgroundColor: '#e7e7e7',
+        borderColor: 'black',
+        borderWidth: 1,
         height: 40,
-        justifyContent : 'center'
+        justifyContent: 'center'
     },
     Daytext: {
         left: 5,

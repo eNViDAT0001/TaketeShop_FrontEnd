@@ -4,22 +4,21 @@ import { TextInput, Button, Colors, IconButton } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import Header from '../../components/UI/Header';
 
-function Phone(props) {
-    const [phonenumber, setPhonenumber] = React.useState("");
+
+function ChangeName(props) {
+    const [name, setName] = React.useState("");
     const navigation = useNavigation()
     return (
         <View style={styles.screen}>
             <Header title="Thay đổi số điện thoại"></Header>
             <View style={styles.screen1}>
                 <Text style={styles.text}>
-                    Số điện thoại</Text>
-                <TextInput
-                    keyboardType='numeric'
-                    maxLength={10}
-                    label="Số điện thoại"
+                    Tên đăng nhập</Text>
+                <TextInput                    
+                    label="Tên đăng nhập"
                     mode='outlined'
-                    value={phonenumber}
-                    onChangeText={phonenumber => setPhonenumber(phonenumber)}
+                    value={name}
+                    onChangeText={name => setName(name)}
                 />
             </View>
 
@@ -112,4 +111,4 @@ const styles = StyleSheet.create({
     },
 
 });
-export default Phone;
+export default ChangeName;

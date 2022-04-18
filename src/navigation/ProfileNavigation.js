@@ -6,7 +6,7 @@ import BirthScreen from '../screens/ProfileScreen/BirthScreen';
 import Email from '../screens/ProfileScreen/Email';
 import Phone from '../screens/ProfileScreen/PhoneScreen';
 import ChangePassword from '../screens/ProfileScreen/ChangePassword';
-
+import ChangeName from '../screens/ProfileScreen/ChangeName';
 
 
 const Stack = createNativeStackNavigator();
@@ -20,6 +20,11 @@ function ProfileNavigation() {
         name={"Profile"}
         options={{ headerShown: false, }}
         component={Profile}>
+      </Stack.Screen>
+      <Stack.Screen
+        name={"ChangeName"}
+        options={{ headerShown: false, }}
+        component={ChangeName}>
       </Stack.Screen>
       <Stack.Screen
         name={"Gender"}
