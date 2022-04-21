@@ -37,19 +37,19 @@ function Profile(props) {
             </View>
             <Form1
                 icons='account'
-                titletext='Name'
+                titletext='Tên tài khoản'
                 onPress={() => { navigation.navigate('ChangeName') }}
                 titletext2={name}
             />
             <Form1
                 icons='gender-male-female'
-                titletext='Gender'
+                titletext='Giới tính'
                 onPress={() => { navigation.navigate('Gender') }}
                 titletext2={sex}
             />
             <Form1
                 icons='calendar-month'
-                titletext='Birth day'
+                titletext='Ngày sinh'
                 onPress={() => { navigation.navigate('Birth') }}
                 titletext2={birth}
             />
@@ -61,13 +61,13 @@ function Profile(props) {
             />
             <Form1
                 icons='cellphone'
-                titletext='Phone number'
+                titletext='Số điện thoại'
                 onPress={() => { navigation.navigate('Phone number') }}
                 titletext2={phonenumber}
             />
             <Form1
                 icons='lock'
-                titletext='Change password'
+                titletext='Đổi mật khẩu'
                 onPress={() => { navigation.navigate('Change Password') }}
                 titletext2={'*******'}
             />
