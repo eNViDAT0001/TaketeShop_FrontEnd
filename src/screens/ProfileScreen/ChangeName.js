@@ -7,15 +7,27 @@ import Header from '../../components/UI/Header';
 
 function ChangeName(props) {
     const [name, setName] = React.useState("");
-    const navigation = useNavigation()
+    const navigation = useNavigation();
+   
+
     return (
         <View style={styles.screen}>
+<<<<<<< Updated upstream
             <Header title="Thay đổi số điện thoại"></Header>
+=======
+            <Header title="Thay đổi tên người dùng"></Header>
+>>>>>>> Stashed changes
             <View style={styles.screen1}>
                 <Text style={styles.text}>
                     Tên đăng nhập</Text>
                 <TextInput                    
+<<<<<<< Updated upstream
                     label="Tên đăng nhập"
+=======
+                    label="Tên người dùng"
+                    placeholder={"Mời nhập tên người dùng"}
+                    style={{backgroundColor: Colors.backgroundColor}}
+>>>>>>> Stashed changes
                     mode='outlined'
                     value={name}
                     onChangeText={name => setName(name)}

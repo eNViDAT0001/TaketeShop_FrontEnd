@@ -6,6 +6,7 @@ import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { FORGOT_PASSWORD_SCREEN, BOTTOM_BAR_NAVIGATOR } from '../../constants/NavigatorIndex';
 import ImageShow from '../../components/ImageShow';
 import Colors from '../../constants/Colors';
+import { getLogin } from '../../store/AccountData/ProfileData';
 
 
 function LoginScreen() {
@@ -14,6 +15,17 @@ function LoginScreen() {
   const [password, setPassword] = React.useState("");
 
   const [currentImage, setCurrentImage] = React.useState();
+
+  const getUserAndLogin = () => {
+        
+    // getLogin().then((data) => {
+    //     //if (username != data('username')) {setName({data : 'username'})};
+
+    // }        
+    // ).catch((error) => {   
+    //     console.error('Error') ;        
+    // })
+  }
 
   return (
     <SafeAreaView style={styles.container}>

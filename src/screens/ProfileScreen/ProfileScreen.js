@@ -7,15 +7,36 @@ import { Avatar } from 'react-native-paper';
 import Gender from './Gender';
 import Header from '../../components/UI/Header';
 import { ADDRESS_SCREEN, ADD_ADDRESS_SCREEN } from '../../constants/NavigatorIndex';
+import { getUserFromSever } from '../../store/AccountData/ProfileData';
 
 function Profile(props) {
-    const navigation = useNavigation()
-    const [name, setName] = useState('MiKu');
+    const navigation = useNavigation();
+    const [isLoading, setLoading] = useState(true);
+    const [data, setData] = useState([]);
+    //const [userID, setUserID] = useState(3);
+    const [name, setName] = useState('Chưa xác định');
     const [sex, setSex] = useState('Chưa xác định');
     const [birth, setBirth] = useState('Chưa xác định');
-    const [email, setEmail] = useState('@Miku');
+    const [email, setEmail] = useState('@Chưa xác định');
     const [phonenumber, setPhonenumber] = useState('Chưa xác định');
     const [img, setImage] = useState('../../../assets/images/logo1.png');
+
+    const getDataFromSever = async (userID) => {
+        try {
+            const response = await fetch('http://localhost:5000/user/' + 3);
+            const json = await response.json();
+            setData(JSON.stringify(json));
+            setName(data[0].name);                
+
+
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+
     return (
 
         <ScrollView style={styles.container}>
@@ -37,7 +58,11 @@ function Profile(props) {
             </View>
             <Form1
                 icons='account'
+<<<<<<< Updated upstream
                 titletext='Name'
+=======
+                titletext='Tên người dùng'
+>>>>>>> Stashed changes
                 onPress={() => { navigation.navigate('ChangeName') }}
                 titletext2={name}
             />

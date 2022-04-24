@@ -7,7 +7,8 @@ import { LOGIN_MAIN_SCREEN } from '../../constants/NavigatorIndex';
 
 
 function SignUpScreen() {
-  const navigation = useNavigation()
+  const navigation = useNavigation();
+  const [name, setName] = React.useState("");
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [confirmpassword, setConfirmpassword] = React.useState("");
@@ -16,6 +17,13 @@ function SignUpScreen() {
     <SafeAreaView style={styles.container}>
       <Text style={styles.maintext}>Đăng ký</Text>     
       <View style={styles.signup}>
+      <TextInput
+         style = {{marginBottom: 10}}
+          label="name"
+          mode='outlined'
+          value={name}
+          onChangeText={name => setName(name)}
+        />
         <TextInput
          style = {{marginBottom: 10}}
           label="Username"
