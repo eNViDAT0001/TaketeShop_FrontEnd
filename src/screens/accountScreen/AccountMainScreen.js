@@ -16,34 +16,34 @@ function AccountMainScreen() {
             <Form1
                 styles={styles.itemsContainer}
                 icons='account'
-                titletext='Profile'                
+                titletext='Thông tin cá nhân'                
                 onPress={()=> {navigation.navigate(PROFILE_NAVIGATOR)}}
-                titletext2 = 'xcvjkz'
+                //titletext2 = 'xcvjkz'
             />
             <Form1
              styles={styles.itemsContainer}
                 icons='map-marker'
-                titletext='Address'
+                titletext='Địa chỉ'
                 onPress={() => navigation.navigate(ADDRESS_SCREEN)}
             />
 
             <Form1
              styles={styles.itemsContainer}
                 icons='credit-card-outline'
-                titletext='My store'
+                titletext='Cửa hàng của tôi'
                 //onPress={() => navigation.navigate()}
             />
             <Form1
              styles={styles.itemsContainer}
                 icons='face-agent'
-                titletext='Support'
+                titletext='Hỗ trợ khách hàng'
                 onPress={() => navigation.navigate('ChatScreen')}
             />
 
             <Form1
              styles={styles.itemsContainer}
                 icons='logout'
-                titletext='Log out'
+                titletext='Đăng xuất'
                 onPress={() => navigation.navigate('LoginNavigator')}
             />
 
