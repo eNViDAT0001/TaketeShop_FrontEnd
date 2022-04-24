@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Text, StyleSheet, View, SafeAreaView, Image, TouchableOpacity, ScrollView } from 'react-native'
 import Form1 from '../accountScreen/Form'
 import { TextInput, Button, Colors, IconButton } from 'react-native-paper';
@@ -9,13 +10,32 @@ import Header from '../../components/UI/Header';
 import { ADDRESS_SCREEN, ADD_ADDRESS_SCREEN } from '../../constants/NavigatorIndex';
 
 function Profile(props) {
+    //const dispatch = useDispatch();
     const navigation = useNavigation()
-    const [name, setName] = useState('MiKu');
+    const [name, setName] = useState('Chưa xác định');
     const [sex, setSex] = useState('Chưa xác định');
+    const [data, setData] = useState([]);
     const [birth, setBirth] = useState('Chưa xác định');
-    const [email, setEmail] = useState('@Miku');
+    const [email, setEmail] = useState('@Chưa xác định');
     const [phonenumber, setPhonenumber] = useState('Chưa xác định');
     const [img, setImage] = useState('../../../assets/images/logo1.png');
+
+    const getDataUser = async (UserId) => {
+        try {
+            const response = await fetch('http://localhost:5000/user/3');
+            const json = await response.json();
+            //setData(json);
+            setName(json[0].name);
+            //setSex(data.gender);
+
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    useEffect(() => {
+        getDataUser();
+    }, []);
     return (
 
         <ScrollView style={styles.container}>
@@ -30,7 +50,7 @@ function Profile(props) {
                 </TouchableOpacity>
 
                 <View>
-                    <Text style={styles.text1} > {name}</Text>
+                    <Text style={styles.text1} > {data.name}</Text>
                     <Text style={styles.text2} > {email}</Text>
                 </View>
 
@@ -38,7 +58,9 @@ function Profile(props) {
             <Form1
                 icons='account'
                 titletext='Tên tài khoản'
-                onPress={() => { navigation.navigate('ChangeName') }}
+                onPress={() => {
+                    navigation.navigate('ChangeName')                   
+                }}
                 titletext2={name}
             />
             <Form1
