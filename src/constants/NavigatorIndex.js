@@ -7,6 +7,9 @@ export const LOGIN_NAVIGATOR = "LoginNavigator";
 export const PROFILE_NAVIGATOR = "ProfileNavigation";
 
 
+export const STARTUP_SCREEN = "StartupScreen";
+
+
 export const LOGIN_MAIN_SCREEN = "LoginScreen";
 export const FORGOT_PASSWORD_SCREEN = "ForgotPassword";
 export const HOME_MAIN_SCREEN = "HomeMainScreen";

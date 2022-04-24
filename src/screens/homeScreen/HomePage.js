@@ -3,9 +3,7 @@ import {View, StyleSheet} from 'react-native';
 import CategoryHolder from '../../components/CategoryHolder';
 import Card from '../../components/UI/Card';
 import {
-  ONSALES_DUMMY_DATA,
-  BESTSELLER_DUMMY_DATA,
-  FORYOU_DUMMY_DATA,
+  PRODUCT_DUMMY_DATA, PRODUCT_ITEMS_DUMMY_DATA,
 } from '../../dummy_database/dummy-data';
 import BannerPager from '../../components/BannerPager';
 import Colors from '../../constants/Colors';
@@ -28,7 +26,7 @@ function HomePage(props) {
             title={'Giảm giá'}
             horizontal={true}z
             numColum={1}
-            itemList={ONSALES_DUMMY_DATA}
+            itemList={PRODUCT_ITEMS_DUMMY_DATA}
           />
         </Card>
         <Card style={styles.cardContainer}>
@@ -38,7 +36,7 @@ function HomePage(props) {
             title={'Bán chạy'}
             horizontal={true}
             numColum={1}
-            itemList={BESTSELLER_DUMMY_DATA}
+            itemList={PRODUCT_ITEMS_DUMMY_DATA}
           />
         </Card>
         <Card style={styles.cardContainer}>
@@ -48,7 +46,7 @@ function HomePage(props) {
             title={'Dành cho bạn'}
             horizontal={false}
             numColum={2}
-            itemList={FORYOU_DUMMY_DATA}
+            itemList={PRODUCT_ITEMS_DUMMY_DATA}
           />
         </Card>
       </View>

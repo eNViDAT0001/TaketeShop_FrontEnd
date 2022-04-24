@@ -7,6 +7,7 @@ import ReduxThunk from 'redux-thunk'
 import { LogBox, StatusBar } from "react-native";
 import Colors from './src/constants/Colors';
 import AppNavigator from './src/navigation/AppNavigator.js';
+import productReducer from './src/store/reducers/products';
 
 LogBox.ignoreLogs(["EventEmitter.removeListener"]);
 
@@ -38,7 +39,7 @@ LogBox.ignoreLogs(["EventEmitter.removeListener"]);
 
 
 const rootReducer = combineReducers({
-
+  product: productReducer
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));

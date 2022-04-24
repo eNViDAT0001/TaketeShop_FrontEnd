@@ -59,6 +59,7 @@ const styles = StyleSheet.create({
   product: {
     flex: 1,
     margin: 5,
+    elevation: 10,
   },
 
   imageContainer: {

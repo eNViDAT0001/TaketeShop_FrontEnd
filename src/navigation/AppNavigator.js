@@ -12,6 +12,7 @@ import {
   NOTIFICATION_SCREEN,
   PRODUCT_DETAIL_SCREEN,
   PROFILE_NAVIGATOR,
+  STARTUP_SCREEN,
   SUCCESS_SCREEN,
 } from '../constants/NavigatorIndex';
 import BottomBarNavigator from './BottomBarNavigator';
@@ -26,6 +27,7 @@ import AddAddressPage from '../screens/addressScreen/AddAddressPage';
 import SuccessScreen from '../screens/addressScreen/SuccessScreen';
 import NotificationScreen from '../screens/homeScreen/NotificationScreen';
 import ProfileNavigation from './ProfileNavigation';
+import StartupScreen from '../screens/StartupScreen';
 const StackNavigator = createNativeStackNavigator();
 function AppNavigator() {
   return (
@@ -38,13 +40,20 @@ function AppNavigator() {
           },
         }}>
         <StackNavigator.Screen
+          name={STARTUP_SCREEN}
+          component={StartupScreen}
+          options={{
+            headerShown: false,
+          }}></StackNavigator.Screen>
+
+        <StackNavigator.Screen
           name={LOGIN_NAVIGATOR}
           component={LoginNavigator}
           options={{
             headerShown: false,
           }}></StackNavigator.Screen>
 
-          <StackNavigator.Screen
+        <StackNavigator.Screen
           name={PROFILE_NAVIGATOR}
           component={ProfileNavigation}
           options={{
@@ -105,7 +114,8 @@ function AppNavigator() {
           options={{
             headerTitle: 'Thêm Địa Chỉ',
             headerShown: false,
-          }}></StackNavigator.Screen><StackNavigator.Screen
+          }}></StackNavigator.Screen>
+        <StackNavigator.Screen
           name={NOTIFICATION_SCREEN}
           component={NotificationScreen}
           options={{
