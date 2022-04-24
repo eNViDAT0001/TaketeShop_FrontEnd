@@ -1,4 +1,4 @@
-import {LOGIN} from '../actions/auth';
+import {CHANGE_NAME, LOGIN} from '../actions/auth';
 
 const initialState = {
   userID: '#0000',
@@ -6,7 +6,8 @@ const initialState = {
   sex: 'Không xác định',
   birthday: '0001/01/01',
   email: 'abc@gmail.com',
-  avatar: 'https://4xucy2kyby51ggkud2tadg3d-wpengine.netdna-ssl.com/wp-content/uploads/sites/37/2017/02/IAFOR-Blank-Avatar-Image.jpg',
+  avatar:
+    'https://4xucy2kyby51ggkud2tadg3d-wpengine.netdna-ssl.com/wp-content/uploads/sites/37/2017/02/IAFOR-Blank-Avatar-Image.jpg',
   roles: 'CUSTOMER',
   token: null,
 };
@@ -24,8 +25,11 @@ function AuthReducer(state = initialState, action) {
         avatar: action.user.avatar,
         roles: action.user.roles,
       };
+    case CHANGE_NAME:
+      return {...state, name: action.name};
     case LOGOUT:
       return initialState;
+
     // case SIGNUP:
     //   return {
     //     token: action.token,

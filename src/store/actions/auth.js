@@ -7,6 +7,8 @@ export const SIGNUP = 'SIGNUP';
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 
+export const CHANGE_NAME = 'CHANGE_NAME';
+
 let timer;
 
 export const authenticate = (userId, token, expiryTime) => {
@@ -113,6 +115,12 @@ export const logout = () => {
   return {type: LOGOUT};
 };
 
+export const changeName = (name) => {
+  return {type: CHANGE_NAME, name}
+}
+
+
+
 const clearLogoutTimer = () => {
   if (timer) {
     clearTimeout(timer);
@@ -137,3 +145,4 @@ const saveDataToStorage = (token, userId, expirationDate) => {
     }),
   );
 };
+
