@@ -8,13 +8,14 @@ import { Avatar } from 'react-native-paper';
 import Gender from './Gender';
 import Header from '../../components/UI/Header';
 import { ADDRESS_SCREEN, ADD_ADDRESS_SCREEN } from '../../constants/NavigatorIndex';
+import { getOneUserData } from '../../store/actions/productsAction';
+
 
 function Profile(props) {
-    //const dispatch = useDispatch();
     const navigation = useNavigation()
     const [name, setName] = useState('Chưa xác định');
-    const [sex, setSex] = useState('Chưa xác định');
-    const [data, setData] = useState([]);
+    const [sex, setSex] = useState(1);
+    const [data, setData] = useState(3);
     const [birth, setBirth] = useState('Chưa xác định');
     const [email, setEmail] = useState('@Chưa xác định');
     const [phonenumber, setPhonenumber] = useState('Chưa xác định');
@@ -24,9 +25,12 @@ function Profile(props) {
         try {
             const response = await fetch('http://localhost:5000/user/3');
             const json = await response.json();
-            //setData(json);
-            setName(json[0].name);
-            //setSex(data.gender);
+            json[0].name ? setName(json[0].name) : null;
+            json[0].gender ? setSex(json[0].gender) : null;
+            json[0].birthday ? setBirth(json[0].birthday) : null;
+            json[0].email ? setEmail(json[0].email) : null;
+            json[0].phonenumber ? setPhonenumber(json[0].phonenumber) : null;
+
 
         } catch (error) {
             console.error(error);
@@ -36,6 +40,22 @@ function Profile(props) {
     useEffect(() => {
         getDataUser();
     }, []);
+
+
+    getOneUserData(3).then((params) => {
+
+        params[0].name ? setName(json[0].name) : null;
+        params[0].gender ? setSex(json[0].gender) : null;
+        params[0].birthday ? setBirth(json[0].birthday) : null;
+        params[0].email ? setEmail(json[0].email) : null;
+        params[0].phonenumber ? setPhonenumber(json[0].phonenumber) : null;
+
+    }).catch((error) => {
+        console.log(error);
+    });
+
+
+
     return (
 
         <ScrollView style={styles.container}>
@@ -50,7 +70,7 @@ function Profile(props) {
                 </TouchableOpacity>
 
                 <View>
-                    <Text style={styles.text1} > {data.name}</Text>
+                    <Text style={styles.text1} > {name}</Text>
                     <Text style={styles.text2} > {email}</Text>
                 </View>
 
@@ -59,7 +79,7 @@ function Profile(props) {
                 icons='account'
                 titletext='Tên tài khoản'
                 onPress={() => {
-                    navigation.navigate('ChangeName')                   
+                    navigation.navigate('ChangeName')
                 }}
                 titletext2={name}
             />
@@ -67,7 +87,7 @@ function Profile(props) {
                 icons='gender-male-female'
                 titletext='Giới tính'
                 onPress={() => { navigation.navigate('Gender') }}
-                titletext2={sex}
+                titletext2={(sex == 1) ? "Nam" : "Nữ"}
             />
             <Form1
                 icons='calendar-month'
@@ -116,13 +136,14 @@ const styles = StyleSheet.create({
         padding: 10
     },
     text1: {
-        fontSize: 35,
+        fontSize: 30,
         fontWeight: '900',
         fontFamily: 'open-sans-bold',
         textShadowRadius: 1,
         alignItems: 'flex-start'
     },
     text2: {
+        left: 5,
         fontSize: 15,
         fontWeight: '900',
         fontFamily: 'open-sans-bold',
