@@ -25,6 +25,7 @@ export const ADDRESS_SCREEN ="AddressScreen";
 export const ADD_ADDRESS_SCREEN ="AddAddressScreen";
 export const SUCCESS_SCREEN ="SuccessScreen";
 export const NOTIFICATION_SCREEN ="NotificationScreen";
+export const WISHLIST_SCREEN ="WISHLIST_SCREEN"
 
 export const ORDER_CONFIRM_PAGE ="OrderConfirmPage";
 export const ORDER_DELIVERING_PAGE ="OrderDeliveringPage";

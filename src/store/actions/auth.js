@@ -41,7 +41,6 @@ export const signup = (
         gender: gender,
         email: email,
         type: type,
-        returnSecureToken: true,
       }),
     });
 
@@ -84,11 +83,9 @@ export const login = (username, password) => {
 
     const resData = await response.json();
     const error = resData.error;
-    let message = 'Something went wrong!';
 
     if (error) {
-      message = resData.msg;
-      throw new Error(message);
+      throw new Error(resData.msg);
     }
 
     console.log(resData);

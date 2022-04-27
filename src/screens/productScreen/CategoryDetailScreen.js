@@ -1,49 +1,113 @@
-import React, { useState } from 'react';
-import {Dropdown} from 'react-native-element-dropdown'
+import React, {useEffect, useState} from 'react';
+import {Dropdown} from 'react-native-element-dropdown';
 import {StyleSheet, FlatList, View, Text} from 'react-native';
-
+import Header from '../../components/UI/Header';
 import Colors from '../../constants/Colors';
 import ShopItems from '../../components/ShopItems';
-import { ONSALES_DUMMY_DATA } from '../../dummy_database/dummy-data';
+import {useSelector} from 'react-redux';
+import {useNavigation, useRoute} from '@react-navigation/native';
 const BESTSELLER = 'BESTSELLER';
 const INCREASE = 'INCREASE';
 const DECREASE = 'DECREASE';
 const DATE_CATCH = 'DATE_CATCH';
 const data = [
-  { label: 'Mua nhiều', value: BESTSELLER },
-  { label: 'Giá tăng dần', value: INCREASE },
-  { label: 'Giá giảm dần', value: DECREASE },
-  { label: 'Ngày đánh bắt', value: DATE_CATCH },
+  {label: 'Mua nhiều', value: BESTSELLER},
+  {label: 'Giá tăng dần', value: INCREASE},
+  {label: 'Giá giảm dần', value: DECREASE},
+  {label: 'Ngày đánh bắt', value: DATE_CATCH},
 ];
 function CategoryDetailScreen(props) {
+  useEffect(() => {
+    if (type === 'NORMAL')
+      return setDisplayProducts(
+        cloneList(products).filter(item => item.categoryID === id),
+      );
+
+    return setDisplayProducts(cloneList(products));
+  }, [products]);
+  const id = useRoute().params.id;
+  const title = useRoute().params.title;
+  const type = useRoute().params.type;
+  const products = useSelector(state => state.products.availableProducts);
+  const [displayProducts, setDisplayProducts] = useState([]);
+
+  const cloneList = availableProducts => {
+    const transformedShopItems = [];
+    for (const key in availableProducts) {
+      transformedShopItems.push({
+        productID: availableProducts[key].productID,
+        categoryID: availableProducts[key].categoryID,
+        name: availableProducts[key].name,
+        price: availableProducts[key].price,
+        quantity: availableProducts[key].quantity,
+        discount: availableProducts[key].discount,
+        discountPrice:
+          availableProducts[key].price -
+          (availableProducts[key].discount / 100).toFixed(2) *
+            availableProducts[key].price,
+        image: availableProducts[key].image[0],
+        category: availableProducts[key].category,
+        provider: availableProducts[key].provider,
+        liked: availableProducts[key].liked,
+      });
+    }
+    return transformedShopItems;
+  };
+
+  const filter = mode => {
+    switch (mode) {
+      case BESTSELLER: {
+        return displayProducts;
+      }
+      case INCREASE: {
+        return displayProducts.sort((a, b) =>
+          a.discountPrice > b.discountPrice ? 1 : -1,
+        );
+      }
+      case DECREASE: {
+        return displayProducts.sort((a, b) =>
+          a.discountPrice < b.discountPrice ? 1 : -1,
+        );
+      }
+      case DATE_CATCH: {
+        return displayProducts.sort((a, b) =>
+          a.createTime > b.createTime ? 1 : -1,
+        );
+      }
+      default:{
+        return displayProducts;
+      }
+    }
+  };
 
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
   return (
     <View style={{...styles.container, ...props.style}}>
+      <Header title={title}></Header>
       <Dropdown
-          style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
-          placeholderStyle={styles.placeholderStyle}
-          selectedTextStyle={styles.selectedTextStyle}
-          iconStyle={styles.iconStyle}
-          data={data}
-          maxHeight={230}
-          labelField="label"
-          valueField="value"
-          placeholder={!isFocus ? 'Lọc...' : '...'}
-          value={value}
-          onFocus={() => setIsFocus(true)}
-          onBlur={() => setIsFocus(false)}
-          onChange={item => {
-            setValue(item.value);
-            setIsFocus(false);
-          }}
-        />
+        style={[styles.dropdown, isFocus && {borderColor: 'blue'}]}
+        placeholderStyle={styles.placeholderStyle}
+        selectedTextStyle={styles.selectedTextStyle}
+        iconStyle={styles.iconStyle}
+        data={data}
+        maxHeight={230}
+        labelField="label"
+        valueField="value"
+        placeholder={!isFocus ? 'Lọc...' : '...'}
+        value={value}
+        onFocus={() => setIsFocus(true)}
+        onBlur={() => setIsFocus(false)}
+        onChange={item => {
+          setValue(item.value);
+          setIsFocus(false);
+        }}
+      />
       <FlatList
         style={styles.itemList}
         horizontal={false}
         numColumns={2}
-        data={ONSALES_DUMMY_DATA}
+        data={filter(value)}
         renderItem={itemData => (
           <ShopItems
             item={itemData.item}

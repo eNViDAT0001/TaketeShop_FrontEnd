@@ -11,8 +11,7 @@ const initialState = {
   roles: 'CUSTOMER',
   token: null,
 };
-
-function AuthReducer(state = initialState, action) {
+export default (state = initialState, action) => {
   switch (action.type) {
     case LOGIN:
       return {
@@ -38,6 +37,6 @@ function AuthReducer(state = initialState, action) {
     default:
       return state;
   }
+  return state;
 }
 
-export default AuthReducer;

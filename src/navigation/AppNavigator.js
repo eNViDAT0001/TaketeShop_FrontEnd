@@ -14,6 +14,7 @@ import {
   PROFILE_NAVIGATOR,
   STARTUP_SCREEN,
   SUCCESS_SCREEN,
+  WISHLIST_SCREEN,
 } from '../constants/NavigatorIndex';
 import BottomBarNavigator from './BottomBarNavigator';
 import CategoryDetailScreen from '../screens/productScreen/CategoryDetailScreen';
@@ -28,6 +29,7 @@ import SuccessScreen from '../screens/addressScreen/SuccessScreen';
 import NotificationScreen from '../screens/homeScreen/NotificationScreen';
 import ProfileNavigation from './ProfileNavigation';
 import StartupScreen from '../screens/StartupScreen';
+import WishlistScreen from '../screens/homeScreen/WishlistScreen';
 const StackNavigator = createNativeStackNavigator();
 function AppNavigator() {
   return (
@@ -64,14 +66,23 @@ function AppNavigator() {
           name={BOTTOM_BAR_NAVIGATOR}
           component={BottomBarNavigator}
           options={{
+            headerTitle: 'Home Page',
             headerShown: false,
           }}></StackNavigator.Screen>
 
         <StackNavigator.Screen
+          name={WISHLIST_SCREEN}
+          component={WishlistScreen}
+          options={{
+            headerTitle: 'Yêu Thích',
+            headerShown: false,
+          }}></StackNavigator.Screen>
+        <StackNavigator.Screen
           name={CATEGORY_DETAIL_SCREEN}
           component={CategoryDetailScreen}
           options={{
-            headerTitle: 'Úm ba la Detail nè',
+            headerTitle: 'Detail Screen',
+            headerShown: false,
           }}></StackNavigator.Screen>
 
         <StackNavigator.Screen

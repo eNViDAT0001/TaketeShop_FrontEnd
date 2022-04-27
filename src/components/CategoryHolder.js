@@ -15,15 +15,15 @@ function CategoryHolder(props) {
         </View>
       </TouchableOpacity>
       <FlatList
+        onRefresh={props.onRefresh}
         keyExtractor={(item, index) => item.productID}
         style={styles.itemList}
+        refreshing={props.refreshing}
         horizontal={props.horizontal}
         numColumns={props.numColum}
         data={props.itemList}
         renderItem={itemData => (
-          <ShopItems
-            item={itemData.item}
-            onSelect={() => console.log(itemData.item.name)}></ShopItems>
+          <ShopItems item={itemData.item}></ShopItems>
         )}></FlatList>
     </View>
   );
