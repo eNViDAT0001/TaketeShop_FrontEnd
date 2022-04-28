@@ -6,7 +6,27 @@ import Header from '../../components/UI/Header';
 import Colors from '../../constants/Colors';
 function Email(props) {
     const [email, setEmail] = React.useState("");
-    const navigation = useNavigation()
+    const navigation = useNavigation();
+
+    const ChangeButton = async () => {
+        if (!email ){
+            alert("Vui lòng nhập tên tài khoản");     
+        }else
+        try {
+            await fetch('http://localhost:5000/user/' + '4' + '?' + 'field=email&value=' + email, {
+                method: 'PATCH',
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                },
+                body: JSON.stringify(),
+
+            }).then((response) => response.json())
+                .then((json) => navigation.navigate('Profile'));
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     return (
         <View style={styles.screen}>
             <Header title="Thay đổi email"></Header>
@@ -15,7 +35,7 @@ function Email(props) {
                     label="Email"
                     mode='outlined'
                     placeholder={"Mời nhập email"}
-                    style={{backgroundColor: Colors.backgroundColor}}
+                    style={{ backgroundColor: Colors.backgroundColor }}
                     value={email}
                     onChangeText={email => setEmail(email)}
                 />
@@ -28,7 +48,7 @@ function Email(props) {
                     style={styles.button}
                     color='#4F5160'
                     labelStyle={{ fontSize: 20 }}
-                    onPress={() => navigation.goBack()}>
+                    onPress={ChangeButton}>
                     Xác nhận
                 </Button>
             </View>

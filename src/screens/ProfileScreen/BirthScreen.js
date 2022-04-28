@@ -1,18 +1,36 @@
-import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
-import {Text, StyleSheet, View, Image, TouchableOpacity} from 'react-native';
-import {Button, IconButton, TextInput} from 'react-native-paper';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { Text, StyleSheet, View, Image, TouchableOpacity } from 'react-native';
+import { Button, IconButton, TextInput } from 'react-native-paper';
 import FormText from '../accountScreen/FormText';
 import CalendarPicker from 'react-native-calendar-picker';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import Header from '../../components/UI/Header';
 import Colors from '../../constants/Colors';
-import {convertWeekToVietnamese, convertMonthToVietnamese} from '../../ulti/Ulti'
+import { convertWeekToVietnamese, convertMonthToVietnamese } from '../../ulti/Ulti'
 function BirthScreen(props) {
   const navigation = useNavigation();
   const [date, setDate] = useState('');
   const [displayDay, setDisplayDay] = useState([]);
 
-  const  onDateChange = async (day) => {
+  const ChangeButton = async () => {
+    if (!date ){
+      alert("Vui lòng chọn ngày sinh");     
+  }else try {
+      await fetch('http://localhost:5000/user/' + '4' + '?' + 'field=birthday&value=' + date, {
+        method: 'PATCH',
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+        body: JSON.stringify(),
+
+      }).then((response) => response.json())
+        .then(navigation.navigate('Profile'));
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const onDateChange = async (day) => {
     await setDate(day);
   };
 
@@ -20,7 +38,7 @@ function BirthScreen(props) {
     setDisplayDay(date.toString().split(' '));
 
   }, [date])
-  
+
   return (
     <View style={styles.screen}>
       <Header title="Thay đổi ngày sinh"></Header>
@@ -56,7 +74,7 @@ function BirthScreen(props) {
               'Tháng Mười Một',
               'Tháng Mười Hai',
             ]}
-            
+
             selectYearTitle={'Chọn năm'}
             selectMonthTitle={'Chọn tháng trong năm '}
             previousTitle="Trước"
@@ -73,8 +91,8 @@ function BirthScreen(props) {
           contentStyle={styles.buttonText}
           style={styles.button}
           color="#4F5160"
-          labelStyle={{fontSize: 20}}
-          onPress={() => navigation.goBack()}>
+          labelStyle={{ fontSize: 20 }}
+          onPress={ChangeButton}>
           Xác nhận
         </Button>
       </View>
@@ -112,16 +130,16 @@ const styles = StyleSheet.create({
     fontSize: 40,
     color: 'black',
   },
-    buttonContainer: {
-        margin: 5,
-        borderRadius: 40,
-        color: '#4f5160'
-    },
-    button: {
-        height: 50,
-    },
-    buttonText: {
-        height: '100%',
-    },
+  buttonContainer: {
+    margin: 5,
+    borderRadius: 40,
+    color: '#4f5160'
+  },
+  button: {
+    height: 50,
+  },
+  buttonText: {
+    height: '100%',
+  },
 });
 export default BirthScreen;

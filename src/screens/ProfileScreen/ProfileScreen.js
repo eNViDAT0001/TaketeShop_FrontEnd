@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, componentdiv } from 'react';
 import { useDispatch } from 'react-redux';
 import { Text, StyleSheet, View, SafeAreaView, Image, TouchableOpacity, ScrollView } from 'react-native'
 import Form1 from '../accountScreen/Form'
@@ -23,7 +23,7 @@ function Profile(props) {
 
     const getDataUser = async (UserId) => {
         try {
-            const response = await fetch('http://localhost:5000/user/3');
+            const response = await fetch('http://localhost:5000/user/4');
             const json = await response.json();
             json[0].name ? setName(json[0].name) : null;
             json[0].gender ? setSex(json[0].gender) : null;
@@ -35,27 +35,13 @@ function Profile(props) {
         } catch (error) {
             console.error(error);
         }
-    }
-
-    useEffect(() => {
-        getDataUser();
-    }, []);
-
-
-    getOneUserData(3).then((params) => {
-
-        params[0].name ? setName(json[0].name) : null;
-        params[0].gender ? setSex(json[0].gender) : null;
-        params[0].birthday ? setBirth(json[0].birthday) : null;
-        params[0].email ? setEmail(json[0].email) : null;
-        params[0].phonenumber ? setPhonenumber(json[0].phonenumber) : null;
-
-    }).catch((error) => {
-        console.log(error);
-    });
-
-
-
+    }   
+    var myVar = setInterval(getDataUser, 5000);
+   
+    // useEffect(() => {
+    //     getDataUser();
+    // });
+    
     return (
 
         <ScrollView style={styles.container}>

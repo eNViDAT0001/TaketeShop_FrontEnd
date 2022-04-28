@@ -7,7 +7,24 @@ import Colors from '../../constants/Colors';
 
 function Phone(props) {
     const [phonenumber, setPhonenumber] = React.useState("");
-    const navigation = useNavigation()
+    const navigation = useNavigation();
+
+    const ChangeButton = async () => {
+        try {
+            await fetch('http://localhost:5000/user/' + '4' + '?' + 'field=phone&value=' + date, {
+                method: 'PATCH',
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                },
+                body: JSON.stringify(),
+
+            }).then((response) => response.json())
+                .then((json) => navigation.navigate('Profile'));
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     return (
         <View style={styles.screen}>
             <Header title="Thay đổi số điện thoại"></Header>
@@ -17,7 +34,7 @@ function Phone(props) {
                     maxLength={10}
                     label="Số điện thoại"
                     placeholder={"Mời nhập số điện thoại"}
-                    style={{backgroundColor: Colors.backgroundColor}}
+                    style={{ backgroundColor: Colors.backgroundColor }}
                     mode='outlined'
                     value={phonenumber}
                     onChangeText={phonenumber => setPhonenumber(phonenumber)}
@@ -31,7 +48,7 @@ function Phone(props) {
                     style={styles.button}
                     color='#4F5160'
                     labelStyle={{ fontSize: 20 }}
-                    onPress={() => navigation.goBack()}>
+                    onPress={ChangeButton}>
                     Xác nhận
                 </Button>
             </View>
