@@ -10,11 +10,15 @@ import {
   convertWeekToVietnamese,
   convertMonthToVietnamese,
 } from '../../ulti/Ulti';
+import {useDispatch, useSelector} from 'react-redux';
+import * as authActions from '../../store/actions/auth';
 
 function BirthScreen(props) {
   const navigation = useNavigation();
   const [date, setDate] = useState('');
   const [displayDay, setDisplayDay] = useState([]);
+  const dispatch = useDispatch();
+  const userID = useSelector(state => state.auth.userID);
 
 
   const ChangeButton = async () => {
@@ -100,7 +104,12 @@ function BirthScreen(props) {
           style={styles.button}
           color="#4F5160"
           labelStyle={{ fontSize: 20 }}
-          onPress={ChangeButton}>
+          onPress={() => {
+            dispatch(authActions.changeBirthday(userID, `${displayDay[3]}-${convertMonthToVietnamese(displayDay[1])}-${
+              displayDay[2]
+            }`));
+            navigation.navigate('Profile');
+          }}>
           Xác nhận
         </Button>
       </View>

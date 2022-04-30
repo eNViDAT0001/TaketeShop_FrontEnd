@@ -1,5 +1,5 @@
 import React, { useState, useRoute } from 'react';
-+import {
+import {
   Text, StyleSheet, View, Image, TouchableOpacity, ScrollView, TextInput,
   FlatList,
   Dimensions

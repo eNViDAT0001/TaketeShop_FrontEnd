@@ -7,9 +7,12 @@ import {
   BOTTOM_BAR_NAVIGATOR,
   LOGIN_NAVIGATOR,
 } from '../constants/NavigatorIndex';
+import { useDispatch } from 'react-redux';
+import * as authActions from '../store/actions/auth'
 
 function StartupScreen(props) {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const tryLogin = async () => {
@@ -25,7 +28,6 @@ function StartupScreen(props) {
         const {token, userID, expiryDate} = transformedData;
 
         const expirationDate = await new Date(expiryDate);
-
 
         if (expirationDate <= new Date() || !token || !userID) {
 
@@ -43,7 +45,7 @@ function StartupScreen(props) {
     };
 
     tryLogin();
-  }, []);
+  }, [dispatch]);
   return (
     <View style={styles.screen}>
       <View style={styles.imageContainer}>
