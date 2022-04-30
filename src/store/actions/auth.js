@@ -12,9 +12,29 @@ export const CHANGE_NAME = 'CHANGE_NAME';
 let timer;
 
 export const authenticate = (userId, token, expiryTime) => {
-  return dispatch => {
+  return async dispatch => {
     dispatch(setLogoutTimer(expiryTime));
-    dispatch({type: AUTHENTICATE, userId: userId, token: token});
+
+    const response = await fetch(`http://localhost:5000/user/${userId}`);
+
+    const resData = await response.json();
+    const error = resData.error;
+
+    if (error) {
+      throw new Error(resData.msg);
+    }
+
+
+    dispatch({type: LOGIN, user: {
+      token: token,
+      id: resData.userID,
+      name: resData.name,
+      sex: resData.gender,
+      birthday: resData.birthday,
+      email: resData.email,
+      avatar: resData.avatar,
+      role: resData.roles,
+    },});
   };
 };
 
@@ -70,6 +90,7 @@ export const signup = (
 
 export const login = (username, password) => {
   return async dispatch => {
+    console.log(username, password)
     const response = await fetch('http://localhost:5000/user/login', {
       method: 'POST',
       headers: {
@@ -88,7 +109,7 @@ export const login = (username, password) => {
       throw new Error(resData.msg);
     }
 
-    console.log(resData);
+    saveDataToStorage(resData.token, resData.userID, resData.expiredDay)
 
     dispatch({
       type: LOGIN,
@@ -137,8 +158,8 @@ const saveDataToStorage = (token, userId, expirationDate) => {
     'userData',
     JSON.stringify({
       token: token,
-      userId: userId,
-      expiryDate: expirationDate.toISOString(),
+      userID: userId,
+      expiryDate: expirationDate,
     }),
   );
 };

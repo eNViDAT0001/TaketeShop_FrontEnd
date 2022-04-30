@@ -1,4 +1,4 @@
-import {CHANGE_NAME, LOGIN} from '../actions/auth';
+import {AUTHENTICATE, CHANGE_NAME, LOGIN} from '../actions/auth';
 
 const initialState = {
   userID: '#0000',
@@ -38,5 +38,4 @@ export default (state = initialState, action) => {
       return state;
   }
   return state;
-}
-
+};

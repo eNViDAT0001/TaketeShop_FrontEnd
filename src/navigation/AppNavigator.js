@@ -35,7 +35,7 @@ function AppNavigator() {
   return (
     <NavigationContainer>
       <StackNavigator.Navigator
-        initialRouteName={LOGIN_NAVIGATOR}
+        initialRouteName={STARTUP_SCREEN}
         options={{
           headerStyle: {
             backgroundColor: Colors.primaryColor,

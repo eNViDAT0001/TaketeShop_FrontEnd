@@ -28,6 +28,8 @@ function ForgotPassword() {
           label="Email"
           mode="outlined"
           value={email}
+          style={{backgroundColor: Colors.backgroundColor}}
+
           onChangeText={email => setEmail(email)}
         />
       </View>
