@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Text, StyleSheet, View, Image, TouchableOpacity } from 'react-native'
-import { TextInput, Button,} from 'react-native-paper';
+import { TextInput, Button, } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import Header from '../../components/UI/Header';
 import Colors from '../../constants/Colors';
@@ -8,19 +8,38 @@ import Colors from '../../constants/Colors';
 
 
 function ChangeName(props) {
-    const [name, setName] = React.useState("");
-    const navigation = useNavigation()
+    const [name1, setName] = useState("");
+    const navigation = useNavigation();
+
+    const ChangeButton = () => {
+        if (!name1 ){
+            alert("Vui lòng nhập tên tài khoản");     
+        }else  try {
+            fetch('http://localhost:5000/user/'+'4'+'?field=name&value='+ name1, {
+                method: 'PATCH',
+                headers: {              
+                    'Content-type': 'application/json; charset=UTF-8',                                 
+                },
+                body: JSON.stringify(),
+               
+            }).then((response) => response.json())
+            .then(navigation.navigate('Profile'));                 
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     return (
         <View style={styles.screen}>
             <Header title="Thay đổi tên hiển thị"></Header>
             <View style={styles.screen1}>
-                <TextInput                    
+                <TextInput
                     label="Tên hiển thị"
                     placeholder={"Mời nhập tên hiển thị"}
-                    style={{backgroundColor: Colors.backgroundColor}}
+                    style={{ backgroundColor: Colors.backgroundColor }}
                     mode='outlined'
-                    value={name}
-                    onChangeText={name => setName(name)}
+                    value={name1}
+                    onChangeText={name1 => setName(name1)}
                 />
             </View>
 
@@ -31,7 +50,7 @@ function ChangeName(props) {
                     style={styles.button}
                     color='#4F5160'
                     labelStyle={{ fontSize: 20 }}
-                    onPress={() => navigation.goBack()}>
+                    onPress={ChangeButton}>
                     Xác nhận
                 </Button>
             </View>

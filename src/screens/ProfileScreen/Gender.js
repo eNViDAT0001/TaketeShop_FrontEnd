@@ -1,6 +1,6 @@
 import React, { useState, useRoute } from 'react';
-import { Text, StyleSheet, View, Image,  TouchableOpacity } from 'react-native'
-import { TextInput, Colors, IconButton ,Button} from 'react-native-paper';
+import { Text, StyleSheet, View, Image, TouchableOpacity } from 'react-native'
+import { TextInput, Colors, IconButton, Button } from 'react-native-paper';
 import { Dropdown } from 'react-native-element-dropdown';
 import { useNavigation } from '@react-navigation/native';
 import Header from '../../components/UI/Header';
@@ -10,9 +10,30 @@ const data = [
     { label: 'Nữ', value: '2' },
 ];
 
+
 function Gender(props) {
+
     const [value, setValue] = useState(null);
-    const navigation = useNavigation()
+    const navigation = useNavigation();
+
+    const ChangeButton = async () => {
+        try {
+            await fetch('http://localhost:5000/user/' + '4' + '?' + 'field=gender&value=' + value, {
+                method: 'PATCH',
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                },
+                body: JSON.stringify(),
+
+            }).then((response) => response.json())
+                .then((json) => navigation.navigate('Profile'));
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+
+
     return (
         <View style={styles.screen}>
             <Header title="Thay đổi giới tính"></Header>
@@ -29,7 +50,7 @@ function Gender(props) {
                     placeholder={'Chọn giới tính...'}
                     value={value}
                     onChange={item => {
-                        setValue(item.value);                        
+                        setValue(item.value);
                     }}
                 />
             </View>
@@ -40,10 +61,10 @@ function Gender(props) {
                     style={styles.button}
                     color='#4F5160'
                     labelStyle={{ fontSize: 20 }}
-                    onPress={() => navigation.navigate('Profile')}>
+                    onPress={ChangeButton}>
                     Xác nhận
                 </Button>
-            </View> 
+            </View>
         </View>
 
 
@@ -82,7 +103,7 @@ const styles = StyleSheet.create({
     itemList: {
         flex: 4,
     },
-   
+
     label: {
         position: 'absolute',
         backgroundColor: 'white',
