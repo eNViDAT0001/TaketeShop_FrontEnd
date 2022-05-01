@@ -276,8 +276,7 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   signup: {
-    top: 10,
-    padding: 20,
+    paddingHorizontal: 20
   },
   hidetext: {
     top: 120,
