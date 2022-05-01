@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
   },
   logo: {
     width: '100%',
-    height: '75%',
+    height: '110%',
   },
 
   input: {

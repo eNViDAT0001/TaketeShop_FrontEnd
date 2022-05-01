@@ -1,144 +1,173 @@
-import React,{ useLayoutEffect} from 'react';
-import { Text, StyleSheet, View, SafeAreaView, Image, TouchableOpacity, ScrollView } from 'react-native'
-import { useSelector, useDispatch } from 'react-redux';
-import { TextInput, Button, Colors, IconButton } from 'react-native-paper';
-import { useNavigation } from '@react-navigation/native';
-import { LOGIN_MAIN_SCREEN } from '../../constants/NavigatorIndex';
-import { Dropdown } from 'react-native-element-dropdown';
+import React, {useEffect, useLayoutEffect, useState} from 'react';
+import {
+  Text,
+  StyleSheet,
+  View,
+  SafeAreaView,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
+import {useSelector, useDispatch} from 'react-redux';
+import {TextInput, Button} from 'react-native-paper';
+import Colors from '../../constants/Colors';
+import {useNavigation} from '@react-navigation/native';
+import {LOGIN_MAIN_SCREEN} from '../../constants/NavigatorIndex';
+import {Dropdown} from 'react-native-element-dropdown';
 import CalendarPicker from 'react-native-calendar-picker';
-import { convertWeekToVietnamese, convertMonthToVietnamese } from '../../ulti/Ulti';
+import {
+  convertWeekToVietnamese,
+  convertMonthToVietnamese,
+} from '../../ulti/Ulti';
+import Card from '../../components/UI/Card';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const dataGender = [
-  { label: 'Nam', value: '1' },
-  { label: 'Nữ', value: '0' },
+  {label: 'Nam', value: '1'},
+  {label: 'Nữ', value: '0'},
 ];
 
-
 function SignUpScreen() {
-  const navigation = useNavigation()
-  const [username, setUsername] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [confirmpassword, setConfirmpassword] = React.useState("");
-  const [email, setEmail] = React.useState("");
-  const [name, setName] = React.useState("");
-  const [gender, setGender] = React.useState("");
-  const [birthday, setBirthday] = React.useState("");
-  const [SDT, setSDT] = React.useState("");
-  const [avatar, setAvatar] = React.useState("");
+  const navigation = useNavigation();
+  const [username, setUsername] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [confirmPassword, setConfirmPassword] = React.useState('');
+  const [email, setEmail] = React.useState('');
+  const [name, setName] = React.useState('');
+  const [gender, setGender] = React.useState('');
+  const [birthday, setBirthday] = React.useState('');
+  const [phone, setPhone] = React.useState('');
+  const [avatar, setAvatar] = React.useState('');
   const [showBirth, setShowBirth] = React.useState(false);
   const [displayDay, setDisplayDay] = React.useState([]);
 
-  const onDateChange = async (day) => {
-    await setBirthday(day);
+  const [user, setUser] = useState({
+    username: '',
+    password: '',
+    confirmPassword: '',
+    name: '',
+    email: '',
+    gender: '',
+    birthday: '',
+    phone: '',
+    avatar: '',
+  });
+
+  const onDateChange = async day => {
+    await setUser({...user, birthday: day});
   };
 
   useLayoutEffect(() => {
-    setDisplayDay(birthday.toString().split(' '));
-  }, [birthday]);
+    setDisplayDay(user.birthday.toString().split(' '));
+  }, [user.birthday]);
 
   const checkSignUp = () => {
-    if (!username) {
+    if (!user.username) {
       alert('Vui lòng nhập tên đăng nhập');
-    }
-    else if (!name) {
-      alert("Vui lòng nhập tên định danh");
-    }
-    else if (!gender) {
-      alert("Vui lòng chọn giới tính");
-    }
-    else if (!birthday) {
-      alert("Vui lòng chọn ngày sinh");
-    }
-    else if (!SDT) {
-      alert("Vui lòng nhập số điện thoại");
-    }
-    else if (!password) {
-      alert("Vui lòng nhập mật khẩu");
-    }
-    else if (!confirmpassword) {
-      alert("Vui lòng nhập mật khẩu xác nhận");
-    }
-    else if (!email) {
-      alert("Vui lòng nhập email");
-    }
-    else if (password !== confirmpassword) {
-      alert("Xác nhận mật khẩu không chính xác, vui lòng nhập lại");
-    }
-    else navigation.navigate('SuccesScreen');
-  }
-
-
+    } else if (!user.name) {
+      alert('Vui lòng nhập tên định danh');
+    } else if (!user.gender) {
+      alert('Vui lòng chọn giới tính');
+    } else if (!user.birthday) {
+      alert('Vui lòng chọn ngày sinh');
+    } else if (!user.phone) {
+      alert('Vui lòng nhập số điện thoại');
+    } else if (!user.password) {
+      alert('Vui lòng nhập mật khẩu');
+    } else if (!user.confirmPassword) {
+      alert('Vui lòng nhập mật khẩu xác nhận');
+    } else if (!user.email) {
+      alert('Vui lòng nhập email');
+    } else if (user.password !== user.confirmPassword) {
+      alert('Xác nhận mật khẩu không chính xác, vui lòng nhập lại');
+    } else navigation.navigate('SuccesScreen');
+  };
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.maintext}>Đăng ký</Text>
       <ScrollView style={styles.signup}>
+        <Text style={styles.maintext}>Đăng ký</Text>
+
         <TextInput
-          style={{ marginBottom: 10 }}
-          label="Username"
-          mode='outlined'
-          value={username}
-          onChangeText={username => setUsername(username)}
+          style={{marginBottom: 10, backgroundColor: Colors.backgroundColor}}
+          label="Tên đăng nhập"
+          mode="outlined"
+          value={user.username}
+          onChangeText={txt => setUser({...user, username: txt})}
         />
         <TextInput
-          style={{ marginBottom: 10 }}
-          label="Password"
-          mode='outlined'
+          style={{marginBottom: 10, backgroundColor: Colors.backgroundColor}}
+          label="Mật khẩu"
+          mode="outlined"
           secureTextEntry={true}
-          value={password}
-          onChangeText={password => setPassword(password)}
+          value={user.password}
+          onChangeText={txt => setUser({...user, password: txt})}
         />
         <TextInput
-          style={{ marginBottom: 10 }}
-          label="Confirm password"
+          style={{marginBottom: 10, backgroundColor: Colors.backgroundColor}}
+          label="Xác nhận mật khẩu"
           secureTextEntry={true}
-          mode='outlined'
-          value={confirmpassword}
-          onChangeText={confirmpassword => setConfirmpassword(confirmpassword)}
+          mode="outlined"
+          value={user.confirmPassword}
+          onChangeText={txt => setUser({...user, confirmPassword: txt})}
         />
         <TextInput
-          style={{ marginBottom: 10 }}
+          style={{marginBottom: 10, backgroundColor: Colors.backgroundColor}}
           label="Email"
-          mode='outlined'
-          value={email}
-          onChangeText={email => setEmail(email)}
+          mode="outlined"
+          value={user.email}
+          onChangeText={txt => setUser({...user, email: txt})}
         />
         <TextInput
-          style={{ marginBottom: 10 }}
-          label="Tên định danh "
-          mode='outlined'
-          value={name}
-          onChangeText={name => setName(name)}
+          style={{marginBottom: 10, backgroundColor: Colors.backgroundColor}}
+          label="Họ và tên "
+          mode="outlined"
+          value={user.name}
+          onChangeText={txt => setUser({...user, name: txt})}
         />
-        {/* Gender */}
-        <Dropdown
-          style={styles.dropdown}
-          placeholderStyle={styles.placeholderStyle}
-          selectedTextStyle={styles.selectedTextStyle}
-          iconStyle={styles.iconStyle}
-          data={dataGender}
-          maxHeight={130}
-          labelField="label"
-          valueField="gender"
-          placeholder={'Chọn giới tính...'}
-          value={gender}
-          onChange={item => {
-            setGender(item.dataGender);
-          }}
-        />
-        <TouchableOpacity onPress={() => setShowBirth(!showBirth)}>
-          <TextInput
-            style={{ marginBottom: 10 }}            
-            label={birthday ? `${convertWeekToVietnamese(displayDay[0])} ${displayDay[2]
-              }/${convertMonthToVietnamese(displayDay[1])}/${displayDay[3]}`
-              : 'Vui lòng chọn ngày'}
-            mode='outlined'            
-            editable = {false}
-            onChangeText={birthday => setBirthday(birthday)}
+        <View
+          style={{
+            flexDirection: 'row',
+            flex: 1,
+            width: '100%',
+            justifyContent: 'space-between',
+          }}>
+          <Dropdown
+            style={styles.dropdown}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            iconStyle={styles.iconStyle}
+            data={dataGender}
+            maxHeight={130}
+            labelField="label"
+            valueField="gender"
+            placeholder={'Giới tính...'}
+            value={user.gender}
+            onChange={item => {
+              setUser({...user, gender: item.dataGender});
+            }}
           />
-          {/* Show calendar */}
-          {showBirth ?
-          (<View >
+          <View style={{flex:1.8}}>
+            <TouchableOpacity onPress={() => setShowBirth(!showBirth)}>
+              <View
+                style={styles.birthday}>
+                <Text style={{fontSize: 20}}>
+                  {user.birthday
+                    ? `${convertWeekToVietnamese(displayDay[0])} ${
+                        displayDay[2]
+                      }/${convertMonthToVietnamese(displayDay[1])}/${
+                        displayDay[3]
+                      }`
+                    : 'Ngày sinh'}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+        </View>
+        {/* Show calendar */}
+
+        {showBirth ? (
+          <View>
             <CalendarPicker
               weekdays={[
                 'Chủ nhật',
@@ -163,7 +192,6 @@ function SignUpScreen() {
                 'Tháng Mười Một',
                 'Tháng Mười Hai',
               ]}
-  
               selectYearTitle={'Chọn năm'}
               selectMonthTitle={'Chọn tháng trong năm '}
               previousTitle="Trước"
@@ -171,93 +199,94 @@ function SignUpScreen() {
               selectedDayColor={'#4F5160'}
               onDateChange={onDateChange}
             />
-          </View>) : null
-           
-          }
-        </TouchableOpacity>
-
+          </View>
+        ) : null}
         <TextInput
-          style={{ marginBottom: 10 }}
+          style={{marginBottom: 10, backgroundColor: Colors.backgroundColor}}
           keyboardType="numeric"
           label="Số điện thoại "
-          mode='outlined'
-          value={SDT}
-          onChangeText={SDT => setSDT(SDT)}
+          mode="outlined"
+          value={user.phone}
+          onChangeText={txt => setUser({...user, phone: txt})}
         />
-        <TextInput
-          style={{ marginBottom: 10 }}
-          label="Uri avatar..."
-          mode='outlined'
-          value={avatar}
-          onChangeText={avatar => setAvatar(avatar)}
-        />
-
+        <TouchableOpacity
+          activeOpacity={0.9}
+          onPress={() => console.log('Adddddd')}>
+          <Card style={styles.addImageContainer}>
+            <AntDesign
+              style={styles.addIcon}
+              name="pluscircle"
+              color={'#9098B1'}
+              size={40}
+            />
+          </Card>
+        </TouchableOpacity>
 
         <View style={styles.buttonContainer}>
           <Button
             mode="contained"
             contentStyle={styles.buttonText}
             style={styles.button}
-            color='#4f5160'
-            labelStyle={{ fontSize: 20 }}
+            color="#4f5160"
+            labelStyle={{fontSize: 20}}
             onPress={checkSignUp}>
             Đăng ký
           </Button>
         </View>
 
         <View style={styles.containertext}>
-          <Text style={styles.text1}>
-            Đã có tài khoản ?
-          </Text>
+          <Text style={styles.text1}>Đã có tài khoản ?</Text>
           <TouchableOpacity
-            onPress={() => navigation.navigate(LOGIN_MAIN_SCREEN)} >
-            <Text style={styles.text2}>
-              Đăng nhập
-            </Text>
+            onPress={() => navigation.navigate(LOGIN_MAIN_SCREEN)}>
+            <Text style={styles.text2}>Đăng nhập</Text>
           </TouchableOpacity>
         </View>
-
-
       </ScrollView>
-
-
-
-    </SafeAreaView >
+    </SafeAreaView>
   );
 }
 
-
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
     flex: 1,
     backgroundColor: '#fffff',
   },
+  addImageContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: 5,
+    borderRadius: 10,
+    borderWidth: 1,
+    height: 100,
+    width: 90,
+  },
   containertext: {
     flexDirection: 'row',
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
   text1: {
     marginLeft: 100,
-    color: "black",
+    color: 'black',
     fontSize: 20,
   },
   text2: {
     marginLeft: 10,
     fontWeight: 'bold',
     textDecorationLine: 'underline',
-    color: "blue",
+    color: 'blue',
     fontSize: 20,
   },
   maintext: {
     top: 10,
-    marginLeft: 10,
+    margin: 10,
+    marginLeft: 0,
     fontWeight: 'bold',
     fontSize: 32,
-    color: 'black'
+    color: 'black',
   },
   signup: {
-    top: 10
+    top: 10,
+    padding: 20,
   },
   hidetext: {
     top: 120,
@@ -268,13 +297,26 @@ const styles = StyleSheet.create({
   },
   dropdown: {
     marginBottom: 10,
-    height: 60,
+    marginRight: 20,
+    height: 55,
     borderColor: 'gray',
-    borderWidth: 0.5,
+    borderWidth: 1,
     paddingHorizontal: 8,
-    backgroundColor: '#f6f6f6',
-    borderColor: 'black',
+    backgroundColor: Colors.backgroundColor,
     borderRadius: 5,
+    flex: 1,
+  },
+  birthday: {
+    marginBottom: 10,
+    height: 55,
+    borderColor: 'gray',
+    borderWidth: 1,
+    paddingHorizontal: 8,
+    backgroundColor: Colors.backgroundColor,
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    flex: 1,
   },
   placeholderStyle: {
     fontSize: 17,
@@ -285,7 +327,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     margin: 5,
     borderRadius: 20,
-    color: '#4f5160'
+    color: '#4f5160',
   },
   button: {
     height: 50,
@@ -308,8 +350,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: '#4f5160',
   },
-
 });
 
 export default SignUpScreen;
-
