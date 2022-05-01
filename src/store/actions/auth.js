@@ -131,7 +131,7 @@ export const login = (username, password) => {
         email: resData.email,
         avatar: resData.avatar,
         role: resData.roles,
-        phone: resData[0].phone,
+        phone: resData.phone,
 
       },
     });

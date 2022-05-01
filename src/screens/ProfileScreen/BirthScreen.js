@@ -20,25 +20,6 @@ function BirthScreen(props) {
   const dispatch = useDispatch();
   const userID = useSelector(state => state.auth.userID);
 
-
-  const ChangeButton = async () => {
-    if (!date ){
-      alert("Vui lòng chọn ngày sinh");     
-  }else try {
-      await fetch('http://localhost:5000/user/' + '4' + '?' + 'field=birthday&value=' + date, {
-        method: 'PATCH',
-        headers: {
-          'Content-type': 'application/json; charset=UTF-8',
-        },
-        body: JSON.stringify(),
-
-      }).then((response) => response.json())
-        .then(navigation.navigate('Profile'));
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
   const onDateChange = async (day) => {
     await setDate(day);
   };
