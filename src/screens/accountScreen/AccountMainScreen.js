@@ -5,10 +5,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import Colors from '../../constants/Colors';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import Form1 from './Form';
-import { ADDRESS_SCREEN,ADD_ADDRESS_SCREEN,PROFILE_NAVIGATOR} from '../../constants/NavigatorIndex';
-
+import { ADDRESS_SCREEN,ADD_ADDRESS_SCREEN,LOGIN_MAIN_SCREEN,LOGIN_NAVIGATOR,PROFILE_NAVIGATOR, STARTUP_SCREEN} from '../../constants/NavigatorIndex';
+import * as authActions from '../../store/actions/auth'
 
 function AccountMainScreen() {
+    const dispatch = useDispatch();
     const navigation = useNavigation()
     return (
         <ScrollView style={styles.screen}>
@@ -44,7 +45,7 @@ function AccountMainScreen() {
              styles={styles.itemsContainer}
                 icons='logout'
                 titletext='Đăng xuất'
-                onPress={() => navigation.navigate('LoginNavigator')}
+                onPress={() => {dispatch(authActions.logout); navigation.navigate(LOGIN_NAVIGATOR)}}
             />
 
         </ScrollView>

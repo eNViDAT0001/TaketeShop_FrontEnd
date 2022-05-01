@@ -7,7 +7,7 @@ import SearchPage from './SearchPage';
 import HomePage from './HomePage';
 import { SEARCH_BAR_HEIGHT } from '../../constants/fontsize';
 import { useNavigation } from '@react-navigation/native';
-import { NOTIFICATION_SCREEN } from '../../constants/NavigatorIndex';
+import { NOTIFICATION_SCREEN, WISHLIST_SCREEN } from '../../constants/NavigatorIndex';
 
 function HomeMainScreen() {
   const navigation = useNavigation();
@@ -19,6 +19,7 @@ function HomeMainScreen() {
     searchQuery === '' ? <HomePage /> : <SearchPage keyword={searchQuery} />;
 
   const onNotifyClickHandler = () => navigation.navigate(NOTIFICATION_SCREEN);
+  const onWishlistClickHandler = () => navigation.navigate(WISHLIST_SCREEN);
 
 
   return (
@@ -34,7 +35,7 @@ function HomeMainScreen() {
                 value={searchQuery}></Searchbar>
               <IconButton
                 icon="cards-heart-outline"
-                onPress={() => alert('This is a Message button!')}
+                onPress={onWishlistClickHandler}
                 color={Colors.iconColor}
               />
               <IconButton

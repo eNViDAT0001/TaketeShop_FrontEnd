@@ -1,21 +1,18 @@
 import React from 'react';
 import {
-  Text,
-  StyleSheet,
-  View,
-  SafeAreaView,
-  KeyboardAvoidingView,
-  TouchableOpacity,
+  Text, StyleSheet, View, SafeAreaView, KeyboardAvoidingView, TouchableOpacity,
 } from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
-import {TextInput, Button} from 'react-native-paper';
-import {useNavigation} from '@react-navigation/native';
+import { useSelector, useDispatch } from 'react-redux';
+import { TextInput, Button } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
 import Colors from '../../constants/Colors';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 function ForgotPassword() {
   const navigation = useNavigation();
   const [email, setEmail] = React.useState('');
   return (
+
     <SafeAreaView style={styles.container}>
       <Text style={styles.maintext}>Quên mật khẩu</Text>
       <Text style={styles.hidetext}>
@@ -25,9 +22,12 @@ function ForgotPassword() {
 
       <View style={styles.login}>
         <TextInput
+          style={{ marginBottom: 10 }}
           label="Email"
           mode="outlined"
           value={email}
+          style={{backgroundColor: Colors.backgroundColor}}
+
           onChangeText={email => setEmail(email)}
         />
       </View>
@@ -37,16 +37,17 @@ function ForgotPassword() {
           contentStyle={styles.buttonText}
           style={styles.button}
           color={Colors.primaryColor}
-          labelStyle={{fontSize: 20}}
+          labelStyle={{ fontSize: 20 }}
           onPress={() => navigation.navigate('SuccesScreen')}>
           Đăng ký
         </Button>
       </View>
 
-      <KeyboardAvoidingView  style={styles.bottom} behavior="padding" enabled>
+      <View style={styles.bottom} >
+
         <View style={styles.containertext}>
           <Text style={styles.text1}>Đã nhớ lại mật khẩu ?</Text>
-          <TouchableOpacity onPress={() => navigation.popToTop()}>
+          <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
             <Text style={styles.text2}>Đăng nhập</Text>
           </TouchableOpacity>
         </View>
@@ -57,8 +58,10 @@ function ForgotPassword() {
             <Text style={styles.text2}>Đăng ký</Text>
           </TouchableOpacity>
         </View>
-      </KeyboardAvoidingView>
+      </View>
     </SafeAreaView>
+
+
   );
 }
 
@@ -102,8 +105,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#9B9B9B',
   },
-  bottom:{
-      flex: 1,
+  bottom: {
+    bottom: 200
   },
   login: {
     top: 130,

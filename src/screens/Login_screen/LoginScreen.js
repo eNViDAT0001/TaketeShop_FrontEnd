@@ -1,107 +1,150 @@
-import React, { useState } from 'react';
-import { Text, StyleSheet, View, SafeAreaView, Image, TouchableOpacity } from 'react-native'
-import { useSelector, useDispatch } from 'react-redux';
-import { TextInput, Button, IconButton } from 'react-native-paper';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
-import { FORGOT_PASSWORD_SCREEN, BOTTOM_BAR_NAVIGATOR } from '../../constants/NavigatorIndex';
+import React, {useCallback, useEffect, useReducer, useState} from 'react';
+import {
+  Text,
+  StyleSheet,
+  View,
+  SafeAreaView,
+  Image,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
+import {useSelector, useDispatch} from 'react-redux';
+import {
+  TextInput,
+  Button,
+  IconButton,
+  ActivityIndicator,
+} from 'react-native-paper';
+import {NavigationContainer, useNavigation} from '@react-navigation/native';
+import {
+  FORGOT_PASSWORD_SCREEN,
+  BOTTOM_BAR_NAVIGATOR,
+} from '../../constants/NavigatorIndex';
 import ImageShow from '../../components/ImageShow';
 import Colors from '../../constants/Colors';
-
+import * as authActions from '../../store/actions/auth';
 
 function LoginScreen() {
-  const navigation = useNavigation()
-  const [username, setUsername] = React.useState("");
-  const [password, setPassword] = React.useState("");
+  const [username, setUsername] = React.useState('');
+  const [password, setPassword] = React.useState('');
 
-  const [currentImage, setCurrentImage] = React.useState();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    if (error) {
+      Alert.alert('An Error Occurred!', error + ', please try again!', [
+        {text: 'Okay'},
+      ]);
+    }
+  }, [error]);
+
+  const authHandler = async () => {
+    const action = authActions.login(
+      username,
+      password,
+    );
+
+    setError(null);
+    setIsLoading(true);
+    try {
+      await dispatch(action);
+      navigation.navigate(BOTTOM_BAR_NAVIGATOR);
+    } catch (err) {
+      setError(err.message);
+      setIsLoading(false);
+    }
+  };
+
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.imageContainer}>
         <Image
           style={styles.logo}
-          source={require('../../../assets/images/logo1.png')}
-        ></Image>
+          source={require('../../../assets/images/img_appLogo.png')}></Image>
       </View>
       <View>
-
         <View style={styles.containertextinput}>
           <TextInput
-            label="username"
-            mode='outlined'
+            label="Tên đăng nhập"
+            mode="outlined"
             value={username}
-            onChangeText={username => setUsername(username)}
+            style={{backgroundColor: Colors.backgroundColor}}
+            autoCapitalize="none"
+            errorText="Định dạng tên đăng nhập không đúng"
+            onChangeText={(txt) => setUsername(txt)}
+            initialValue=""
           />
 
           <TextInput
-            label="password"
-            mode='outlined'
+            label="Mật khẩu"
+            mode="outlined"
             value={password}
-            secureTextEntry={true}
-            onChangeText={password => setPassword(password)}
+            secureTextEntry
+            required
+            minLength={5}
+            style={{backgroundColor: Colors.backgroundColor}}
+            autoCapitalize="none"
+            errorText="Định dạng mật khẩu không đúng"
+            onChangeText={(txt) => setPassword(txt)}
+            initialValue=""
+
           />
         </View>
         <View style={styles.forgotpasscontainer}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate(FORGOT_PASSWORD_SCREEN)}
-          >
-            <Text style={styles.press}
-            > Quên mật khẩu ?</Text>
+          <TouchableOpacity onPress={() => navigation.navigate(FORGOT_PASSWORD_SCREEN)}>
+            <Text style={styles.press}> Quên mật khẩu ?</Text>
           </TouchableOpacity>
         </View>
 
-
         <View style={styles.buttonContainer}>
-          <Button
-            mode="contained"
-            contentStyle={styles.buttonText}
-            style={styles.button}
-            color={Colors.primaryColor}
-            labelStyle={{fontSize: 20}}
-            onPress={() => navigation.navigate(BOTTOM_BAR_NAVIGATOR)}>
+          {isLoading ? (
+            <ActivityIndicator
+              ize="small"
+              color={Colors.primary}></ActivityIndicator>
+          ) : (
+            <Button
+              mode="contained"
+              contentStyle={styles.buttonText}
+              style={styles.button}
+              color={Colors.primaryColor}
+              labelStyle={{fontSize: 20}}
+              onPress={authHandler}>
               Đăng nhập
-          </Button>
+            </Button>
+          )}
         </View>
 
         <View style={styles.containertext}>
-          <Text style={styles.text1}>
-            Không có tài khoản ?
-          </Text>
+          <Text style={styles.text1}>Không có tài khoản ?</Text>
 
-          <TouchableOpacity
-            onPress={() => navigation.navigate('SignUpScreen')}  >
-            <Text style={styles.text2}>
-              Đăng ký
-            </Text>
+          <TouchableOpacity onPress={() => navigation.navigate('SignUpScreen')}>
+            <Text style={styles.text2}>Đăng ký</Text>
           </TouchableOpacity>
         </View>
-
-      </View >
+      </View>
 
       <View style={styles.bottom}>
-        <Text style={styles.text3}>
-          Đăng nhập với
-        </Text>
+        <Text style={styles.text3}>Đăng nhập với</Text>
         <View style={styles.ggfb}>
           <IconButton
             icon="google"
-            color= "red"
+            color="red"
             size={20}
             onPress={() => console.log('Pressed')}
           />
           <IconButton
             icon="facebook"
-            color= "blue"
+            color="blue"
             size={20}
             onPress={() => console.log('Pressed')}
           />
-
         </View>
-
       </View>
-
-    </SafeAreaView >
-
+    </SafeAreaView>
   );
 }
 
@@ -114,37 +157,38 @@ const styles = StyleSheet.create({
   },
   containertextinput: {
     padding: 15,
-    paddingBottom: 5
+    paddingBottom: 5,
   },
   containertext: {
     flexDirection: 'row',
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
   text3: {
-    color: "black",
+    color: 'black',
     fontSize: 20,
   },
- 
+
   text1: {
     marginLeft: 100,
-    color: "black",
+    color: 'black',
     fontSize: 20,
   },
   text2: {
     marginLeft: 10,
     fontWeight: 'bold',
     textDecorationLine: 'underline',
-    color: "blue",
+    color: 'blue',
     fontSize: 20,
   },
   imageContainer: {
     width: '100%',
+    padding: 15,
+    alignItems: 'center',
     flex: 1,
-    overflow: 'hidden'
   },
   logo: {
-    width: '100%',
-    height: '100%',
+    width: '95%',
+    height: '105%',
   },
 
   input: {
@@ -157,18 +201,18 @@ const styles = StyleSheet.create({
   forgotpasscontainer: {
     alignItems: 'flex-end',
     marginBottom: 10,
-    marginRight: 5
+    marginRight: 5,
   },
   press: {
     fontWeight: 'bold',
     textDecorationLine: 'underline',
-    color: "black",
+    color: 'black',
     fontSize: 22,
   },
   buttonContainer: {
     margin: 5,
     borderRadius: 20,
-    color: '#4f5160'
+    color: '#4f5160',
   },
   button: {
     height: 50,
@@ -180,12 +224,10 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     alignSelf: 'center',
   },
-   ggfb: {
+  ggfb: {
     flexDirection: 'row',
     alignSelf: 'center',
   },
 });
 
 export default LoginScreen;
-
-

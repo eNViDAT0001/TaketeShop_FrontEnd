@@ -17,12 +17,12 @@ import Comment from '../../components/Comment';
 import Card from '../../components/UI/Card';
 import Colors from '../../constants/Colors';
 import { COMMENT_SCREEN } from '../../constants/NavigatorIndex';
-import {BESTSELLER_DUMMY_DATA} from '../../dummy_database/dummy-data';
+import {BESTSELLER_DUMMY_DATA, PRODUCT_ITEMS_DUMMY_DATA} from '../../dummy_database/dummy-data';
 // import {Rating} from 'react-native-ratings';
 function ProductDetailScreen(props) {
   const navigation = useNavigation();
   const route = useRoute();
-  const product = route.params.product;
+  const id = route.params.id;
 
   const onCommentPress = () => {
     navigation.navigate(COMMENT_SCREEN)
@@ -30,7 +30,7 @@ function ProductDetailScreen(props) {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerTitle: product.name,
+      headerTitle: '',
       headerStyle: {
         position: 'relative',
         zIndex: 1,
@@ -67,8 +67,9 @@ function ProductDetailScreen(props) {
           <Image
             style={styles.slider}
             source={{
-              uri: 'https://images.ctfassets.net/hrltx12pl8hq/7yQR5uJhwEkRfjwMFJ7bUK/dc52a0913e8ff8b5c276177890eb0129/offset_comp_772626-opt.jpg?fit=fill&w=800&h=300',
-            }}></Image>
+              uri: 'https://www.thaistreet.com.vn/wp-content/uploads/2021/04/Food.jpg',
+            }}
+            ></Image>
         </View>
         <View style={styles.title}>
           <Text style={styles.titleText}>Product Name</Text>
@@ -119,7 +120,7 @@ function ProductDetailScreen(props) {
             title={'Bạn cũng có thể thích'}
             horizontal={true}
             numColum={1}
-            itemList={BESTSELLER_DUMMY_DATA}
+            itemList={PRODUCT_ITEMS_DUMMY_DATA}
           />
         </Card>
       </ScrollView>

@@ -1,21 +1,26 @@
-import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
-import {Text, StyleSheet, View, Image, TouchableOpacity} from 'react-native';
-import {Button, IconButton, TextInput} from 'react-native-paper';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { Text, StyleSheet, View, Image, TouchableOpacity } from 'react-native';
+import { Button, IconButton, TextInput } from 'react-native-paper';
 import FormText from '../accountScreen/FormText';
 import CalendarPicker from 'react-native-calendar-picker';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import Header from '../../components/UI/Header';
 import Colors from '../../constants/Colors';
 import {
   convertWeekToVietnamese,
   convertMonthToVietnamese,
 } from '../../ulti/Ulti';
+import {useDispatch, useSelector} from 'react-redux';
+import * as authActions from '../../store/actions/auth';
+
 function BirthScreen(props) {
   const navigation = useNavigation();
   const [date, setDate] = useState('');
   const [displayDay, setDisplayDay] = useState([]);
+  const dispatch = useDispatch();
+  const userID = useSelector(state => state.auth.userID);
 
-  const onDateChange = async day => {
+  const onDateChange = async (day) => {
     await setDate(day);
   };
 
@@ -62,6 +67,7 @@ function BirthScreen(props) {
               'Tháng Mười Một',
               'Tháng Mười Hai',
             ]}
+
             selectYearTitle={'Chọn năm'}
             selectMonthTitle={'Chọn tháng trong năm '}
             previousTitle="Trước"
@@ -78,8 +84,13 @@ function BirthScreen(props) {
           contentStyle={styles.buttonText}
           style={styles.button}
           color="#4F5160"
-          labelStyle={{fontSize: 20}}
-          onPress={() => navigation.goBack()}>
+          labelStyle={{ fontSize: 20 }}
+          onPress={() => {
+            dispatch(authActions.changeBirthday(userID, `${displayDay[3]}-${convertMonthToVietnamese(displayDay[1])}-${
+              displayDay[2]
+            }`));
+            navigation.navigate('Profile');
+          }}>
           Xác nhận
         </Button>
       </View>
@@ -120,7 +131,8 @@ const styles = StyleSheet.create({
   buttonContainer: {
     margin: 5,
     borderRadius: 40,
-    color: '#4f5160',
+
+    color: '#4f5160'
   },
   button: {
     height: 50,

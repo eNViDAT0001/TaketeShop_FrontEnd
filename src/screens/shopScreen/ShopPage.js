@@ -1,40 +1,74 @@
-import React, {useState} from 'react';
-import {View, StyleSheet} from 'react-native';
+import React, {useEffect, useState, useCallback} from 'react';
+import {View, StyleSheet, ActivityIndicator, Text, Button} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import CategoryHolder from '../../components/CategoryHolder';
 import CategoryNameHolder from '../../components/CategoryNameHolder';
-import {
-  FORYOU_DUMMY_DATA,
-} from '../../dummy_database/dummy-data';
-import { useNavigation } from '@react-navigation/native';
-import { CATEGORY_DETAIL_SCREEN } from '../../constants/NavigatorIndex';
+import {PRODUCT_ITEMS_DUMMY_DATA} from '../../dummy_database/dummy-data';
+import {useNavigation} from '@react-navigation/native';
+import {CATEGORY_DETAIL_SCREEN} from '../../constants/NavigatorIndex';
+import Colors from '../../constants/Colors';
 
 function ShopPage(props) {
+  const products = useSelector(state => state.products.availableProducts);
+  const [categoryHolder, setCategoryHolder] = useState(
+    useSelector(state => state.products.categories)[0],
+  );
+
   const navigation = useNavigation();
-  const [categoryHolder, setCategoryHolder] = useState('');
-    
-  const onSelectedCategory = () => navigation.navigate(CATEGORY_DETAIL_SCREEN);
+
+  const cagetoryItems = availableProducts => {
+    const transformedShopItems = [];
+    for (const key in availableProducts) {
+      transformedShopItems.push({
+        productID: products[key].productID,
+        categoryID: products[key].categoryID,
+        name: products[key].name,
+        price: products[key].price,
+        quantity: products[key].quantity,
+        discount: products[key].discount,
+        discountPrice:
+          products[key].price -
+          (products[key].discount / 100).toFixed(2) * products[key].price,
+        image: products[key].image[0],
+        category: products[key].category,
+        provider: products[key].provider,
+        liked: products[key].liked,
+      });
+    }
+    return transformedShopItems.filter(
+      item => item.categoryID === categoryHolder.categoryID,
+    );
+  };
+
   const onClickCategoryHandler = category => {
     setCategoryHolder(category);
   };
+
   return (
-    <View style={{... styles.screen, ...props.style}}>
+    <View style={{...styles.screen, ...props.style}}>
       <CategoryNameHolder
         style={styles.nameHolder}
         onSelect={onClickCategoryHandler}></CategoryNameHolder>
       <CategoryHolder
-        onCategorySelect={onSelectedCategory}
+        onCategorySelect={() =>
+          navigation.navigate(CATEGORY_DETAIL_SCREEN, {
+            id: categoryHolder.categoryID,
+            title: categoryHolder.name,
+            type: 'NORMAL',
+          })
+        }
         style={styles.categoryHolder}
-        title={categoryHolder}
+        title={categoryHolder.name}
         horizontal={false}
         numColum={2}
-        itemList={FORYOU_DUMMY_DATA}
+        itemList={cagetoryItems(products).slice(0, 20)}
       />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  centered: {flex: 1, justifyContent: 'center', alignItems: 'center'},
   screen: {
     flex: 1,
     flexDirection: 'row',

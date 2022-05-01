@@ -1,6 +1,5 @@
 import React from 'react';
 import {StyleSheet, Image, Text, View, FlatList} from 'react-native';
-import {Card} from 'react-native-paper';
 import StarRating from 'react-native-star-rating';
 const IMAGE_TEMP =
   'https://cms.dmpcdn.com/article/2021/04/02/a1ca8540-936b-11eb-8b27-db7c51a78b67_original.jpg';

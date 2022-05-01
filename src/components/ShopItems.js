@@ -13,10 +13,10 @@ import Colors from '../constants/Colors';
 import {PRODUCT_DETAIL_SCREEN} from '../constants/NavigatorIndex';
 import Card from './UI/Card';
 
-function ShopItems(props) {
+  function ShopItems(props) {
   const navigation = useNavigation();
   const onItemClick = () =>
-    navigation.navigate(PRODUCT_DETAIL_SCREEN, {product: props.item});
+    navigation.navigate(PRODUCT_DETAIL_SCREEN, {product: props.item.id});
   let TouchableCmp = TouchableOpacity;
 
   if (Platform.OS === 'android' && Platform.Version >= 21) {
@@ -26,7 +26,7 @@ function ShopItems(props) {
   return (
     <View style={{...styles.screen, ...props.style}}>
       <Card style={styles.product}>
-        <View>
+        <View style={{borderRadius: 5,}}>
           <TouchableCmp onPress={onItemClick} useForeground>
             <View style={{padding: 10}}>
               <View style={styles.imageContainer}>

@@ -1,22 +1,32 @@
-import {CREATE_PRODUCT, SET_PRODUCTS} from '../actions/products';
+import {PRODUCT_ITEMS_DUMMY_DATA} from '../../dummy_database/dummy-data';
+import ProductModel from '../../models/ProductModel';
+import {CREATE_PRODUCT, SET_CATEGORIES, SET_PRODUCTS} from '../actions/products';
 
 const initialState = {
   availableProducts: [],
+  wishlistProducts: [],
+  categories: [],
   userProducts: [],
   recommenderProducts: [],
   filteredProducts: [],
   favoriteProducts: [],
 };
-
-const productReducer = (state = initialState, action) => {
+export default (state = initialState, action) => {
   switch (action.type) {
     case SET_PRODUCTS:
       return {
+        ...state,
         availableProducts: action.products,
-        userProducts: action.products.filter(prod => prod.ownerId === 5),
+        wishlistProducts: action.products.filter(prod => prod.liked === true),
+      };
+    case SET_CATEGORIES:
+      return {
+        ...state,
+        categories: action.categories,
+        // userProducts: action.products.filter(prod => prod.ownerId === 5),
       };
     case CREATE_PRODUCT:
-      const newProduct = new Product(
+      const newProduct = new ProductModel(
         resData[key].id,
         action.productData.category_id,
         action.productData.user_id,
@@ -32,9 +42,8 @@ const productReducer = (state = initialState, action) => {
       return {
         ...state,
         availableProducts: state.availableProducts.concat(newProduct),
-        userProducts: state.userProducts.concat(newProduct),
+        // userProducts: state.userProducts.concat(newProduct),
       };
   }
+  return state;
 };
-
-export default productReducer;

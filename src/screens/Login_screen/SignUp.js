@@ -12,6 +12,27 @@ function SignUpScreen() {
   const [password, setPassword] = React.useState("");
   const [confirmpassword, setConfirmpassword] = React.useState("");
   const [email, setEmail] = React.useState("");
+
+  const checkSignUp = () =>{    
+    if (!username)  {
+      alert('Vui lòng nhập tên đăng nhập');      
+    }
+    else if (!password)  {
+      alert("Vui lòng nhập mật khẩu");      
+    }
+    else if (!confirmpassword) {
+      alert("Vui lòng nhập mật khẩu xác nhận");      
+    }
+    else if (!email)  {
+      alert("Vui lòng nhập email");      
+    }
+    else if (password !== confirmpassword) {
+      alert("Xác nhận mật khẩu không chính xác, vui lòng nhập lại");      
+    }
+    else navigation.navigate('SuccesScreen');
+
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.maintext}>Đăng ký</Text>     
@@ -53,10 +74,11 @@ function SignUpScreen() {
             style={styles.button}
             color='#4f5160'
             labelStyle={{fontSize: 20}}
-            onPress={() => navigation.navigate('SuccesScreen')}>
+            onPress={checkSignUp}>
               Đăng ký
           </Button>
         </View>      
+        
       <View style={styles.containertext}>
         <Text style={styles.text1}>
          Đã có tài khoản ?
