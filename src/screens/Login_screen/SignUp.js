@@ -315,7 +315,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   buttonContainer: {
-    margin: 5,
+    marginVertical: 5,
     borderRadius: 20,
     color: '#4f5160',
   },
@@ -325,6 +325,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     height: '100%',
+    width: '100%'
   },
 
   Daytextcontainer: {
