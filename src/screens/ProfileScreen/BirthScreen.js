@@ -25,7 +25,7 @@ function BirthScreen(props) {
     if (!date ){
       alert("Vui lòng chọn ngày sinh");     
   }else try {
-      await fetch('http://localhost:5000/user/' + '4' + '?' + 'field=birthday&value=' + date, {
+      await fetch('http://localhost:5000/user/' + userID + '?' + 'field=birthday&value=' + date, {
         method: 'PATCH',
         headers: {
           'Content-type': 'application/json; charset=UTF-8',

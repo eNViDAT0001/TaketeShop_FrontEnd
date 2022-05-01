@@ -187,8 +187,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   logo: {
-    width: '95%',
-    height: '105%',
+    width: '100%',
+    height: '75%',
   },
 
   input: {
