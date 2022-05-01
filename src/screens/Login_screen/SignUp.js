@@ -29,15 +29,6 @@ const dataGender = [
 
 function SignUpScreen() {
   const navigation = useNavigation();
-  const [username, setUsername] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [confirmPassword, setConfirmPassword] = React.useState('');
-  const [email, setEmail] = React.useState('');
-  const [name, setName] = React.useState('');
-  const [gender, setGender] = React.useState('');
-  const [birthday, setBirthday] = React.useState('');
-  const [phone, setPhone] = React.useState('');
-  const [avatar, setAvatar] = React.useState('');
   const [showBirth, setShowBirth] = React.useState(false);
   const [displayDay, setDisplayDay] = React.useState([]);
 
