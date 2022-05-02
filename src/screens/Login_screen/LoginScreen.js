@@ -176,8 +176,7 @@ const styles = StyleSheet.create({
   text2: {
     marginLeft: 10,
     fontWeight: 'bold',
-    textDecorationLine: 'underline',
-    color: 'blue',
+    color: Colors.primaryColor,
     fontSize: 20,
   },
   imageContainer: {
@@ -205,7 +204,6 @@ const styles = StyleSheet.create({
   },
   press: {
     fontWeight: 'bold',
-    textDecorationLine: 'underline',
     color: 'black',
     fontSize: 22,
   },

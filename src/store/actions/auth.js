@@ -54,6 +54,7 @@ export const signup = (
   birthday,
   gender,
   email,
+  phone,
   type,
 ) => {
   return async dispatch => {
@@ -69,6 +70,7 @@ export const signup = (
         birthday: birthday,
         gender: gender,
         email: email,
+        phone: phone,
         type: type,
       }),
     });
@@ -82,24 +84,13 @@ export const signup = (
       throw new Error(message);
     }
 
-    console.log(resData);
-    dispatch(
-      authenticate(
-        resData.localId,
-        resData.idToken,
-        parseInt(resData.expiresIn) * 1000,
-      ),
-    );
-    const expirationDate = new Date(
-      new Date().getTime() + parseInt(resData.expiresIn) * 1000,
-    );
-    saveDataToStorage(resData.idToken, resData.localId, expirationDate);
+    login(username, password);
   };
 };
 
 export const login = (username, password) => {
   return async dispatch => {
-    console.log(username + 'Login into TaketeShop');
+    console.log(username + ' Login into TaketeShop');
     const response = await fetch('http://localhost:5000/user/login', {
       method: 'POST',
       headers: {

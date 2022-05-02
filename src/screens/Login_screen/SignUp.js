@@ -21,6 +21,7 @@ import {
 } from '../../ulti/Ulti';
 import Card from '../../components/UI/Card';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import * as authActions from '../../store/actions/auth';
 
 const dataGender = [
   {label: 'Nam', value: '1'},
@@ -29,6 +30,7 @@ const dataGender = [
 
 function SignUpScreen() {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   const [showBirth, setShowBirth] = React.useState(false);
   const [displayDay, setDisplayDay] = React.useState([]);
 
@@ -46,6 +48,18 @@ function SignUpScreen() {
 
   const onDateChange = async day => {
     await setUser({...user, birthday: day});
+  };
+
+  const SQLDate = (date) => {
+    return `${date[3]}-${convertMonthToVietnamese(date[1])}-${
+      date[2]
+    }`
+  }
+
+  const showDate = date => {
+    return `${convertWeekToVietnamese(date[0])} ${
+      date[2]
+    }/${convertMonthToVietnamese(date[1])}/${date[3]}`;
   };
 
   useLayoutEffect(() => {
@@ -71,7 +85,21 @@ function SignUpScreen() {
       alert('Vui lòng nhập email');
     } else if (user.password !== user.confirmPassword) {
       alert('Xác nhận mật khẩu không chính xác, vui lòng nhập lại');
-    } else navigation.navigate('SuccesScreen');
+    } else {
+      dispatch(
+        authActions.signup(
+          user.username,
+          user.password,
+          user.name,
+          SQLDate(displayDay),
+          user.gender,
+          user.email,
+          user.phone,
+          'CUSTOMER',
+        ),
+      );
+      navigation.navigate('SuccesScreen');
+    }
   };
 
   return (
@@ -135,20 +163,15 @@ function SignUpScreen() {
             placeholder={'Giới tính...'}
             value={user.gender}
             onChange={item => {
-              setUser({...user, gender: item.dataGender});
+              setUser({...user, gender: item.value});
             }}
           />
-          <View style={{flex:1.8}}>
+          <View style={{flex: 1.8}}>
             <TouchableOpacity onPress={() => setShowBirth(!showBirth)}>
-              <View
-                style={styles.birthday}>
-                <Text style={{fontSize: 20}}>
+              <View style={styles.birthday}>
+                <Text style={{fontSize: 17}}>
                   {user.birthday
-                    ? `${convertWeekToVietnamese(displayDay[0])} ${
-                        displayDay[2]
-                      }/${convertMonthToVietnamese(displayDay[1])}/${
-                        displayDay[3]
-                      }`
+                    ? showDate(displayDay)
                     : 'Ngày sinh'}
                 </Text>
               </View>
@@ -263,8 +286,7 @@ const styles = StyleSheet.create({
   text2: {
     marginLeft: 10,
     fontWeight: 'bold',
-    textDecorationLine: 'underline',
-    color: 'blue',
+    color: Colors.primaryColor,
     fontSize: 20,
   },
   maintext: {
@@ -276,7 +298,7 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   signup: {
-    paddingHorizontal: 20
+    paddingHorizontal: 15,
   },
   hidetext: {
     top: 120,
@@ -287,7 +309,7 @@ const styles = StyleSheet.create({
   },
   dropdown: {
     marginBottom: 10,
-    marginRight: 20,
+    marginRight: 10,
     height: 55,
     borderColor: 'gray',
     borderWidth: 1,
@@ -312,7 +334,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
   },
   selectedTextStyle: {
-    fontSize: 18,
+    fontSize: 17,
   },
   buttonContainer: {
     marginVertical: 5,
@@ -325,7 +347,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     height: '100%',
-    width: '100%'
+    width: '100%',
   },
 
   Daytextcontainer: {

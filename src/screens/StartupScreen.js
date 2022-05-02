@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {View, ActivityIndicator, StyleSheet, Image} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Colors from '../constants/Colors';
-import {useNavigation} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 import {
   BOTTOM_BAR_NAVIGATOR,
   LOGIN_NAVIGATOR,
@@ -13,7 +13,7 @@ import * as authActions from '../store/actions/auth'
 function StartupScreen(props) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-
+  const isFocused = useIsFocused();
   useEffect(() => {
     const tryLogin = async () => {
       try {
@@ -45,7 +45,7 @@ function StartupScreen(props) {
     };
 
     tryLogin();
-  }, [dispatch]);
+  }, [dispatch, isFocused]);
   return (
     <View style={styles.screen}>
       <View style={styles.imageContainer}>

@@ -40,7 +40,7 @@ function HomePage(props) {
   useEffect(() => {
     setIsLoading(true);
     loadProducts().then(() => {
-      setIsLoading(false);
+    setIsLoading(false);
     });
   }, [dispatch, loadProducts]);
 
