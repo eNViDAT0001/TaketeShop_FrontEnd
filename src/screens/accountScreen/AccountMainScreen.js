@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Colors from '../../constants/Colors';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import Form1 from './Form';
-import { ADDRESS_SCREEN,ADD_ADDRESS_SCREEN,LOGIN_MAIN_SCREEN,LOGIN_NAVIGATOR,PROFILE_NAVIGATOR, STARTUP_SCREEN} from '../../constants/NavigatorIndex';
+import { ADDRESS_SCREEN,ADD_ADDRESS_SCREEN,ADMIN_NAVIGATOR,LOGIN_MAIN_SCREEN,LOGIN_NAVIGATOR,PROFILE_NAVIGATOR, STARTUP_SCREEN} from '../../constants/NavigatorIndex';
 import * as authActions from '../../store/actions/auth'
 
 function AccountMainScreen() {
@@ -33,7 +33,7 @@ function AccountMainScreen() {
              styles={styles.itemsContainer}
                 icons='credit-card-outline'
                 titletext='Cửa hàng của tôi'
-                //onPress={() => navigation.navigate()}
+                onPress={() => navigation.navigate(ADMIN_NAVIGATOR)}
             />: null}
             <Form1
              styles={styles.itemsContainer}
