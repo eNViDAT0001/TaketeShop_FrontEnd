@@ -21,27 +21,33 @@ export const authenticate = (userId, token, expiryTime) => {
   return async dispatch => {
     dispatch(setLogoutTimer(expiryTime));
 
-    const response = await fetch(`http://localhost:5000/user/${userId}`);
+    const response = await fetch(`http://localhost:5000/user/${userId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: 'Bearer ' + token,
+      },
+    });
 
     const resData = await response.json();
     const error = resData.error;
 
     if (error) {
-      throw new Error(resData.msg);
+      console.log(resData.msg)
     }
-
+    
     dispatch({
       type: LOGIN,
       user: {
         token: token,
         id: userId,
-        name: resData[0].name,
-        sex: resData[0].gender,
-        birthday: resData[0].birthday,
-        email: resData[0].email,
-        avatar: resData[0].avatar,
-        role: resData[0].roles,
-        phone: resData[0].phone,
+        name: resData.name,
+        gender: resData.gender,
+        birthday: resData.birthday,
+        email: resData.email,
+        avatar: resData.avatar,
+        role: resData.role,
+        phone: resData.phone,
       },
     });
   };
@@ -90,7 +96,6 @@ export const signup = (
 
 export const login = (username, password) => {
   return async dispatch => {
-    console.log(username + ' Login into TaketeShop');
     const response = await fetch('http://localhost:5000/user/login', {
       method: 'POST',
       headers: {
@@ -110,6 +115,7 @@ export const login = (username, password) => {
     }
 
     saveDataToStorage(resData.token, resData.userID, resData.expiredDay);
+    console.log(username + ' Login into TaketeShop as ' + resData.role);
 
     dispatch({
       type: LOGIN,
@@ -117,11 +123,11 @@ export const login = (username, password) => {
         token: resData.token,
         id: resData.userID,
         name: resData.name,
-        sex: resData.gender,
+        gender: resData.gender,
         birthday: resData.birthday,
         email: resData.email,
         avatar: resData.avatar,
-        role: resData.roles,
+        role: resData.role,
         phone: resData.phone,
 
       },

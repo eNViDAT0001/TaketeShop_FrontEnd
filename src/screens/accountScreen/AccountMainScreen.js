@@ -10,7 +10,8 @@ import * as authActions from '../../store/actions/auth'
 
 function AccountMainScreen() {
     const dispatch = useDispatch();
-    const navigation = useNavigation()
+    const navigation = useNavigation();
+    const role = useSelector(state => state.auth.role);
     return (
         <ScrollView style={styles.screen}>
             
@@ -28,12 +29,12 @@ function AccountMainScreen() {
                 onPress={() => navigation.navigate(ADDRESS_SCREEN)}
             />
 
-            <Form1
+            {role !== 'CUSTOMER'? <Form1
              styles={styles.itemsContainer}
                 icons='credit-card-outline'
                 titletext='Cửa hàng của tôi'
                 //onPress={() => navigation.navigate()}
-            />
+            />: null}
             <Form1
              styles={styles.itemsContainer}
                 icons='face-agent'

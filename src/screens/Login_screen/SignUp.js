@@ -159,7 +159,7 @@ function SignUpScreen() {
             data={dataGender}
             maxHeight={130}
             labelField="label"
-            valueField="gender"
+            valueField="value"
             placeholder={'Giới tính...'}
             value={user.gender}
             onChange={item => {

@@ -18,7 +18,7 @@ const initialState = {
   phone: '0122789201',
   avatar:
     'https://4xucy2kyby51ggkud2tadg3d-wpengine.netdna-ssl.com/wp-content/uploads/sites/37/2017/02/IAFOR-Blank-Avatar-Image.jpg',
-  roles: 'CUSTOMER',
+  role: 'CUSTOMER',
   token: null,
 };
 export default (state = initialState, action) => {
@@ -32,7 +32,7 @@ export default (state = initialState, action) => {
         birthday: action.user.birthday,
         email: action.user.email,
         avatar: action.user.avatar,
-        roles: action.user.roles,
+        role: action.user.role,
         phone: action.user.phone,
 
       };
