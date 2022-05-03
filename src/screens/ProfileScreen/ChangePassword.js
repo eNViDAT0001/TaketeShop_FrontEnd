@@ -6,6 +6,8 @@ import Header from '../../components/UI/Header';
 import Colors from '../../constants/Colors';
 import {useDispatch, useSelector} from 'react-redux';
 import * as authActions from '../../store/actions/auth';
+
+
 function ChangePassword(props) {
   const [pass, setPass] = React.useState('');
   const [oldpass, setOldpass] = React.useState('');
@@ -13,26 +15,8 @@ function ChangePassword(props) {
   const [confirmpass, setConfirmpass] = React.useState('');
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const userID = useSelector(state => state.auth.userID);
-  const [error, setError] = useState();
-
-  useEffect(() => {
-    if (error) {
-      Alert.alert('An Error Occurred!', error + ', please try again!', [
-        {text: 'Okay'},
-      ]);
-    }
-  }, [error]);
-
-  const getDataUser = async () => {
-    try {
-      const response = await fetch('http://localhost:5000/user/4');
-      const json = await response.json();
-      setPass(json[0].password);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const userID = useSelector(state => state.auth.userID);  
+  const token = useSelector(state => state.auth.token);
 
   const ChangeButton = async () => {
     if (!oldpass) {
@@ -43,29 +27,17 @@ function ChangePassword(props) {
       alert('Vui lòng nhập mật khẩu xác nhận lại mật khẩu');
     } else if (newpass !== confirmpass) {
       alert('Xác nhận mật khẩu không chính xác, vui lòng nhập lại');
-    } else if (oldpass !== pass) {
-      alert('Mật khẩu hiện tại không chính xác, vui lòng nhập lại');
-    } else
-      try {
-        await fetch(
-          'http://localhost:5000/user/' +
-            '4' +
-            '?' +
-            'field=password&value=' +
-            email,
-          {
-            method: 'PATCH',
-            headers: {
-              'Content-type': 'application/json; charset=UTF-8',
-            },
-            body: JSON.stringify(),
-          },
-        )
-          .then(response => response.json())
-          .then(json => navigation.navigate('Profile'));
-      } catch (error) {
-        console.error(error);
-      }
+    } else if (oldpass == newpass) {
+      alert('Mật khẩu mới không được trùng với mật khẩu cũ, vui lòng nhập lại');
+    } else try {
+
+      dispatch(authActions.changePassword(userID, token, oldpass,newpass));
+      navigation.navigate('Profile');
+
+
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

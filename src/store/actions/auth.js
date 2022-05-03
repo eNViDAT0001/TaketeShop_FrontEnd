@@ -241,9 +241,25 @@ export const changeAvatar = (userID, token, value) => {
     dispatch({type: CHANGE_AVATAR, value: value});
   };
 };
-// export const changePassword = (value) => {
-//   return {type: CHANGE_PASSWORD, value: value}
-// }
+
+export const changePassword = (userID, token, oldpass, newpass) => {
+  return async dispatch => {
+    await fetch(
+      `http://localhost:5000/user/password/${userID}?oldpass=${oldpass}&newpass=${newpass}`,
+      {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: 'Bearer ' + token,
+        },
+      },
+    );
+
+    dispatch({type: CHANGE_PASSWORD, value: value});
+  };
+};
+
+
 
 const clearLogoutTimer = () => {
   if (timer) {
