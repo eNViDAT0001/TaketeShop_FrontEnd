@@ -245,7 +245,7 @@ export const changeAvatar = (userID, token, value) => {
 export const changePassword = (userID, token, oldpass, newpass) => {
   return async dispatch => {
     await fetch(
-      `http://localhost:5000/user/password/${userID}?oldpass=${oldpass}&newpass=${newpass}`,
+      `http://localhost:5000/user/password/${userID}?oldpass=${oldpass}&newpass=${newpass}`,      
       {
         method: 'PATCH',
         headers: {
@@ -253,9 +253,7 @@ export const changePassword = (userID, token, oldpass, newpass) => {
           authorization: 'Bearer ' + token,
         },
       },
-    );
-
-    dispatch({type: CHANGE_PASSWORD, value: value});
+    );   
   };
 };
 

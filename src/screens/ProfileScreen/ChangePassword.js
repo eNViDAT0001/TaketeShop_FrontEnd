@@ -29,11 +29,10 @@ function ChangePassword(props) {
       alert('Xác nhận mật khẩu không chính xác, vui lòng nhập lại');
     } else if (oldpass == newpass) {
       alert('Mật khẩu mới không được trùng với mật khẩu cũ, vui lòng nhập lại');
-    } else try {
+    } else try {     
 
-      dispatch(authActions.changePassword(userID, token, oldpass,newpass));
+      dispatch(authActions.changePassword(userID, token, oldpass, newpass));
       navigation.navigate('Profile');
-
 
     } catch (error) {
       console.error(error);
