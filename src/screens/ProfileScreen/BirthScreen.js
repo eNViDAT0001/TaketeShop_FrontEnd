@@ -19,6 +19,7 @@ function BirthScreen(props) {
   const [displayDay, setDisplayDay] = useState([]);
   const dispatch = useDispatch();
   const userID = useSelector(state => state.auth.userID);
+  const token = useSelector(state => state.auth.token);
 
   const onDateChange = async day => {
     await setDate(day);
@@ -90,7 +91,7 @@ function BirthScreen(props) {
           color="#4F5160"
           labelStyle={{fontSize: 20}}
           onPress={() => {
-            dispatch(authActions.changeBirthday(userID, SQLDate(displayDay)));
+            dispatch(authActions.changeBirthday(userID, token, SQLDate(displayDay)));
             navigation.navigate('Profile');
           }}>
           Xác nhận

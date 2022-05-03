@@ -11,6 +11,7 @@ function Phone(props) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const userID = useSelector(state => state.auth.userID);
+  const token = useSelector(state => state.auth.token);
 
   return (
     <View style={styles.screen}>
@@ -36,7 +37,7 @@ function Phone(props) {
           color="#4F5160"
           labelStyle={{fontSize: 20}}
           onPress={() => {
-            dispatch(authActions.changePhone(userID, phonenumber));
+            dispatch(authActions.changePhone(userID, token, phonenumber));
             navigation.navigate('Profile');
           }}>
           Xác nhận

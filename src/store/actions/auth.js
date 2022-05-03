@@ -135,7 +135,7 @@ export const logout = () => {
   return {type: LOGOUT};
 };
 
-export const changeName = (userID, value) => {
+export const changeName = (userID, token, value) => {
   return async dispatch => {
     await fetch(
       `http://localhost:5000/user/${userID}?field=name&value=${value}`,
@@ -143,6 +143,7 @@ export const changeName = (userID, value) => {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
+          authorization: 'Bearer ' + token,
         },
       },
     );
@@ -150,7 +151,7 @@ export const changeName = (userID, value) => {
     dispatch({type: CHANGE_NAME, value: value});
   };
 };
-export const changeGender = (userID, value) => {
+export const changeGender = (userID, token, value) => {
   return async dispatch => {
     await fetch(
       `http://localhost:5000/user/${userID}?field=gender&value=${value}`,
@@ -158,6 +159,7 @@ export const changeGender = (userID, value) => {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
+          authorization: 'Bearer ' + token,
         },
       },
     );
@@ -165,7 +167,7 @@ export const changeGender = (userID, value) => {
     dispatch({type: CHANGE_GENDER, value: value});
   };
 };
-export const changeBirthday = (userID, value) => {
+export const changeBirthday = (userID, token, value) => {
   return async dispatch => {
     await fetch(
       `http://localhost:5000/user/${userID}?field=birthday&value=${value}`,
@@ -173,6 +175,8 @@ export const changeBirthday = (userID, value) => {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
+          authorization: 'Bearer ' + token,
+
         },
       },
     );
@@ -180,7 +184,7 @@ export const changeBirthday = (userID, value) => {
     dispatch({type: CHANGE_BIRTHDAY, value: value});
   };
 };
-export const changeEmail = (userID, value) => {
+export const changeEmail = (userID, token, value) => {
   return async dispatch => {
     await fetch(
       `http://localhost:5000/user/${userID}?field=email&value=${value}`,
@@ -188,6 +192,8 @@ export const changeEmail = (userID, value) => {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
+          authorization: 'Bearer ' + token,
+
         },
       },
     );
@@ -195,7 +201,7 @@ export const changeEmail = (userID, value) => {
     dispatch({type: CHANGE_EMAIL, value: value});
   };
 };
-export const changePhone = (userID, value) => {
+export const changePhone = (userID, token, value) => {
   return async dispatch => {
     await fetch(
       `http://localhost:5000/user/${userID}?field=phone&value=${value}`,
@@ -203,6 +209,8 @@ export const changePhone = (userID, value) => {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
+          authorization: 'Bearer ' + token,
+
         },
       },
     );
@@ -210,7 +218,7 @@ export const changePhone = (userID, value) => {
     dispatch({type: CHANGE_PHONE, value: value});
   };
 };
-export const changeAvatar = (userID, value) => {
+export const changeAvatar = (userID, token, value) => {
   return async dispatch => {
     await fetch(
       `http://localhost:5000/user/${userID}?field=avatar&value=${value}`,
@@ -218,6 +226,8 @@ export const changeAvatar = (userID, value) => {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
+          authorization: 'Bearer ' + token,
+
         },
       },
     );

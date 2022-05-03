@@ -47,7 +47,7 @@ function Profile(props) {
         icons="account"
         titletext="Tên tài khoản"
         onPress={() => {
-          navigation.navigate('ChangeName');
+          navigation.navigate('ChangeName', {value: name});
         }}
         titletext2={name}
       />
@@ -55,8 +55,9 @@ function Profile(props) {
         icons="gender-male-female"
         titletext="Giới tính"
         onPress={() => {
-          navigation.navigate('Gender');
+          navigation.navigate('Gender', {value: gender});
         }}
+        value={gender}
         titletext2={gender == 1 ? 'Nam' : 'Nữ'}
       />
       <Form1
@@ -71,7 +72,7 @@ function Profile(props) {
         icons="email"
         titletext="Email"
         onPress={() => {
-          navigation.navigate('Email');
+          navigation.navigate('Email', {value: email});
         }}
         titletext2={email}
       />
@@ -79,7 +80,7 @@ function Profile(props) {
         icons="cellphone"
         titletext="Số điện thoại"
         onPress={() => {
-          navigation.navigate('Phone number');
+          navigation.navigate('Phone number', {value: phoneNumber});
         }}
         titletext2={phoneNumber}
       />

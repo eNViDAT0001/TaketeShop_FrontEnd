@@ -33,7 +33,7 @@ import Card from './UI/Card';
                 <Image style={styles.image} source={{uri: props.item.image}} />
               </View>
               <View style={styles.itemDescription}>
-                <Text style={styles.textTitle}>{props.item.name}</Text>
+                <Text style={styles.textTitle}>{props.item.name.length < 14? props.item.name: (props.item.name.slice(0, 10)+'...')}</Text>
                 <Text style={styles.textPrice}>{props.item.discountPrice}</Text>
                 <View style={styles.discount}>
                   <Text style={styles.textTruePrice}>
