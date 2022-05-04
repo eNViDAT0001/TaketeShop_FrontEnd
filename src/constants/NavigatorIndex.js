@@ -5,7 +5,7 @@ export const ORDER_NAVIGATOR = "OrderNavigator";
 export const ACCOUNT_NAVIGATOR = "AccountNavigator";
 export const LOGIN_NAVIGATOR = "LoginNavigator";
 export const PROFILE_NAVIGATOR = "ProfileNavigation";
-
+export const PRODUCT_NAVIGATOR = "ProductNavigator";
 
 export const STARTUP_SCREEN = "StartupScreen";
 
@@ -25,7 +25,10 @@ export const ADDRESS_SCREEN ="AddressScreen";
 export const ADD_ADDRESS_SCREEN ="AddAddressScreen";
 export const SUCCESS_SCREEN ="SuccessScreen";
 export const NOTIFICATION_SCREEN ="NotificationScreen";
-export const WISHLIST_SCREEN ="WISHLIST_SCREEN"
+export const WISHLIST_SCREEN ="WISHLIST_SCREEN";
+
+export const ADD_PRODUCT ="AddProductScreen";
+export const FIX_PRODUCT ="FixProduct";
 
 export const ORDER_CONFIRM_PAGE ="OrderConfirmPage";
 export const ORDER_DELIVERING_PAGE ="OrderDeliveringPage";

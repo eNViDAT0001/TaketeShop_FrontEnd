@@ -1,6 +1,6 @@
 import React from 'react';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {NavigationContainer} from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
 import {
   ADDRESS_SCREEN,
   ADD_ADDRESS_SCREEN,
@@ -15,6 +15,7 @@ import {
   STARTUP_SCREEN,
   SUCCESS_SCREEN,
   WISHLIST_SCREEN,
+  PRODUCT_NAVIGATOR,
 } from '../constants/NavigatorIndex';
 import BottomBarNavigator from './BottomBarNavigator';
 import CategoryDetailScreen from '../screens/productScreen/CategoryDetailScreen';
@@ -30,12 +31,15 @@ import NotificationScreen from '../screens/homeScreen/NotificationScreen';
 import ProfileNavigation from './ProfileNavigation';
 import StartupScreen from '../screens/StartupScreen';
 import WishlistScreen from '../screens/homeScreen/WishlistScreen';
+import ProductNavigator from './ProductNavigator';
+
 const StackNavigator = createNativeStackNavigator();
 function AppNavigator() {
   return (
     <NavigationContainer>
       <StackNavigator.Navigator
-        initialRouteName={STARTUP_SCREEN}
+        //initialRouteName={STARTUP_SCREEN}
+        initialRouteName={PRODUCT_NAVIGATOR}
         options={{
           headerStyle: {
             backgroundColor: Colors.primaryColor,
@@ -133,6 +137,14 @@ function AppNavigator() {
             headerTitle: 'Thông báo',
             headerShown: false,
           }}></StackNavigator.Screen>
+
+        <StackNavigator.Screen
+          name={PRODUCT_NAVIGATOR}
+          component={ProductNavigator}
+          options={{
+            headerShown: false,
+          }}></StackNavigator.Screen>
+
       </StackNavigator.Navigator>
     </NavigationContainer>
   );
