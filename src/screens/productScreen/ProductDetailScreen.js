@@ -22,7 +22,7 @@ import {BESTSELLER_DUMMY_DATA, PRODUCT_ITEMS_DUMMY_DATA} from '../../dummy_datab
 function ProductDetailScreen(props) {
   const navigation = useNavigation();
   const route = useRoute();
-  const id = route.params.id;
+ // const id = route.params.id;
 
   const onCommentPress = () => {
     navigation.navigate(COMMENT_SCREEN)
