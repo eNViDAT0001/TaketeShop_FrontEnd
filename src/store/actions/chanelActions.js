@@ -68,7 +68,7 @@ export const getMessagerFromChanelId = (chanelId) => {
         if (error) {
             console.log(error)
         }
-        DATA_MESSAGES.push(json.stringify());
+        DATA_MESSAGES.push(json);
         //console.log(DATA_MESSAGES);
         // setMessageFromChanelId(json);
         //console.log(json._id)
@@ -108,7 +108,7 @@ export const addMessager = (chanelId, userId, text, isStaff) => {
         );
 
         const resData = await response.json();
-        DATA_MESSAGES.push(resData.stringify());
+        DATA_MESSAGES.push(resData);
         // const error = resData.error;
         // if (error) {
         //     console.log(error)

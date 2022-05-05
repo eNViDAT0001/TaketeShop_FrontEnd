@@ -18,13 +18,15 @@ function ChatScreen(props) {
   // var DATA_MESSAGES = chanelActions.DATA_MESSAGES;
   const [messages, setMessages] = useState(null);
   const dispatch = useDispatch();
+ 
   const navigation = useNavigation();
-  const role = useSelector(state => state.auth.role);
-  
+  const role = useSelector(state => state.auth.role); 
+  const userId = useSelector(state => state.auth.userId);
+  dispatch(chanelActions.getChanel(userId));
+   
   const chanelId = useSelector(state => state.chanel._id);
   const userChanelId = useSelector(state => state.chanel.userId);
-  //const userId = useSelector(state => state.auth.userId);
-  const userId = 4;
+  //const userId = 4;
   let isStaff = false ;
 
   if (role == 'STAFF'){
@@ -114,9 +116,9 @@ function ChatScreen(props) {
             if (messages != "") {              
               //chanelId OK
               // do userID
-             // dispatch(chanelActions.addMessager(chanelId, userId, messages, isStaff)).              
+              dispatch(chanelActions.addMessager(chanelId, userId, messages, isStaff)).              
               //dispatch(chanelActions.createChanel(18)).
-              //  then(setMessages(""))
+                then(setMessages(""))
                 
                   //console.log(chanelActions.DATA_MESSAGES))
             }

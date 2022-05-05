@@ -15,19 +15,19 @@ import HomeMainScreen from '../screens/homeScreen/HomeMainScreen';
 import AccountNavigator from './AccountNavigator';
 import CartMainScreen from '../screens/cartScreen/CartMainScreen';
 import OrderNavigator from './OrderNavigator';
-import { useSelector, useDispatch } from 'react-redux';
-import * as authActions from '../store/actions/auth'
-import * as chanelActions from '../store/actions/chanelActions';
+// import { useSelector, useDispatch } from 'react-redux';
+// import * as authActions from '../store/actions/auth'
+// import * as chanelActions from '../store/actions/chanelActions';
 
 const TabNavigator = createMaterialBottomTabNavigator();
 function BottomBarNavigator() {
-  const dispatch = useDispatch();
-  const role = useSelector(state => state.auth.role);
-  const userId = 4;//useSelector(state => state.auth.userId);
-  if (role != 'CUSTOMER') {
-    // Chu y
-    dispatch(chanelActions.getChanel(userId));
-}   
+  //const dispatch = useDispatch();
+  // const role = useSelector(state => state.auth.role);
+  // const userId = useSelector(state => state.auth.userId);
+  // if (role != 'CUSTOMER') {
+  //   // Chu y
+  //   dispatch(chanelActions.getChanel(userId));
+//}   
   return (
     <TabNavigator.Navigator
       activeColor={Colors.iconColor}
