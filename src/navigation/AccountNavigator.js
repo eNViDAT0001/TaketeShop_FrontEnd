@@ -2,7 +2,7 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ACCOUNT_MAIN_SCREEN,CHAT_SCREEN } from '../constants/NavigatorIndex';
 import AccountMainScreen from '../screens/accountScreen/AccountMainScreen';
-import ProfileNavigation from './ProfileNavigation';
+import ProfileNavigation from './ProfileNavigator';
 import ChatScreen from '../screens/accountScreen/ChatScreen/ChatScreen';
 
 const Stack = createNativeStackNavigator();

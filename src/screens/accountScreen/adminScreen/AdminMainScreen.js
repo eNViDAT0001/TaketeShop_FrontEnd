@@ -15,11 +15,14 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Card from '../../../components/UI/Card';
 import Colors from '../../../constants/Colors';
+import { useNavigation } from '@react-navigation/native';
+import { ADMIN_ADD_PRODUCT_SCREEN, ADMIN_PRODUCT_DETAIL_SCREEN } from '../../../constants/NavigatorIndex';
 const ICON_SIZE = 32;
 const ICON_TITLE_SIZE = 35;
 const ICON_COLOR = '#9098B1';
 const ICON_TITLE_COLOR = '#223263';
 function AdminMainScreen() {
+  const navigation = useNavigation();
   return (
     <View style={styles.screen}>
       <View style={styles.imageContainer}>
@@ -83,7 +86,7 @@ function AdminMainScreen() {
           <Text style={styles.contentTitle}>Sản Phẩm</Text>
         </View>
         <View style={styles.statusContainer}>
-          <TouchableOpacity style={styles.itemContainer}>
+          <TouchableOpacity style={styles.itemContainer} onPress={() => navigation.navigate(ADMIN_PRODUCT_DETAIL_SCREEN, {id: false})}>
             <MaterialIcons
               name="add-box"
               color={ICON_COLOR}

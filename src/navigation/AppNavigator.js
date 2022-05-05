@@ -29,19 +29,17 @@ import AddressScreen from '../screens/addressScreen/AddressScreen';
 import AddAddressPage from '../screens/addressScreen/AddAddressPage';
 import SuccessScreen from '../screens/addressScreen/SuccessScreen';
 import NotificationScreen from '../screens/homeScreen/NotificationScreen';
-import ProfileNavigation from './ProfileNavigation';
+import ProfileNavigator from './ProfileNavigator';
 import StartupScreen from '../screens/StartupScreen';
 import WishlistScreen from '../screens/homeScreen/WishlistScreen';
 import AdminNavigator from './AdminNavigator';
-import ProductNavigator from './ProductNavigator';
 
 const StackNavigator = createNativeStackNavigator();
 function AppNavigator() {
   return (
     <NavigationContainer>
       <StackNavigator.Navigator
-        //initialRouteName={STARTUP_SCREEN}
-        initialRouteName={PRODUCT_NAVIGATOR}
+        initialRouteName={STARTUP_SCREEN}
         options={{
           headerStyle: {
             backgroundColor: Colors.primaryColor,
@@ -63,7 +61,7 @@ function AppNavigator() {
 
         <StackNavigator.Screen
           name={PROFILE_NAVIGATOR}
-          component={ProfileNavigation}
+          component={ProfileNavigator}
           options={{
             headerShown: false,
           }}></StackNavigator.Screen>
@@ -145,13 +143,6 @@ function AppNavigator() {
           component={AdminNavigator}
           options={{
             headerTitle: 'Admin',
-            headerShown: false,
-          }}></StackNavigator.Screen>
-        <StackNavigator.Screen
-
-          name={PRODUCT_NAVIGATOR}
-          component={ProductNavigator}
-          options={{
             headerShown: false,
           }}></StackNavigator.Screen>
 

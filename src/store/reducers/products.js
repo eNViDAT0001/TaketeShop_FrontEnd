@@ -6,10 +6,9 @@ const initialState = {
   availableProducts: [],
   wishlistProducts: [],
   categories: [],
-  userProducts: [],
+  units: [],
+  // userProducts: [],
   recommenderProducts: [],
-  filteredProducts: [],
-  favoriteProducts: [],
 };
 export default (state = initialState, action) => {
   switch (action.type) {
