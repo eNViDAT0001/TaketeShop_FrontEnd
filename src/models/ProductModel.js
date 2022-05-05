@@ -1,11 +1,11 @@
 class ProductModel {
-  userID = 'DefaultProvider';
+  userId = 'DefaultProvider';
   liked = false;
 
   constructor(
     productID,
     categoryID,
-    userID,
+    userId,
     name,
     description,
     price,
@@ -19,7 +19,7 @@ class ProductModel {
   ) {
     this.productID = productID;
     this.categoryID = categoryID;
-    this.userID = userID;
+    this.userId = userId;
     this.name = name;
     this.description = description;
     this.price = price;

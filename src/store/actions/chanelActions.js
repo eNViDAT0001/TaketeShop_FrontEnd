@@ -8,9 +8,9 @@ export const ADD_MESSAGER = 'ADD_MESSAGER';
 export const CHANGE_NAME = 'CHANGE_NAME';
 //export const CHANGE_NAME = 'CHANGE_NAME';
 
-export const getChanel = (userID) => {
+export const getChanel = (userId) => {
     return async dispatch => {
-        const response = await fetch(`http://localhost:5000/chanel/` + userID);//+userID);
+        const response = await fetch(`http://localhost:5000/chanel/` + userId);//+userId);
         const json = await response.json();
         const error = json.error;
         if (error) {
@@ -21,7 +21,7 @@ export const getChanel = (userID) => {
             type: GET_CHANEL,
             chanel: {
                 chanelId: json[0]._id,
-                userID: json[0].userID,
+                userId: json[0].userId,
             },
         });
     };
@@ -36,7 +36,7 @@ export const createChanel = (user_id) => {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                userID: user_id,
+                userId: user_id,
             }),
         });
 
@@ -50,7 +50,7 @@ export const createChanel = (user_id) => {
             type: CREATE_CHANEL,
             chanel: {
                 chanelId: resData[0]._id,
-                userID: user_id,
+                userId: user_id,
             },
         });
     };
@@ -61,7 +61,7 @@ export const createChanel = (user_id) => {
 
 export const getMessagerFromChanelId = (chanelId) => {
     return async dispatch => {
-        const response = await fetch(`http://localhost:5000/message/chanel/` + chanelId);//+userID);
+        const response = await fetch(`http://localhost:5000/message/chanel/` + chanelId);//+userId);
         const json = await response.json();
         const error = json.error;
         if (error) {
@@ -75,7 +75,7 @@ export const getMessagerFromChanelId = (chanelId) => {
         //     type: GET_MESSAGER,
         //     messager: {
         //         _id: json._id,
-        //         userID: json.userID,
+        //         userId: json.userId,
         //         chanelId : json.chanelId,
         //         text : json.text,
         //         isStaff: json.isStaff,
@@ -85,7 +85,7 @@ export const getMessagerFromChanelId = (chanelId) => {
     };
 };
 
-export const addMessager = (chanelId, userID, text, isStaff) => {
+export const addMessager = (chanelId, userId, text, isStaff) => {
     return async dispatch => {
         const timer = await Date.now;
         const response = await fetch(
@@ -98,7 +98,7 @@ export const addMessager = (chanelId, userID, text, isStaff) => {
                 },
                 body: JSON.stringify({
                     chanelId: chanelId,
-                    userID: userID,
+                    userId: userId,
                     text: text,
                     isStaff: isStaff,
                     createAt: timer,

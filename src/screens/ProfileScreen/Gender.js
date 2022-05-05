@@ -15,7 +15,7 @@ function Gender(props) {
   const [value, setValue] = useState(null);
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const userID = useSelector(state => state.auth.userID);
+  const userId = useSelector(state => state.auth.userId);
   const token = useSelector(state => state.auth.token);
 
 
@@ -47,7 +47,7 @@ function Gender(props) {
           color="#4F5160"
           labelStyle={{fontSize: 20}}
           onPress={() => {
-            dispatch(authActions.changeGender(userID, token, value));
+            dispatch(authActions.changeGender(userId, token, value));
             navigation.navigate('Profile');
           }}>
           Xác nhận

@@ -4,7 +4,7 @@ import {
 } from '../actions/chanelActions';
 
 const initialState = {
-    userID: '0000',
+    userId: '0000',
     _id: '2733b142e26a5e0838ffab0',
 
 };
@@ -14,7 +14,7 @@ export default  (state = initialState, action) => {
     switch (action.type) {
         case GET_CHANEL:           
             return {                
-                userID: action.chanel.userID,
+                userId: action.chanel.userId,
                 chanelId: action.chanel.chanelId,
             };
         //case  CREATE_CHANEL:

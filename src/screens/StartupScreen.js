@@ -25,11 +25,11 @@ function StartupScreen(props) {
 
         const transformedData = JSON.parse(userData);
 
-        const {token, userID, expiryDate} = transformedData;
+        const {token, userId, expiryDate} = transformedData;
 
         const expirationDate = await new Date(expiryDate);
 
-        if (expirationDate <= new Date() || !token || !userID) {
+        if (expirationDate <= new Date() || !token || !userId) {
 
           navigation.navigate(LOGIN_NAVIGATOR);
           return;
@@ -38,7 +38,7 @@ function StartupScreen(props) {
 
         navigation.navigate(BOTTOM_BAR_NAVIGATOR);
 
-        dispatch(authActions.authenticate(userID, token, expirationTime));
+        dispatch(authActions.authenticate(userId, token, expirationTime));
       } catch (err) {
         console.log(err);
       }

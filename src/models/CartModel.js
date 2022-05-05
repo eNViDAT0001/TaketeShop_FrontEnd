@@ -1,7 +1,7 @@
 class CartModel{
-    constructor(id, userID, createTime, updateTime){
+    constructor(id, userId, createTime, updateTime){
         this.id = id;
-        this.userID = userID;
+        this.userId = userId;
         this.createTime = createTime;
         this.updateTime = updateTime;
     }

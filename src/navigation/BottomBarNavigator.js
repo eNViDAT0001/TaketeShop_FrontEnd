@@ -23,10 +23,10 @@ const TabNavigator = createMaterialBottomTabNavigator();
 function BottomBarNavigator() {
 //   const dispatch = useDispatch();
 //   const role = useSelector(state => state.auth.role);
-//   const userID = useSelector(state => state.auth.userID);
+//   const userId = useSelector(state => state.auth.userId);
 //   if (role != 'CUSTOMER') {
 //     // Chu y
-//     dispatch(chanelActions.getChanel(userID));
+//     dispatch(chanelActions.getChanel(userId));
 // }   
   return (
     <TabNavigator.Navigator

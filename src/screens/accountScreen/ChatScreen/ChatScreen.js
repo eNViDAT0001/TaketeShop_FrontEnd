@@ -22,8 +22,8 @@ function ChatScreen(props) {
   const role = useSelector(state => state.auth.role);
   
   const chanelId = useSelector(state => state.chanel.chanelId);
-  const userChanelId = useSelector(state => state.chanel.userID);
-  const userID = useSelector(state => state.auth.userID);
+  const userChanelId = useSelector(state => state.chanel.userId);
+  const userId = useSelector(state => state.auth.userId);
   let isStaff = false ;
 
   if (role == 'STAFF'){
@@ -34,7 +34,7 @@ function ChatScreen(props) {
     {
       _id: "62735cd32e26a5e0838ffb11",
       chanelId: "62733b142e26a5e0838ffab0",
-      userID: 4,
+      userId: 4,
       text: "2aaaaa",
       isStaff: true,
       createAt: "2022-05-05T13:39:23.667Z",
@@ -42,7 +42,7 @@ function ChatScreen(props) {
     {
       _id: "62736b932cd94da29484357d",
       chanelId: "62736b262cd94da29484357a",
-      userID: 5,
+      userId: 5,
       text: "3bbbbb",
       isStaff: false,
       createAt: "2022-05-05T13:41:55.562Z",
@@ -50,7 +50,7 @@ function ChatScreen(props) {
     {
       _id: "62736b932cd94da29484357df",
       chanelId: "62736b262cd94da29484357a",
-      userID: 5,
+      userId: 5,
       text: "he",
       isStaff: false,
       createAt: "2022-05-05T13:49:36.754Z",
@@ -59,9 +59,9 @@ function ChatScreen(props) {
 
   const Chats = (item) => {
     //var state = item.sender === "Me"
-    var state = (userID == item.userID)
+    var state = (userId == item.userId)
     return (
-      <View style={[styles.pdlt10, styles.mdtp10, styles.mdbt10, styles.pdtp10, (item.userID == userID) ? styles.frowrev : styles.frow, styles.jStart]}>
+      <View style={[styles.pdlt10, styles.mdtp10, styles.mdbt10, styles.pdtp10, (item.userId == userId) ? styles.frowrev : styles.frow, styles.jStart]}>
         {/* <View View style={state ? styles.pdlt10 : styles.pdrt10} >
            <Image style={{ width: 10, height: 60, borderRadius: 50 }}
             source={{ uri: item.img }} /> 
@@ -112,7 +112,7 @@ function ChatScreen(props) {
           onPress={() => {
             if (messages != "") {
               console.log(messages)
-              //dispatch(chanelActions.addMessager(chanelId, userID, messages, isStaff)).
+              //dispatch(chanelActions.addMessager(chanelId, userId, messages, isStaff)).
               dispatch(chanelActions.createChanel(18)).
                 then(setMessages(""))
                 

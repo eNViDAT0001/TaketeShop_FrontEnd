@@ -17,11 +17,11 @@ export const CHANGE_PASSWORD = 'CHANGE_PASSWORD';
 
 let timer;
 
-export const authenticate = (userID, token, expiryTime) => {
+export const authenticate = (userId, token, expiryTime) => {
   return async dispatch => {
     dispatch(setLogoutTimer(expiryTime));
 
-    const response = await fetch(`http://localhost:5000/user/${userID}`, {
+    const response = await fetch(`http://localhost:5000/user/${userId}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -40,7 +40,7 @@ export const authenticate = (userID, token, expiryTime) => {
       type: LOGIN,
       user: {
         token: token,
-        id: userID,
+        id: userId,
         name: resData.name,
         gender: resData.gender,
         birthday: resData.birthday,
@@ -114,14 +114,14 @@ export const login = (username, password) => {
       throw new Error(resData.msg);
     }
 
-    saveDataToStorage(resData.token, resData.userID, resData.expiredDay);
+    saveDataToStorage(resData.token, resData.userId, resData.expiredDay);
     console.log(username + ' Login into TaketeShop as ' + resData.role);
 
     dispatch({
       type: LOGIN,
       user: {
         token: resData.token,
-        id: resData.userID,
+        id: resData.userId,
         name: resData.name,
         gender: resData.gender,
         birthday: resData.birthday,
@@ -141,10 +141,10 @@ export const logout = () => {
   return {type: LOGOUT};
 };
 
-export const changeName = (userID, token, value) => {
+export const changeName = (userId, token, value) => {
   return async dispatch => {
     await fetch(
-      `http://localhost:5000/user/${userID}?field=name&value=${value}`,
+      `http://localhost:5000/user/${userId}?field=name&value=${value}`,
       {
         method: 'PATCH',
         headers: {
@@ -157,10 +157,10 @@ export const changeName = (userID, token, value) => {
     dispatch({type: CHANGE_NAME, value: value});
   };
 };
-export const changeGender = (userID, token, value) => {
+export const changeGender = (userId, token, value) => {
   return async dispatch => {
     await fetch(
-      `http://localhost:5000/user/${userID}?field=gender&value=${value}`,
+      `http://localhost:5000/user/${userId}?field=gender&value=${value}`,
       {
         method: 'PATCH',
         headers: {
@@ -173,10 +173,10 @@ export const changeGender = (userID, token, value) => {
     dispatch({type: CHANGE_GENDER, value: value});
   };
 };
-export const changeBirthday = (userID, token, value) => {
+export const changeBirthday = (userId, token, value) => {
   return async dispatch => {
     await fetch(
-      `http://localhost:5000/user/${userID}?field=birthday&value=${value}`,
+      `http://localhost:5000/user/${userId}?field=birthday&value=${value}`,
       {
         method: 'PATCH',
         headers: {
@@ -190,10 +190,10 @@ export const changeBirthday = (userID, token, value) => {
     dispatch({type: CHANGE_BIRTHDAY, value: value});
   };
 };
-export const changeEmail = (userID, token, value) => {
+export const changeEmail = (userId, token, value) => {
   return async dispatch => {
     await fetch(
-      `http://localhost:5000/user/${userID}?field=email&value=${value}`,
+      `http://localhost:5000/user/${userId}?field=email&value=${value}`,
       {
         method: 'PATCH',
         headers: {
@@ -207,10 +207,10 @@ export const changeEmail = (userID, token, value) => {
     dispatch({type: CHANGE_EMAIL, value: value});
   };
 };
-export const changePhone = (userID, token, value) => {
+export const changePhone = (userId, token, value) => {
   return async dispatch => {
     await fetch(
-      `http://localhost:5000/user/${userID}?field=phone&value=${value}`,
+      `http://localhost:5000/user/${userId}?field=phone&value=${value}`,
       {
         method: 'PATCH',
         headers: {
@@ -224,10 +224,10 @@ export const changePhone = (userID, token, value) => {
     dispatch({type: CHANGE_PHONE, value: value});
   };
 };
-export const changeAvatar = (userID, token, value) => {
+export const changeAvatar = (userId, token, value) => {
   return async dispatch => {
     await fetch(
-      `http://localhost:5000/user/${userID}?field=avatar&value=${value}`,
+      `http://localhost:5000/user/${userId}?field=avatar&value=${value}`,
       {
         method: 'PATCH',
         headers: {
@@ -242,10 +242,10 @@ export const changeAvatar = (userID, token, value) => {
   };
 };
 
-export const changePassword = (userID, token, oldpass, newpass) => {
+export const changePassword = (userId, token, oldpass, newpass) => {
   return async dispatch => {
     await fetch(
-      `http://localhost:5000/user/password/${userID}?oldpass=${oldpass}&newpass=${newpass}`,      
+      `http://localhost:5000/user/password/${userId}?oldpass=${oldpass}&newpass=${newpass}`,      
       {
         method: 'PATCH',
         headers: {
@@ -273,12 +273,12 @@ const setLogoutTimer = expirationTime => {
   };
 };
 
-const saveDataToStorage = (token, userID, expirationDate) => {
+const saveDataToStorage = (token, userId, expirationDate) => {
   AsyncStorage.setItem(
     'userData',
     JSON.stringify({
       token: token,
-      userID: userID,
+      userId: userId,
       expiryDate: expirationDate,
     }),
   );

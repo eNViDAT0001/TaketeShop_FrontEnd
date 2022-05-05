@@ -24,7 +24,7 @@ function FixProduct(props) {
     const [loaisp, setLoaisp] = useState(null);
     const [unit, setUnit] = useState(null);
     const navigation = useNavigation();
-    const userID = useSelector(state => state.auth.userID);
+    const userId = useSelector(state => state.auth.userId);
     const dispatch = useDispatch();
 
 
@@ -36,7 +36,7 @@ function FixProduct(props) {
                 <View style={styles.screenrow}>
                     <Text style={styles.text1}> Tên sản phẩm </Text>
                     <Text 
-                    style={styles.textEnd }> ID: {userID} </Text>
+                    style={styles.textEnd }> ID: {userId} </Text>
 
                 </View>
 

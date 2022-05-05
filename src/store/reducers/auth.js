@@ -11,7 +11,7 @@ import {
 } from '../actions/auth';
 
 const initialState = {
-  userID: '0000',
+  userId: '0000',
   name: 'Khách',
   gender: 'Không xác định',
   birthday: '0001/01/01',
@@ -27,7 +27,7 @@ export default (state = initialState, action) => {
     case LOGIN:
       return {
         token: action.user.token,
-        userID: action.user.id,
+        userId: action.user.id,
         name: action.user.name,
         gender: action.user.gender,
         birthday: action.user.birthday,
@@ -58,7 +58,7 @@ export default (state = initialState, action) => {
     // case SIGNUP:
     //   return {
     //     token: action.token,
-    //     userID: action.userID
+    //     userId: action.userId
     //   };
     default:
       return state;
