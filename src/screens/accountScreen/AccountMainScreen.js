@@ -7,11 +7,13 @@ import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import Form1 from './Form';
 import { ADDRESS_SCREEN,ADD_ADDRESS_SCREEN,LOGIN_MAIN_SCREEN,LOGIN_NAVIGATOR,PROFILE_NAVIGATOR, STARTUP_SCREEN} from '../../constants/NavigatorIndex';
 import * as authActions from '../../store/actions/auth'
+import * as chanelActions from '../../store/actions/chanelActions';
 
 function AccountMainScreen() {
     const dispatch = useDispatch();
     const navigation = useNavigation();
     const role = useSelector(state => state.auth.role);
+    const userId = useSelector(state => state.auth.userID);
     return (
         <ScrollView style={styles.screen}>
             
@@ -39,7 +41,11 @@ function AccountMainScreen() {
              styles={styles.itemsContainer}
                 icons='face-agent'
                 titletext='Hỗ trợ khách hàng'
-                onPress={() => navigation.navigate('ChatScreen')}
+                onPress={() =>{
+                    if (role == 'STAFF') {
+                        dispatch(chanelActions.getChanel(userId));
+                    }
+                    ; navigation.navigate('ChatScreen')}}
             />
 
             <Form1
