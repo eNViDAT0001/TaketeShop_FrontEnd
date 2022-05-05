@@ -11,7 +11,7 @@ import {
 } from '../actions/auth';
 
 const initialState = {
-  userId: '0000',
+  userID: '0000',
   name: 'Khách',
   gender: 'Không xác định',
   birthday: '0001/01/01',
@@ -27,7 +27,7 @@ export default (state = initialState, action) => {
     case LOGIN:
       return {
         token: action.user.token,
-        userId: action.user.id,
+        userID: action.user.id,
         name: action.user.name,
         gender: action.user.gender,
         birthday: action.user.birthday,
@@ -49,17 +49,9 @@ export default (state = initialState, action) => {
       return { ...state, phone: action.value };
     case CHANGE_AVATAR:
       return { ...state, avatar: action.value };
-    case CHANGE_PASSWORD:
-      return { ...state, avatar: action.value };
-
     case LOGOUT:
       return initialState;
-
-    // case SIGNUP:
-    //   return {
-    //     token: action.token,
-    //     userId: action.userId
-    //   };
+      
     default:
       return state;
   }

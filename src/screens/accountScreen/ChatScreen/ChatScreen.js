@@ -21,7 +21,7 @@ function ChatScreen(props) {
  
   const navigation = useNavigation();
   const role = useSelector(state => state.auth.role); 
-  const userId = useSelector(state => state.auth.userId);
+  const userId = useSelector(state => state.auth.userID);
   dispatch(chanelActions.getChanel(userId));
    
   const chanelId = useSelector(state => state.chanel._id);
