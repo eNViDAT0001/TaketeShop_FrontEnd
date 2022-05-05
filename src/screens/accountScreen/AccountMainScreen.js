@@ -44,10 +44,10 @@ function AccountMainScreen() {
                 onPress={() => {
                     if (role != 'STAFF') {
                         navigation.navigate('ListChanel');
-                        //dispatch(chanelActions.getMessagerFromChanelId(chanelId));
-                        //console.log("casdahanelID"+ chanelId);
+                        dispatch(chanelActions.getMessagerFromChanelId(chanelId));
+                        console.log("casdahanelID"+ chanelId);
                     } else {
-                       // dispatch(chanelActions.getMessagerFromChanelId(chanelId)).
+                        dispatch(chanelActions.getMessagerFromChanelId(chanelId)).
                             navigation.navigate('ChatScreen')
 
                         //console.log("get"+ chanelId);

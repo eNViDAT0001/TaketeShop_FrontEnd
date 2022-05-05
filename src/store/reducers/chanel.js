@@ -15,7 +15,7 @@ export default  (state = initialState, action) => {
         case GET_CHANEL:           
             return {                
                 userId: action.chanel.userId,
-                chanelId: action.chanel.chanelId,
+                _id: action.chanel.chanelId,
             };
         //case  CREATE_CHANEL:
             // const newChanel = new CModel(

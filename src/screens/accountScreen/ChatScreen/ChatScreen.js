@@ -21,41 +21,42 @@ function ChatScreen(props) {
   const navigation = useNavigation();
   const role = useSelector(state => state.auth.role);
   
-  const chanelId = useSelector(state => state.chanel.chanelId);
+  const chanelId = useSelector(state => state.chanel._id);
   const userChanelId = useSelector(state => state.chanel.userId);
-  const userId = useSelector(state => state.auth.userId);
+  //const userId = useSelector(state => state.auth.userId);
+  const userId = 4;
   let isStaff = false ;
 
   if (role == 'STAFF'){
     isStaff = true;
   } ;
 
-  const DATA_MESSAGES = [
-    {
-      _id: "62735cd32e26a5e0838ffb11",
-      chanelId: "62733b142e26a5e0838ffab0",
-      userId: 4,
-      text: "2aaaaa",
-      isStaff: true,
-      createAt: "2022-05-05T13:39:23.667Z",
-    },
-    {
-      _id: "62736b932cd94da29484357d",
-      chanelId: "62736b262cd94da29484357a",
-      userId: 5,
-      text: "3bbbbb",
-      isStaff: false,
-      createAt: "2022-05-05T13:41:55.562Z",
-    },
-    {
-      _id: "62736b932cd94da29484357df",
-      chanelId: "62736b262cd94da29484357a",
-      userId: 5,
-      text: "he",
-      isStaff: false,
-      createAt: "2022-05-05T13:49:36.754Z",
-    }
-  ]
+  // const DATA_MESSAGES = [
+  //   {
+  //     _id: "62735cd32e26a5e0838ffb11",
+  //     chanelId: "62733b142e26a5e0838ffab0",
+  //     userId: 4,
+  //     text: "2aaaaa",
+  //     isStaff: true,
+  //     createAt: "2022-05-05T13:39:23.667Z",
+  //   },
+  //   {
+  //     _id: "62736b932cd94da29484357d",
+  //     chanelId: "62736b262cd94da29484357a",
+  //     userId: 5,
+  //     text: "3bbbbb",
+  //     isStaff: false,
+  //     createAt: "2022-05-05T13:41:55.562Z",
+  //   },
+  //   {
+  //     _id: "62736b932cd94da29484357df",
+  //     chanelId: "62736b262cd94da29484357a",
+  //     userId: 5,
+  //     text: "he",
+  //     isStaff: false,
+  //     createAt: "2022-05-05T13:49:36.754Z",
+  //   }
+  // ]
 
   const Chats = (item) => {
     //var state = item.sender === "Me"
@@ -86,7 +87,7 @@ function ChatScreen(props) {
       <Header title="Hỗ trợ khách hàng"></Header>
 
       <FlatList
-        data={DATA_MESSAGES}
+        data={chanelActions.DATA_MESSAGES}
         renderItem={itemData => (renderMessages(itemData.item))}
         keyExtractor={(item, index) => item._id}
         //stickyHeaderIndices={[0]}
@@ -110,11 +111,12 @@ function ChatScreen(props) {
           color='#2196f3'
           size={25}
           onPress={() => {
-            if (messages != "") {
-              console.log(messages)
-              //dispatch(chanelActions.addMessager(chanelId, userId, messages, isStaff)).
-              dispatch(chanelActions.createChanel(18)).
-                then(setMessages(""))
+            if (messages != "") {              
+              //chanelId OK
+              // do userID
+             // dispatch(chanelActions.addMessager(chanelId, userId, messages, isStaff)).              
+              //dispatch(chanelActions.createChanel(18)).
+              //  then(setMessages(""))
                 
                   //console.log(chanelActions.DATA_MESSAGES))
             }

@@ -8,7 +8,7 @@ export const ADD_MESSAGER = 'ADD_MESSAGER';
 export const CHANGE_NAME = 'CHANGE_NAME';
 //export const CHANGE_NAME = 'CHANGE_NAME';
 
-export const getChanel = (userId) => {
+export const getChanel = async (userId) => {
     return async dispatch => {
         const response = await fetch(`http://localhost:5000/chanel/` + userId);//+userId);
         const json = await response.json();
@@ -27,13 +27,14 @@ export const getChanel = (userId) => {
     };
 };
 
-export const createChanel = (user_id) => {
+export const createChanel = async (user_id) => {
     return async dispatch => {
         // any async code you want!
         const response = await fetch('http://localhost:5000/chanel/', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 userId: user_id,
@@ -56,7 +57,7 @@ export const createChanel = (user_id) => {
     };
 }
 
-//export var DATA_MESSAGES = ([]);
+export var DATA_MESSAGES = ([]);
 //export const [messageFromChanelId, setMessageFromChanelId] = React.useState([]);
 
 export const getMessagerFromChanelId = (chanelId) => {
@@ -67,7 +68,7 @@ export const getMessagerFromChanelId = (chanelId) => {
         if (error) {
             console.log(error)
         }
-        //DATA_MESSAGES.push(json);
+        DATA_MESSAGES.push(json.stringify());
         //console.log(DATA_MESSAGES);
         // setMessageFromChanelId(json);
         //console.log(json._id)
@@ -91,9 +92,9 @@ export const addMessager = (chanelId, userId, text, isStaff) => {
         const response = await fetch(
             'http://localhost:5000/message/add/' + chanelId,
             {
-                method: 'PATCH',
+                method: 'POST',
                 headers: {
-                    Accept: 'application/json',
+                    'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
@@ -107,9 +108,10 @@ export const addMessager = (chanelId, userId, text, isStaff) => {
         );
 
         const resData = await response.json();
-        const error = resData.error;
-        if (error) {
-            console.log(error)
-        }
+        DATA_MESSAGES.push(resData.stringify());
+        // const error = resData.error;
+        // if (error) {
+        //     console.log(error)
+        // }
     };
 };
