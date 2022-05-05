@@ -2,7 +2,8 @@ import React, { useState, useRoute } from 'react';
 import {
   Text, StyleSheet, View, Image, TouchableOpacity, ScrollView, TextInput,
   FlatList,
-  Dimensions
+  Dimensions,
+  SafeAreaView,
 } from 'react-native'
 import { Colors, IconButton, Button } from 'react-native-paper';
 import { Dropdown } from 'react-native-element-dropdown';
@@ -14,88 +15,82 @@ import * as chanelActions from '../../../store/actions/chanelActions';
 
 const { width, height } = Dimensions.get('window');
 function ChatScreen(props) {
-  const [value, setValue] = useState(null);
+  // var DATA_MESSAGES = chanelActions.DATA_MESSAGES;
   const [messages, setMessages] = useState(null);
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const chanelId = useSelector(state => state.chanel._id);
-  const userChanelId = useSelector(state => state.chanel.userId);
-  const userId = useSelector(state => state.auth.userID);
-  const isStaff = (userId == userChanelId ? false : true); 
+  const role = useSelector(state => state.auth.role);
   
-  //setValue(useSelector(state => state.chanel.chanelId));
+  const chanelId = useSelector(state => state.chanel.chanelId);
+  const userChanelId = useSelector(state => state.chanel.userID);
+  const userID = useSelector(state => state.auth.userID);
+  let isStaff = false ;
+
+  if (role == 'STAFF'){
+    isStaff = true;
+  } ;
 
   const DATA_MESSAGES = [
     {
-      id: 0, frnName: 'Shuja Khalid', chats: [
-        { id: 1, text: userChanelId, sender: 'Shuja Khalid' },
-        { id: 1, text: "value", sender: 'Me' },
-        { id: 1, text: 'To style the header in React Navigation use a header object inside the navigationOptions object', sender: 'Shuja Khalid' },
-      ]
-    }
-  ]
-  const DATA_MESSAGES1 = [
-    {
       _id: "62735cd32e26a5e0838ffb11",
       chanelId: "62733b142e26a5e0838ffab0",
-      userId: 4,
-      text: "2",
-      isStaff: false,
+      userID: 4,
+      text: "2aaaaa",
+      isStaff: true,
       createAt: "2022-05-05T13:39:23.667Z",
     },
     {
       _id: "62736b932cd94da29484357d",
       chanelId: "62736b262cd94da29484357a",
-      userId: 5,
-      text: "3",
+      userID: 5,
+      text: "3bbbbb",
       isStaff: false,
       createAt: "2022-05-05T13:41:55.562Z",
     },
     {
-      _id: "62736b932cd94da29484357d",
+      _id: "62736b932cd94da29484357df",
       chanelId: "62736b262cd94da29484357a",
-      userId: 5,
+      userID: 5,
       text: "he",
       isStaff: false,
       createAt: "2022-05-05T13:49:36.754Z",
     }
   ]
 
-  const Chats = ({ item }) => {
-    var state = item.sender === "Me"
-    //var state = item.userId === userChanelId
+  const Chats = (item) => {
+    //var state = item.sender === "Me"
+    var state = (userID == item.userID)
     return (
-      <View style={[styles.pdlt10, styles.mdtp10, styles.mdbt10, styles.pdtp10, item.sender === "Me" ? styles.frowrev : styles.frow, styles.jStart]}>
-      {/* </View>/<View style={[styles.pdlt10, styles.mdtp10, styles.mdbt10, styles.pdtp10, userChanelId === userId ? styles.frowrev : styles.frow, styles.jStart]}> */}
-        <View style={state ? styles.pdlt10 : styles.pdrt10}>
-          {/* <Image style={{ width: 10, height: 60, borderRadius: 50 }}
-            source={{ uri: item.img }} /> */}
+      <View style={[styles.pdlt10, styles.mdtp10, styles.mdbt10, styles.pdtp10, (item.userID == userID) ? styles.frowrev : styles.frow, styles.jStart]}>
+        {/* <View View style={state ? styles.pdlt10 : styles.pdrt10} >
+           <Image style={{ width: 10, height: 60, borderRadius: 50 }}
+            source={{ uri: item.img }} /> 
+        </View > */}
+        <View style={[styles.Chat, state ? styles.myChat : styles.frnChat]}>
+          <Text style={{ lineHeight: 25 }}>{item.text}</Text>
         </View>
-        <View>
-          <View style={[styles.Chat, state ? styles.myChat : styles.frnChat]}>
-            <Text style={{ lineHeight: 25 }}>{item.text}</Text>
-          </View>
-        </View>
-      </View>
+
+      </View >
     )
   };
 
-  const _renderMessages = ({ item }) => {
+  const renderMessages = (item) => {
     return (
-      <Chats item={item} />
+      Chats(item)
     )
-  }
+  };
+
 
   return (
-    <View style={styles.screen}>
+    <SafeAreaView style={styles.screen}>
       <Header title="Hỗ trợ khách hàng"></Header>
 
       <FlatList
-        data={DATA_MESSAGES[0].chats}
-        renderItem={_renderMessages}
-        keyExtractor={(item, index) => String(index)}
-        stickyHeaderIndices={[0]}
-        contentContainerStyle={{ flexGrow: 1, backgroundColor: '#D3D3D388', top: 5 }}
+        data={DATA_MESSAGES}
+        renderItem={itemData => (renderMessages(itemData.item))}
+        keyExtractor={(item, index) => item._id}
+        //stickyHeaderIndices={[0]}
+        contentContainerStyle={{ flexGrow: 1, backgroundColor: '#D3D3D388', top: 5, marginHorizontal: 8 }}
 
       />
 
@@ -115,14 +110,18 @@ function ChatScreen(props) {
           color='#2196f3'
           size={25}
           onPress={() => {
-            if (messages != ""){
-              dispatch(chanelActions.addMessager(chanelId, userId, messages,isStaff));
-              setMessages("");
-            }            
+            if (messages != "") {
+              console.log(messages)
+              //dispatch(chanelActions.addMessager(chanelId, userID, messages, isStaff)).
+              dispatch(chanelActions.createChanel(18)).
+                then(setMessages(""))
+                
+                  //console.log(chanelActions.DATA_MESSAGES))
+            }
           }} />
       </View>
 
-    </View>
+    </SafeAreaView>
 
 
 
@@ -138,6 +137,15 @@ const styles = StyleSheet.create({
   },
   chatScreen: {
 
+  },
+  title: {
+    fontSize: 32,
+  },
+  item: {
+    backgroundColor: '#f9c2ff',
+    padding: 20,
+    marginVertical: 8,
+    marginHorizontal: 16,
   },
   Chat: {
     maxWidth: width / 1.5,

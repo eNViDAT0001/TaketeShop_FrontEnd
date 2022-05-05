@@ -17,11 +17,11 @@ export const CHANGE_PASSWORD = 'CHANGE_PASSWORD';
 
 let timer;
 
-export const authenticate = (userId, token, expiryTime) => {
+export const authenticate = (userID, token, expiryTime) => {
   return async dispatch => {
     dispatch(setLogoutTimer(expiryTime));
 
-    const response = await fetch(`http://localhost:5000/user/${userId}`, {
+    const response = await fetch(`http://localhost:5000/user/${userID}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -40,7 +40,7 @@ export const authenticate = (userId, token, expiryTime) => {
       type: LOGIN,
       user: {
         token: token,
-        id: userId,
+        id: userID,
         name: resData.name,
         gender: resData.gender,
         birthday: resData.birthday,
@@ -273,12 +273,12 @@ const setLogoutTimer = expirationTime => {
   };
 };
 
-const saveDataToStorage = (token, userId, expirationDate) => {
+const saveDataToStorage = (token, userID, expirationDate) => {
   AsyncStorage.setItem(
     'userData',
     JSON.stringify({
       token: token,
-      userID: userId,
+      userID: userID,
       expiryDate: expirationDate,
     }),
   );

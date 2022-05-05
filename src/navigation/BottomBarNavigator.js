@@ -15,9 +15,19 @@ import HomeMainScreen from '../screens/homeScreen/HomeMainScreen';
 import AccountNavigator from './AccountNavigator';
 import CartMainScreen from '../screens/cartScreen/CartMainScreen';
 import OrderNavigator from './OrderNavigator';
+// import { useSelector, useDispatch } from 'react-redux';
+// import * as authActions from '../store/actions/auth'
+// import * as chanelActions from '../store/actions/chanelActions';
 
 const TabNavigator = createMaterialBottomTabNavigator();
 function BottomBarNavigator() {
+//   const dispatch = useDispatch();
+//   const role = useSelector(state => state.auth.role);
+//   const userID = useSelector(state => state.auth.userID);
+//   if (role != 'CUSTOMER') {
+//     // Chu y
+//     dispatch(chanelActions.getChanel(userID));
+// }   
   return (
     <TabNavigator.Navigator
       activeColor={Colors.iconColor}

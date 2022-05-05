@@ -58,7 +58,7 @@ export default (state = initialState, action) => {
     // case SIGNUP:
     //   return {
     //     token: action.token,
-    //     userId: action.userId
+    //     userID: action.userID
     //   };
     default:
       return state;

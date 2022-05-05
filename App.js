@@ -9,7 +9,7 @@ import AppNavigator from './src/navigation/AppNavigator.js';
 import productReducer from './src/store/reducers/products';
 import authReducer from './src/store/reducers/auth';
 import chanelReducer from './src/store/reducers/chanel';
-import messagerReducer from './src/store/reducers/messager';
+//import messagerReducer from './src/store/reducers/messager';
 LogBox.ignoreLogs(["EventEmitter.removeListener"]);
 
 
@@ -43,7 +43,7 @@ const rootReducer = combineReducers({
   products: productReducer,
    auth: authReducer,
    chanel : chanelReducer,
-   messager : messagerReducer,
+   //messager : messagerReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));

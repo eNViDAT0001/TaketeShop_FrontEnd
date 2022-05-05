@@ -12,12 +12,12 @@ const initialState = {
 
 export default  (state = initialState, action) => {
     switch (action.type) {
-        case GET_CHANEL:
-            return {
-                userId: action.chanel.userId,
-                _id: action.chanel._id,
+        case GET_CHANEL:           
+            return {                
+                userID: action.chanel.userID,
+                chanelId: action.chanel.chanelId,
             };
-        case  CREATE_CHANEL:
+        //case  CREATE_CHANEL:
             // const newChanel = new CModel(
             //     resData[key].id,
             //     action.productData.category_id,
