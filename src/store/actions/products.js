@@ -1,5 +1,5 @@
-import CategoryModel from '../../models/CategoryModels';
-import Product from '../../models/ProductModel';
+import CategoryModel from '../../models/product/CategoryModels';
+import ProductModel from '../../models/product/ProductModel';
 export const DELETE_PRODUCT = 'DELETE_PRODUCT';
 export const CREATE_PRODUCT = 'CREATE_PRODUCT';
 export const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
@@ -21,16 +21,18 @@ export const fetchProducts = () => {
 
       for (const key in resData) {
         loadedProducts.push(
-          new Product(
+          new ProductModel(
             resData[key].id,
             resData[key].category_id,
             resData[key].user_id,
+            resData[key].unit_id,
             resData[key].name,
             resData[key].descriptions,
             resData[key].price,
             resData[key].quantity,
+            resData[key].unit,
             resData[key].discount,
-            resData[key].unit_id,
+            resData[key].image,
             resData[key].create_time,
             resData[key].update_time,
           ),
@@ -85,6 +87,7 @@ export const createProduct = (
   description,
   price,
   quantity,
+  image,
   unit_id,
   discount,
   category_id,
@@ -102,6 +105,7 @@ export const createProduct = (
         description,
         price,
         quantity,
+        image,
         unit_id,
         discount,
         category_id,
@@ -119,6 +123,7 @@ export const createProduct = (
         description,
         price,
         quantity,
+        image,
         unit_id,
         discount,
         category_id,

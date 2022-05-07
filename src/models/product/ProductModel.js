@@ -5,6 +5,7 @@ class ProductModel {
   constructor(
     productID,
     categoryID,
+    unitID,
     userID,
     name,
     description,
@@ -12,13 +13,14 @@ class ProductModel {
     quantity,
     discount,
     liked,
-    image,
     sold,
+    image,
     createTime,
     updateTime,
   ) {
     this.productID = productID;
     this.categoryID = categoryID;
+    this.unitID = unitID;
     this.userID = userID;
     this.name = name;
     this.description = description;
