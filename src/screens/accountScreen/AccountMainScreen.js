@@ -6,12 +6,17 @@ import Colors from '../../constants/Colors';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import Form1 from './Form';
 import { ADDRESS_SCREEN,ADD_ADDRESS_SCREEN,ADMIN_NAVIGATOR,LOGIN_MAIN_SCREEN,LOGIN_NAVIGATOR,PROFILE_NAVIGATOR, STARTUP_SCREEN} from '../../constants/NavigatorIndex';
-import * as authActions from '../../store/actions/auth'
+import * as authActions from '../../store/actions/auth';
+import * as chanelActions from '../../store/actions/chanelActions';
 
 function AccountMainScreen() {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch();   
     const navigation = useNavigation();
+    const userID = useSelector(state => state.auth.userId);
+    console.log(" get userID:"+ userID);
+    dispatch(chanelActions.getChanel(userID));
     const role = useSelector(state => state.auth.role);
+    const chanelId = useSelector(state => state.chanel.chanelId);
     return (
         <ScrollView style={styles.screen}>
             
@@ -35,11 +40,22 @@ function AccountMainScreen() {
                 titletext='Cửa hàng của tôi'
                 onPress={() => navigation.navigate(ADMIN_NAVIGATOR)}
             />: null}
-            <Form1
-             styles={styles.itemsContainer}
+           <Form1
+                styles={styles.itemsContainer}
                 icons='face-agent'
                 titletext='Hỗ trợ khách hàng'
-                onPress={() => navigation.navigate('ChatScreen')}
+                onPress={() => {
+                    if (role != 'CUSTOMER') {                        
+                        console.log("chanel get :"+ chanelId)        
+                            
+                        dispatch(chanelActions.getMessagerFromChanelId(chanelId));
+                        navigation.navigate('ChatScreen');
+                    } else {
+                        dispatch(chanelActions.getAllChanel(userID));
+                        navigation.navigate('ChatScreen');
+                    }
+                }
+                }
             />
 
             <Form1
