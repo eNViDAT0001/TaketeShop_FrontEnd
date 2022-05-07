@@ -11,7 +11,7 @@ const Stack = createNativeStackNavigator();
 
 function AccountNavigator() {
   return (
-    <Stack.Navigator initialRouteName={AccountMainScreen}>
+    <Stack.Navigator initialRouteName={ACCOUNT_MAIN_SCREEN}>
       <Stack.Screen
         name={ACCOUNT_MAIN_SCREEN}
         options={{ headerShown: false }}

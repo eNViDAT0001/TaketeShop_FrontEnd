@@ -6,7 +6,7 @@ import {
 const messageModel = ([]);
 const initialState = {
     _id: '62735cd32e26a5e0838ffb11',
-    userId: 5,
+    userID: 5,
     chanelId: '62733b142e26a5e0838ffab0',
     text: 'hello',
     isStaff: true,
@@ -18,7 +18,7 @@ export default (state = initialState, action) => {
     switch (action.type) {
         case GET_MESSAGER:
             return {
-                userId: action.messager.userId,
+                userID: action.messager.userID,
                 _id: action.messager._id,
                 chanelId: action.messager.chanelId,
                 text: action.messager.text,
@@ -27,7 +27,7 @@ export default (state = initialState, action) => {
             };
         // case ADD_MESSAGER:
         //     const addMess = new messageModel(
-        //         action.messager.userId,
+        //         action.messager.userID,
         //         action.messager._id,
         //         action.messager.chanelId,
         //         action.messager.text,

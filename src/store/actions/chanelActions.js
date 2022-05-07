@@ -1,4 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import messagerModel from '../../models/MessagerModel';
+import ChanelModel from '../../models/ChanelModel';
 
 export const CREATE_CHANEL = 'CREATE_CHANEL';
 export const GET_CHANEL = 'GET_CHANEL';
@@ -8,36 +10,63 @@ export const ADD_MESSAGER = 'ADD_MESSAGER';
 export const CHANGE_NAME = 'CHANGE_NAME';
 //export const CHANGE_NAME = 'CHANGE_NAME';
 
-export const getChanel = async (userId) => {
+
+export const getAllChanel = () => {
     return async dispatch => {
-        const response = await fetch(`http://localhost:5000/chanel/` + userId);//+userId);
-        const json = await response.json();
-        const error = json.error;
+        const response = await fetch(`http://localhost:5000/chanel/`);//+userID);
+        const resData = await response.json();
+        const error = resData.error;
         if (error) {
             console.log(error)
         }
-        // console.log(json[0]._id+ "chanelID")
+        console.log("get all chanel:" + resData._id,)
+        const allChanel = [];
+
+        for (const key in resData) {
+            allChanel.push(
+                new ChanelModel(
+                    resData[key]._id,
+                    resData[key].userId,
+                ),
+            );
+        }
+        dispatch({ type: GET_ALL_CHANEL, chanel: allChanel });
+    };
+};
+export const getChanel = (userID) => {
+    return async dispatch => {
+        const response = await fetch(`http://localhost:5000/chanel/` + userID);//+userID);
+        const resData = await response.json();
+        const error = resData.error;
+        if (error) {
+            console.log(error)
+        }
+        console.log("get chanel:" + resData[0]._id);
+        // const chanel = new ChanelModel(
+        //     resData[0]._id,
+        //     resData[0].userId,
+        const id = resData[0]._id;
+        const uid = resData[0].userId;
+        // )
         dispatch({
             type: GET_CHANEL,
-            chanel: {
-                chanelId: json[0]._id,
-                userId: json[0].userId,
-            },
+            chanel: new ChanelModel(
+                id, uid
+            ),
         });
     };
 };
 
-export const createChanel = async (user_id) => {
+export const createChanel = (userID) => {
     return async dispatch => {
         // any async code you want!
-        const response = await fetch('http://localhost:5000/chanel/', {
+        const response = await fetch('http://localhost:5000/chanel/' + userID, {
             method: 'POST',
             headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                userId: user_id,
+                userID,
             }),
         });
 
@@ -47,71 +76,101 @@ export const createChanel = async (user_id) => {
             console.log("create Chanel error")
         }
         console.log("create Chanel ok")
+        const id = resData[0]._id
         dispatch({
             type: CREATE_CHANEL,
             chanel: {
-                chanelId: resData[0]._id,
-                userId: user_id,
+                chanelId: id,
+                userID: userID,
             },
         });
     };
 }
 
-export var DATA_MESSAGES = ([]);
-//export const [messageFromChanelId, setMessageFromChanelId] = React.useState([]);
+//export var DATA_MESSAGES = ([]);
 
 export const getMessagerFromChanelId = (chanelId) => {
     return async dispatch => {
-        const response = await fetch(`http://localhost:5000/message/chanel/` + chanelId);//+userId);
-        const json = await response.json();
-        const error = json.error;
+        const response = await fetch(`http://localhost:5000/message/chanel/` + chanelId);//+userID);
+        const resData = await response.json();
+        const error = resData.error;
+        //console.log(resData);
         if (error) {
             console.log(error)
         }
-        DATA_MESSAGES.push(json);
-        //console.log(DATA_MESSAGES);
-        // setMessageFromChanelId(json);
-        //console.log(json._id)
-        // dispatch({
-        //     type: GET_MESSAGER,
-        //     messager: {
-        //         _id: json._id,
-        //         userId: json.userId,
-        //         chanelId : json.chanelId,
-        //         text : json.text,
-        //         isStaff: json.isStaff,
-        //         createAt: json.createAt,
-        //     },
-        // });
+        const loadedMessager = [];
+
+        for (const key in resData) {
+            loadedMessager.push(
+                new messagerModel(
+                    resData[key]._id,
+                    resData[key].chanelId,
+                    resData[key].userId,
+                    resData[key].text,
+                    resData[key].isStaff,
+                    resData[key].createAt
+                ),
+            );
+        }
+        dispatch({ type: GET_MESSAGER, message: loadedMessager });
+
     };
 };
 
-export const addMessager = (chanelId, userId, text, isStaff) => {
+export const addMessager = (chanelId, userID, text, isStaff) => {
     return async dispatch => {
-        const timer = await Date.now;
-        const response = await fetch(
-            'http://localhost:5000/message/add/' + chanelId,
+        console.log(userID);
+        console.log(text);
+        const response = await fetch('http://localhost:5000/message/add/' + chanelId,
             {
                 method: 'POST',
                 headers: {
-                    'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    chanelId: chanelId,
-                    userId: userId,
-                    text: text,
-                    isStaff: isStaff,
-                    createAt: timer,
+                    chanelId,
+                    userID,
+                    text,
+                    isStaff,
+                    // createAt: timer,
                 }),
             },
         );
 
         const resData = await response.json();
-        DATA_MESSAGES.push(resData);
-        // const error = resData.error;
-        // if (error) {
-        //     console.log(error)
+        console.log("Them messager thanh cong :" + resData[0].createAt);
+        const error = resData.error;
+        // DATA_MESSAGES.push(json);
+        if (error) {
+            console.log(error)
+        }
+        const id = resData[0]._id;
+        // const loadedMessager = [];
+
+        // for (const key in resData) {
+        //     loadedMessager.push(
+        //     new CategoryModel(
+        //       resData[key]._id,
+        //       resData[key].name,
+        //       resData[key].discount,
+        //       resData[key].image,
+        //       resData[key].create_time,
+        //       resData[key].update_time,
+        //     ),
+        //   );
         // }
+  
+       // dispatch({type: ADD_MESSAGER, categories: loadedMessager});
+        dispatch({
+            type: ADD_MESSAGER,
+            message: {
+                _id: id,
+                chanelId,
+                userID,
+                text,
+                isStaff,
+                createAt: resData[0].createAt,
+            },
+        });
     };
 };

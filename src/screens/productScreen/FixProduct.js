@@ -24,7 +24,7 @@ function FixProduct(props) {
     const [loaisp, setLoaisp] = useState(null);
     const [unit, setUnit] = useState(null);
     const navigation = useNavigation();
-    const userId = useSelector(state => state.auth.userId);
+    const userId = useSelector(state => state.auth.userID);
     const dispatch = useDispatch();
 
 

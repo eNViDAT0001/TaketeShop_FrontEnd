@@ -10,7 +10,7 @@ import * as authActions from '../../store/actions/auth'
 import * as chanelActions from '../../store/actions/chanelActions';
 
 function AccountMainScreen() {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch();   
     const navigation = useNavigation();
     const role = useSelector(state => state.auth.role);
     const chanelId = useSelector(state => state.chanel.chanelId);
@@ -42,17 +42,17 @@ function AccountMainScreen() {
                 icons='face-agent'
                 titletext='Hỗ trợ khách hàng'
                 onPress={() => {
-                    if (role != 'STAFF') {
-                        navigation.navigate('ListChanel');
+                    if (role != 'CUSTOMER') {                        
+                        //console.log("chanel get :"+chanelId)        
+                            
                         dispatch(chanelActions.getMessagerFromChanelId(chanelId));
-                        console.log("casdahanelID"+ chanelId);
+                        navigation.navigate('ChatScreen');
                     } else {
-                        dispatch(chanelActions.getMessagerFromChanelId(chanelId)).
-                            navigation.navigate('ChatScreen')
-
-                        //console.log("get"+ chanelId);
-                    }                   
-                }}
+                        dispatch(chanelActions.getAllChanel(userID));
+                        navigation.navigate('ChatScreen');
+                    }
+                }
+                }
             />
 
             <Form1

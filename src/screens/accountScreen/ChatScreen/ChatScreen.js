@@ -18,58 +18,30 @@ function ChatScreen(props) {
   // var DATA_MESSAGES = chanelActions.DATA_MESSAGES;
   const [messages, setMessages] = useState(null);
   const dispatch = useDispatch();
- 
   const navigation = useNavigation();
-  const role = useSelector(state => state.auth.role); 
-  const userId = useSelector(state => state.auth.userID);
-  dispatch(chanelActions.getChanel(userId));
-   
+  const role = useSelector(state => state.auth.role);
+  const userID = useSelector(state => state.auth.userID);
   const chanelId = useSelector(state => state.chanel._id);
-  const userChanelId = useSelector(state => state.chanel.userId);
-  //const userId = 4;
-  let isStaff = false ;
+  const userChanelId = useSelector(state => state.chanel.userID);
+  //const [isFetching, setIsFetching] = useState(false);
 
-  if (role == 'STAFF'){
+  let isStaff = false;
+  if (role != 'CUSTOMER') {
     isStaff = true;
-  } ;
+  };
 
-  // const DATA_MESSAGES = [
-  //   {
-  //     _id: "62735cd32e26a5e0838ffb11",
-  //     chanelId: "62733b142e26a5e0838ffab0",
-  //     userId: 4,
-  //     text: "2aaaaa",
-  //     isStaff: true,
-  //     createAt: "2022-05-05T13:39:23.667Z",
-  //   },
-  //   {
-  //     _id: "62736b932cd94da29484357d",
-  //     chanelId: "62736b262cd94da29484357a",
-  //     userId: 5,
-  //     text: "3bbbbb",
-  //     isStaff: false,
-  //     createAt: "2022-05-05T13:41:55.562Z",
-  //   },
-  //   {
-  //     _id: "62736b932cd94da29484357df",
-  //     chanelId: "62736b262cd94da29484357a",
-  //     userId: 5,
-  //     text: "he",
-  //     isStaff: false,
-  //     createAt: "2022-05-05T13:49:36.754Z",
-  //   }
-  // ]
 
   const Chats = (item) => {
     //var state = item.sender === "Me"
-    var state = (userId == item.userId)
+    var state;
+    if (isStaff) {
+      (item.userID == userID) ? (state = styles.frowrev) : (state = styles.frow);
+    } else {
+      (item.userID == userID) ? (state = styles.frow) : (state = styles.frowrev);
+    }
     return (
-      <View style={[styles.pdlt10, styles.mdtp10, styles.mdbt10, styles.pdtp10, (item.userId == userId) ? styles.frowrev : styles.frow, styles.jStart]}>
-        {/* <View View style={state ? styles.pdlt10 : styles.pdrt10} >
-           <Image style={{ width: 10, height: 60, borderRadius: 50 }}
-            source={{ uri: item.img }} /> 
-        </View > */}
-        <View style={[styles.Chat, state ? styles.myChat : styles.frnChat]}>
+      <View style={[styles.pdlt10, styles.mdtp10, styles.mdbt10, styles.pdtp10, state, styles.jStart]}>
+        <View View style={[styles.Chat, (item.userID == userID) ? styles.myChat : styles.frnChat]} >
           <Text style={{ lineHeight: 25 }}>{item.text}</Text>
         </View>
 
@@ -82,16 +54,22 @@ function ChatScreen(props) {
       Chats(item)
     )
   };
-
+  const flatListRef = React.useRef();
 
   return (
     <SafeAreaView style={styles.screen}>
       <Header title="Hỗ trợ khách hàng"></Header>
 
       <FlatList
-        data={chanelActions.DATA_MESSAGES}
+        // data={DATA_MESSAGES}
+        ref={flatListRef}
+        data={useSelector(state => state.chanel.DATA_MESSAGES)}
+        //extraData ={useSelector(state => state.chanel.DATA_MESSAGES)}
+        //onRefresh = {useSelector(state => state.chanel.DATA_MESSAGES)}  
+        //refreshing={useSelector(state => state.chanel.DATA_MESSAGES)}
         renderItem={itemData => (renderMessages(itemData.item))}
         keyExtractor={(item, index) => item._id}
+        onLayout={() => flatListRef.current.scrollToEnd({ animated: true })}
         //stickyHeaderIndices={[0]}
         contentContainerStyle={{ flexGrow: 1, backgroundColor: '#D3D3D388', top: 5, marginHorizontal: 8 }}
 
@@ -113,14 +91,15 @@ function ChatScreen(props) {
           color='#2196f3'
           size={25}
           onPress={() => {
-            if (messages != "") {              
-              //chanelId OK
-              // do userID
-              dispatch(chanelActions.addMessager(chanelId, userId, messages, isStaff)).              
-              //dispatch(chanelActions.createChanel(18)).
-                then(setMessages(""))
-                
-                  //console.log(chanelActions.DATA_MESSAGES))
+            if (messages != "") {
+              // console.log(chanelId)
+              // console.log(userID)
+              // console.log(messages)
+              // console.log(isStaff)
+              dispatch(chanelActions.createChanel(113));    
+             // dispatch(chanelActions.addMessager(chanelId, userID, messages, isStaff));
+              // dispatch(chanelActions.getMessagerFromChanelId(chanelId)).
+              setMessages("")
             }
           }} />
       </View>

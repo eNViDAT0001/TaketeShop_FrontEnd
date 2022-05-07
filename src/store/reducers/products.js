@@ -1,6 +1,6 @@
-import {PRODUCT_ITEMS_DUMMY_DATA} from '../../dummy_database/dummy-data';
+import { PRODUCT_ITEMS_DUMMY_DATA } from '../../dummy_database/dummy-data';
 import ProductModel from '../../models/ProductModel';
-import {CREATE_PRODUCT, SET_CATEGORIES, SET_PRODUCTS} from '../actions/products';
+import { CREATE_PRODUCT, SET_CATEGORIES, SET_PRODUCTS } from '../actions/products';
 
 const initialState = {
   availableProducts: [],

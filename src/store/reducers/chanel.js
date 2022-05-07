@@ -1,46 +1,59 @@
 import {
     CREATE_CHANEL,
-    GET_CHANEL   
+    GET_CHANEL,
+    GET_MESSAGER,
+    ADD_MESSAGER
 } from '../actions/chanelActions';
+import messagerModel from '../../models/MessagerModel';
 
 const initialState = {
-    userId: '0000',
+    userID: '0000',
     _id: '2733b142e26a5e0838ffab0',
-
+    DATA_MESSAGES: []
 };
 
 
-export default  (state = initialState, action) => {
+export default (state = initialState, action) => {
     switch (action.type) {
-        case GET_CHANEL:           
-            return {                
-                userId: action.chanel.userId,
-                _id: action.chanel.chanelId,
+        case GET_CHANEL:
+            console.log("GET_CHANEL")
+            return {
+                ...state,
+                _id: action.chanel._id,
+                userID: action.chanel.userID,
+                // DATA_MESSAGES: [],
             };
-        //case  CREATE_CHANEL:
-            // const newChanel = new CModel(
-            //     resData[key].id,
-            //     action.productData.category_id,
-            //     action.productData.user_id,
-            //     action.productData.name,
-            //     action.productData.descriptions,
-            //     action.productData.price,
-            //     action.productData.quantity,
-            //     action.productData.unit_id,
-            //     action.productData.discount,
-            //     action.productData.create_time,
-            //     action.productData.update_time,
-            //   );
-            //   return {
-            //     ...state,
-            //     availableProducts: state.availableProducts.concat(newProduct),
-            //     // userProducts: state.userProducts.concat(newProduct),
-            //   };
+        // case GET_ALL_CHANEL:
+        //     return {
+        //         ...state,
+        //         userID: action.chanel.userID,
+        //         _id: action.chanel.chanelId,
+        //     };
 
+        case GET_MESSAGER:
+            console.log("GET_MESSAGER")
+            return {
+                ...state,
+                //DATA_MESSAGES: state.DATA_MESSAGES.concat(newmessager),
+                DATA_MESSAGES: action.message,
+                // userProducts: state.userProducts.concat(newProduct),
+            };
+        case ADD_MESSAGER:
+            console.log("ADD_MESSAGER")
+            const newmessager = new messagerModel(
+                resData[key]._id,
+                action.message.chanelId,
+                action.message.userID,
+                action.message.text,
+                action.message.isStaff,
+                action.message.createAt,
+            );
+            return {
+                ...state,
+                DATA_MESSAGES: state.DATA_MESSAGES.concat(newmessager),
+                // userProducts: state.userProducts.concat(newProduct),
+            };
 
-
-        default:
-            return state;
     }
     return state;
 };
