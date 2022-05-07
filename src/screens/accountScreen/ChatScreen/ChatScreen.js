@@ -15,7 +15,7 @@ import * as chanelActions from '../../../store/actions/chanelActions';
 
 const { width, height } = Dimensions.get('window');
 function ChatScreen(props) {
-  // var DATA_MESSAGES = chanelActions.DATA_MESSAGES;
+  var DATA_MESSAGES = useSelector(state => state.chanel.DATA_MESSAGES);
   const [messages, setMessages] = useState(null);
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -64,7 +64,7 @@ function ChatScreen(props) {
         // data={DATA_MESSAGES}
         ref={flatListRef}
         data={useSelector(state => state.chanel.DATA_MESSAGES)}
-        //extraData ={useSelector(state => state.chanel.DATA_MESSAGES)}
+        extraData ={DATA_MESSAGES}
         //onRefresh = {useSelector(state => state.chanel.DATA_MESSAGES)}  
         //refreshing={useSelector(state => state.chanel.DATA_MESSAGES)}
         renderItem={itemData => (renderMessages(itemData.item))}

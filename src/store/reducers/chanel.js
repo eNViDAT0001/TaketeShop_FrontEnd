@@ -41,9 +41,9 @@ export default (state = initialState, action) => {
         case ADD_MESSAGER:
             console.log("ADD_MESSAGER")
             const newmessager = new messagerModel(
-                resData[key]._id,
-                action.message.chanelId,
+                action.message._id,
                 action.message.userID,
+                action.message.chanelId,                
                 action.message.text,
                 action.message.isStaff,
                 action.message.createAt,

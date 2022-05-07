@@ -144,27 +144,11 @@ export const addMessager = (chanelId, userID, text, isStaff) => {
         if (error) {
             console.log(error)
         }
-        const id = resData[0]._id;
-        // const loadedMessager = [];
-
-        // for (const key in resData) {
-        //     loadedMessager.push(
-        //     new CategoryModel(
-        //       resData[key]._id,
-        //       resData[key].name,
-        //       resData[key].discount,
-        //       resData[key].image,
-        //       resData[key].create_time,
-        //       resData[key].update_time,
-        //     ),
-        //   );
-        // }
-  
-       // dispatch({type: ADD_MESSAGER, categories: loadedMessager});
+        
         dispatch({
             type: ADD_MESSAGER,
             message: {
-                _id: id,
+                _id: resData[0]._id,
                 chanelId,
                 userID,
                 text,

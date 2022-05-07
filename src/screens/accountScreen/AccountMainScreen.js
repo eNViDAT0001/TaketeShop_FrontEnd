@@ -12,6 +12,9 @@ import * as chanelActions from '../../store/actions/chanelActions';
 function AccountMainScreen() {
     const dispatch = useDispatch();   
     const navigation = useNavigation();
+    const userID = useSelector(state => state.auth.userId);
+    console.log(" get userID:"+ userID)        ;
+    dispatch(chanelActions.getChanel(4));
     const role = useSelector(state => state.auth.role);
     const chanelId = useSelector(state => state.chanel.chanelId);
     return (
@@ -43,7 +46,7 @@ function AccountMainScreen() {
                 titletext='Hỗ trợ khách hàng'
                 onPress={() => {
                     if (role != 'CUSTOMER') {                        
-                        //console.log("chanel get :"+chanelId)        
+                        console.log("chanel get :"+ chanelId)        
                             
                         dispatch(chanelActions.getMessagerFromChanelId(chanelId));
                         navigation.navigate('ChatScreen');
