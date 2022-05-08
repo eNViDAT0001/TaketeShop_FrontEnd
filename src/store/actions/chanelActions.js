@@ -167,3 +167,9 @@ export const addMessager = (chanelId, userId, text, isStaff) => {
 
     };
 };
+
+export const logout = () => {
+    clearLogoutTimer();
+    AsyncStorage.removeItem('userData');
+    return {type: LOGOUT};
+  };

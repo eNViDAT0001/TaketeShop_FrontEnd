@@ -12,10 +12,15 @@ import * as chanelActions from '../../store/actions/chanelActions';
 function AccountMainScreen() {
     const dispatch = useDispatch();
     const navigation = useNavigation();
-    const userID = useSelector(state => state.auth.userID);      
+    const userID = useSelector(state => state.auth.userID);
     const role = useSelector(state => state.auth.role);   
-    dispatch(chanelActions.getChanel(userID));                          
-
+    if (role === 'CUSTOMER') {
+        dispatch(chanelActions.getChanel(userID));      
+        const chanelId = useSelector(state => state.chanel._id);              
+        dispatch(chanelActions.getMessagerFromChanelId(chanelId));
+    }else {
+        dispatch(chanelActions.getAllChanel());
+    }
     return (
         <ScrollView style={styles.screen}>
             <Form1
@@ -43,11 +48,9 @@ function AccountMainScreen() {
                 icons='face-agent'
                 titletext='Hỗ trợ khách hàng'
                 onPress={() => {
-                    if (role == 'CUSTOMER') {                       
-                        dispatch(chanelActions.getMessagerFromChanelId(useSelector(state => state.chanel._id)));
+                    if (role == 'CUSTOMER') {                                  
                         navigation.navigate('ChatScreen');
-                    } else {
-                        dispatch(chanelActions.getAllChanel());                        
+                    } else {                       
                         navigation.navigate('ListChanel');
                     }
                 }

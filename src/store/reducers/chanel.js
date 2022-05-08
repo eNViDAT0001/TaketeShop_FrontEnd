@@ -3,21 +3,17 @@ import {
     GET_CHANEL,
     GET_MESSAGER,
     ADD_MESSAGER,
-    GET_ALL_CHANEL
+    GET_ALL_CHANEL,
+    LOGOUT
 } from '../actions/chanelActions';
 import messagerModel from '../../models/MessagerModel';
 import ChanelModel from '../../models/ChanelModel';
 
 const initialState = {
     _id: '2733b142e26a5e0838ffab0',
-    userID: '0000',      
+    userID: '0000',
     DATA_MESSAGES: [],
-    LIST_CHANEL :[
-        {
-            _id: '2733b142e26a5e0838ffab0',
-            userID: '0000',            
-        }
-    ]
+    LIST_CHANEL: []
 };
 
 
@@ -27,13 +23,13 @@ export default (state = initialState, action) => {
             console.log("GET_CHANEL")
             return {
                 ...state,
-                _id : action.chanel.chanelId,
-                userID : action.chanel.userId,                       
+                _id: action.chanel.chanelId,
+                userID: action.chanel.userId,
                 DATA_MESSAGES: [],
             };
 
         case GET_ALL_CHANEL:
-            console.log("GET_ALL_CHANEL" )
+            console.log("GET_ALL_CHANEL")
             return {
                 ...state,
                 LIST_CHANEL: action.chanel,
@@ -60,6 +56,8 @@ export default (state = initialState, action) => {
                 DATA_MESSAGES: state.DATA_MESSAGES.concat(newmessager),
                 // userProducts: state.userProducts.concat(newProduct),
             };
+        case LOGOUT:
+            return initialState;
 
     }
     return state;

@@ -20,7 +20,7 @@ const initialState = {
   avatar:
     'https://4xucy2kyby51ggkud2tadg3d-wpengine.netdna-ssl.com/wp-content/uploads/sites/37/2017/02/IAFOR-Blank-Avatar-Image.jpg',
   role: 'CUSTOMER',
-  token: null,
+  token: null, 
 };
 export default (state = initialState, action) => {
   switch (action.type) {
