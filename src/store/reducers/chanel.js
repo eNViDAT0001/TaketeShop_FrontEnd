@@ -4,7 +4,7 @@ import {
     GET_MESSAGER,
     ADD_MESSAGER,
     GET_ALL_CHANEL,
-    LOGOUT
+    LOGOUT,
 } from '../actions/chanelActions';
 import messagerModel from '../../models/MessagerModel';
 import ChanelModel from '../../models/ChanelModel';

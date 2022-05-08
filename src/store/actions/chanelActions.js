@@ -14,8 +14,8 @@ export const CHANGE_NAME = 'CHANGE_NAME';
 export const getChanel = (userId) => {
     return async dispatch => {
         const response = await fetch(`http://localhost:5000/chanel/` + userId);//+userId);
-        const json = await response.json();
-        const error = json.error;
+        const resData = await response.json();
+        const error = resData.error;
         if (error) {
             console.log(error)
         }
@@ -23,8 +23,8 @@ export const getChanel = (userId) => {
         dispatch({
             type: GET_CHANEL,
             chanel: {
-                chanelId: json[0]._id,
-                userId: json[0].userId,
+                chanelId: resData[0]._id,
+                userId: userId,
             },
         });
     };
@@ -168,8 +168,6 @@ export const addMessager = (chanelId, userId, text, isStaff) => {
     };
 };
 
-export const logout = () => {
-    clearLogoutTimer();
-    AsyncStorage.removeItem('userData');
+export const logout = () => {      
     return {type: LOGOUT};
   };

@@ -61,7 +61,11 @@ function AccountMainScreen() {
                 styles={styles.itemsContainer}
                 icons='logout'
                 titletext='Đăng xuất'
-                onPress={() => { dispatch(authActions.logout); navigation.navigate(STARTUP_SCREEN) }}
+                onPress={() => { 
+                    dispatch(authActions.logout); 
+                    navigation.navigate(STARTUP_SCREEN) ;
+                    dispatch(chanelActions.logout);
+                }}
             />
 
         </ScrollView>
