@@ -22,13 +22,18 @@ import { Form } from 'formik';
 function ListChanel() {
   var ALL_LIST_CHANEL = useSelector(state => state.chanel.LIST_CHANEL);
   const navigation = useNavigation();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(); 
+  
+  // useEffect(()=> {
 
+
+  // })
   const Chats = (item) => {
     return (
       <View style={styles.container}>
         <TouchableOpacity
           onPress={() => {
+            console.log("goi chanel userID:"+item.userID)
             dispatch(chanelActions.getChanel(item.userID));
             dispatch(chanelActions.getMessagerFromChanelId(item._id));
             navigation.navigate('ChatScreen');
@@ -54,13 +59,14 @@ function ListChanel() {
 
     )
   };
-
   const renderMessages = (item) => {
     return (
       Chats(item)
     )
   };
+
   return (
+
     <SafeAreaView style={styles.screen}>
       <Header title="Danh sách hỗ trợ khách hàng"></Header>
 

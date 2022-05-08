@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, StyleSheet, FlatList, Text, ScrollView } from 'react-native';
 import { Searchbar, IconButton } from 'react-native-paper';
 import { useSelector, useDispatch } from 'react-redux';
@@ -10,19 +10,22 @@ import * as authActions from '../../store/actions/auth'
 import * as chanelActions from '../../store/actions/chanelActions';
 
 function AccountMainScreen() {
+    const userID = useSelector(state => state.auth.userID);
+    const role = useSelector(state => state.auth.role);
     const dispatch = useDispatch();
     const navigation = useNavigation();
-    const userID = useSelector(state => state.auth.userID);
-    const role = useSelector(state => state.auth.role);      
-    if (role === 'CUSTOMER') {
-        
-        dispatch(chanelActions.getChanel(userID));      
-        const chanelId = useSelector(state => state.chanel._id);
-        dispatch(chanelActions.getMessagerFromChanelId(chanelId));
-    }else {       
-        dispatch(chanelActions.getAllChanel());
-    }
-    
+    const chanelId = useSelector(state => state.chanel._id);
+
+    useEffect(() => {
+        if (role == 'CUSTOMER') {
+            dispatch(chanelActions.getChanel(userID));           
+            dispatch(chanelActions.getMessagerFromChanelId(chanelId));
+        } else {
+            dispatch(chanelActions.getAllChanel());
+        }
+    }, [role]);
+
+
     return (
         <ScrollView style={styles.screen}>
             <Form1
@@ -50,9 +53,9 @@ function AccountMainScreen() {
                 icons='face-agent'
                 titletext='Hỗ trợ khách hàng'
                 onPress={() => {
-                    if (role == 'CUSTOMER') {                                  
+                    if (role == 'CUSTOMER') {
                         navigation.navigate('ChatScreen');
-                    } else {                       
+                    } else {
                         navigation.navigate('ListChanel');
                     }
                 }
@@ -63,9 +66,9 @@ function AccountMainScreen() {
                 styles={styles.itemsContainer}
                 icons='logout'
                 titletext='Đăng xuất'
-                onPress={() => { 
-                    dispatch(authActions.logout); 
-                    navigation.navigate(STARTUP_SCREEN) ;
+                onPress={() => {
+                    dispatch(authActions.logout);
+                    navigation.navigate(STARTUP_SCREEN);
                     dispatch(chanelActions.logout);
                 }}
             />

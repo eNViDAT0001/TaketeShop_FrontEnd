@@ -23,6 +23,14 @@ export default (state = initialState, action) => {
             console.log("GET_CHANEL")
             return {
                 ...state,
+                _id: action.chanel._id,
+                userID: action.chanel.userID,
+                DATA_MESSAGES: [],
+            };
+        case CREATE_CHANEL:
+            console.log("GET_CHANEL")
+            return {
+                ...state,
                 _id: action.chanel.chanelId,
                 userID: action.chanel.userId,
                 DATA_MESSAGES: [],

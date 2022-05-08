@@ -21,13 +21,15 @@ export const getChanel = (userId) => {
             if (error) {
                 console.log(error)
             }
-            console.log("GET_CHANEL  Success ")
+           
+            // const chanel = resData[0]._id;           
+            console.log("GET_CHANEL  Success :" +resData[0]._id) 
             dispatch({
                 type: GET_CHANEL,
                 chanel: {
-                    chanelId: resData._id,
-                    userId: userId,
-                },
+                    _id : resData[0]._id,
+                    userID : userId,
+                }
             });
         } catch (err) {
             console.log(err);
@@ -86,7 +88,7 @@ export const createChanel = (user_id) => {
         dispatch({
             type: CREATE_CHANEL,
             chanel: {
-                chanelId: resData[0]._id,
+                chanelId: resData._id,
                 userId: user_id,
             },
         });
