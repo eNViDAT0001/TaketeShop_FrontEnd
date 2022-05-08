@@ -13,16 +13,16 @@ function AccountMainScreen() {
     const dispatch = useDispatch();
     const navigation = useNavigation();
     const userID = useSelector(state => state.auth.userID);
-    const role = useSelector(state => state.auth.role);  
-    var  chanelId ;
+    const role = useSelector(state => state.auth.role);      
     if (role === 'CUSTOMER') {
         
         dispatch(chanelActions.getChanel(userID));      
-        chanelId = useSelector(state => state.chanel._id);
+        const chanelId = useSelector(state => state.chanel._id);
         dispatch(chanelActions.getMessagerFromChanelId(chanelId));
     }else {       
         dispatch(chanelActions.getAllChanel());
     }
+    
     return (
         <ScrollView style={styles.screen}>
             <Form1
