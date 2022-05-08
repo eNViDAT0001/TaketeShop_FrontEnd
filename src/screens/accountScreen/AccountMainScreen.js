@@ -5,64 +5,60 @@ import { useSelector, useDispatch } from 'react-redux';
 import Colors from '../../constants/Colors';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import Form1 from './Form';
-import { ADDRESS_SCREEN,ADD_ADDRESS_SCREEN,ADMIN_NAVIGATOR,LOGIN_MAIN_SCREEN,LOGIN_NAVIGATOR,PROFILE_NAVIGATOR, STARTUP_SCREEN} from '../../constants/NavigatorIndex';
-import * as authActions from '../../store/actions/auth';
+import { ADDRESS_SCREEN, ADD_ADDRESS_SCREEN, LOGIN_MAIN_SCREEN, LOGIN_NAVIGATOR, PROFILE_NAVIGATOR, STARTUP_SCREEN } from '../../constants/NavigatorIndex';
+import * as authActions from '../../store/actions/auth'
 import * as chanelActions from '../../store/actions/chanelActions';
 
 function AccountMainScreen() {
-    const dispatch = useDispatch();   
+    const dispatch = useDispatch();
     const navigation = useNavigation();
-    const userID = useSelector(state => state.auth.userId);
-    console.log(" get userID:"+ userID);
-    dispatch(chanelActions.getChanel(userID));
-    const role = useSelector(state => state.auth.role);
-    const chanelId = useSelector(state => state.chanel.chanelId);
+    const userID = useSelector(state => state.auth.userID);      
+    const role = useSelector(state => state.auth.role);   
+    dispatch(chanelActions.getChanel(userID));                          
+
     return (
         <ScrollView style={styles.screen}>
-            
             <Form1
                 styles={styles.itemsContainer}
                 icons='account'
-                titletext='Thông tin cá nhân'                
-                onPress={()=> {navigation.navigate(PROFILE_NAVIGATOR)}}
-                //titletext2 = 'xcvjkz'
+                titletext='Thông tin cá nhân'
+                onPress={() => { navigation.navigate(PROFILE_NAVIGATOR) }}
+            //titletext2 = 'xcvjkz'
             />
             <Form1
-             styles={styles.itemsContainer}
+                styles={styles.itemsContainer}
                 icons='map-marker'
                 titletext='Địa chỉ'
                 onPress={() => navigation.navigate(ADDRESS_SCREEN)}
             />
 
-            {role !== 'CUSTOMER'? <Form1
-             styles={styles.itemsContainer}
+            {role !== 'CUSTOMER' ? <Form1
+                styles={styles.itemsContainer}
                 icons='credit-card-outline'
                 titletext='Cửa hàng của tôi'
-                onPress={() => navigation.navigate(ADMIN_NAVIGATOR)}
-            />: null}
-           <Form1
+            //onPress={() => navigation.navigate()}
+            /> : null}
+            <Form1
                 styles={styles.itemsContainer}
                 icons='face-agent'
                 titletext='Hỗ trợ khách hàng'
                 onPress={() => {
-                    if (role != 'CUSTOMER') {                        
-                        console.log("chanel get :"+ chanelId)        
-                            
-                        dispatch(chanelActions.getMessagerFromChanelId(chanelId));
+                    if (role == 'CUSTOMER') {                       
+                        dispatch(chanelActions.getMessagerFromChanelId(useSelector(state => state.chanel._id)));
                         navigation.navigate('ChatScreen');
                     } else {
-                        dispatch(chanelActions.getAllChanel(userID));
-                        navigation.navigate('ChatScreen');
+                        dispatch(chanelActions.getAllChanel());                        
+                        navigation.navigate('ListChanel');
                     }
                 }
                 }
             />
 
             <Form1
-             styles={styles.itemsContainer}
+                styles={styles.itemsContainer}
                 icons='logout'
                 titletext='Đăng xuất'
-                onPress={() => {dispatch(authActions.logout); navigation.navigate(STARTUP_SCREEN)}}
+                onPress={() => { dispatch(authActions.logout); navigation.navigate(STARTUP_SCREEN) }}
             />
 
         </ScrollView>
@@ -72,9 +68,9 @@ function AccountMainScreen() {
 
 const styles = StyleSheet.create({
     screen: {
-       flex: 1,
+        flex: 1,
     },
-    itemsContainer:{
+    itemsContainer: {
         height: 100
     }
 });

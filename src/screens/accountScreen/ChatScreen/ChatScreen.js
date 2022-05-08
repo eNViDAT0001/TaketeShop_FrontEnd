@@ -15,7 +15,8 @@ import * as chanelActions from '../../../store/actions/chanelActions';
 
 const { width, height } = Dimensions.get('window');
 function ChatScreen(props) {
-  var DATA_MESSAGES = useSelector(state => state.chanel.DATA_MESSAGES);
+  var DATA_MESS = useSelector(state => state.chanel.DATA_MESSAGES);
+  //var DATA_MESS = useSelector(state => state.chanel.LIST_CHANEL);
   const [messages, setMessages] = useState(null);
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -61,10 +62,9 @@ function ChatScreen(props) {
       <Header title="Hỗ trợ khách hàng"></Header>
 
       <FlatList
-        // data={DATA_MESSAGES}
         ref={flatListRef}
-        data={useSelector(state => state.chanel.DATA_MESSAGES)}
-        extraData ={useSelector(state => state.chanel.DATA_MESSAGES)}
+        data={DATA_MESS}
+        extraData={DATA_MESS}
         //onRefresh = {useSelector(state => state.chanel.DATA_MESSAGES)}  
         //refreshing={useSelector(state => state.chanel.DATA_MESSAGES)}
         renderItem={itemData => (renderMessages(itemData.item))}
@@ -91,23 +91,20 @@ function ChatScreen(props) {
           color='#2196f3'
           size={25}
           onPress={() => {
-            if (messages != "") {
+            //if (messages != NULL) {
               // console.log(chanelId)
               // console.log(userID)
               // console.log(messages)
               // console.log(isStaff)
-              dispatch(chanelActions.createChanel(113));    
-             // dispatch(chanelActions.addMessager(chanelId, userID, messages, isStaff));
+              // dispatch(chanelActions.createChanel(113));
+              dispatch(chanelActions.addMessager(chanelId, userID, messages, isStaff));
               // dispatch(chanelActions.getMessagerFromChanelId(chanelId)).
               setMessages("")
-            }
+            //}
           }} />
       </View>
 
     </SafeAreaView>
-
-
-
 
   );
 }

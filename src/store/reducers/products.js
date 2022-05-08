@@ -1,5 +1,5 @@
 import {PRODUCT_ITEMS_DUMMY_DATA} from '../../dummy_database/dummy-data';
-import ProductModel from '../../models/product/ProductModel';
+import ProductModel from '../../models/ProductModel';
 import {CREATE_PRODUCT, SET_CATEGORIES, SET_PRODUCTS} from '../actions/products';
 
 const initialState = {
@@ -29,15 +29,12 @@ export default (state = initialState, action) => {
         resData[key].id,
         action.productData.category_id,
         action.productData.user_id,
-        action.productData.unit_id,
         action.productData.name,
         action.productData.descriptions,
         action.productData.price,
         action.productData.quantity,
-        action.productData.unit,
+        action.productData.unit_id,
         action.productData.discount,
-        action.productData.sold,
-        action.productData.image,
         action.productData.create_time,
         action.productData.update_time,
       );

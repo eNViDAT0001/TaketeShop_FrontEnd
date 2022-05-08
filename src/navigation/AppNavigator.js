@@ -39,7 +39,7 @@ function AppNavigator() {
   return (
     <NavigationContainer>
       <StackNavigator.Navigator
-        initialRouteName={STARTUP_SCREEN}
+        initialRouteName={BOTTOM_BAR_NAVIGATOR}
         options={{
           headerStyle: {
             backgroundColor: Colors.primaryColor,
