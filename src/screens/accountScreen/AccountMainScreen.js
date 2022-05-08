@@ -13,12 +13,14 @@ function AccountMainScreen() {
     const dispatch = useDispatch();
     const navigation = useNavigation();
     const userID = useSelector(state => state.auth.userID);
-    const role = useSelector(state => state.auth.role);   
+    const role = useSelector(state => state.auth.role);  
+    var  chanelId ;
     if (role === 'CUSTOMER') {
+        
         dispatch(chanelActions.getChanel(userID));      
-        const chanelId = useSelector(state => state.chanel._id);              
+        chanelId = useSelector(state => state.chanel._id);
         dispatch(chanelActions.getMessagerFromChanelId(chanelId));
-    }else {
+    }else {       
         dispatch(chanelActions.getAllChanel());
     }
     return (
