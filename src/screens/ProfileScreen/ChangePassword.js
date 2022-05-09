@@ -15,7 +15,7 @@ function ChangePassword(props) {
   const [confirmpass, setConfirmpass] = React.useState('');
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const userID = useSelector(state => state.auth.userID);  
+  const userId = useSelector(state => state.auth.userId);  
   const token = useSelector(state => state.auth.token);
 
   const ChangeButton = async () => {
@@ -31,7 +31,7 @@ function ChangePassword(props) {
       alert('Mật khẩu mới không được trùng với mật khẩu cũ, vui lòng nhập lại');
     } else try {     
 
-      dispatch(authActions.changePassword(userID, token, oldpass, newpass));
+      dispatch(authActions.changePassword(userId, token, oldpass, newpass));
       navigation.navigate('Profile');
 
     } catch (error) {

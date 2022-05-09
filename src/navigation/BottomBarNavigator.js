@@ -18,10 +18,11 @@ import OrderNavigator from './OrderNavigator';
 
 const TabNavigator = createMaterialBottomTabNavigator();
 function BottomBarNavigator() {
+  
   return (
     <TabNavigator.Navigator
       activeColor={Colors.iconColor}
-      initialRouteName={HOME_MAIN_SCREEN}
+      initialRouteName={ACCOUNT_NAVIGATOR}
       barStyle={{backgroundColor: Colors.primaryColor}}>
       <TabNavigator.Screen
         name={HOME_MAIN_SCREEN}

@@ -10,7 +10,7 @@ function Email(props) {
   const [email, setEmail] = React.useState('');
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const userID = useSelector(state => state.auth.userID);
+  const userId = useSelector(state => state.auth.userId);
   const token = useSelector(state => state.auth.token);
 
   return (
@@ -35,7 +35,7 @@ function Email(props) {
           color="#4F5160"
           labelStyle={{fontSize: 20}}
           onPress={() => {
-            dispatch(authActions.changeEmail(userID, token, email));
+            dispatch(authActions.changeEmail(userId, token, email));
             navigation.navigate('Profile');
           }}>
           Xác nhận
