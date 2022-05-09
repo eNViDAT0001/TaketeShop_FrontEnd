@@ -9,6 +9,7 @@ import {useNavigation} from '@react-navigation/native';
 import {CATEGORY_DETAIL_SCREEN} from '../../constants/NavigatorIndex';
 import {useDispatch, useSelector} from 'react-redux';
 import * as productActions from '../../store/actions/products';
+import * as bannerActions from '../../store/actions/banner';
 function HomePage(props) {
   const products = useSelector(state => state.products.availableProducts);
   const dispatch = useDispatch();
@@ -25,6 +26,7 @@ function HomePage(props) {
     try {
       await dispatch(productActions.fetchProducts());
       await dispatch(productActions.fetchCategory());
+      await dispatch(bannerActions.fetchBanner());
     } catch (err) {
       setError(err.msg);
     }

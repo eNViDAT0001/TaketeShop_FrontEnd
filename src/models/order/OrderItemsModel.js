@@ -3,7 +3,6 @@ class OrderItemsModel{
         this.orderItemsID = orderItemsID;
         this.orderID = orderID;
         this.categoryID = categoryID;
-        this.categoryID = categoryID;
         this.productID = productID;
         this.name = name;
         this.price = price;

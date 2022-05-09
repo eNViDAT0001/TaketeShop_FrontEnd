@@ -1,5 +1,4 @@
 class ProductModel {
-  userID = 'DefaultProvider';
   liked = false;
 
   constructor(

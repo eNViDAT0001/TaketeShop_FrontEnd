@@ -1,12 +1,14 @@
-import {BANNER_DUMMY_DATA} from '../../dummy_database/dummy-data';
+import { SET_BANNER } from "../actions/banner";
 
 const initialState = {
-  bannerList: BANNER_DUMMY_DATA,
+  banners: [],
 };
 
 export default (state = initialState, action) => {
     switch (action.type){
-        
+        case SET_BANNER:{
+          return {banners: action.banners}
+        }
     }
     return state;
 }
