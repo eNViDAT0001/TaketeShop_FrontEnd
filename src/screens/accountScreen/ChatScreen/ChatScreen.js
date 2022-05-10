@@ -31,7 +31,7 @@ function ChatScreen(props) {
   // }, [role]);
   if (role != 'CUSTOMER') {
     isStaff = true;
-    console.log("Chat Screen1 :" + chanelId);
+    //console.log("Chat Screen1 :" + chanelId);
   } else {
     //console.log("Chat Screen2");
     dispatch(chanelActions.getMessagerFromChanelId(chanelId));
@@ -40,11 +40,11 @@ function ChatScreen(props) {
 
 
   const Chats = (item) => {
-
+   
     if (isStaff) {
       (item.userID == userID) ? (state = styles.frowrev) : (state = styles.frow);
     } else {
-      (item.userID == userID) ? (state = styles.frow) : (state = styles.frowrev);
+      (item.userID == userChanelId) ? (state = styles.frowrev) : (state = styles.frow);
     }
     return (
       <View style={[styles.pdlt10, styles.mdtp10, styles.mdbt10, styles.pdtp10, state, styles.jStart]}>
@@ -95,10 +95,10 @@ function ChatScreen(props) {
           color='#2196f3'
           size={25}
           onPress={() => {
-            console.log(chanelId)
-            console.log(userID)
-            console.log(messages)
-            console.log(isStaff)
+            // console.log(chanelId)
+            // console.log(userID)
+            // console.log(messages)
+            // console.log(isStaff)
             // dispatch(chanelActions.createChanel(113));
             dispatch(chanelActions.addMessager(chanelId, userID, messages, isStaff));
             setMessages("")

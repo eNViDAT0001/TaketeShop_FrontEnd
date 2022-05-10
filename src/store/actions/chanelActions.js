@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import messagerModel from '../../models/MessagerModel';
 import ChanelModel from '../../models/ChanelModel';
+import User from '../../models/UserModel';
 
 export const CREATE_CHANEL = 'CREATE_CHANEL';
 export const GET_CHANEL = 'GET_CHANEL';
@@ -21,14 +22,14 @@ export const getChanel = (userId) => {
             if (error) {
                 console.log(error)
             }
-           
+
             // const chanel = resData[0]._id;           
-            console.log("GET_CHANEL  Success :" +resData[0]._id) 
+            console.log("GET_CHANEL  Success :" + resData[0]._id)
             dispatch({
                 type: GET_CHANEL,
                 chanel: {
-                    _id : resData[0]._id,
-                    userID : userId,
+                    _id: resData[0]._id,
+                    userID: userId,
                 }
             });
         } catch (err) {
@@ -42,8 +43,8 @@ export const getChanel = (userId) => {
 export const getAllChanel = () => {
     return async dispatch => {
         try {
-            const response = await fetch(`http://localhost:5000/chanel/`);
-
+            //const response = await fetch(`http://localhost:5000/chanel/`);
+            const response = await fetch(`http://localhost:5000/user/getAllUser`);
             if (response.error) {
                 throw new Error(response.error);
             }
@@ -51,11 +52,30 @@ export const getAllChanel = () => {
             console.log("GET_ALL_CHANEL  Success:" + resData.length)
             const loadedAllChanel = [];
 
+            // for (const key in resData) {
+            //     loadedAllChanel.push(
+            //         new ChanelModel(
+            //             resData[key]._id,
+            //             resData[key].userId,
+            //         ),
+            //     );
+            // }
+           // userID, username, password, name, birthday, gender, email, phone, type, avatar, createTime, updateTime
             for (const key in resData) {
                 loadedAllChanel.push(
-                    new ChanelModel(
-                        resData[key]._id,
-                        resData[key].userId,
+                    new User(
+                        resData[key].id, //userID
+                        null, //username
+                        null, //pass
+                        resData[key].name,
+                        null, //birth
+                        null,//gender
+                        null,//email
+                        null,//phone
+                        resData[key].type,//type
+                        resData[key].avatar,
+                        null, //createtime
+                        null, //updateTime
                     ),
                 );
             }
@@ -106,7 +126,7 @@ export const getMessagerFromChanelId = (chanelId) => {
                 throw new Error(response.msg);
             }
             const resData = await response.json();
-            console.log("get DATA_MESSAGES ok");
+           // console.log("get DATA_MESSAGES ok");
 
             const loadedMessagers = [];
 

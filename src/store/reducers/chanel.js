@@ -44,7 +44,7 @@ export default (state = initialState, action) => {
             };
 
         case GET_MESSAGER:
-            console.log("GET_MESSAGER")
+            //console.log("GET_MESSAGER")
             return {
                 ...state,
                 DATA_MESSAGES: action.message,

@@ -9,9 +9,8 @@ import {
   FlatList,
 } from 'react-native';
 import Form1 from '../../accountScreen/Form';
-import { TextInput, Button, Colors, IconButton } from 'react-native-paper';
+import { TextInput, Button, Colors, IconButton, Avatar } from 'react-native-paper';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
-import { Avatar } from 'react-native-paper';
 import Header from '../../../components/UI/Header';
 import { useSelector, useDispatch } from 'react-redux';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -20,9 +19,11 @@ import * as chanelActions from '../../../store/actions/chanelActions';
 import { Form } from 'formik';
 
 function ListChanel() {
-  var ALL_LIST_CHANEL = useSelector(state => state.chanel.LIST_CHANEL);
+  var ALL_LIST_CHANEL = useSelector(state => state.chanel.LIST_CHANEL); 
   const navigation = useNavigation();
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
+  let chanelID = useSelector(state => state.chanel._id);
+  let img = useSelector(state => state.auth.avatar); 
   
   // useEffect(()=> {
 
@@ -33,26 +34,37 @@ function ListChanel() {
       <View style={styles.container}>
         <TouchableOpacity
           onPress={() => {
-            console.log("goi chanel userID:"+item.userID)
+            console.log("goi chanel userID:" + item.avatar)
             dispatch(chanelActions.getChanel(item.userID));
-            dispatch(chanelActions.getMessagerFromChanelId(item._id));
+            dispatch(chanelActions.getMessagerFromChanelId(chanelID));
             navigation.navigate('ChatScreen');
           }}>
-          <View style={styles.titleContainer}>
-            <MaterialCommunityIcons
-              name="account"
-              color={Colors.iconColor}
-              size={40}
+          <View style={styles.screenrow}>
+            <Avatar.Image
+              size={50}
+              source={{ uri: item.avatar }}
             />
-            <Text> UserID : {item.userID}</Text>
-            <View style={styles.expandContainer}>
-              <Text>Nhắn tin</Text>
+            <View>
+              <Text style={styles.text1}>
+                {item.name}</Text>
+              <View style={styles.text2}>
+                <Text>  {item.type}</Text>
+
+              </View>
+            </View>
+            <View style={{
+              flex: 1,
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'flex-end',
+            }}>
               <MaterialCommunityIcons
                 name="chevron-right"
                 color={Colors.iconColor}
                 size={40}
               />
             </View>
+
           </View>
         </TouchableOpacity>
       </View>
@@ -94,7 +106,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#ffff',
   },
-  titleContainer: {
+  screenrow: {
     flexDirection: 'row',
     alignItems: 'center',
     padding: 5,
@@ -107,7 +119,8 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   text1: {
-    fontSize: 30,
+    left: 7,
+    fontSize: 20,
     fontWeight: '900',
     fontFamily: 'open-sans-bold',
     textShadowRadius: 1,
