@@ -25,7 +25,7 @@ export const ADDRESS_SCREEN ="AddressScreen";
 export const ADD_ADDRESS_SCREEN ="AddAddressScreen";
 export const SUCCESS_SCREEN ="SuccessScreen";
 export const NOTIFICATION_SCREEN ="NotificationScreen";
-export const WISHLIST_SCREEN ="WISHLIST_SCREEN";
+export const WISHLIST_SCREEN ="WISHLIST_SCREEN"
 
 export const ADD_PRODUCT ="AddProductScreen";
 export const FIX_PRODUCT ="FixProduct";
@@ -36,19 +36,6 @@ export const ORDER_DELIVERED_PAGE ="OrderDeliveredPage";
 export const ORDER_CANCEL_PAGE ="OrderCancelPage";
 
 
-export const ADMIN_SCREEN ="AdminScreen";
-export const ADMIN_PRODUCT_DETAIL_SCREEN ="AdminProductDetailScreen";
-export const ADMIN_ADD_PRODUCT_SCREEN ="AdminAddProductScreen";
-
-
-export const ADMIN_ORDER_STATUS_PAGE ="AdminOrderConfirmPage";
-export const ADMIN_ORDER_DELIVERING_PAGE ="AdminOrderDeliveringPage";
-export const ADMIN_ORDER_DELIVERED_PAGE ="AdminOrderDeliveredPage";
-export const ADMIN_ORDER_CANCEL_PAGE ="AdminOrderCancelPage";
-
-
-
 export const BOTTOM_BAR_NAVIGATOR = "BottomBarNavigator";
-export const ADMIN_NAVIGATOR = "AdminNavigator";
 
 export const CHAT_SCREEN = "ChatScreen";

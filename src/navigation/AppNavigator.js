@@ -5,7 +5,6 @@ import {
   ADDRESS_SCREEN,
   ADD_ADDRESS_SCREEN,
   ADD_COMMENT_SCREEN,
-  ADMIN_NAVIGATOR,
   BOTTOM_BAR_NAVIGATOR,
   CATEGORY_DETAIL_SCREEN,
   COMMENT_SCREEN,
@@ -32,8 +31,11 @@ import NotificationScreen from '../screens/homeScreen/NotificationScreen';
 import ProfileNavigator from './ProfileNavigator';
 import StartupScreen from '../screens/StartupScreen';
 import WishlistScreen from '../screens/homeScreen/WishlistScreen';
+<<<<<<< HEAD
 import AdminNavigator from './AdminNavigator';
 
+=======
+>>>>>>> parent of f622da2 (Add MyStoreScreen)
 const StackNavigator = createNativeStackNavigator();
 function AppNavigator() {
   return (
@@ -137,6 +139,7 @@ function AppNavigator() {
             headerTitle: 'Thông báo',
             headerShown: false,
           }}></StackNavigator.Screen>
+<<<<<<< HEAD
 
         <StackNavigator.Screen
           name={ADMIN_NAVIGATOR}
@@ -146,6 +149,8 @@ function AppNavigator() {
             headerShown: false,
           }}></StackNavigator.Screen>
 
+=======
+>>>>>>> parent of f622da2 (Add MyStoreScreen)
       </StackNavigator.Navigator>
     </NavigationContainer>
   );
