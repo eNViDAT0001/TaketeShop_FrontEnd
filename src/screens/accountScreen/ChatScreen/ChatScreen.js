@@ -24,7 +24,7 @@ function ChatScreen(props) {
   const flatListRef = React.useRef();
   const chanelId = useSelector(state => state.chanel._id);
   const userChanelId = useSelector(state => state.chanel.userID);
-  var state;
+  let state;
   let isStaff = false;
   // useEffect(() => {
    
