@@ -16,6 +16,11 @@ function Banner(props) {
   const onClickHandler = () => {
     navigation.navigate(CATEGORY_DETAIL_SCREEN)
   }
+  const endTime = () => {
+    const endDate = new Date(props.endTime);
+    const now = new Date();
+    return (endDate.getTime() / 1000) -(now.getTime()/1000);
+  }
   return (
     <TouchableOpacity
       style={{...styles.container, ...props.style}}
@@ -31,7 +36,7 @@ function Banner(props) {
           <Text style={styles.discount}> GIẢM {props.discount}%</Text>
           <View style={styles.countdownContainer}>
             <Countdown
-              until={props.endTime}
+              until={endTime()}
               timeToShow={['D', 'H', 'M', 'S']}
               timeLabels={{m: '', h: '', s: '', d: ''}}
               digitStyle={styles.countdownDigit}
@@ -63,7 +68,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
-    marginLeft: '10%',
+    marginLeft: '2%',
     marginTop: '10%',
   },
   title: {

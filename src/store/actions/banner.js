@@ -10,12 +10,13 @@ export const fetchBanner = () => {
       const response = await fetch('http://localhost:5000/banner/all');
 
       if (response.error) {
+      console.log("sdfsdfdsfdsfdsf")
+
         throw new Error(response.msg);
       }
 
       const resData = await response.json();
       const loadedBanner = [];
-      console.log("sdfsdfdsfdsfdsf")
       for (const key in resData) {
         loadedBanner.push(
           new BannerModel(
@@ -24,7 +25,6 @@ export const fetchBanner = () => {
             resData[key].discount,
             resData[key].endTime,
             resData[key].image,
-            resData[key].productID.split(','),
             resData[key].create_time,
             resData[key].update_time,
           ),

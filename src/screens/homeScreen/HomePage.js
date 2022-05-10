@@ -24,9 +24,9 @@ function HomePage(props) {
     setError(null);
     setIsRefreshing(true);
     try {
-      await dispatch(productActions.fetchProducts());
-      await dispatch(productActions.fetchCategory());
       await dispatch(bannerActions.fetchBanner());
+      await dispatch(productActions.fetchProducts());
+      // await dispatch(productActions.fetchCategory());
     } catch (err) {
       setError(err.msg);
     }
@@ -77,7 +77,6 @@ function HomePage(props) {
   //     </View>
   //   );
   // }
-
   const onSales = ((availableProducts) => {
     const transformedShopItems = [];
     for (const key in availableProducts) {

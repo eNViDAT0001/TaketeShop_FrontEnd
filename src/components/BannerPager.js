@@ -7,6 +7,7 @@ import Banner from './UI/Banner';
 
 function BannerPager(props) {
   const banners = useSelector(state => state.banner.banners);
+  
 
   return (
     <PagerView

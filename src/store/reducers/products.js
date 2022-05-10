@@ -1,7 +1,10 @@
 import {PRODUCT_ITEMS_DUMMY_DATA} from '../../dummy_database/dummy-data';
 import ProductModel from '../../models/product/ProductModel';
-import {CREATE_PRODUCT, SET_CATEGORIES, SET_PRODUCTS} from '../actions/products';
-
+import {
+  CREATE_PRODUCT,
+  SET_CATEGORIES,
+  SET_PRODUCTS,
+} from '../actions/products';
 
 const initialState = {
   availableProducts: [],
@@ -27,8 +30,9 @@ export default (state = initialState, action) => {
       };
     case CREATE_PRODUCT:
       const newProduct = new ProductModel(
-        resData[key].id,
+        action.productData.id,
         action.productData.category_id,
+        action.productData.unit_id,
         action.productData.user_id,
         action.productData.unit_id,
         action.productData.name,
@@ -37,8 +41,10 @@ export default (state = initialState, action) => {
         action.productData.quantity,
         action.productData.unit,
         action.productData.discount,
-        action.productData.sold,
+        action.productData.false,
         action.productData.image,
+        action.productData.discount,
+        action.productData.sold,
         action.productData.create_time,
         action.productData.update_time,
       );

@@ -9,7 +9,8 @@ import {
 } from '../constants/NavigatorIndex';
 import { useDispatch } from 'react-redux';
 import * as authActions from '../store/actions/auth'
-
+import * as productActions from '../store/actions/products';
+import * as bannerActions from '../store/actions/banner';
 function StartupScreen(props) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -26,7 +27,6 @@ function StartupScreen(props) {
         const transformedData = JSON.parse(userData);
 
         const {token, userId, expiryDate} = transformedData;
-
         const expirationDate = await new Date(expiryDate);
 
         if (expirationDate <= new Date() || !token || !userId) {

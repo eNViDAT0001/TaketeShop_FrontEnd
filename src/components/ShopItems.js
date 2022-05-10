@@ -22,7 +22,6 @@ import Card from './UI/Card';
   if (Platform.OS === 'android' && Platform.Version >= 21) {
     TouchableCmp = TouchableNativeFeedback;
   }
-
   return (
     <View style={{...styles.screen, ...props.style}}>
       <Card style={styles.product}>
@@ -30,10 +29,11 @@ import Card from './UI/Card';
           <TouchableCmp onPress={onItemClick} useForeground>
             <View style={{padding: 10}}>
               <View style={styles.imageContainer}>
-                <Image style={styles.image} source={{uri: props.item.image}} />
+                <Image style={styles.image} source={{uri: props.item.image.image}} />
               </View>
               <View style={styles.itemDescription}>
-                <Text style={styles.textTitle}>{props.item.name.length < 14? props.item.name: (props.item.name.slice(0, 10)+'...')}</Text>
+                {/* <Text style={styles.textTitle}>{props.item.name.length < 14? props.item.name: (props.item.name.slice(0, 10)+'...')}</Text> */}
+                <Text style={styles.textTitle}>{props.item.name}</Text>
                 <Text style={styles.textPrice}>{props.item.discountPrice}</Text>
                 <View style={styles.discount}>
                   <Text style={styles.textTruePrice}>
