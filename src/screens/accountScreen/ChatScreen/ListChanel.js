@@ -19,16 +19,16 @@ import * as chanelActions from '../../../store/actions/chanelActions';
 import { Form } from 'formik';
 
 function ListChanel() {
-  var ALL_LIST_CHANEL = useSelector(state => state.chanel.LIST_CHANEL); 
+  var ALL_LIST_CHANEL = useSelector(state => state.chanel.LIST_CHANEL);
   const navigation = useNavigation();
   const dispatch = useDispatch();
   let chanelID = useSelector(state => state.chanel._id);
-  let img = useSelector(state => state.auth.avatar); 
-  
-  // useEffect(()=> {
+  let img = useSelector(state => state.auth.avatar);
 
+  useEffect(() => {
+    dispatch(chanelActions.getMessagerFromChanelId(chanelID));
 
-  // })
+  });
   const Chats = (item) => {
     return (
       <View style={styles.container}>
@@ -36,8 +36,11 @@ function ListChanel() {
           onPress={() => {
             console.log("goi chanel userID:" + item.avatar)
             dispatch(chanelActions.getChanel(item.userID));
-            dispatch(chanelActions.getMessagerFromChanelId(chanelID));
-            navigation.navigate('ChatScreen');
+            dispatch(chanelActions.getMessagerFromChanelId(chanelID)).then(
+              navigation.navigate('ChatScreen' ,{titleHeader: item.name})
+            )
+            
+
           }}>
           <View style={styles.screenrow}>
             <Avatar.Image
@@ -67,7 +70,7 @@ function ListChanel() {
 
           </View>
         </TouchableOpacity>
-      </View>
+      </View >
 
     )
   };

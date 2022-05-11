@@ -25,7 +25,7 @@ export default (state = initialState, action) => {
                 ...state,
                 _id: action.chanel._id,
                 userID: action.chanel.userID,
-                DATA_MESSAGES: [],
+               // DATA_MESSAGES: [],
             };
         case CREATE_CHANEL:
             console.log("GET_CHANEL")

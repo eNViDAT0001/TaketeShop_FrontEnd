@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as chanelActions from '../../../store/actions/chanelActions';
 
 const { width, height } = Dimensions.get('window');
-function ChatScreen(props) {
+function ChatScreen({route}) {
   var DATA_MESSAGES = useSelector(state => state.chanel.DATA_MESSAGES);
   //var DATA_MESS = useSelector(state => state.chanel.LIST_CHANEL);
   const [messages, setMessages] = useState(null);
@@ -24,23 +24,27 @@ function ChatScreen(props) {
   const flatListRef = React.useRef();
   const chanelId = useSelector(state => state.chanel._id);
   const userChanelId = useSelector(state => state.chanel.userID);
+  const {titleHeader}  =  route.params;   
   let state;
   let isStaff = false;
   // useEffect(() => {
-   
+
   // }, [role]);
+  
   if (role != 'CUSTOMER') {
     isStaff = true;
+   
     //console.log("Chat Screen1 :" + chanelId);
   } else {
-    //console.log("Chat Screen2");
+    //console.log("Chat Screen2");    
+    //titleHeader = "Hỗ trợ khách hàng";
     dispatch(chanelActions.getMessagerFromChanelId(chanelId));
   }
 
 
 
   const Chats = (item) => {
-   
+
     if (isStaff) {
       (item.userID == userID) ? (state = styles.frowrev) : (state = styles.frow);
     } else {
@@ -65,7 +69,9 @@ function ChatScreen(props) {
 
   return (
     <SafeAreaView style={styles.screen}>
-      <Header title="Hỗ trợ khách hàng"></Header>
+     <Header title={titleHeader}></Header>
+      
+
 
       <FlatList
         ref={flatListRef}

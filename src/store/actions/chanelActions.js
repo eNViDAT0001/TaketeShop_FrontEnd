@@ -50,16 +50,7 @@ export const getAllChanel = () => {
             }
             const resData = await response.json();
             console.log("GET_ALL_CHANEL  Success:" + resData.length)
-            const loadedAllChanel = [];
-
-            // for (const key in resData) {
-            //     loadedAllChanel.push(
-            //         new ChanelModel(
-            //             resData[key]._id,
-            //             resData[key].userId,
-            //         ),
-            //     );
-            // }
+            const loadedAllChanel = [];           
            // userID, username, password, name, birthday, gender, email, phone, type, avatar, createTime, updateTime
             for (const key in resData) {
                 loadedAllChanel.push(

@@ -18,7 +18,8 @@ function AccountNavigator() {
       <Stack.Screen
         name={CHAT_SCREEN}
         options={{ headerShown: false }}
-        component={ChatScreen}></Stack.Screen>
+        component={ChatScreen}>        
+        </Stack.Screen>
 
       <Stack.Screen
         name={LIST_CHANEL}

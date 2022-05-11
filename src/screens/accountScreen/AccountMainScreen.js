@@ -54,7 +54,7 @@ function AccountMainScreen() {
                 titletext='Hỗ trợ khách hàng'
                 onPress={() => {
                     if (role == 'CUSTOMER') {
-                        navigation.navigate('ChatScreen');
+                        navigation.navigate('ChatScreen',{titleHeader: "Hỗ trợ khách hàng"});
                     } else {
                         navigation.navigate('ListChanel');
                     }
