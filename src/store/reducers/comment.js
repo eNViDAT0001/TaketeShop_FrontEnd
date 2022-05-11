@@ -1,10 +1,21 @@
+import { SET_COMMENT_WITH_PRODUCT_ID } from "../actions/comment";
+
 const initialState = {
-    commentList: [],
-    filteredComments: [],
+    productComments: [],
+    rating: 0,
 }
 
-const commentReducer = (state = initialState, action) => {
+export default (state = initialState, action) => {
+    switch(action.type){
+        case SET_COMMENT_WITH_PRODUCT_ID:{
+            return {productComments: action.comments, rating: () => {
+                let avg = 0;
+                for(const key in action.comments){
+                    avg += action.comments[key].rating
+                }
+                return avg/action.comments.length
+            }}
+        }
+    }
     return state;
 }
-
-export default commentReducer;

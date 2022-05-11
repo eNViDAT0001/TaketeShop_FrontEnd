@@ -19,25 +19,30 @@ export const fetchProducts = () => {
 
       const resData = await response.json();
       const loadedProducts = [];
-      
+
       for (const key in resData) {
         const images = [];
-        if (!resData[key].images){
-          images.push(new ImageModel(-1, 'https://vanhoadoanhnghiepvn.vn/wp-content/uploads/2020/08/112815953-stock-vector-no-image-available-icon-flat-vector.jpg'));
+        if (!resData[key].images) {
+          images.push(
+            new ImageModel(
+              -1,
+              'https://vanhoadoanhnghiepvn.vn/wp-content/uploads/2020/08/112815953-stock-vector-no-image-available-icon-flat-vector.jpg',
+            ),
+          );
         } else {
-          const arrImage = resData[key].images.split(',')
-          for (const image in arrImage){
+          const arrImage = resData[key].images.split(',');
+          for (const image in arrImage) {
             const tempImage = arrImage[image].split(' ');
-            images.push(new ImageModel(tempImage[0], tempImage[1]))
+            images.push(new ImageModel(tempImage[0], tempImage[1]));
           }
         }
+
         loadedProducts.push(
           new ProductModel(
             resData[key].id,
             resData[key].category_id,
             resData[key].unit_id,
             resData[key].user_id,
-            resData[key].unit_id,
             resData[key].name,
             resData[key].category_name,
             resData[key].descriptions,
@@ -46,8 +51,8 @@ export const fetchProducts = () => {
             resData[key].unit,
             resData[key].discount,
             resData[key].false,
-            images,
             resData[key].sold,
+            images,
             resData[key].create_time,
             resData[key].update_time,
           ),

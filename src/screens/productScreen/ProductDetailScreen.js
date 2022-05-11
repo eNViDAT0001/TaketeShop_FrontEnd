@@ -1,39 +1,55 @@
 import {useNavigation, useRoute} from '@react-navigation/native';
-import React, {useLayoutEffect} from 'react';
+import React, {useLayoutEffect, useState, useCallback} from 'react';
 import {
   StyleSheet,
   View,
   Text,
   Image,
   ScrollView,
-  TouchableNativeFeedback,
   TouchableOpacity,
-  Platform
 } from 'react-native';
 import {IconButton} from 'react-native-paper';
 import StarRating from 'react-native-star-rating';
+import {useDispatch, useSelector} from 'react-redux';
 import CategoryHolder from '../../components/CategoryHolder';
 import Comment from '../../components/Comment';
 import Card from '../../components/UI/Card';
 import Colors from '../../constants/Colors';
-import { COMMENT_SCREEN } from '../../constants/NavigatorIndex';
-import {BESTSELLER_DUMMY_DATA, PRODUCT_ITEMS_DUMMY_DATA} from '../../dummy_database/dummy-data';
-// import {Rating} from 'react-native-ratings';
+import {COMMENT_SCREEN} from '../../constants/NavigatorIndex';
+import PagerView from 'react-native-pager-view';
+import * as commentActions from '../../store/actions/comment'
 function ProductDetailScreen(props) {
-  const navigation = useNavigation();
   const route = useRoute();
- // const id = route.params.id;
+  const dispatch = useDispatch();
+  const products = useSelector(state => state.products.availableProducts);
+  const comments = useSelector(state => state.comment.productComments);
+  const navigation = useNavigation();
+  const id = route.params.id;
+  const product = products.find(item => item.productID === id);
+  console.log(comments)
+  const [error, setError] = useState();
 
   const onCommentPress = () => {
-    navigation.navigate(COMMENT_SCREEN)
-  }
+    navigation.navigate(COMMENT_SCREEN, {id: id});
+  };
 
+  const loadProducts = useCallback(async () => {
+    try {
+      await dispatch(commentActions.fetchCommentWithProductID(id))
+    } catch (err) {
+      setError(err.msg);
+    }
+  }, [dispatch, setError]);
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: '',
       headerStyle: {
-        position: 'relative',
-        zIndex: 1,
+        position: 'absolute',
+        backgroundColor: 'transparent',
+        zIndex: 100,
+        top: 10,
+        left: 0,
+        right: 0,
       },
       headerTransparent: true,
       headerRight: () => (
@@ -53,26 +69,65 @@ function ProductDetailScreen(props) {
         </View>
       ),
     });
+    const willFocusSub = navigation.addListener('focus', loadProducts);
+
+    return willFocusSub;
   });
 
-  let TouchableCmp = TouchableOpacity;
-
-  if (Platform.OS === 'android' && Platform.Version >= 21) {
-    TouchableCmp = TouchableNativeFeedback;
+  const cloneList = availableProducts => {
+    const transformedShopItems = [];
+    for (const key in availableProducts) {
+      transformedShopItems.push({
+        productID: availableProducts[key].productID,
+        categoryID: availableProducts[key].categoryID,
+        name: availableProducts[key].name,
+        price: availableProducts[key].price,
+        quantity: availableProducts[key].quantity,
+        discount: availableProducts[key].discount,
+        discountPrice:
+          availableProducts[key].price -
+          (availableProducts[key].discount / 100).toFixed(2) *
+            availableProducts[key].price,
+        image: availableProducts[key].image[0].image,
+        unit: availableProducts[key].unit,
+        category: availableProducts[key].category,
+        provider: availableProducts[key].provider,
+        liked: availableProducts[key].liked,
+      });
+    }
+    return transformedShopItems;
+  };
+  if (error) {
+    return (
+      <View style={styles.centered}>
+        <Text>Có lỗi, vui lòng thử lại</Text>
+        <Button
+          title="Thử lại"
+          onPress={loadProducts}
+          color={Colors.primaryColor}
+        />
+      </View>
+    );
   }
   return (
     <View style={styles.screen}>
       <ScrollView>
-        <View style={styles.sliderContainer}>
-          <Image
-            style={styles.slider}
-            source={{
-              uri: 'https://www.thaistreet.com.vn/wp-content/uploads/2021/04/Food.jpg',
-            }}
-            ></Image>
-        </View>
+        <PagerView
+          style={styles.sliderContainer}
+          initialPage={0}
+          showPageIndicator={true}>
+          {product.image.map((item, index) => (
+            <View key={index} style={styles.slider}>
+              <Image
+                style={{width: '100%', height: '100%'}}
+                source={{
+                  uri: item.image,
+                }}></Image>
+            </View>
+          ))}
+        </PagerView>
         <View style={styles.title}>
-          <Text style={styles.titleText}>Product Name</Text>
+          <Text style={styles.titleText}>{product.name}</Text>
           <View style={styles.ratingContainer}>
             <StarRating
               disabled={true}
@@ -86,31 +141,27 @@ function ProductDetailScreen(props) {
               emptyStarColor={'#EBF0FF'}
               fullStarColor={'#FFDF00'}
             />
-            <Text style={styles.ratingCount}>(Rating Count)</Text>
+            <Text style={styles.ratingCount}>(Đánh giá)</Text>
           </View>
           <View style={styles.priceContainer}>
-            <Text style={styles.priceText}>Product Price đ</Text>
+            <Text style={styles.priceText}>{product.discountPrice} đ</Text>
             <View style={styles.discountContainer}>
-              <Text style={styles.truePriceText}>Product True Price đ</Text>
-              <Text style={styles.discountText}> -Product Discount% </Text>
+              <Text style={styles.truePriceText}>{product.price} đ</Text>
+              <Text style={styles.discountText}> -{product.discount}% </Text>
             </View>
           </View>
         </View>
         <View style={styles.descriptionContainer}>
-          <Text style={styles.descripHeader}>Description</Text>
-          <Text style={styles.description}>
-            This is speciasdfsadfsadfdsfdsafdsafdsfdsfdsfdsfdsfdsafsdfdsafsafd
-          </Text>
+          <Text style={styles.descripHeader}>Mô tả sản phẩm</Text>
+          <Text style={styles.description}>{product.description}</Text>
         </View>
         <View style={styles.commentContainer}>
-          <TouchableOpacity
-            activeOpacity={0.9}
-            onPress={onCommentPress}>
+          <TouchableOpacity activeOpacity={0.9} onPress={onCommentPress}>
             <View style={styles.headerComment}>
               <Text style={styles.titleComment}> Bình luận về sản phẩm</Text>
               <Text style={styles.expandComment}> {'>'} </Text>
             </View>
-            <Comment></Comment>
+            {!comments.length? <Text>   Không có bình luận</Text> : <Comment data={comments[0]}></Comment>}
           </TouchableOpacity>
         </View>
         <Card style={styles.cardContainer}>
@@ -120,12 +171,12 @@ function ProductDetailScreen(props) {
             title={'Bạn cũng có thể thích'}
             horizontal={true}
             numColum={1}
-            itemList={PRODUCT_ITEMS_DUMMY_DATA}
+            itemList={cloneList(products)}
           />
         </Card>
       </ScrollView>
       <Card style={styles.bottomBar}>
-        <TouchableOpacity style={styles.bottomButton} >
+        <TouchableOpacity style={styles.bottomButton}>
           <Text style={styles.bottomText}>Chọn Mua</Text>
         </TouchableOpacity>
       </Card>
@@ -136,6 +187,7 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
   },
+  centered: {flex: 1, justifyContent: 'center', alignItems: 'center'},
   headerButtonRight: {
     flexDirection: 'row',
   },
@@ -244,9 +296,9 @@ const styles = StyleSheet.create({
   },
   bottomButton: {
     flex: 1,
-    alignItems:'center',
-    justifyContent:'center',    
-    backgroundColor:Colors.primaryColor,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Colors.primaryColor,
     borderRadius: 5,
     borderWidth: 1,
   },

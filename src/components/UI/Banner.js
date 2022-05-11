@@ -13,8 +13,8 @@ import {CATEGORY_DETAIL_SCREEN} from '../../constants/NavigatorIndex';
 
 function Banner(props) {
   const navigation = useNavigation();
-  const onClickHandler = () => {
-    navigation.navigate(CATEGORY_DETAIL_SCREEN)
+  const onClickHandler = (id, type) => {
+    navigation.navigate(CATEGORY_DETAIL_SCREEN, {id: id, type: type});
   }
   const endTime = () => {
     const endDate = new Date(props.endTime);
@@ -25,7 +25,7 @@ function Banner(props) {
     <TouchableOpacity
       style={{...styles.container, ...props.style}}
       activeOpacity={1}
-      onPress={onClickHandler}>
+      onPress={() => onClickHandler(props.id, "BANNER")}>
       <ImageBackground
         style={styles.image}
         source={{

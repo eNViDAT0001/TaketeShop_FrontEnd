@@ -1,6 +1,6 @@
 class ProductModel {
   liked = false;
-
+  image = [];
   constructor(
     productID,
     categoryID,

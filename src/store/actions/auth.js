@@ -139,17 +139,19 @@ export const logout = () => {
   AsyncStorage.removeItem('userData');
   return {type: LOGOUT};
 };
-
 export const changeName = (userId, token, value) => {
   return async dispatch => {
     await fetch(
-      `http://localhost:5000/user/${userId}?field=name&value=${value}`,
+      `http://localhost:5000/user/${userId}`,
       {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
           authorization: 'Bearer ' + token,
         },
+        body: JSON.stringify({
+          name: value
+        })
       },
     );
 
@@ -159,13 +161,16 @@ export const changeName = (userId, token, value) => {
 export const changeGender = (userId, token, value) => {
   return async dispatch => {
     await fetch(
-      `http://localhost:5000/user/${userId}?field=gender&value=${value}`,
+      `http://localhost:5000/user/${userId}`,
       {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
           authorization: 'Bearer ' + token,
         },
+        body: JSON.stringify({
+          gender: value
+        })
       },
     );
 
@@ -175,14 +180,16 @@ export const changeGender = (userId, token, value) => {
 export const changeBirthday = (userId, token, value) => {
   return async dispatch => {
     await fetch(
-      `http://localhost:5000/user/${userId}?field=birthday&value=${value}`,
+      `http://localhost:5000/user/${userId}`,
       {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
           authorization: 'Bearer ' + token,
-
         },
+        body: JSON.stringify({
+          birthday: value
+        })
       },
     );
 
@@ -192,14 +199,16 @@ export const changeBirthday = (userId, token, value) => {
 export const changeEmail = (userId, token, value) => {
   return async dispatch => {
     await fetch(
-      `http://localhost:5000/user/${userId}?field=email&value=${value}`,
+      `http://localhost:5000/user/${userId}`,
       {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
           authorization: 'Bearer ' + token,
-
         },
+        body: JSON.stringify({
+          email: value
+        })
       },
     );
 
@@ -209,14 +218,16 @@ export const changeEmail = (userId, token, value) => {
 export const changePhone = (userId, token, value) => {
   return async dispatch => {
     await fetch(
-      `http://localhost:5000/user/${userId}?field=phone&value=${value}`,
+      `http://localhost:5000/user/${userId}`,
       {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
           authorization: 'Bearer ' + token,
-
         },
+        body: JSON.stringify({
+          phone: value
+        })
       },
     );
 
@@ -226,33 +237,40 @@ export const changePhone = (userId, token, value) => {
 export const changeAvatar = (userId, token, value) => {
   return async dispatch => {
     await fetch(
-      `http://localhost:5000/user/${userId}?field=avatar&value=${value}`,
+      `http://localhost:5000/user/${userId}`,
       {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
           authorization: 'Bearer ' + token,
-
         },
+        body: JSON.stringify({
+          avatar: value
+        })
       },
     );
 
     dispatch({type: CHANGE_AVATAR, value: value});
   };
 };
+// const {username, name, password, birthday, gender, email, phone, type, avatar} = req.body;
 
-export const changePassword = (userId, token, oldpass, newpass) => {
+export const changePassword = (userId, token, oldPass, newPass) => {
   return async dispatch => {
     await fetch(
-      `http://localhost:5000/user/password/${userId}?oldpass=${oldpass}&newpass=${newpass}`,      
+      `http://localhost:5000/user/password/${userId}`,
       {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
           authorization: 'Bearer ' + token,
         },
+        body: JSON.stringify({
+          newPass: newPass,
+          oldPass: oldPass
+        })
       },
-    );   
+    ); 
   };
 };
 

@@ -13,31 +13,33 @@ import Colors from '../constants/Colors';
 import {PRODUCT_DETAIL_SCREEN} from '../constants/NavigatorIndex';
 import Card from './UI/Card';
 
-  function ShopItems(props) {
+function ShopItems(props) {
   const navigation = useNavigation();
   const onItemClick = () =>
-    navigation.navigate(PRODUCT_DETAIL_SCREEN, {product: props.item.id});
+    navigation.navigate(PRODUCT_DETAIL_SCREEN, {id: props.item.productID});
   let TouchableCmp = TouchableOpacity;
-
   if (Platform.OS === 'android' && Platform.Version >= 21) {
     TouchableCmp = TouchableNativeFeedback;
   }
   return (
     <View style={{...styles.screen, ...props.style}}>
       <Card style={styles.product}>
-        <View style={{borderRadius: 5,}}>
+        <View style={{borderRadius: 5}}>
           <TouchableCmp onPress={onItemClick} useForeground>
             <View style={{padding: 10}}>
               <View style={styles.imageContainer}>
-                <Image style={styles.image} source={{uri: props.item.image.image}} />
+                <Image style={styles.image} source={{uri: props.item.image}} />
               </View>
               <View style={styles.itemDescription}>
-                {/* <Text style={styles.textTitle}>{props.item.name.length < 14? props.item.name: (props.item.name.slice(0, 10)+'...')}</Text> */}
-                <Text style={styles.textTitle}>{props.item.name}</Text>
+                <Text style={styles.textTitle}>
+                  {props.item.name.length < 13
+                    ? props.item.name
+                    : props.item.name.slice(0, 13) + '...'}
+                </Text>
                 <Text style={styles.textPrice}>{props.item.discountPrice}</Text>
                 <View style={styles.discount}>
                   <Text style={styles.textTruePrice}>
-                    {props.item.price}/kg
+                    {props.item.price}/{props.item.unit}
                   </Text>
                   <Text style={styles.textDiscount}>
                     {' '}
@@ -55,6 +57,8 @@ import Card from './UI/Card';
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
+    width: 180,
+    maxWidth: 220,
   },
   product: {
     flex: 1,

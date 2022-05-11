@@ -17,6 +17,7 @@ function BannerPager(props) {
       {banners.map((banner, index) => (
         <View key={index}>
           <Banner
+            id={banner.id}
             title={banner.title}
             image={banner.image}
             discount={banner.discount}

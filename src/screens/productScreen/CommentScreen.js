@@ -11,6 +11,7 @@ import {
   Platform,
 } from 'react-native';
 import {Button} from 'react-native-paper';
+import { useSelector } from 'react-redux';
 import Comment from '../../components/Comment';
 import Card from '../../components/UI/Card';
 import Header from '../../components/UI/Header';
@@ -18,6 +19,7 @@ import Colors from '../../constants/Colors';
 import {ADD_COMMENT_SCREEN} from '../../constants/NavigatorIndex';
 
 function CommentScreen(props) {
+  const comments = useSelector(state => state.comment.productComments);
   const navigation = useNavigation();
   const onAddCommentPress = () => {
     navigation.navigate(ADD_COMMENT_SCREEN);
@@ -30,7 +32,7 @@ function CommentScreen(props) {
   return (
     <FlatList
       style={styles.screen}
-      data={[1, 2, 3, 4, 5]}
+      data={comments}
       renderItem={itemData => <Comment data={itemData.item}></Comment>}
       ListHeaderComponent={
         <View style={{flex: 1}}>
@@ -76,7 +78,7 @@ function CommentScreen(props) {
               <Text style={styles.bottomText}>Thêm Đánh Giá</Text>
             </View>
           </TouchableCmp> */}
-          <Button onPress={onAddCommentPress}>Thêm đánh giá</Button>
+          <Button onPress={onAddCommentPress} color={Colors.primaryColor}>Thêm đánh giá</Button>
         </View>
       }></FlatList>
   );

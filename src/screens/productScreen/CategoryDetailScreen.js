@@ -17,18 +17,28 @@ const data = [
   {label: 'Ngày đánh bắt', value: DATE_CATCH},
 ];
 function CategoryDetailScreen(props) {
+  const products = useSelector(state => state.products.availableProducts);
+  const banners = useSelector(state => state.banner.banners);
+  const id = useRoute().params.id;
+  const type = useRoute().params.type;
   useEffect(() => {
-    if (type === 'NORMAL')
+    if (type === 'NORMAL') {
       return setDisplayProducts(
         cloneList(products).filter(item => item.categoryID === id),
       );
+    }
+    if (type === 'BANNER') {
+      const productIDs = banners.find(item => item.id == id).productID;
+      console.log('Banner list:', productIDs);
+      return setDisplayProducts(
+        cloneList(products).filter(item => productIDs.includes(item.productID)),
+      );
+    }
 
     return setDisplayProducts(cloneList(products));
   }, [products]);
-  const id = useRoute().params.id;
+
   const title = useRoute().params.title;
-  const type = useRoute().params.type;
-  const products = useSelector(state => state.products.availableProducts);
   const [displayProducts, setDisplayProducts] = useState([]);
 
   const cloneList = availableProducts => {
@@ -45,7 +55,8 @@ function CategoryDetailScreen(props) {
           availableProducts[key].price -
           (availableProducts[key].discount / 100).toFixed(2) *
             availableProducts[key].price,
-        image: availableProducts[key].image[0],
+        image: availableProducts[key].image[0].image,
+        unit: availableProducts[key].unit,
         category: availableProducts[key].category,
         provider: availableProducts[key].provider,
         liked: availableProducts[key].liked,
@@ -74,7 +85,7 @@ function CategoryDetailScreen(props) {
           a.createTime > b.createTime ? 1 : -1,
         );
       }
-      default:{
+      default: {
         return displayProducts;
       }
     }

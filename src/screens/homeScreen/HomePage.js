@@ -19,7 +19,6 @@ function HomePage(props) {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [error, setError] = useState();
 
-
   const loadProducts = useCallback(async () => {
     setError(null);
     setIsRefreshing(true);
@@ -36,13 +35,13 @@ function HomePage(props) {
   useEffect(() => {
     const willFocusSub = navigation.addListener('focus', loadProducts);
 
-    return willFocusSub
+    return willFocusSub;
   }, [loadProducts]);
 
   useEffect(() => {
     setIsLoading(true);
     loadProducts().then(() => {
-    setIsLoading(false);
+      setIsLoading(false);
     });
   }, [dispatch, loadProducts]);
 
@@ -77,7 +76,7 @@ function HomePage(props) {
   //     </View>
   //   );
   // }
-  const onSales = ((availableProducts) => {
+  const onSales = availableProducts => {
     const transformedShopItems = [];
     for (const key in availableProducts) {
       transformedShopItems.push({
@@ -88,9 +87,11 @@ function HomePage(props) {
         quantity: availableProducts[key].quantity,
         discount: availableProducts[key].discount,
         discountPrice:
-        availableProducts[key].price -
-          (availableProducts[key].discount / 100).toFixed(2) * availableProducts[key].price,
-        image: availableProducts[key].image[0],
+          availableProducts[key].price -
+          (availableProducts[key].discount / 100).toFixed(2) *
+            availableProducts[key].price,
+        unit: availableProducts[key].unit,
+        image: availableProducts[key].image[0].image,
         category: availableProducts[key].category,
         provider: availableProducts[key].provider,
         liked: availableProducts[key].liked,
@@ -99,15 +100,14 @@ function HomePage(props) {
     return transformedShopItems.sort((a, b) =>
       a.discount < b.discount ? 1 : -1,
     );
-  });
+  };
   const bestSeller = null;
   const forYou = null;
 
   return (
     <View>
       <BannerPager
-        style={styles.banner}
-        onBannerPress={onSelectedCategory}></BannerPager>
+        style={styles.banner}></BannerPager>
       <View style={styles.container}>
         <Card style={styles.cardContainer}>
           <CategoryHolder
@@ -130,7 +130,7 @@ function HomePage(props) {
             title={'Bán chạy'}
             horizontal={true}
             numColum={1}
-            itemList={PRODUCT_ITEMS_DUMMY_DATA}
+            itemList={onSales(products).slice(0, 20)}
           />
         </Card>
         <Card style={styles.cardContainer}>
@@ -142,7 +142,7 @@ function HomePage(props) {
             title={'Dành cho bạn'}
             horizontal={false}
             numColum={2}
-            itemList={PRODUCT_ITEMS_DUMMY_DATA}
+            itemList={onSales(products).slice(0, 20)}
           />
         </Card>
       </View>
