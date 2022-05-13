@@ -27,9 +27,10 @@ function ChatScreen({route}) {
   const {titleHeader}  =  route.params;   
   let state;
   let isStaff = false;
-  // useEffect(() => {
 
-  // }, [role]);
+  //  useEffect(() => {
+     
+  //  });
   
   if (role != 'CUSTOMER') {
     isStaff = true;
