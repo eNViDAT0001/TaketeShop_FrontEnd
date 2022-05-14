@@ -2,13 +2,14 @@ import React from 'react';
 import { Text, StyleSheet, View, SafeAreaView, Image, Button, TouchableOpacity } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import Colors from '../../constants/Colors';
+import { STARTUP_SCREEN } from '../../constants/NavigatorIndex';
 
 function SuccesScreen(props) {
   const navigation = useNavigation()
   return (
     <View style={styles.screen}>
       <TouchableOpacity activeOpacity={1}
-        onPress={() => navigation.navigate('LoginScreen')}>
+        onPress={() => navigation.navigate(STARTUP_SCREEN)}>
         <View style={styles.container}>
           <View style={styles.imgcontainer}>
             <Image            

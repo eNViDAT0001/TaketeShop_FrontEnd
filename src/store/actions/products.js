@@ -1,5 +1,6 @@
-import CategoryModel from '../../models/CategoryModels';
-import Product from '../../models/ProductModel';
+import ImageModel from '../../models/image/imageModel';
+import CategoryModel from '../../models/product/CategoryModels';
+import ProductModel from '../../models/product/ProductModel';
 export const DELETE_PRODUCT = 'DELETE_PRODUCT';
 export const CREATE_PRODUCT = 'CREATE_PRODUCT';
 export const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
@@ -20,23 +21,43 @@ export const fetchProducts = () => {
       const loadedProducts = [];
 
       for (const key in resData) {
+        const images = [];
+        if (!resData[key].images) {
+          images.push(
+            new ImageModel(
+              -1,
+              'https://vanhoadoanhnghiepvn.vn/wp-content/uploads/2020/08/112815953-stock-vector-no-image-available-icon-flat-vector.jpg',
+            ),
+          );
+        } else {
+          const arrImage = resData[key].images.split(',');
+          for (const image in arrImage) {
+            const tempImage = arrImage[image].split(' ');
+            images.push(new ImageModel(tempImage[0], tempImage[1]));
+          }
+        }
+
         loadedProducts.push(
-          new Product(
+          new ProductModel(
             resData[key].id,
             resData[key].category_id,
+            resData[key].unit_id,
             resData[key].user_id,
             resData[key].name,
+            resData[key].category_name,
             resData[key].descriptions,
             resData[key].price,
             resData[key].quantity,
+            resData[key].unit,
             resData[key].discount,
-            resData[key].unit_id,
+            resData[key].false,
+            resData[key].sold,
+            images,
             resData[key].create_time,
             resData[key].update_time,
           ),
         );
       }
-
       dispatch({type: SET_PRODUCTS, products: loadedProducts});
     } catch (err) {
       // send to custom analytics server
@@ -85,6 +106,7 @@ export const createProduct = (
   description,
   price,
   quantity,
+  image,
   unit_id,
   discount,
   category_id,
@@ -102,6 +124,7 @@ export const createProduct = (
         description,
         price,
         quantity,
+        image,
         unit_id,
         discount,
         category_id,
@@ -119,6 +142,7 @@ export const createProduct = (
         description,
         price,
         quantity,
+        image,
         unit_id,
         discount,
         category_id,

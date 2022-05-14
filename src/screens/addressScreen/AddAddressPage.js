@@ -1,11 +1,12 @@
-import { useNavigation } from '@react-navigation/native';
-import React, {useState} from 'react';
+import {useNavigation} from '@react-navigation/native';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, View, Text} from 'react-native';
 import {Dropdown} from 'react-native-element-dropdown';
 import {Button, TextInput} from 'react-native-paper';
 import Header from '../../components/UI/Header';
 import Colors from '../../constants/Colors';
-import { SUCCESS_SCREEN } from '../../constants/NavigatorIndex';
+import {SUCCESS_SCREEN} from '../../constants/NavigatorIndex';
+import PickLocation from './PickLocation'
 
 const data = [
   {label: 'Mua nhiều', value: 'BESTSELLER'},
@@ -14,9 +15,26 @@ const data = [
   {label: 'Ngày đánh bắt', value: 'DATE_CATCH'},
 ];
 function AddAddressPage() {
+
   const navigation = useNavigation();
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
+  
+  useEffect(() => {
+    // First-load logic
+  }, []);
+
+  function onCitySelect(option) {
+    // Logic khi chọn Tỉnh/Thành
+  }
+
+  function onDistrictSelect(option) {
+    // Logic khi chọn Phường/Xã
+  }
+
+  function onWardSelect(option) {
+    // Logic khi chọn Quận/Huyện
+  }
   return (
     <View style={styles.screen}>
       <Header title={'Thêm địa chỉ'}></Header>
@@ -122,7 +140,7 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     paddingHorizontal: 8,
     backgroundColor: Colors.backgroundColor,
-    marginTop: 20
+    marginTop: 20,
   },
   icon: {
     marginRight: 5,
@@ -155,7 +173,7 @@ const styles = StyleSheet.create({
   },
   address: {
     backgroundColor: Colors.backgroundColor,
-    marginTop: 10
+    marginTop: 10,
   },
   buttonContainer: {
     padding: 10,

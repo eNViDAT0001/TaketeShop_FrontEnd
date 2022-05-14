@@ -18,7 +18,7 @@ import Card from './UI/Card';
 import * as productActions from '../store/actions/products'
 
 function CategoryNameHolder(props) {
-  const products = useSelector(state => state.products.availableProducts);
+  const products = useSelector(state => state.products.categories);
   const dispatch = useDispatch();
   const navigation = useNavigation();
 

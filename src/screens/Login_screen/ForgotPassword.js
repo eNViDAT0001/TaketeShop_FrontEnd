@@ -87,29 +87,29 @@ const styles = StyleSheet.create({
   text2: {
     marginLeft: 10,
     fontWeight: 'bold',
-    textDecorationLine: 'underline',
-    color: 'blue',
+    color: Colors.primaryColor,
     fontSize: 20,
   },
   maintext: {
-    top: 50,
+    marginTop: 50,
     marginLeft: 10,
     fontWeight: 'bold',
     fontSize: 32,
     color: 'black',
   },
   hidetext: {
-    top: 120,
+    marginTop: 10,
     marginLeft: 10,
     fontWeight: 'bold',
     fontSize: 16,
     color: '#9B9B9B',
   },
   bottom: {
-    bottom: 200
+    flex: 1
   },
   login: {
-    top: 130,
+    flex: 1,
+    margin: 10,
   },
   buttonContainer: {
     margin: 5,
@@ -119,7 +119,6 @@ const styles = StyleSheet.create({
   button: {
     height: 50,
     borderRadius: 5,
-    top: 170,
   },
   buttonText: {
     height: '100%',

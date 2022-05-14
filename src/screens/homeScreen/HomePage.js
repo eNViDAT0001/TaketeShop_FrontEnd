@@ -9,6 +9,7 @@ import {useNavigation} from '@react-navigation/native';
 import {CATEGORY_DETAIL_SCREEN} from '../../constants/NavigatorIndex';
 import {useDispatch, useSelector} from 'react-redux';
 import * as productActions from '../../store/actions/products';
+import * as bannerActions from '../../store/actions/banner';
 function HomePage(props) {
   const products = useSelector(state => state.products.availableProducts);
   const dispatch = useDispatch();
@@ -18,11 +19,11 @@ function HomePage(props) {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [error, setError] = useState();
 
-
   const loadProducts = useCallback(async () => {
     setError(null);
     setIsRefreshing(true);
     try {
+      await dispatch(bannerActions.fetchBanner());
       await dispatch(productActions.fetchProducts());
       await dispatch(productActions.fetchCategory());
     } catch (err) {
@@ -34,7 +35,7 @@ function HomePage(props) {
   useEffect(() => {
     const willFocusSub = navigation.addListener('focus', loadProducts);
 
-    return willFocusSub
+    return willFocusSub;
   }, [loadProducts]);
 
   useEffect(() => {
@@ -59,24 +60,7 @@ function HomePage(props) {
       </View>
     );
   }
-
-  // if (isLoading) {
-  //   return (
-  //     <View style={styles.centered}>
-  //       <ActivityIndicator size="large" color={Colors.primaryColor} />
-  //     </View>
-  //   );
-  // }
-
-  // if (!isLoading && products.length === 0) {
-  //   return (
-  //     <View style={styles.centered}>
-  //       <Text>Không tìm thấy sản phẩm!</Text>
-  //     </View>
-  //   );
-  // }
-
-  const onSales = ((availableProducts) => {
+  const onSales = availableProducts => {
     const transformedShopItems = [];
     for (const key in availableProducts) {
       transformedShopItems.push({
@@ -87,9 +71,11 @@ function HomePage(props) {
         quantity: availableProducts[key].quantity,
         discount: availableProducts[key].discount,
         discountPrice:
-        availableProducts[key].price -
-          (availableProducts[key].discount / 100).toFixed(2) * availableProducts[key].price,
-        image: availableProducts[key].image[0],
+          availableProducts[key].price -
+          (availableProducts[key].discount / 100).toFixed(2) *
+            availableProducts[key].price,
+        unit: availableProducts[key].unit,
+        image: availableProducts[key].image[0].image,
         category: availableProducts[key].category,
         provider: availableProducts[key].provider,
         liked: availableProducts[key].liked,
@@ -98,15 +84,13 @@ function HomePage(props) {
     return transformedShopItems.sort((a, b) =>
       a.discount < b.discount ? 1 : -1,
     );
-  });
-  const bestSeller = null;
-  const forYou = null;
+  };
+
 
   return (
     <View>
       <BannerPager
-        style={styles.banner}
-        onBannerPress={onSelectedCategory}></BannerPager>
+        style={styles.banner}></BannerPager>
       <View style={styles.container}>
         <Card style={styles.cardContainer}>
           <CategoryHolder
@@ -129,7 +113,7 @@ function HomePage(props) {
             title={'Bán chạy'}
             horizontal={true}
             numColum={1}
-            itemList={PRODUCT_ITEMS_DUMMY_DATA}
+            itemList={onSales(products).slice(0, 20)}
           />
         </Card>
         <Card style={styles.cardContainer}>
@@ -141,7 +125,7 @@ function HomePage(props) {
             title={'Dành cho bạn'}
             horizontal={false}
             numColum={2}
-            itemList={PRODUCT_ITEMS_DUMMY_DATA}
+            itemList={onSales(products).slice(0, 20)}
           />
         </Card>
       </View>

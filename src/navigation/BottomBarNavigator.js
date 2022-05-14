@@ -18,6 +18,7 @@ import OrderNavigator from './OrderNavigator';
 
 const TabNavigator = createMaterialBottomTabNavigator();
 function BottomBarNavigator() {
+  
   return (
     <TabNavigator.Navigator
       activeColor={Colors.iconColor}

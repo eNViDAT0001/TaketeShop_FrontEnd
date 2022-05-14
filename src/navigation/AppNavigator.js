@@ -5,6 +5,7 @@ import {
   ADDRESS_SCREEN,
   ADD_ADDRESS_SCREEN,
   ADD_COMMENT_SCREEN,
+  ADMIN_NAVIGATOR,
   BOTTOM_BAR_NAVIGATOR,
   CATEGORY_DETAIL_SCREEN,
   COMMENT_SCREEN,
@@ -15,6 +16,7 @@ import {
   STARTUP_SCREEN,
   SUCCESS_SCREEN,
   WISHLIST_SCREEN,
+  PRODUCT_NAVIGATOR,
 } from '../constants/NavigatorIndex';
 import BottomBarNavigator from './BottomBarNavigator';
 import CategoryDetailScreen from '../screens/productScreen/CategoryDetailScreen';
@@ -27,9 +29,11 @@ import AddressScreen from '../screens/addressScreen/AddressScreen';
 import AddAddressPage from '../screens/addressScreen/AddAddressPage';
 import SuccessScreen from '../screens/addressScreen/SuccessScreen';
 import NotificationScreen from '../screens/homeScreen/NotificationScreen';
-import ProfileNavigation from './ProfileNavigation';
+import ProfileNavigator from './ProfileNavigator';
 import StartupScreen from '../screens/StartupScreen';
 import WishlistScreen from '../screens/homeScreen/WishlistScreen';
+import AdminNavigator from './AdminNavigator';
+
 const StackNavigator = createNativeStackNavigator();
 function AppNavigator() {
   return (
@@ -57,7 +61,7 @@ function AppNavigator() {
 
         <StackNavigator.Screen
           name={PROFILE_NAVIGATOR}
-          component={ProfileNavigation}
+          component={ProfileNavigator}
           options={{
             headerShown: false,
           }}></StackNavigator.Screen>
@@ -131,6 +135,14 @@ function AppNavigator() {
           component={NotificationScreen}
           options={{
             headerTitle: 'Thông báo',
+            headerShown: false,
+          }}></StackNavigator.Screen>
+
+        <StackNavigator.Screen
+          name={ADMIN_NAVIGATOR}
+          component={AdminNavigator}
+          options={{
+            headerTitle: 'Admin',
             headerShown: false,
           }}></StackNavigator.Screen>
       </StackNavigator.Navigator>

@@ -8,10 +8,10 @@ function Comment(props) {
     <View style={{...styles.screen, ...props.style}}>
       <View style={styles.headerContainer}>
         <View style={styles.avatarContainer}>
-          <Image style={styles.avatar} source={{uri: IMAGE_TEMP}}></Image>
+          <Image style={styles.avatar} source={{uri: props.data.avatar}}></Image>
         </View>
         <View style={styles.nameContainer}>
-          <Text style={styles.name}>Name</Text>
+          <Text style={styles.name}>{props.data.user}</Text>
           <StarRating
             type={'star'}
             disabled={true}
@@ -21,27 +21,26 @@ function Comment(props) {
             fullStar={'star'}
             halfStar={'star-half'}
             maxStars={5}
-            rating={3}
+            rating={props.data.rating}
             emptyStarColor={'#EBF0FF'}
             fullStarColor={'#FFDF00'}
           />
         </View>
       </View>
       <Text style={styles.comment}>
-        This is some comment that you will never care descriptions
+        {props.data.comment}
       </Text>
       <FlatList
-        data={[1, 2, 3, 4, 5]}
-        style={styles.imageList}
+        data={props.data.images}
         horizontal={true}
         renderItem={itemData => (
           <View style={styles.commentImageContainer}>
             <Image
               style={styles.commentImage}
-              source={{uri: IMAGE_TEMP}}></Image>
+              source={{uri: itemData.item.image}}></Image>
           </View>
         )}></FlatList>
-      <Text style={styles.createTime}>Create Time</Text>
+      <Text style={styles.createTime}>{props.data.create_time}</Text>
     </View>
   );
 }

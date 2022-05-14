@@ -11,7 +11,7 @@ import ChangeName from '../screens/ProfileScreen/ChangeName';
 
 const Stack = createNativeStackNavigator();
 
-function ProfileNavigation() {
+function ProfileNavigator() {
   const [text, onChangeText] = React.useState(null);
 
   return (
@@ -62,4 +62,4 @@ function ProfileNavigation() {
 
 
 
-export default ProfileNavigation;  
+export default ProfileNavigator;  

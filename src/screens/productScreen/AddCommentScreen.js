@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import {Button, TextInput} from 'react-native-paper';
@@ -7,12 +7,25 @@ import Card from '../../components/UI/Card';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Colors from '../../constants/Colors';
 import Header from '../../components/UI/Header';
-
-const IMAGE_TEMP = 'https://kangaroovietnam.vn/Uploads/sinh-to-bo.jpg';
+import ImagePicker from 'react-native-image-crop-picker';
 function AddCommentScreen(props) {
   const [star, setStar] = useState(0);
+  const [images, setImages] = useState([]);
   const [comment, setComment] = useState('');
+  const [response, setResponse] = useState();
+  const onSetImageHandler = () =>{
+    console.log('--------------------------------');
+    ImagePicker.openPicker({
+      multiple: true
+    }).then(images => {
+      setImages(images);
+      console.log(images);
+    });
 
+  }
+  const onConfirmHandler = () =>{
+    
+  }
   return (
     <View style={styles.screen}>
       <Header title={'Viết đánh giá'} style={styles.header}></Header>
@@ -47,7 +60,7 @@ function AddCommentScreen(props) {
         <Text style={styles.title}>Thêm ảnh</Text>
         <View>
           <FlatList
-            data={[1, 2, 3, 4]}
+            data={images}
             horizontal={true}
             style={styles.imageList}
             renderItem={itemData => (
@@ -58,7 +71,7 @@ function AddCommentScreen(props) {
             ListFooterComponent={
               <TouchableOpacity
                 activeOpacity={0.9}
-                onPress={() => console.log('Adddddd')}>
+                onPress={() => onSetImageHandler()}>
                 <Card style={styles.addImageContainer}>
                   <AntDesign
                     style={styles.addIcon}

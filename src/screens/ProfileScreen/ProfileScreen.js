@@ -1,5 +1,5 @@
-import React, {useState, useEffect, componentdiv} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import React, { useState, useEffect, componentdiv } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Text,
   StyleSheet,
@@ -10,11 +10,10 @@ import {
   ScrollView,
 } from 'react-native';
 import Form1 from '../accountScreen/Form';
-import {TextInput, Button, Colors, IconButton} from 'react-native-paper';
-import {NavigationContainer, useNavigation} from '@react-navigation/native';
-import {Avatar} from 'react-native-paper';
+import { TextInput, Button, Colors, IconButton } from 'react-native-paper';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { Avatar } from 'react-native-paper';
 import Header from '../../components/UI/Header';
-
 
 function Profile(props) {
   const navigation = useNavigation();
@@ -31,10 +30,13 @@ function Profile(props) {
     <ScrollView style={styles.container}>
       <Header title="Thông tin cá nhân"></Header>
       <View style={styles.containeravatar}>
-        <TouchableOpacity>
+        <TouchableOpacity
+         //</View> onPress={chooseFile} 
+         >
+           
           <Avatar.Image
             size={100}
-            source={{uri: img}}
+            source={{ uri: img }}
           />
         </TouchableOpacity>
 
@@ -47,7 +49,7 @@ function Profile(props) {
         icons="account"
         titletext="Tên tài khoản"
         onPress={() => {
-          navigation.navigate('ChangeName');
+          navigation.navigate('ChangeName', { value: name });
         }}
         titletext2={name}
       />
@@ -55,8 +57,9 @@ function Profile(props) {
         icons="gender-male-female"
         titletext="Giới tính"
         onPress={() => {
-          navigation.navigate('Gender');
+          navigation.navigate('Gender', { value: gender });
         }}
+        value={gender}
         titletext2={gender == 1 ? 'Nam' : 'Nữ'}
       />
       <Form1
@@ -71,7 +74,7 @@ function Profile(props) {
         icons="email"
         titletext="Email"
         onPress={() => {
-          navigation.navigate('Email');
+          navigation.navigate('Email', { value: email });
         }}
         titletext2={email}
       />
@@ -79,7 +82,7 @@ function Profile(props) {
         icons="cellphone"
         titletext="Số điện thoại"
         onPress={() => {
-          navigation.navigate('Phone number');
+          navigation.navigate('Phone number', { value: phoneNumber });
         }}
         titletext2={phoneNumber}
       />

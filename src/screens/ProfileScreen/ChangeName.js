@@ -11,7 +11,8 @@ function ChangeName(props) {
   const [name, setName] = useState('');
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const userID = useSelector(state => state.auth.userID);
+  const userId = useSelector(state => state.auth.userID);
+  const token = useSelector(state => state.auth.token);
 
   return (
     <View style={styles.screen}>
@@ -35,7 +36,7 @@ function ChangeName(props) {
           color="#4F5160"
           labelStyle={{fontSize: 20}}
           onPress={() => {
-            dispatch(authActions.changeName(userID, name));
+            dispatch(authActions.changeName(userId, token, name));
             navigation.navigate('Profile');
           }}>
           Xác nhận

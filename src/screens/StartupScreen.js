@@ -2,18 +2,19 @@ import React, {useEffect} from 'react';
 import {View, ActivityIndicator, StyleSheet, Image} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Colors from '../constants/Colors';
-import {useNavigation} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 import {
   BOTTOM_BAR_NAVIGATOR,
   LOGIN_NAVIGATOR,
 } from '../constants/NavigatorIndex';
 import { useDispatch } from 'react-redux';
 import * as authActions from '../store/actions/auth'
-
+import * as productActions from '../store/actions/products';
+import * as bannerActions from '../store/actions/banner';
 function StartupScreen(props) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-
+  const isFocused = useIsFocused();
   useEffect(() => {
     const tryLogin = async () => {
       try {
@@ -25,11 +26,10 @@ function StartupScreen(props) {
 
         const transformedData = JSON.parse(userData);
 
-        const {token, userID, expiryDate} = transformedData;
-
+        const {token, userId, expiryDate} = transformedData;
         const expirationDate = await new Date(expiryDate);
 
-        if (expirationDate <= new Date() || !token || !userID) {
+        if (expirationDate <= new Date() || !token || !userId) {
 
           navigation.navigate(LOGIN_NAVIGATOR);
           return;
@@ -38,14 +38,14 @@ function StartupScreen(props) {
 
         navigation.navigate(BOTTOM_BAR_NAVIGATOR);
 
-        dispatch(authActions.authenticate(userID, token, expirationTime));
+        dispatch(authActions.authenticate(userId, token, expirationTime));
       } catch (err) {
         console.log(err);
       }
     };
 
     tryLogin();
-  }, [dispatch]);
+  }, [dispatch, isFocused]);
   return (
     <View style={styles.screen}>
       <View style={styles.imageContainer}>
