@@ -5,15 +5,19 @@ import { useSelector, useDispatch } from 'react-redux';
 import Colors from '../../constants/Colors';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import Form1 from './Form';
+<<<<<<< Updated upstream
 import { ADDRESS_SCREEN, ADD_ADDRESS_SCREEN, LOGIN_MAIN_SCREEN, LOGIN_NAVIGATOR, PROFILE_NAVIGATOR, STARTUP_SCREEN } from '../../constants/NavigatorIndex';
+=======
+import { ADDRESS_SCREEN, ADD_ADDRESS_SCREEN, ADMIN_NAVIGATOR, LOGIN_MAIN_SCREEN, LOGIN_NAVIGATOR, PROFILE_NAVIGATOR, STARTUP_SCREEN } from '../../constants/NavigatorIndex';
+>>>>>>> Stashed changes
 import * as authActions from '../../store/actions/auth'
 import * as chanelActions from '../../store/actions/chanelActions';
 
 function AccountMainScreen() {
-    const dispatch = useDispatch();   
+    const dispatch = useDispatch();
     const navigation = useNavigation();
     const userID = useSelector(state => state.auth.userId);
-    console.log(" get userID:"+ userID)        ;
+    console.log(" get userID:" + userID);
     dispatch(chanelActions.getChanel(4));
     const role = useSelector(state => state.auth.role);
     const chanelId = useSelector(state => state.chanel.chanelId);
@@ -38,16 +42,22 @@ function AccountMainScreen() {
                 styles={styles.itemsContainer}
                 icons='credit-card-outline'
                 titletext='Cửa hàng của tôi'
+<<<<<<< Updated upstream
             //onPress={() => navigation.navigate()}
             /> : null}
+=======
+                onPress={() => navigation.navigate(ADMIN_NAVIGATOR)}
+            /> : null}
+
+>>>>>>> Stashed changes
             <Form1
                 styles={styles.itemsContainer}
                 icons='face-agent'
                 titletext='Hỗ trợ khách hàng'
                 onPress={() => {
-                    if (role != 'CUSTOMER') {                        
-                        console.log("chanel get :"+ chanelId)        
-                            
+                    if (role != 'CUSTOMER') {
+                        console.log("chanel get :" + chanelId)
+
                         dispatch(chanelActions.getMessagerFromChanelId(chanelId));
                         navigation.navigate('ChatScreen');
                     } else {
@@ -57,6 +67,25 @@ function AccountMainScreen() {
                 }
                 }
             />
+
+            {/* Dành cho Admin */}
+            {role !== 'CUSTOMER' ?      {/*{role === 'SHOP'  */}
+                (
+                    < Form1
+                        styles={styles.itemsContainer}
+                        icons='credit-card-outline'
+                        titletext='Thêm nhân viên'
+                        onPress={() => navigation.navigate(ADMIN_NAVIGATOR)}
+                    />
+                    < Form1
+                        styles={styles.itemsContainer}
+                        icons='credit-card-outline'
+                        titletext='Xóa/Sửa nhân viên'
+                        onPress={() => navigation.navigate(ADMIN_NAVIGATOR)}
+                    />
+                ) : null}
+
+
 
             <Form1
                 styles={styles.itemsContainer}

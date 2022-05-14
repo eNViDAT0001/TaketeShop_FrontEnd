@@ -38,8 +38,13 @@ function AppNavigator() {
   return (
     <NavigationContainer>
       <StackNavigator.Navigator
+<<<<<<< Updated upstream
         //initialRouteName={STARTUP_SCREEN}
         initialRouteName={BOTTOM_BAR_NAVIGATOR}
+=======
+       // initialRouteName={STARTUP_SCREEN}  
+       initialRouteName={BOTTOM_BAR_NAVIGATOR}
+>>>>>>> Stashed changes
         options={{
           headerStyle: {
             backgroundColor: Colors.primaryColor,

@@ -22,6 +22,10 @@ function BottomBarNavigator() {
   return (
     <TabNavigator.Navigator
       activeColor={Colors.iconColor}
+<<<<<<< Updated upstream
+=======
+      //initialRouteName={HOME_MAIN_SCREEN}
+>>>>>>> Stashed changes
       initialRouteName={ACCOUNT_NAVIGATOR}
       barStyle={{backgroundColor: Colors.primaryColor}}>
       <TabNavigator.Screen
