@@ -115,7 +115,6 @@ export const login = (username, password) => {
     }
     saveDataToStorage(resData.token, resData.userID, resData.expiredDay);
     console.log(username + ' Login into TaketeShop as ' + resData.role);
-
     dispatch({
       type: LOGIN,
       user: {

@@ -19,14 +19,7 @@ export const fetchCommentWithProductID = (id) => {
       const loadedComment = [];
       for (const key in resData) {
         const images = [];
-        if (!resData[key].images) {
-          images.push(
-            new ImageModel(
-              -1,
-              'https://vanhoadoanhnghiepvn.vn/wp-content/uploads/2020/08/112815953-stock-vector-no-image-available-icon-flat-vector.jpg',
-            ),
-          );
-        } else {
+        if (resData[key].images) {
           const arrImage = resData[key].images.split(',');
           for (const image in arrImage) {
             const tempImage = arrImage[image].split(' ');

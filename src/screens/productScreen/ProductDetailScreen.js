@@ -26,7 +26,6 @@ function ProductDetailScreen(props) {
   const navigation = useNavigation();
   const id = route.params.id;
   const product = products.find(item => item.productID === id);
-  console.log(comments)
   const [error, setError] = useState();
 
   const onCommentPress = () => {

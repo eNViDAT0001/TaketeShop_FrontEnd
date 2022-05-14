@@ -20,19 +20,21 @@ function ShopPage(props) {
     const transformedShopItems = [];
     for (const key in availableProducts) {
       transformedShopItems.push({
-        productID: products[key].productID,
-        categoryID: products[key].categoryID,
-        name: products[key].name,
-        price: products[key].price,
-        quantity: products[key].quantity,
-        discount: products[key].discount,
+        productID: availableProducts[key].productID,
+        categoryID: availableProducts[key].categoryID,
+        name: availableProducts[key].name,
+        price: availableProducts[key].price,
+        quantity: availableProducts[key].quantity,
+        discount: availableProducts[key].discount,
         discountPrice:
-          products[key].price -
-          (products[key].discount / 100).toFixed(2) * products[key].price,
-        image: products[key].image[0],
-        category: products[key].category,
-        provider: products[key].provider,
-        liked: products[key].liked,
+          availableProducts[key].price -
+          (availableProducts[key].discount / 100).toFixed(2) *
+            availableProducts[key].price,
+        unit: availableProducts[key].unit,
+        image: availableProducts[key].image[0].image,
+        category: availableProducts[key].category,
+        provider: availableProducts[key].provider,
+        liked: availableProducts[key].liked,
       });
     }
     return transformedShopItems.filter(

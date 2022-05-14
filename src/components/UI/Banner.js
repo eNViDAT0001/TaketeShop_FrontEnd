@@ -14,7 +14,7 @@ import {CATEGORY_DETAIL_SCREEN} from '../../constants/NavigatorIndex';
 function Banner(props) {
   const navigation = useNavigation();
   const onClickHandler = (id, type) => {
-    navigation.navigate(CATEGORY_DETAIL_SCREEN, {id: id, type: type});
+    navigation.navigate(CATEGORY_DETAIL_SCREEN, {id: id, type: type, title: props.title});
   }
   const endTime = () => {
     const endDate = new Date(props.endTime);

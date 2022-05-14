@@ -55,8 +55,8 @@ function CategoryDetailScreen(props) {
           availableProducts[key].price -
           (availableProducts[key].discount / 100).toFixed(2) *
             availableProducts[key].price,
-        image: availableProducts[key].image[0].image,
         unit: availableProducts[key].unit,
+        image: availableProducts[key].image[0].image,
         category: availableProducts[key].category,
         provider: availableProducts[key].provider,
         liked: availableProducts[key].liked,
@@ -121,8 +121,7 @@ function CategoryDetailScreen(props) {
         data={filter(value)}
         renderItem={itemData => (
           <ShopItems
-            item={itemData.item}
-            onSelect={() => console.log(itemData.item.name)}></ShopItems>
+            item={itemData.item}></ShopItems>
         )}></FlatList>
     </View>
   );

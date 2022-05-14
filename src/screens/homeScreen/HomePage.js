@@ -25,7 +25,7 @@ function HomePage(props) {
     try {
       await dispatch(bannerActions.fetchBanner());
       await dispatch(productActions.fetchProducts());
-      // await dispatch(productActions.fetchCategory());
+      await dispatch(productActions.fetchCategory());
     } catch (err) {
       setError(err.msg);
     }
@@ -60,22 +60,6 @@ function HomePage(props) {
       </View>
     );
   }
-
-  // if (isLoading) {
-  //   return (
-  //     <View style={styles.centered}>
-  //       <ActivityIndicator size="large" color={Colors.primaryColor} />
-  //     </View>
-  //   );
-  // }
-
-  // if (!isLoading && products.length === 0) {
-  //   return (
-  //     <View style={styles.centered}>
-  //       <Text>Không tìm thấy sản phẩm!</Text>
-  //     </View>
-  //   );
-  // }
   const onSales = availableProducts => {
     const transformedShopItems = [];
     for (const key in availableProducts) {
@@ -101,8 +85,7 @@ function HomePage(props) {
       a.discount < b.discount ? 1 : -1,
     );
   };
-  const bestSeller = null;
-  const forYou = null;
+
 
   return (
     <View>

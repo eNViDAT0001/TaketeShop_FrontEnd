@@ -18,7 +18,7 @@ function BirthScreen(props) {
   const [date, setDate] = useState('');
   const [displayDay, setDisplayDay] = useState([]);
   const dispatch = useDispatch();
-  const userId = useSelector(state => state.auth.userId);
+  const userId = useSelector(state => state.auth.userID);
   const token = useSelector(state => state.auth.token);
 
   const onDateChange = async day => {

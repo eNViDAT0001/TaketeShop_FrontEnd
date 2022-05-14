@@ -5,15 +5,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import Colors from '../../constants/Colors';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import Form1 from './Form';
-import { ADDRESS_SCREEN,ADD_ADDRESS_SCREEN,ADMIN_NAVIGATOR,LOGIN_MAIN_SCREEN,LOGIN_NAVIGATOR,PROFILE_NAVIGATOR, STARTUP_SCREEN} from '../../constants/NavigatorIndex';
+import { ADDRESS_SCREEN,ADMIN_NAVIGATOR,PROFILE_NAVIGATOR, STARTUP_SCREEN} from '../../constants/NavigatorIndex';
 import * as authActions from '../../store/actions/auth'
 import * as chanelActions from '../../store/actions/chanelActions';
 
 function AccountMainScreen() {
     const dispatch = useDispatch();   
     const navigation = useNavigation();
-    const userID = useSelector(state => state.auth.userId);
-    console.log(" get userID:"+ userID)        ;
+    const userID = useSelector(state => state.auth.userID);
+    console.log("User ID:"+ userID);
     dispatch(chanelActions.getChanel(4));
     const role = useSelector(state => state.auth.role);
     const chanelId = useSelector(state => state.chanel.chanelId);
@@ -74,6 +74,7 @@ function AccountMainScreen() {
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
+        backgroundColor: Colors.backgroundColor
     },
     itemsContainer: {
         height: 100

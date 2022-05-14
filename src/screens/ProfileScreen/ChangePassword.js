@@ -15,7 +15,7 @@ function ChangePassword(props) {
   const [confirmpass, setConfirmpass] = React.useState('');
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const userId = useSelector(state => state.auth.userId);  
+  const userId = useSelector(state => state.auth.userID);  
   const token = useSelector(state => state.auth.token);
 
   const ChangeButton = async () => {

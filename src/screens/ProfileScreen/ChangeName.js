@@ -11,7 +11,7 @@ function ChangeName(props) {
   const [name, setName] = useState('');
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const userId = useSelector(state => state.auth.userId);
+  const userId = useSelector(state => state.auth.userID);
   const token = useSelector(state => state.auth.token);
 
   return (

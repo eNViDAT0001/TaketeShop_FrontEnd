@@ -32,7 +32,6 @@ function Comment(props) {
       </Text>
       <FlatList
         data={props.data.images}
-        style={styles.imageList}
         horizontal={true}
         renderItem={itemData => (
           <View style={styles.commentImageContainer}>
