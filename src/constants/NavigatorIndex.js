@@ -52,3 +52,5 @@ export const BOTTOM_BAR_NAVIGATOR = "BottomBarNavigator";
 export const ADMIN_NAVIGATOR = "AdminNavigator";
 
 export const CHAT_SCREEN = "ChatScreen";
+export const LIST_CHANEL = "ListChanel";
+export const LIST_STAFF_SCREEN = "ListStaffScreen";

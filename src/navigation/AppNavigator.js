@@ -1,6 +1,6 @@
 import React from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { NavigationContainer } from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {NavigationContainer} from '@react-navigation/native';
 import {
   ADDRESS_SCREEN,
   ADD_ADDRESS_SCREEN,
@@ -145,7 +145,6 @@ function AppNavigator() {
             headerTitle: 'Admin',
             headerShown: false,
           }}></StackNavigator.Screen>
-
       </StackNavigator.Navigator>
     </NavigationContainer>
   );
