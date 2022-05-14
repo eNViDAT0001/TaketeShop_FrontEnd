@@ -6,7 +6,7 @@ import AccountMainScreen from '../screens/accountScreen/AccountMainScreen';
 import ProfileNavigation from './ProfileNavigation';
 import ChatScreen from '../screens/accountScreen/ChatScreen/ChatScreen';
 import ListChanel from '../screens/accountScreen/ChatScreen/ListChanel';
-import ListStaffScreen from '../screens/accountScreen/ListStaffScreen'
+import ListStaffScreen from '../screens/accountScreen/ADMIN/ListStaffScreen'
 const Stack = createNativeStackNavigator();
 
 function AccountNavigator() {

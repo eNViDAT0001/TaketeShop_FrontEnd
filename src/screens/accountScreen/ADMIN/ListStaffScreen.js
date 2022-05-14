@@ -16,10 +16,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as authActions from '../../../store/actions/auth'
 import * as chanelActions from '../../../store/actions/chanelActions';
-import { Form } from 'formik';
 
 function ListStaffScreen() {
-  var ALL_LIST_CHANEL = useSelector(state => state.chanel.LIST_CHANEL);
+  var ALL_LIST_USER = useSelector(state => state.chanel.LIST_CHANEL);
   const navigation = useNavigation();
   const dispatch = useDispatch();
   let chanelID = useSelector(state => state.chanel._id);
@@ -83,11 +82,11 @@ function ListStaffScreen() {
   return (
 
     <SafeAreaView style={styles.screen}>
-      <Header title="Danh sách hỗ trợ khách hàng"></Header>
+      <Header title="Danh sách nhân viên"></Header>
 
       <FlatList
-        data={ALL_LIST_CHANEL}
-        extraData={ALL_LIST_CHANEL}
+        data={ALL_LIST_USER}
+        extraData={ALL_LIST_USER}
         renderItem={itemData => (renderMessages(itemData.item))}
         keyExtractor={(item, index) => item._id}
         contentContainerStyle={{ flexGrow: 1, backgroundColor: '#D3D3D388', top: 5, marginHorizontal: 8 }}
