@@ -35,7 +35,7 @@ export const authenticate = (userId, token, expiryTime) => {
     if (error) {
       console.log(resData.msg)
     }
-    
+
     dispatch({
       type: LOGIN,
       user: {
@@ -136,7 +136,7 @@ export const login = (username, password) => {
 export const logout = () => {
   clearLogoutTimer();
   AsyncStorage.removeItem('userData');
-  return {type: LOGOUT};
+  return { type: LOGOUT };
 };
 export const changeName = (userId, token, value) => {
   return async dispatch => {
@@ -154,7 +154,7 @@ export const changeName = (userId, token, value) => {
       },
     );
 
-    dispatch({type: CHANGE_NAME, value: value});
+    dispatch({ type: CHANGE_NAME, value: value });
   };
 };
 export const changeGender = (userId, token, value) => {
@@ -173,7 +173,7 @@ export const changeGender = (userId, token, value) => {
       },
     );
 
-    dispatch({type: CHANGE_GENDER, value: value});
+    dispatch({ type: CHANGE_GENDER, value: value });
   };
 };
 export const changeBirthday = (userId, token, value) => {
@@ -192,7 +192,7 @@ export const changeBirthday = (userId, token, value) => {
       },
     );
 
-    dispatch({type: CHANGE_BIRTHDAY, value: value});
+    dispatch({ type: CHANGE_BIRTHDAY, value: value });
   };
 };
 export const changeEmail = (userId, token, value) => {
@@ -211,7 +211,7 @@ export const changeEmail = (userId, token, value) => {
       },
     );
 
-    dispatch({type: CHANGE_EMAIL, value: value});
+    dispatch({ type: CHANGE_EMAIL, value: value });
   };
 };
 export const changePhone = (userId, token, value) => {
@@ -230,7 +230,7 @@ export const changePhone = (userId, token, value) => {
       },
     );
 
-    dispatch({type: CHANGE_PHONE, value: value});
+    dispatch({ type: CHANGE_PHONE, value: value });
   };
 };
 export const changeAvatar = (userId, token, value) => {
@@ -249,27 +249,46 @@ export const changeAvatar = (userId, token, value) => {
       },
     );
 
-    dispatch({type: CHANGE_AVATAR, value: value});
+    dispatch({ type: CHANGE_AVATAR, value: value });
   };
 };
 // const {username, name, password, birthday, gender, email, phone, type, avatar} = req.body;
 
-export const changePassword = (userId, token, oldPass, newPass) => {
+// export const changePassword = (userId, token, oldPass, newPass) => {
+//   return async dispatch => {
+//     await fetch(
+//       `http://localhost:5000/user/password/${userId}`,
+//       {
+//         method: 'PATCH',
+//         headers: {
+//           'Content-Type': 'application/json',
+//           authorization: 'Bearer ' + token,
+//         },
+//         body: JSON.stringify({
+//           newPass: newPass,
+//           oldPass: oldPass
+//         })
+//       },
+//     ); 
+//   };
+// };
+
+export const changePassword = (userId, token, oldpass, newpass) => {
   return async dispatch => {
-    await fetch(
-      `http://localhost:5000/user/password/${userId}`,
+    const response = await fetch(`http://localhost:5000/user/password/${userId}?oldpass=${oldpass}&newpass=${newpass}`,
       {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
           authorization: 'Bearer ' + token,
         },
-        body: JSON.stringify({
-          newPass: newPass,
-          oldPass: oldPass
-        })
-      },
-    ); 
+      });
+    const resData = await response.json();
+    const error = resData.error;
+
+    if (error) {
+      alert('Xác nhận mật khẩu không chính xác, vui lòng nhập lại');     
+    }
   };
 };
 

@@ -69,19 +69,19 @@ function AccountMainScreen() {
         }}
       />
 
-      {role !== 'CUSTOMER' ? (
+      {role === 'SHOP' ? (
         <View>
           <Form1
             styles={styles.itemsContainer}
             icons="credit-card-outline"
             titletext="Thêm nhân viên"
-            onPress={() => navigation.navigate(ADMIN_NAVIGATOR)}
+            onPress={() => navigation.navigate('AddStaff')}
           />
           <Form1
             styles={styles.itemsContainer}
             icons="credit-card-outline"
             titletext="Xóa/Sửa nhân viên"
-            onPress={() => navigation.navigate(ADMIN_NAVIGATOR)}
+            onPress={() => navigation.navigate('ListStaffScreen')}
           />
         </View>
       ) : null}

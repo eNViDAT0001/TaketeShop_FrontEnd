@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
-import Form1 from '../../accountScreen/Form';
+import Form1 from '../Form';
 import { TextInput, Button, Colors, IconButton, Avatar } from 'react-native-paper';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import Header from '../../../components/UI/Header';

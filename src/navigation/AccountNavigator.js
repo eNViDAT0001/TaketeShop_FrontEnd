@@ -1,10 +1,12 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { ACCOUNT_MAIN_SCREEN, CHAT_SCREEN,LIST_CHANEL , LIST_STAFF_SCREEN } from '../constants/NavigatorIndex';
+import { ACCOUNT_MAIN_SCREEN, CHAT_SCREEN,LIST_CHANEL , LIST_STAFF_SCREEN, ADD_STAFF_SCREEN } from '../constants/NavigatorIndex';
 import AccountMainScreen from '../screens/accountScreen/AccountMainScreen';
 import ChatScreen from '../screens/accountScreen/ChatScreen/ChatScreen';
 import ListChanel from '../screens/accountScreen/ChatScreen/ListChanel';
-import ListStaffScreen from '../screens/accountScreen/ADMIN/ListStaffScreen'
+import ListStaffScreen from '../screens/accountScreen/adminScreen/ListStaffScreen';
+import AddStaff from '../screens/accountScreen/adminScreen/AddStaff';
+
 const Stack = createNativeStackNavigator();
 
 function AccountNavigator() {
@@ -30,9 +32,11 @@ function AccountNavigator() {
         name={LIST_STAFF_SCREEN}
         options={{ headerShown: false }}
         component={ListStaffScreen}>
-      </Stack.Screen>
-
-
+      </Stack.Screen>     
+    <Stack.Screen
+      name={ADD_STAFF_SCREEN}
+      options={{ headerShown: false }}
+      component={AddStaff} />
 
     </Stack.Navigator>
 
