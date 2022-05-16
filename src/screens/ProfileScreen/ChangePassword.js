@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { Text, StyleSheet, View, Image, TouchableOpacity } from 'react-native';
-import { TextInput, Button } from 'react-native-paper';
-import { useNavigation } from '@react-navigation/native';
+import React, {useState} from 'react';
+import {Text, StyleSheet, View, Image, TouchableOpacity} from 'react-native';
+import {TextInput, Button} from 'react-native-paper';
+import {useNavigation} from '@react-navigation/native';
 import Header from '../../components/UI/Header';
 import Colors from '../../constants/Colors';
-import { useDispatch, useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import * as authActions from '../../store/actions/auth';
 
 
@@ -15,7 +15,7 @@ function ChangePassword(props) {
   const [confirmpass, setConfirmpass] = React.useState('');
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const userId = useSelector(state => state.auth.userID);
+  const userId = useSelector(state => state.auth.userId);  
   const token = useSelector(state => state.auth.token);
 
   const ChangeButton = async () => {
@@ -29,8 +29,9 @@ function ChangePassword(props) {
       alert('Xác nhận mật khẩu không chính xác, vui lòng nhập lại');
     } else if (oldpass == newpass) {
       alert('Mật khẩu mới không được trùng với mật khẩu cũ, vui lòng nhập lại');
-    } else try {
-      dispatch(authActions.changePassword(userId, token, oldpass, newpass)); 
+    } else try {     
+
+      dispatch(authActions.changePassword(userId, token, oldpass, newpass));
       navigation.navigate('Profile');
 
     } catch (error) {
@@ -77,7 +78,7 @@ function ChangePassword(props) {
           contentStyle={styles.buttonText}
           style={styles.button}
           color="#4F5160"
-          labelStyle={{ fontSize: 20 }}
+          labelStyle={{fontSize: 20}}
           onPress={ChangeButton}>
           Xác nhận
         </Button>

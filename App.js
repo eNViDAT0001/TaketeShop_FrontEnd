@@ -11,7 +11,7 @@ import authReducer from './src/store/reducers/auth';
 import bannerReducer from './src/store/reducers/banner';
 import chanelReducer from './src/store/reducers/chanel';
 import commentReducer from './src/store/reducers/comment';
-//import messagerReducer from './src/store/reducers/messager';
+import StaffReducer from './src/store/reducers/ListStaff';
 
 LogBox.ignoreLogs(["EventEmitter.removeListener"]);
 
@@ -48,6 +48,7 @@ const rootReducer = combineReducers({
   banner: bannerReducer,
   chanel : chanelReducer,
   comment : commentReducer,
+  staff : StaffReducer,
    //messager : messagerReducer,
 });
 

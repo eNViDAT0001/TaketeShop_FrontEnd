@@ -14,3 +14,6 @@ class User{
         this.updateTime = updateTime;
     }
 }
+
+
+export default User;

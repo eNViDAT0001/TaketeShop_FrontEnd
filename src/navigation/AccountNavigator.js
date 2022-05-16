@@ -1,11 +1,12 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { ACCOUNT_MAIN_SCREEN, CHAT_SCREEN,LIST_CHANEL , LIST_STAFF_SCREEN, ADD_STAFF_SCREEN } from '../constants/NavigatorIndex';
+import { ACCOUNT_MAIN_SCREEN, CHAT_SCREEN, LIST_CHANEL, LIST_STAFF_SCREEN, ADD_STAFF_SCREEN, PROFILE_NAVIGATOR } from '../constants/NavigatorIndex';
 import AccountMainScreen from '../screens/accountScreen/AccountMainScreen';
 import ChatScreen from '../screens/accountScreen/ChatScreen/ChatScreen';
 import ListChanel from '../screens/accountScreen/ChatScreen/ListChanel';
-import ListStaffScreen from '../screens/accountScreen/adminScreen/ListStaffScreen';
-import AddStaff from '../screens/accountScreen/adminScreen/AddStaff';
+import ListStaffScreen from '../screens/accountScreen/ForAdmin/ListStaffScreen';
+import AddStaff from '../screens/accountScreen/ForAdmin/AddStaff';
+import ProfileNavigator from './ProfileNavigator';
 
 const Stack = createNativeStackNavigator();
 
@@ -23,6 +24,13 @@ function AccountNavigator() {
       </Stack.Screen>
 
       <Stack.Screen
+        name={PROFILE_NAVIGATOR}
+        component={ProfileNavigator}
+        options={{
+          headerShown: false,
+        }}></Stack.Screen>
+
+      <Stack.Screen
         name={LIST_CHANEL}
         options={{ headerShown: false }}
         component={ListChanel}>
@@ -32,11 +40,11 @@ function AccountNavigator() {
         name={LIST_STAFF_SCREEN}
         options={{ headerShown: false }}
         component={ListStaffScreen}>
-      </Stack.Screen>     
-    <Stack.Screen
-      name={ADD_STAFF_SCREEN}
-      options={{ headerShown: false }}
-      component={AddStaff} />
+      </Stack.Screen>
+      <Stack.Screen
+        name={ADD_STAFF_SCREEN}
+        options={{ headerShown: false }}
+        component={AddStaff} />
 
     </Stack.Navigator>
 

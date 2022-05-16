@@ -1,6 +1,6 @@
 import React from 'react';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {NavigationContainer} from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
 import {
   ADDRESS_SCREEN,
   ADD_ADDRESS_SCREEN,
@@ -12,11 +12,12 @@ import {
   LOGIN_NAVIGATOR,
   NOTIFICATION_SCREEN,
   PRODUCT_DETAIL_SCREEN,
-  PROFILE_NAVIGATOR,
+ 
   STARTUP_SCREEN,
   SUCCESS_SCREEN,
   WISHLIST_SCREEN,
   PRODUCT_NAVIGATOR,
+  //PROFILE_NAVIGATOR_FOR_ADMIN,
 } from '../constants/NavigatorIndex';
 import BottomBarNavigator from './BottomBarNavigator';
 import CategoryDetailScreen from '../screens/productScreen/CategoryDetailScreen';
@@ -29,7 +30,7 @@ import AddressScreen from '../screens/addressScreen/AddressScreen';
 import AddAddressPage from '../screens/addressScreen/AddAddressPage';
 import SuccessScreen from '../screens/addressScreen/SuccessScreen';
 import NotificationScreen from '../screens/homeScreen/NotificationScreen';
-import ProfileNavigator from './ProfileNavigator';
+//import ProfileNavigatorAdmin from './ProfileNavigatorAdmin';
 import StartupScreen from '../screens/StartupScreen';
 import WishlistScreen from '../screens/homeScreen/WishlistScreen';
 import AdminNavigator from './AdminNavigator';
@@ -56,13 +57,6 @@ function AppNavigator() {
         <StackNavigator.Screen
           name={LOGIN_NAVIGATOR}
           component={LoginNavigator}
-          options={{
-            headerShown: false,
-          }}></StackNavigator.Screen>
-
-        <StackNavigator.Screen
-          name={PROFILE_NAVIGATOR}
-          component={ProfileNavigator}
           options={{
             headerShown: false,
           }}></StackNavigator.Screen>

@@ -15,7 +15,8 @@ import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { Avatar } from 'react-native-paper';
 import Header from '../../components/UI/Header';
 
-function Profile(props) {
+function Profile() {
+
   const navigation = useNavigation();
   const name = (useSelector(state => state.auth.name));
   const gender = (useSelector(state => state.auth.gender));
@@ -24,16 +25,46 @@ function Profile(props) {
   const phoneNumber = (useSelector(state => state.auth.phone));
   const img = (useSelector(state => state.auth.avatar));
 
+  //   let name ;
+  //   let gender ;
+  //   let birth;
+  //   let email;
+  //   let phoneNumber;
+  //   let img;
+  //   let date ;
+  //   let token ;  
+  //   const admin = useSelector(state => state.staff.admin);
+  //   console.log("check admin:" + admin);
+  //  // const token = useSelector(state => state.auth.token);
+  //   if (admin) {  
+  //     name = useSelector(state => state.staff.name);
+  //     gender = useSelector(state => state.staff.gender);
+  //     birth = useSelector(state => state.staff.birthday);
+  //     email = useSelector(state => state.staff.email);
+  //     phoneNumber = useSelector(state => state.staff.phone);
+  //     img = useSelector(state => state.staff.avatar);  
+  //     //date = birth.slice(0, 10).split('-');
+  //   }
+  //   else {
+  //     name = (useSelector(state => state.auth.name));
+  //     gender = (useSelector(state => state.auth.gender));
+  //     birth = (useSelector(state => state.auth.birthday));
+  //     email = (useSelector(state => state.auth.email));
+  //     phoneNumber = (useSelector(state => state.auth.phone));
+  //     img = (useSelector(state => state.auth.avatar));      
+  //}
   const date = birth.slice(0, 10).split('-');
+
+
 
   return (
     <ScrollView style={styles.container}>
       <Header title="Thông tin cá nhân"></Header>
       <View style={styles.containeravatar}>
         <TouchableOpacity
-         //</View> onPress={chooseFile} 
-         >
-           
+        //</View> onPress={chooseFile} 
+        >
+
           <Avatar.Image
             size={100}
             source={{ uri: img }}
@@ -82,7 +113,7 @@ function Profile(props) {
         icons="cellphone"
         titletext="Số điện thoại"
         onPress={() => {
-          navigation.navigate('Phone number', { value: phoneNumber });
+          navigation.navigate('Phone', { value: phoneNumber });
         }}
         titletext2={phoneNumber}
       />
@@ -90,7 +121,7 @@ function Profile(props) {
         icons="lock"
         titletext="Đổi mật khẩu"
         onPress={() => {
-          navigation.navigate('Change Password');
+          navigation.navigate('ChangePassword');
         }}
         titletext2={'*******'}
       />

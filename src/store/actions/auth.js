@@ -269,25 +269,31 @@ export const changeAvatar = (userId, token, value) => {
 //           oldPass: oldPass
 //         })
 //       },
-//     ); 
+//     );
 //   };
 // };
 
 export const changePassword = (userId, token, oldpass, newpass) => {
   return async dispatch => {
-    const response = await fetch(`http://localhost:5000/user/password/${userId}?oldpass=${oldpass}&newpass=${newpass}`,
+    const response = await fetch(
+      `http://localhost:5000/user/password/${userId}`,
       {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
           authorization: 'Bearer ' + token,
         },
-      });
+        body: JSON.stringify({
+          oldPass: oldpass,
+          newPass: newpass,         
+        })
+      },
+    );
     const resData = await response.json();
     const error = resData.error;
 
     if (error) {
-      alert('Xác nhận mật khẩu không chính xác, vui lòng nhập lại');     
+      alert('Mật khẩu không chính xác, vui lòng nhập lại');
     }
   };
 };

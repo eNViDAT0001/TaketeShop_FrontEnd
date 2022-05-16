@@ -15,30 +15,21 @@ import Header from '../../../components/UI/Header';
 import { useSelector, useDispatch } from 'react-redux';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as authActions from '../../../store/actions/auth'
-import * as chanelActions from '../../../store/actions/chanelActions';
+import * as ListStaff from '../../../store/actions/ListStaff';
 
 function ListStaffScreen() {
-  var ALL_LIST_USER = useSelector(state => state.chanel.LIST_CHANEL);
+  var ALL_LIST_STAFF = useSelector(state => state.staff.LIST_STAFF);
   const navigation = useNavigation();
-  const dispatch = useDispatch();
-  let chanelID = useSelector(state => state.chanel._id);
-  let img = useSelector(state => state.auth.avatar);
-
-  useEffect(() => {
-    dispatch(chanelActions.getMessagerFromChanelId(chanelID));
-
-  });
+  const dispatch = useDispatch();  
+ 
   const Chats = (item) => {
     return (
       <View style={styles.container}>
         <TouchableOpacity
           onPress={() => {
-            console.log("goi chanel userID:" + item.avatar)
-            dispatch(chanelActions.getChanel(item.userID));
-            dispatch(chanelActions.getMessagerFromChanelId(chanelID)).then(
-              navigation.navigate('ChatScreen' ,{titleHeader: item.name})
-            )
-            
+           
+            // dispatch(ListStaff.getStaffFromUserID(item.userID));
+            // navigation.navigate('ProfileNavigation');            
 
           }}>
           <View style={styles.screenrow}>
@@ -50,7 +41,7 @@ function ListStaffScreen() {
               <Text style={styles.text1}>
                 {item.name}</Text>
               <View style={styles.text2}>
-                <Text>  {item.type}</Text>
+                <Text>  {item.email}</Text>
 
               </View>
             </View>
@@ -85,8 +76,8 @@ function ListStaffScreen() {
       <Header title="Danh sách nhân viên"></Header>
 
       <FlatList
-        data={ALL_LIST_USER}
-        extraData={ALL_LIST_USER}
+        data={ALL_LIST_STAFF}
+        extraData={ALL_LIST_STAFF}
         renderItem={itemData => (renderMessages(itemData.item))}
         keyExtractor={(item, index) => item._id}
         contentContainerStyle={{ flexGrow: 1, backgroundColor: '#D3D3D388', top: 5, marginHorizontal: 8 }}
