@@ -6,6 +6,8 @@ import {useNavigation} from '@react-navigation/native';
 import Header from '../../components/UI/Header';
 import {useDispatch, useSelector} from 'react-redux';
 import * as authActions from '../../store/actions/auth';
+import * as ListStaff from '../../store/actions/ListStaff';
+
 const data = [
   {label: 'Nam', value: '1'},
   {label: 'Nữ', value: '0'},
@@ -14,10 +16,15 @@ const data = [
 function Gender(props) {
   const [value, setValue] = useState(null);
   const navigation = useNavigation();
-  const dispatch = useDispatch();
-  const userId = useSelector(state => state.auth.userId);
+  const dispatch = useDispatch();  
   const token = useSelector(state => state.auth.token);
-
+  const admin = useSelector(state => state.staff.admin);
+  let userID;
+  if (admin) {
+    userID =useSelector(state => state.staff.userID);
+  }else {
+    userID = useSelector(state => state.auth.userID);
+  }
 
   return (
     <View style={styles.screen}>
@@ -47,8 +54,13 @@ function Gender(props) {
           color="#4F5160"
           labelStyle={{fontSize: 20}}
           onPress={() => {
-            dispatch(authActions.changeGender(userId, token, value));
+            if (admin) {
+              dispatch(ListStaff.changeGender(userID, token, value));                 
+            }else {
+              dispatch(authActions.changeGender(userID, token, value));              
+            }
             navigation.navigate('Profile');
+           
           }}>
           Xác nhận
         </Button>

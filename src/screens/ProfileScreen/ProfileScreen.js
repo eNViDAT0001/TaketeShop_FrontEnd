@@ -8,54 +8,73 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  Alert,
 } from 'react-native';
 import Form1 from '../accountScreen/Form';
 import { TextInput, Button, Colors, IconButton } from 'react-native-paper';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { Avatar } from 'react-native-paper';
 import Header from '../../components/UI/Header';
+import * as ListStaff from '../../store/actions/ListStaff';
 
-function Profile() {
+function Profile(props) {
 
   const navigation = useNavigation();
-  const name = (useSelector(state => state.auth.name));
-  const gender = (useSelector(state => state.auth.gender));
-  const birth = (useSelector(state => state.auth.birthday));
-  const email = (useSelector(state => state.auth.email));
-  const phoneNumber = (useSelector(state => state.auth.phone));
-  const img = (useSelector(state => state.auth.avatar));
+  const dispatch = useDispatch();  
 
-  //   let name ;
-  //   let gender ;
-  //   let birth;
-  //   let email;
-  //   let phoneNumber;
-  //   let img;
-  //   let date ;
-  //   let token ;  
-  //   const admin = useSelector(state => state.staff.admin);
-  //   console.log("check admin:" + admin);
-  //  // const token = useSelector(state => state.auth.token);
-  //   if (admin) {  
-  //     name = useSelector(state => state.staff.name);
-  //     gender = useSelector(state => state.staff.gender);
-  //     birth = useSelector(state => state.staff.birthday);
-  //     email = useSelector(state => state.staff.email);
-  //     phoneNumber = useSelector(state => state.staff.phone);
-  //     img = useSelector(state => state.staff.avatar);  
-  //     //date = birth.slice(0, 10).split('-');
-  //   }
-  //   else {
-  //     name = (useSelector(state => state.auth.name));
-  //     gender = (useSelector(state => state.auth.gender));
-  //     birth = (useSelector(state => state.auth.birthday));
-  //     email = (useSelector(state => state.auth.email));
-  //     phoneNumber = (useSelector(state => state.auth.phone));
-  //     img = (useSelector(state => state.auth.avatar));      
-  //}
-  const date = birth.slice(0, 10).split('-');
+  const userID = useSelector(state => state.staff.userID);
+  let name;
+  let gender;
+  let birthday;
+  let email;
+  let phoneNumber;
+  let img;
+  let date;
+  const token = useSelector(state => state.auth.token);
+  const admin = useSelector(state => state.staff.admin);
 
 
+
+  // const token = useSelector(state => state.auth.token);
+  if (admin) {
+    name = useSelector(state => state.staff.name);
+    gender = useSelector(state => state.staff.gender);
+    birthday = useSelector(state => state.staff.birthday);
+    email = useSelector(state => state.staff.email);
+    phoneNumber = useSelector(state => state.staff.phone);
+    img = useSelector(state => state.staff.avatar);
+
+    date = birthday.slice(0, 10).split('-');
+  }
+  else {
+    name = (useSelector(state => state.auth.name));
+    gender = (useSelector(state => state.auth.gender));
+    birthday = (useSelector(state => state.auth.birthday));
+    email = (useSelector(state => state.auth.email));
+    phoneNumber = (useSelector(state => state.auth.phone));
+    img = (useSelector(state => state.auth.avatar));
+    date = birthday.slice(0, 10).split('-');
+  }
+
+  const DeleteStaff = () =>
+    Alert.alert(
+      "Xóa tài khoản",
+      "Bạn có chắc muốn xóa nhân viên này ?",
+      [
+        {
+          text: "Không",
+          onPress: () => {
+            console.log("Cancel delete")
+          },
+          style: "cancel"
+        },
+        { text: "Có", onPress: () => {
+          dispatch(ListStaff.deleteStaff(userID, token));
+          dispatch(ListStaff.getAllStaff(token));
+          navigation.goBack();
+        } }
+      ]
+    );
 
   return (
     <ScrollView style={styles.container}>
@@ -80,7 +99,7 @@ function Profile() {
         icons="account"
         titletext="Tên tài khoản"
         onPress={() => {
-          navigation.navigate('ChangeName', { value: name });
+          navigation.navigate('ChangeName');
         }}
         titletext2={name}
       />
@@ -88,7 +107,7 @@ function Profile() {
         icons="gender-male-female"
         titletext="Giới tính"
         onPress={() => {
-          navigation.navigate('Gender', { value: gender });
+          navigation.navigate('Gender');
         }}
         value={gender}
         titletext2={gender == 1 ? 'Nam' : 'Nữ'}
@@ -105,7 +124,7 @@ function Profile() {
         icons="email"
         titletext="Email"
         onPress={() => {
-          navigation.navigate('Email', { value: email });
+          navigation.navigate('Email');
         }}
         titletext2={email}
       />
@@ -113,7 +132,7 @@ function Profile() {
         icons="cellphone"
         titletext="Số điện thoại"
         onPress={() => {
-          navigation.navigate('Phone', { value: phoneNumber });
+          navigation.navigate('Phone');
         }}
         titletext2={phoneNumber}
       />
@@ -125,6 +144,17 @@ function Profile() {
         }}
         titletext2={'*******'}
       />
+
+      {admin === true ?
+        (<Form1
+          icons="account-remove"
+          titletext="Xóa tài khoản"
+          onPress={ DeleteStaff
+          }
+        />
+        ) : null
+      }
+
     </ScrollView>
   );
 }

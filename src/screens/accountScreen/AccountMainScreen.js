@@ -23,9 +23,9 @@ function AccountMainScreen() {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const userID = useSelector(state => state.auth.userID);
-  console.log('User ID:' + userID);
-  dispatch(chanelActions.getChanel(4));
+  console.log('User ID:' + userID); 
   const role = useSelector(state => state.auth.role);
+  const token = useSelector(state => state.auth.token);
   const chanelId = useSelector(state => state.chanel.chanelId);
   return (
     <ScrollView style={styles.screen}>
@@ -73,28 +73,28 @@ function AccountMainScreen() {
         }}
       />
 
-      {/* {role === 'SHOP' ? (
+      {role === 'SHOP' ? (
         <View>
           <Form1
             styles={styles.itemsContainer}
-            icons="credit-card-outline"
+            icons="account-plus"
             titletext="Thêm nhân viên"
             onPress={() => navigation.navigate('AddStaff')}
           />
           <Form1
             styles={styles.itemsContainer}
-            icons="credit-card-outline"
+            icons="account-multiple"
             titletext="Xóa/Sửa nhân viên"
             onPress={() => {
-              
-              dispatch(ListStaff.getAllStaff());
+              //dispatch(ListStaff.getStaffFromUserID(4,token));
+              dispatch(ListStaff.getAllStaff(token));
               navigation.navigate('ListStaffScreen')
             }
             }
 
           />
         </View>
-      ) : null} */}
+      ) : null}
 
       <Form1
         styles={styles.itemsContainer}

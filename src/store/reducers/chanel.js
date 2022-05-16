@@ -37,7 +37,7 @@ export default (state = initialState, action) => {
             };
 
         case GET_ALL_CHANEL:
-            console.log("GET_ALL_CHANEL")
+            //console.log("GET_ALL_CHANEL")
             return {
                 ...state,
                 LIST_CHANEL: action.chanel,

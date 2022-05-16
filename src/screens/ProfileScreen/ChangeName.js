@@ -6,13 +6,21 @@ import Header from '../../components/UI/Header';
 import Colors from '../../constants/Colors';
 import {useDispatch, useSelector} from 'react-redux';
 import * as authActions from '../../store/actions/auth';
+import * as ListStaff from '../../store/actions/ListStaff';
 
 function ChangeName(props) {
   const [name, setName] = useState('');
   const navigation = useNavigation();
-  const dispatch = useDispatch();
-  const userId = useSelector(state => state.auth.userId);
+  const dispatch = useDispatch();  
   const token = useSelector(state => state.auth.token);
+  const admin = useSelector(state => state.staff.admin);
+  let userID;
+  if (admin) {
+    userID =useSelector(state => state.staff.userID);
+  }else {
+    userID = useSelector(state => state.auth.userID);
+  }
+
 
   return (
     <View style={styles.screen}>
@@ -36,8 +44,14 @@ function ChangeName(props) {
           color="#4F5160"
           labelStyle={{fontSize: 20}}
           onPress={() => {
-            dispatch(authActions.changeName(userId, token, name));
+            if (admin) {
+              dispatch(ListStaff.changeName(userID, token, name));
+              dispatch(ListStaff.getAllStaff(token));
+            }else {
+              dispatch(authActions.changeName(userID, token, name));            
+            }
             navigation.navigate('Profile');
+           
           }}>
           Xác nhận
         </Button>

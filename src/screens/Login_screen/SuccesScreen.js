@@ -9,10 +9,11 @@ function SuccesScreen(props) {
   return (
     <View style={styles.screen}>
       <TouchableOpacity activeOpacity={1}
-        onPress={() => navigation.navigate(STARTUP_SCREEN)}>
+        //onPress={() => navigation.navigate(STARTUP_SCREEN)}>
+        onPress={() => navigation.pop(2)}>
         <View style={styles.container}>
           <View style={styles.imgcontainer}>
-            <Image            
+            <Image
               style={styles.imgsc}
               source={require('../../../assets/images/succes.png')}
             />
@@ -30,16 +31,16 @@ function SuccesScreen(props) {
   );
 }
 const styles = StyleSheet.create({
-  screen: { 
-    flex: 1, 
+  screen: {
+    flex: 1,
     backgroundColor: Colors.backgroundColor,
-    justifyContent : 'center',
-   },
-  container : {
-    alignItems: 'center',
-    justifyContent : 'center', 
+    justifyContent: 'center',
   },
-  imgcontainer: {    
+  container: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  imgcontainer: {
     width: '70%',
     height: '70%',
   },

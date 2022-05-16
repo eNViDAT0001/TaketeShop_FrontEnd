@@ -18,18 +18,20 @@ import * as authActions from '../../../store/actions/auth'
 import * as ListStaff from '../../../store/actions/ListStaff';
 
 function ListStaffScreen() {
-  var ALL_LIST_STAFF = useSelector(state => state.staff.LIST_STAFF);
+  let ALL_LIST_STAFF = useSelector(state => state.staff.LIST_STAFF);
   const navigation = useNavigation();
-  const dispatch = useDispatch();  
- 
+  const dispatch = useDispatch();
+  const name = useSelector(state => state.staff.name);
+  const token = useSelector(state => state.auth.token); 
+  dispatch(ListStaff.getAllStaff(token)); 
   const Chats = (item) => {
     return (
       <View style={styles.container}>
         <TouchableOpacity
           onPress={() => {
-           
-            // dispatch(ListStaff.getStaffFromUserID(item.userID));
-            // navigation.navigate('ProfileNavigation');            
+            dispatch(ListStaff.getStaffFromUserID(item.userID,token));
+
+            navigation.navigate('ProfileNavigation');
 
           }}>
           <View style={styles.screenrow}>

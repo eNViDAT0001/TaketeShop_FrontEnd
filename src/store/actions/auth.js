@@ -138,6 +138,7 @@ export const logout = () => {
   AsyncStorage.removeItem('userData');
   return { type: LOGOUT };
 };
+
 export const changeName = (userId, token, value) => {
   return async dispatch => {
     await fetch(
@@ -252,26 +253,6 @@ export const changeAvatar = (userId, token, value) => {
     dispatch({ type: CHANGE_AVATAR, value: value });
   };
 };
-// const {username, name, password, birthday, gender, email, phone, type, avatar} = req.body;
-
-// export const changePassword = (userId, token, oldPass, newPass) => {
-//   return async dispatch => {
-//     await fetch(
-//       `http://localhost:5000/user/password/${userId}`,
-//       {
-//         method: 'PATCH',
-//         headers: {
-//           'Content-Type': 'application/json',
-//           authorization: 'Bearer ' + token,
-//         },
-//         body: JSON.stringify({
-//           newPass: newPass,
-//           oldPass: oldPass
-//         })
-//       },
-//     );
-//   };
-// };
 
 export const changePassword = (userId, token, oldpass, newpass) => {
   return async dispatch => {
@@ -293,7 +274,7 @@ export const changePassword = (userId, token, oldpass, newpass) => {
     const error = resData.error;
 
     if (error) {
-      alert('Mật khẩu không chính xác, vui lòng nhập lại');
+      alert(resData.msg);
     }
   };
 };

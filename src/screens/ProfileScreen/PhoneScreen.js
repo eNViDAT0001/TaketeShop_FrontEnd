@@ -6,12 +6,20 @@ import Header from '../../components/UI/Header';
 import Colors from '../../constants/Colors';
 import {useDispatch, useSelector} from 'react-redux';
 import * as authActions from '../../store/actions/auth';
+import * as ListStaff from '../../store/actions/ListStaff';
+
 function Phone(props) {
   const [phonenumber, setPhonenumber] = React.useState('');
   const navigation = useNavigation();
-  const dispatch = useDispatch();
-  const userId = useSelector(state => state.auth.userId);
+  const dispatch = useDispatch(); 
   const token = useSelector(state => state.auth.token);
+  const admin = useSelector(state => state.staff.admin);
+  let userID;
+  if (admin) {
+    userID =useSelector(state => state.staff.userID);
+  }else {
+    userID = useSelector(state => state.auth.userID);
+  }
 
   return (
     <View style={styles.screen}>
@@ -37,8 +45,12 @@ function Phone(props) {
           color="#4F5160"
           labelStyle={{fontSize: 20}}
           onPress={() => {
-            dispatch(authActions.changePhone(userId, token, phonenumber));
-            navigation.navigate('Profile');
+            if (admin) {
+              dispatch(ListStaff.changePhone(userID, token, phonenumber));                
+            }else {
+              dispatch(authActions.changePhone(userID, token, phonenumber));              
+            }   
+            navigation.navigate('Profile');        
           }}>
           Xác nhận
         </Button>
