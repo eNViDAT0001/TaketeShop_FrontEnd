@@ -13,19 +13,18 @@ function AddCommentScreen(props) {
   const [images, setImages] = useState([]);
   const [comment, setComment] = useState('');
   const [response, setResponse] = useState();
-  const onSetImageHandler = () =>{
+  const onSetImageHandler = () => {
     console.log('--------------------------------');
-    ImagePicker.openPicker({
+    const imagePickers = ImagePicker.openPicker({
       multiple: true
     }).then(images => {
-      setImages(images);
-      console.log(images);
+      // images.forEach(image => console.log(image.path))
+      setImages(images)
     });
+    images.forEach(image => console.log(image.path))
 
-  }
-  const onConfirmHandler = () =>{
-    
-  }
+  };
+  const onConfirmHandler = () => {};
   return (
     <View style={styles.screen}>
       <Header title={'Viết đánh giá'} style={styles.header}></Header>
@@ -65,7 +64,7 @@ function AddCommentScreen(props) {
             style={styles.imageList}
             renderItem={itemData => (
               <Card style={styles.imageContainer}>
-                <Image style={styles.image} source={{uri: IMAGE_TEMP}}></Image>
+                <Image style={styles.image} source={{uri: itemData.item.path}}></Image>
               </Card>
             )}
             ListFooterComponent={

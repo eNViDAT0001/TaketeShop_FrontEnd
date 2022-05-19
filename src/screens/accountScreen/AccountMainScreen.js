@@ -43,7 +43,7 @@ function AccountMainScreen() {
         onPress={() => navigation.navigate(ADDRESS_SCREEN)}
       />
 
-      {role !== 'CUSTOMER' ? (
+      {role !== 'CUSTOMER'  || role !== 'GUEST'? (
         <Form1
           styles={styles.itemsContainer}
           icons="credit-card-outline"
@@ -69,7 +69,7 @@ function AccountMainScreen() {
         }}
       />
 
-      {role !== 'CUSTOMER' ? (
+      {role !== 'CUSTOMER'  || role !== 'GUEST'? (
         <View>
           <Form1
             styles={styles.itemsContainer}
