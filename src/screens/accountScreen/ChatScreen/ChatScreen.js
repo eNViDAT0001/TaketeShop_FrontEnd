@@ -24,6 +24,7 @@ function ChatScreen({route}) {
   const flatListRef = React.useRef();
   const chanelId = useSelector(state => state.chanel._id);
   const userChanelId = useSelector(state => state.chanel.userID);
+  const token = useSelector(state => state.auth.token);
   const {titleHeader}  =  route.params;   
   let state;
   let isStaff = false;
@@ -32,18 +33,11 @@ function ChatScreen({route}) {
      
   //  });
   
-  if (role != 'CUSTOMER') {
-    isStaff = true;
-   
-    //console.log("Chat Screen1 :" + chanelId);
-  } else {
-    //console.log("Chat Screen2");    
-    //titleHeader = "Hỗ trợ khách hàng";
-    dispatch(chanelActions.getMessagerFromChanelId(chanelId));
-  }
-
-
-
+  if (role === 'CUSTOMER') {
+    dispatch(chanelActions.getMessagerFromChanelId(chanelId,token));
+  } else  {    
+    isStaff = true;      
+  } 
   const Chats = (item) => {
 
     if (isStaff) {
@@ -71,9 +65,6 @@ function ChatScreen({route}) {
   return (
     <SafeAreaView style={styles.screen}>
      <Header title={titleHeader}></Header>
-      
-
-
       <FlatList
         ref={flatListRef}
         data={DATA_MESSAGES}
@@ -101,12 +92,7 @@ function ChatScreen({route}) {
           icon="send"
           color='#2196f3'
           size={25}
-          onPress={() => {
-            // console.log(chanelId)
-            // console.log(userID)
-            // console.log(messages)
-            // console.log(isStaff)
-            // dispatch(chanelActions.createChanel(113));
+          onPress={() => {           
             dispatch(chanelActions.addMessager(chanelId, userID, messages, isStaff));
             setMessages("")
 

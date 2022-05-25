@@ -50,8 +50,8 @@ export const getAllChanel = () => {
             }
             const resData = await response.json();
             console.log("GET_ALL_CHANEL  Success:" + resData.length)
-            const loadedAllChanel = [];           
-           // userID, username, password, name, birthday, gender, email, phone, type, avatar, createTime, updateTime
+            const loadedAllChanel = [];
+            // userID, username, password, name, birthday, gender, email, phone, type, avatar, createTime, updateTime
             for (const key in resData) {
                 loadedAllChanel.push(
                     new User(
@@ -107,17 +107,114 @@ export const createChanel = (user_id) => {
 }
 
 
-export const getMessagerFromChanelId = (chanelId) => {
+export const getMessagerFromChanelId = (chanelId,token) => {
     return async dispatch => {
-
         try {
-            const response = await fetch(`http://localhost:5000/message/chanel/` + chanelId);
+            const response = await fetch(`http://localhost:5000/message/chanel/` + chanelId,
+                {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        authorization: 'Bearer ' + token,
+                    },
+                },
+            );
 
             if (response.error) {
                 throw new Error(response.msg);
             }
             const resData = await response.json();
-           // console.log("get DATA_MESSAGES ok");
+            // console.log("get DATA_MESSAGES ok");
+
+            const loadedMessagers = [];
+
+            for (const key in resData) {
+                loadedMessagers.push(
+                    new messagerModel(
+                        resData[key]._id,
+                        resData[key].chanelId,
+                        resData[key].userId,
+                        resData[key].text,
+                        resData[key].isStaff,
+                        resData[key].createAt
+                    ),
+                );
+            }
+
+            dispatch({ type: GET_MESSAGER, message: loadedMessagers });
+
+        } catch (err) {
+            // send to custom analytics server
+            console.log(err);
+            throw err;
+        }
+
+    };
+};
+
+export const getMessagerFromChanelIdSTAFF = (chanelId,token) => {
+    return async dispatch => {
+        try {
+            const response = await fetch(`http://localhost:5000/message/staff/chanel/` + chanelId,
+                {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        authorization: 'Bearer ' + token,
+                    },
+                },
+            );
+
+            if (response.error) {
+                throw new Error(response.msg);
+            }
+            const resData = await response.json();
+            // console.log("get DATA_MESSAGES ok");
+
+            const loadedMessagers = [];
+
+            for (const key in resData) {
+                loadedMessagers.push(
+                    new messagerModel(
+                        resData[key]._id,
+                        resData[key].chanelId,
+                        resData[key].userId,
+                        resData[key].text,
+                        resData[key].isStaff,
+                        resData[key].createAt
+                    ),
+                );
+            }
+
+            dispatch({ type: GET_MESSAGER, message: loadedMessagers });
+
+        } catch (err) {
+            // send to custom analytics server
+            console.log(err);
+            throw err;
+        }
+
+    };
+};
+
+export const getMessagerFromChanelIdADMIN = (chanelId,token) => {
+    return async dispatch => {
+        try {
+            const response = await fetch(`http://localhost:5000/message/admin/chanel/` + chanelId,
+                {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        authorization: 'Bearer ' + token,
+                    },
+                },
+            );
+
+            if (response.error) {
+                throw new Error(response.msg);
+            }
+            const resData = await response.json();
+            // console.log("get DATA_MESSAGES ok");
 
             const loadedMessagers = [];
 

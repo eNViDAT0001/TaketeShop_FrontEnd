@@ -15,11 +15,11 @@ function AccountMainScreen() {
     const dispatch = useDispatch();
     const navigation = useNavigation();
     const chanelId = useSelector(state => state.chanel._id);
-
+    const token = useSelector(state => state.auth.token);
     useEffect(() => {
-        if (role == 'CUSTOMER') {
+        if (role === 'CUSTOMER') {
             dispatch(chanelActions.getChanel(userID));           
-            dispatch(chanelActions.getMessagerFromChanelId(chanelId));
+            dispatch(chanelActions.getMessagerFromChanelId(chanelId,token));
         } else {
             dispatch(chanelActions.getAllChanel());
         }

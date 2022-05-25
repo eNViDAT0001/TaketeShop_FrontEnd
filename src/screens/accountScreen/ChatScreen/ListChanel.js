@@ -22,12 +22,19 @@ function ListChanel() {
   var ALL_LIST_CHANEL = useSelector(state => state.chanel.LIST_CHANEL);
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const role = useSelector(state => state.auth.role);
   let chanelID = useSelector(state => state.chanel._id);
   let img = useSelector(state => state.auth.avatar);
+  const token = useSelector(state => state.auth.token);
 
   useEffect(() => {
-    dispatch(chanelActions.getMessagerFromChanelId(chanelID));
-
+    if (role === 'CUSTOMER') {
+      dispatch(chanelActions.getMessagerFromChanelId(chanelID,token));
+    } else  if (role === 'STAFF')  {    
+      dispatch(chanelActions.getMessagerFromChanelIdSTAFF(chanelID,token));
+    } else {
+      dispatch(chanelActions.getMessagerFromChanelIdADMIN(chanelID,token));
+    }
   });
   const Chats = (item) => {
     return (
@@ -35,11 +42,16 @@ function ListChanel() {
         <TouchableOpacity
           onPress={() => {
             console.log("goi chanel userID:" + item.avatar)
-            dispatch(chanelActions.getChanel(item.userID));
-            dispatch(chanelActions.getMessagerFromChanelId(chanelID)).then(
-              navigation.navigate('ChatScreen' ,{titleHeader: item.name})
-            )
+            dispatch(chanelActions.getChanel(item.userID));           
+            if (role === 'CUSTOMER') {
+              dispatch(chanelActions.getMessagerFromChanelId(chanelID,token));
+            } else  if (role === 'STAFF')  {    
+              dispatch(chanelActions.getMessagerFromChanelIdSTAFF(chanelID,token));
+            } else {
+              dispatch(chanelActions.getMessagerFromChanelIdADMIN(chanelID,token));
+            }
             
+            navigation.navigate('ChatScreen' ,{titleHeader: item.name});
 
           }}>
           <View style={styles.screenrow}>
