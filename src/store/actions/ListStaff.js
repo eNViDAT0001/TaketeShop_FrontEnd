@@ -64,7 +64,7 @@ export const getStaffFromUserID = (userId, token) => {
     return async dispatch => {
 
        // const response = await fetch(`http://localhost:5000/user/${userId}`);
-        const response = await fetch(`http://localhost:5000/user/${userId}`, {
+        const response = await fetch(`http://localhost:5000/user/admin/${userId}`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
