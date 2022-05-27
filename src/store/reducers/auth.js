@@ -19,7 +19,7 @@ const initialState = {
   phone: '0122789201',
   avatar:
     'https://4xucy2kyby51ggkud2tadg3d-wpengine.netdna-ssl.com/wp-content/uploads/sites/37/2017/02/IAFOR-Blank-Avatar-Image.jpg',
-  role: 'CUSTOMER',
+  role: 'ADMIN',
   token: null,
 };
 export default (state = initialState, action) => {

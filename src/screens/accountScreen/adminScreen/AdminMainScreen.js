@@ -17,12 +17,17 @@ import Card from '../../../components/UI/Card';
 import Colors from '../../../constants/Colors';
 import { useNavigation } from '@react-navigation/native';
 import { ADMIN_ADD_PRODUCT_SCREEN, ADMIN_PRODUCT_DETAIL_SCREEN,BANNER_SCREEN,DISCOUNT_SCREEN } from '../../../constants/NavigatorIndex';
+import {useDispatch, useSelector} from 'react-redux';
+import * as bannerActions from '../../../store/actions/banner';
+
 const ICON_SIZE = 32;
 const ICON_TITLE_SIZE = 35;
 const ICON_COLOR = '#9098B1';
 const ICON_TITLE_COLOR = '#223263';
 function AdminMainScreen() {
   const navigation = useNavigation();
+  const dispatch = useDispatch();  
+
   return (
     <View style={styles.screen}>
       <View style={styles.imageContainer}>
@@ -117,7 +122,11 @@ function AdminMainScreen() {
         </View>
         <View style={styles.statusContainer}>
           <TouchableOpacity style={styles.itemContainer}
-            onPress={() => navigation.navigate(BANNER_SCREEN)}>
+           onPress={() =>
+            {
+              dispatch(bannerActions.fetchBanner());
+              navigation.navigate("ListBanner");
+            } }>
             <FontAwesome5
               name="scroll"
               color={ICON_COLOR}
@@ -125,8 +134,12 @@ function AdminMainScreen() {
               style={styles.icon}></FontAwesome5>
             <Text style={styles.itemTitle}>Banner</Text>
           </TouchableOpacity>
+
           <TouchableOpacity style={styles.itemContainer}
-            onPress={() => navigation.navigate(DISCOUNT_SCREEN)}>
+            onPress={() =>
+            {
+              navigation.navigate("ListDiscount")}
+            }>
             <MaterialCommunityIcons
               name="ticket"
               color={ICON_COLOR}
