@@ -2,7 +2,7 @@ class ProductModel {
   liked = false;
   image = [];
   constructor(
-    productID,
+    {productID,
     categoryID,
     unitID,
     userID,
@@ -17,7 +17,7 @@ class ProductModel {
     sold,
     image,
     createTime,
-    updateTime,
+    updateTime,}
   ) {
     this.productID = productID;
     this.categoryID = categoryID;

@@ -11,7 +11,9 @@ import {useDispatch, useSelector} from 'react-redux';
 import * as productActions from '../../store/actions/products';
 import * as bannerActions from '../../store/actions/banner';
 function HomePage(props) {
-  const products = useSelector(state => state.products.availableProducts);
+  const bestSellerProducts = useSelector(state => state.products.bestSellerProducts);
+  const discountProducts = useSelector(state => state.products.discountProducts);
+  const recommenderProducts = useSelector(state => state.products.availableProducts);
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
@@ -24,7 +26,9 @@ function HomePage(props) {
     setIsRefreshing(true);
     try {
       await dispatch(bannerActions.fetchBanner());
-      await dispatch(productActions.fetchProducts());
+      await dispatch(productActions.fetchDiscountProducts({page: 0}));
+      await dispatch(productActions.fetchBestSellerProducts({page: 0}));
+      await dispatch(productActions.fetchProducts({}));
       await dispatch(productActions.fetchCategory());
     } catch (err) {
       setError(err.msg);
@@ -33,9 +37,9 @@ function HomePage(props) {
   }, [dispatch, setIsLoading, setError]);
 
   useEffect(() => {
-    const willFocusSub = navigation.addListener('focus', loadProducts);
+    // const willFocusSub = navigation.addListener('focus', loadProducts);
 
-    return willFocusSub;
+    return navigation.addListener('focus', loadProducts);
   }, [loadProducts]);
 
   useEffect(() => {
@@ -60,7 +64,7 @@ function HomePage(props) {
       </View>
     );
   }
-  const onSales = availableProducts => {
+  const shopItems = availableProducts => {
     const transformedShopItems = [];
     for (const key in availableProducts) {
       transformedShopItems.push({
@@ -101,7 +105,7 @@ function HomePage(props) {
             title={'Giảm giá'}
             horizontal={true}
             numColum={1}
-            itemList={onSales(products).slice(0, 20)}
+            itemList={shopItems(discountProducts)}
           />
         </Card>
         <Card style={styles.cardContainer}>
@@ -113,7 +117,7 @@ function HomePage(props) {
             title={'Bán chạy'}
             horizontal={true}
             numColum={1}
-            itemList={onSales(products).slice(0, 20)}
+            itemList={shopItems(bestSellerProducts)}
           />
         </Card>
         <Card style={styles.cardContainer}>
@@ -125,7 +129,7 @@ function HomePage(props) {
             title={'Dành cho bạn'}
             horizontal={false}
             numColum={2}
-            itemList={onSales(products).slice(0, 20)}
+            itemList={shopItems(recommenderProducts)}
           />
         </Card>
       </View>

@@ -4,7 +4,6 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {StyleSheet, Text, FlatList, View, TouchableOpacity} from 'react-native';
 import Colors from '../constants/Colors';
 import ShopItems from './ShopItems';
-import {useNavigation} from '@react-navigation/native';
 function CategoryHolder(props) {
   return (
     <View style={{...styles.container, ...props.style}}>
@@ -15,6 +14,7 @@ function CategoryHolder(props) {
         </View>
       </TouchableOpacity>
       <FlatList
+        extraData={props.extraData}
         onRefresh={props.onRefresh}
         keyExtractor={(item, index) => item.productID}
         style={styles.itemList}

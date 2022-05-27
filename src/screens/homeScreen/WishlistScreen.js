@@ -1,28 +1,70 @@
-import React from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {StyleSheet, View, FlatList, Text} from 'react-native';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import ShopItems from '../../components/ShopItems';
 import Header from '../../components/UI/Header';
-
+import * as productAction from '../../store/actions/products';
 function WishlistScreen(props) {
+  const dispatch = useDispatch();
   const wishlist = useSelector(state => state.products.wishlistProducts);
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [error, setError] = useState();
+
+  const loadWishlist = useCallback(async () => {
+    setError(null);
+    setIsRefreshing(true);
+    try {
+      await dispatch(productAction.fetchWishListProducts({page: 0}));
+    } catch (err) {
+      setError(err.msg);
+    }
+    setIsRefreshing(false);
+  }, [dispatch, setIsLoading, setError]);
+
+  useEffect(() => {
+    // const willFocusSub = navigation.addListener('focus', loadWishlist);
+
+    return navigation.addListener('focus', loadWishlist);
+  }, [loadWishlist]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    loadWishlist().then(() => {
+      setIsLoading(false);
+    });
+  }, [dispatch, loadWishlist]);
 
   if (!wishlist.length) {
     return (
       <View style={styles.screen}>
-        <Header title={'Yêu thích'} ></Header>
-
+        <Header title={'Yêu thích'}></Header>
         <View style={styles.centered}>
-          <Text>Trống</Text>
+          <Text>Bạn đang không có sản phẩm yêu thích!</Text>
         </View>
       </View>
     );
   }
 
+  if (error) {
+    return (
+      <View style={styles.centered}>
+        <Text>Có lỗi, vui lòng thử lại</Text>
+        <Button
+          title="Thử lại"
+          onPress={loadWishlist}
+          color={Colors.primaryColor}
+        />
+      </View>
+    );
+  }
   return (
     <View style={styles.screen}>
-      <Header title={'Yêu thích'} ></Header>
+      <Header title={'Yêu thích'}></Header>
       <FlatList
+        refreshing={isRefreshing}
+        onRefresh={loadWishlist}
         keyExtractor={(item, index) => item.productID}
         style={styles.itemList}
         numColumns={2}

@@ -17,7 +17,7 @@ export const fetchBanner = () => {
       const resData = await response.json();
       const loadedBanner = [];
       for (const key in resData) {
-
+        const productIDs = resData[key].productID? resData[key].productID.split(',').map(item => parseInt(item, 10)) : [];
         loadedBanner.push(
           new BannerModel(
             resData[key].id,
@@ -25,7 +25,7 @@ export const fetchBanner = () => {
             resData[key].discount,
             resData[key].endTime,
             resData[key].image,
-            resData[key].productID.split(',').map(item => parseInt(item, 10)),
+            productIDs,
             resData[key].create_time,
             resData[key].update_time,
           ),

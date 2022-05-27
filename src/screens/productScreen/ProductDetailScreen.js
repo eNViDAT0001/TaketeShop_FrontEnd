@@ -18,27 +18,31 @@ import Colors from '../../constants/Colors';
 import {COMMENT_SCREEN} from '../../constants/NavigatorIndex';
 import PagerView from 'react-native-pager-view';
 import * as commentActions from '../../store/actions/comment'
+import * as productActions from '../../store/actions/products'
+
 function ProductDetailScreen(props) {
   const route = useRoute();
   const dispatch = useDispatch();
-  const products = useSelector(state => state.products.availableProducts);
-  const comments = useSelector(state => state.comment.productComments);
   const navigation = useNavigation();
-  const id = route.params.id;
-  const product = products.find(item => item.productID === id);
+  const product = useSelector(state => state.products.currentProduct);
+  const comments = useSelector(state => state.comment.productComments);
+  const recommenderProducts = useSelector(state => state.products.availableProducts);
+  const productID = route.params.id;
   const [error, setError] = useState();
 
   const onCommentPress = () => {
-    navigation.navigate(COMMENT_SCREEN, {id: id});
+    navigation.navigate(COMMENT_SCREEN, {id: productID});
   };
 
   const loadProducts = useCallback(async () => {
     try {
-      await dispatch(commentActions.fetchCommentWithProductID(id))
+      await dispatch(productActions.fetchProductDetail(productID))
+      await dispatch(commentActions.fetchCommentWithProductID(productID))
     } catch (err) {
       setError(err.msg);
     }
   }, [dispatch, setError]);
+  
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: '',
@@ -170,7 +174,7 @@ function ProductDetailScreen(props) {
             title={'Bạn cũng có thể thích'}
             horizontal={true}
             numColum={1}
-            itemList={cloneList(products)}
+            itemList={cloneList(recommenderProducts)}
           />
         </Card>
       </ScrollView>

@@ -1,22 +1,50 @@
-import React, {useEffect, useState, useCallback} from 'react';
+import React, {useEffect, useState, useCallback, useLayoutEffect} from 'react';
 import {View, StyleSheet, ActivityIndicator, Text, Button} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import CategoryHolder from '../../components/CategoryHolder';
 import CategoryNameHolder from '../../components/CategoryNameHolder';
-import {PRODUCT_ITEMS_DUMMY_DATA} from '../../dummy_database/dummy-data';
 import {useNavigation} from '@react-navigation/native';
 import {CATEGORY_DETAIL_SCREEN} from '../../constants/NavigatorIndex';
 import Colors from '../../constants/Colors';
-
+import * as productActions from '../../store/actions/products';
 function ShopPage(props) {
   const products = useSelector(state => state.products.availableProducts);
+  const dispatch = useDispatch();
   const [categoryHolder, setCategoryHolder] = useState(
     useSelector(state => state.products.categories)[0],
   );
-
+  const [isLoading, setIsLoading] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [error, setError] = useState();
   const navigation = useNavigation();
 
-  const cagetoryItems = availableProducts => {
+  const loadCategory = useCallback(async () => {
+    setError(null);
+    setIsRefreshing(true);
+    try {
+      await dispatch(
+        productActions.fetchProductsWithCategoryID({
+          value: categoryHolder.categoryID,
+          page: 0,
+        }),
+      );
+    } catch (err) {
+      setError(err.msg);
+    }
+    setIsRefreshing(false);
+  }, [dispatch, setIsLoading, setError, categoryHolder]);
+  
+  useLayoutEffect(() => {
+    return navigation.addListener('focus', loadCategory);
+  }, [loadCategory]);
+  useEffect(() => {
+    setIsLoading(true);
+    loadCategory().then(() => {
+      setIsLoading(false);
+    });
+  }, [dispatch, loadCategory]);
+
+  const categoryItems = availableProducts => {
     const transformedShopItems = [];
     for (const key in availableProducts) {
       transformedShopItems.push({
@@ -37,12 +65,10 @@ function ShopPage(props) {
         liked: availableProducts[key].liked,
       });
     }
-    return transformedShopItems.filter(
-      item => item.categoryID === categoryHolder.categoryID,
-    );
+    return transformedShopItems;
   };
 
-  const onClickCategoryHandler = category => {
+  const onClickCategoryHandler = async category => {
     setCategoryHolder(category);
   };
 
@@ -59,11 +85,13 @@ function ShopPage(props) {
             type: 'NORMAL',
           })
         }
+        onRefresh={loadCategory}
+        refreshing={isRefreshing}
         style={styles.categoryHolder}
         title={categoryHolder.name}
         horizontal={false}
         numColum={2}
-        itemList={cagetoryItems(products).slice(0, 20)}
+        itemList={categoryItems(products)}
       />
     </View>
   );
