@@ -8,24 +8,49 @@ import {
     ScrollView,
     FlatList,
 } from 'react-native';
+import { convertWeekToVietnamese, convertMonthToVietnamese } from '../../../ulti/Ulti';
 import { TextInput, Button } from 'react-native-paper';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Header from '../../../components/UI/Header';
 import Colors from '../../../constants/Colors';
+import CalendarPicker from 'react-native-calendar-picker';
 import { useDispatch, useSelector } from 'react-redux';
 import * as authActions from '../../../store/actions/auth';
 import { Dropdown } from 'react-native-element-dropdown';
 import Card from '../../../components/UI/Card';
 
+
+
+
 function BannerScreen(props) {
+    let categoryList = [
+        { label: 'Nam', value: '1' },
+        { label: 'Nữ', value: '0' },
+    ];
     const navigation = useNavigation();
     const dispatch = useDispatch();
     const [name, setName] = useState('');
-    const [detail, setDetail] = useState('');
-    const [sale1, setSale1] = useState();
-    const [sale2, setSale2] = useState();
+    const [sale, setSale] = useState();
+    const [category, setCategory] = useState();
+    const [date, setDate] = useState('');
+    const [displayDay, setDisplayDay] = useState([]);
 
+    const onDateChange = async day => {
+        await setDate(day);
+    };
+
+    const SQLDate = date => {
+        return `${date[3]}-${convertMonthToVietnamese(date[1])}-${date[2]}`;
+    };
+    const showDate = date => {
+        return `${convertWeekToVietnamese(date[0])} ${date[2]
+            }/${convertMonthToVietnamese(date[1])}/${date[3]}`;
+    };
+
+    useLayoutEffect(() => {
+        setDisplayDay(date.toString().split(' '));
+    }, [date]);
     return (
         <ScrollView style={styles.screen}>
             <Header title="Banner"></Header>
@@ -41,52 +66,135 @@ function BannerScreen(props) {
                     onChangeText={txt => setName(txt)}
                 />
             </View>
+            {/* Anh chi tiet */}
+            <View style={styles.screenrow}>
+                <Text style={styles.title}> Ảnh chi tiết </Text>
+                <View style={{
+                    flex: 1,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'flex-end',
+                }}>
+                    <FlatList
+                        data={[]}
+                        horizontal={true}
+                        style={styles.imageList}
+                        renderItem={itemData => (
+                            <Card style={styles.imageContainer}>
+                                <Image
+                                    style={styles.image}
+                                    source={{ uri: itemData.item.imagePath }}></Image>
+                            </Card>
+                        )}
+                        ListFooterComponent={
+                            <TouchableOpacity
+                                activeOpacity={0.9}
+                                onPress={() => console.log('Adddddd')}>
+                                <Card style={styles.addImageContainer}>
+                                    <AntDesign
+                                        style={styles.addIcon}
+                                        name="pluscircle"
+                                        color={'#9098B1'}
+                                        size={40}
+                                    />
+                                </Card>
+                            </TouchableOpacity>
+                        }></FlatList>
+                </View>
 
+            </View>
+
+            <View style={styles.screenrow}>
+                <Text style={styles.title}>Giảm giá (%): </Text>
+                <View style={{
+                    flex: 1,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'flex-end',
+                }}>
+                    <TextInput
+                        style={{
+                            width: 100,
+                            backgroundColor: Colors.backgroundColor
+                        }}
+                        keyboardType="numeric"
+                        mode="outlined"
+                        value={sale}
+                        onChangeText={txt => setSale(txt)}
+                    />
+                </View>
+            </View>
+
+
+            {/* end date */}
             <View style={styles.inputContainer}>
-                <Text style={styles.title}>Mô tả Discount Discount: </Text>
+                <Text style={styles.title}>Ngày hết hạn: </Text>
                 <TextInput
-                    multiline
-                    numberOfLines={4}
-                    label="Nhập mô tả"
-                    placeholder={'Mời nhập mô tả Discount'}
-                    style={{ backgroundColor: Colors.backgroundColor }}                  
+                    disabled="false"
+                    style={{ backgroundColor: Colors.backgroundColor }}
+                    keyboardType="numeric"
                     mode="outlined"
-                    value={detail}
-                    onChangeText={txt => setDetail(txt)}
+                    value={date ? showDate(displayDay) : 'Vui lòng chọn ngày'}
+                    onChangeText={txt => setDate(txt)}
+                />
+            </View>
+            <View style={styles.calen}>
+                <CalendarPicker
+                    weekdays={[
+                        'Chủ nhật',
+                        'Thứ hai',
+                        'Thứ ba',
+                        'Thứ tư',
+                        'Thứ năm',
+                        'Thứ sáu',
+                        'Thứ bảy',
+                    ]}
+                    months={[
+                        'Tháng Một',
+                        'Tháng Hai',
+                        'Tháng Ba',
+                        'Tháng Tư',
+                        'Tháng Năm',
+                        'Tháng Sáu',
+                        'Tháng Bảy',
+                        'Tháng Tám',
+                        'Tháng Chín',
+                        'Tháng Mười',
+                        'Tháng Mười Một',
+                        'Tháng Mười Hai',
+                    ]}
+                    selectYearTitle={'Chọn năm'}
+                    selectMonthTitle={'Chọn tháng trong năm '}
+                    previousTitle="Trước"
+                    nextTitle="Sau"
+                    selectedDayColor={Colors.primaryColor}
+                    onDateChange={onDateChange}
                 />
             </View>
 
+            {/* Chon san pham */}
+            <View>
+                <View style={styles.inputContainer}>
+                    <Text style={styles.title}>Chọn loại sản phẩm: </Text>
+                    <Dropdown
+                        style={styles.dropdown}
+                        placeholderStyle={styles.placeholderStyle}
+                        selectedTextStyle={styles.selectedTextStyle}
+                        iconStyle={styles.iconStyle}
+                        data={categoryList}
+                        maxHeight={130}
+                        labelField="label"
+                        valueField="value"
+                        placeholder={'Loại sản phẩm'}
+                        value={category}
+                        onChange={item => {
+                            setValue(item.value);
+                        }}
+                    />
+                </View>
 
-
-            {/* Anh chi tiet */}
-            <View style={styles.inputContainer}>
-                <Text style={styles.title}> Ảnh chi tiết </Text>
-                <FlatList
-                    data={[]}
-                    horizontal={true}
-                    style={styles.imageList}
-                    renderItem={itemData => (
-                        <Card style={styles.imageContainer}>
-                            <Image
-                                style={styles.image}
-                                source={{ uri: itemData.item.imagePath }}></Image>
-                        </Card>
-                    )}
-                    ListFooterComponent={
-                        <TouchableOpacity
-                            activeOpacity={0.9}
-                            onPress={() => console.log('Adddddd')}>
-                            <Card style={styles.addImageContainer}>
-                                <AntDesign
-                                    style={styles.addIcon}
-                                    name="pluscircle"
-                                    color={'#9098B1'}
-                                    size={40}
-                                />
-                            </Card>
-                        </TouchableOpacity>
-                    }></FlatList>
             </View>
+
 
             <View style={styles.buttonContainer}>
                 <Button
@@ -128,6 +236,12 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         paddingHorizontal: 8,
         backgroundColor: Colors.backgroundColor,
+    },
+    screenrow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 5,
+        flex: 1,
     },
     expand: {
         fontFamily: 'open-sans-bold',

@@ -5824,7 +5824,7 @@
   "resolved" "https://registry.npmjs.org/lodash.throttle/-/lodash.throttle-4.1.1.tgz"
   "version" "4.1.1"
 
-"lodash@^4.0.0", "lodash@^4.17.10", "lodash@^4.17.13", "lodash@^4.17.14", "lodash@^4.17.15", "lodash@^4.17.21", "lodash@^4.7.0", "lodash@>=4.0":
+"lodash@*", "lodash@^4.0.0", "lodash@^4.17.10", "lodash@^4.17.13", "lodash@^4.17.14", "lodash@^4.17.15", "lodash@^4.17.21", "lodash@^4.7.0", "lodash@>=4.0":
   "integrity" "sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg=="
   "resolved" "https://registry.npmjs.org/lodash/-/lodash-4.17.21.tgz"
   "version" "4.17.21"
@@ -7238,10 +7238,12 @@
     "prop-types" "^15.5.8"
     "sprintf-js" "^1.1.1"
 
-"react-native-element-dropdown@^1.8.4":
-  "integrity" "sha512-TbUk3s88QEvk5vrswgMOqa9OWANGBbMwvvix9drR9wyJMBpX8TcADh98ULLOJM7LhP9Fw2KGdcon3u94w+cPXA=="
-  "resolved" "https://registry.npmjs.org/react-native-element-dropdown/-/react-native-element-dropdown-1.8.4.tgz"
-  "version" "1.8.4"
+"react-native-element-dropdown@^1.8.11":
+  "integrity" "sha512-7IdQr/XP/t8ErAk5XU2yE8evB5EbYgLhhLafbGMeJEMb3LjRYQDYkm/fr/IhWI0SHgnneEUzj49PhUK/XpcOAA=="
+  "resolved" "https://registry.npmjs.org/react-native-element-dropdown/-/react-native-element-dropdown-1.8.11.tgz"
+  "version" "1.8.11"
+  dependencies:
+    "lodash" "*"
 
 "react-native-gesture-handler@*", "react-native-gesture-handler@^2.3.2", "react-native-gesture-handler@>= 1.0.0":
   "integrity" "sha512-ibcYWHMiDbioUcaAMuw3/Taz3mYn0fJz0q2KnGX1hWpLNz/x/E5/BzKB+T3ycwAm1dQEgPgHWpaZ8eqO/EVFlw=="

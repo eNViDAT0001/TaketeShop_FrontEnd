@@ -1,4 +1,4 @@
-import React, {useEffect, useLayoutEffect, useState} from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import {
   Text,
   StyleSheet,
@@ -8,78 +8,142 @@ import {
   ScrollView,
   FlatList,
 } from 'react-native';
-import {TextInput, Button} from 'react-native-paper';
-import {useNavigation, useRoute} from '@react-navigation/native';
+import { convertWeekToVietnamese, convertMonthToVietnamese } from '../../../ulti/Ulti';
+import { TextInput, Button } from 'react-native-paper';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Header from '../../../components/UI/Header';
 import Colors from '../../../constants/Colors';
-import {useDispatch, useSelector} from 'react-redux';
+import CalendarPicker from 'react-native-calendar-picker';
+import { useDispatch, useSelector } from 'react-redux';
 import * as authActions from '../../../store/actions/auth';
-import {Dropdown} from 'react-native-element-dropdown';
+import { Dropdown } from 'react-native-element-dropdown';
 import Card from '../../../components/UI/Card';
 
 function DiscountScreen(props) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [name, setName] = useState('');
-  const [discountID, setDiscountID] = useState('');
-  const [sale1, setSale1] = useState();
-  const [sale2, setSale2] = useState();
+  const [categoryID, setCategoryID] = useState('');
+  const [sale, setSale] = useState('');
+  const [membership, setMembership] = useState('');
+  const [date, setDate] = useState('');
+  const [displayDay, setDisplayDay] = useState([]);
+
+  const onDateChange = async day => {
+    await setDate(day);
+  };
+
+  const SQLDate = date => {
+    return `${date[3]}-${convertMonthToVietnamese(date[1])}-${date[2]}`;
+  };
+  const showDate = date => {
+    return `${convertWeekToVietnamese(date[0])} ${date[2]
+      }/${convertMonthToVietnamese(date[1])}/${date[3]}`;
+  };
+
+  useLayoutEffect(() => {
+    setDisplayDay(date.toString().split(' '));
+  }, [date]);
 
   return (
     <ScrollView style={styles.screen}>
       <Header title="Discount"></Header>
 
       <View style={styles.inputContainer}>
-        <Text style={styles.title}>Tên Discount: </Text>
+        <Text style={styles.title}>Mã voucher: </Text>
         <TextInput
-          label="Nhập tên Discount"
-          placeholder={'Mời nhập tên Discount'}
-          style={{backgroundColor: Colors.backgroundColor}}
+          label="Nhập mã voucher"          
+          style={{ backgroundColor: Colors.backgroundColor }}
           mode="outlined"
           value={name}
           onChangeText={txt => setName(txt)}
         />
-     </View>     
+      </View>
 
-     <View style={styles.inputContainer}>
-        <Text style={styles.title}>Mã Discount: </Text>
+      <View style={styles.inputContainer}>
+        <Text style={styles.title}>Mã sản phẩm giảm giá: </Text>
         <TextInput
-          label="Nhập mã Discount"
-          placeholder={'Mời nhập mã Discount'}
-          style={{backgroundColor: Colors.backgroundColor}}
-          keyboardType = "numeric"
+          label="Mã sản phẩm giảm giá:"        
+          style={{ backgroundColor: Colors.backgroundColor }}
+          keyboardType="numeric"
           mode="outlined"
-          value={discountID}
-          onChangeText={txt => setDiscountID(txt)}
+          value={categoryID}
+          onChangeText={txt => setCategoryID(txt)}
         />
-     </View>     
+      </View>
 
-     <View style={styles.inputContainer}>
+      <View style={styles.inputContainer}>
+        <Text style={styles.title}>Membership: </Text>
+        <TextInput
+          label="Membership:"         
+          style={{ backgroundColor: Colors.backgroundColor }}
+          keyboardType="numeric"
+          mode="outlined"
+          value={membership}
+          onChangeText={txt => setMembership(txt)}
+        />
+      </View>
+
+      <View style={styles.inputContainer}>
         <Text style={styles.title}>Giảm giá (%): </Text>
         <TextInput
-          label="Nhập tỉ lệ giảm giá"          
-          style={{backgroundColor: Colors.backgroundColor}}
-          keyboardType = "numeric"
+          label="Nhập tỉ lệ giảm giá"
+          style={{ backgroundColor: Colors.backgroundColor }}
+          keyboardType="numeric"
           mode="outlined"
-          value={sale1}
-          onChangeText={txt => setSale1(txt)}
+          value={sale}
+          onChangeText={txt => setSale(txt)}
         />
-     </View>   
+      </View>
 
-     <View style={styles.inputContainer}>
-        <Text style={styles.title}>Giảm giá (đ): </Text>
+      {/* end date */}
+      <View style={styles.inputContainer}>
+        <Text style={styles.title}>Ngày hết hạn: </Text>
         <TextInput
-          label="Nhập số tiền giảm giá"         
-          style={{backgroundColor: Colors.backgroundColor}}
+          disabled = "false"
+          style={{ backgroundColor: Colors.backgroundColor }}
+          keyboardType="numeric"
           mode="outlined"
-          value={sale2}
-          onChangeText={txt => setSale2(txt)}
+          value= {date ? showDate(displayDay) : 'Vui lòng chọn ngày'}
+          onChangeText={txt => setDate(txt)}
+        />      
+      </View>
+      <View style={styles.calen}>
+        <CalendarPicker
+          weekdays={[
+            'Chủ nhật',
+            'Thứ hai',
+            'Thứ ba',
+            'Thứ tư',
+            'Thứ năm',
+            'Thứ sáu',
+            'Thứ bảy',
+          ]}
+          months={[
+            'Tháng Một',
+            'Tháng Hai',
+            'Tháng Ba',
+            'Tháng Tư',
+            'Tháng Năm',
+            'Tháng Sáu',
+            'Tháng Bảy',
+            'Tháng Tám',
+            'Tháng Chín',
+            'Tháng Mười',
+            'Tháng Mười Một',
+            'Tháng Mười Hai',
+          ]}
+          selectYearTitle={'Chọn năm'}
+          selectMonthTitle={'Chọn tháng trong năm '}
+          previousTitle="Trước"
+          nextTitle="Sau"
+          selectedDayColor={Colors.primaryColor}
+          onDateChange={onDateChange}
         />
-     </View>   
-    
-  
-    
+      </View>
+
+
 
       <View style={styles.buttonContainer}>
         <Button
@@ -87,7 +151,7 @@ function DiscountScreen(props) {
           contentStyle={styles.buttonText}
           style={styles.button}
           color="#40bfff"
-          labelStyle={{fontSize: 20}}
+          labelStyle={{ fontSize: 20 }}
           onPress={null}>
           Xác nhận
         </Button>
@@ -101,6 +165,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#ffff',
   },
+
   inputContainer: {
     padding: 10,
     flex: 14,
@@ -187,13 +252,29 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   buttonContainer: {
-    margin:5,
+    margin: 5,
     marginHorizontal: 20,
     borderRadius: 40,
     color: '#4f5160',
   },
   button: {
     height: 50,
+  },
+  Daytextcontainer: {
+    backgroundColor: Colors.backgroundColor,
+    borderColor: 'black',
+    borderRadius: 5,
+    borderWidth: 1,
+    height: 50,
+    justifyContent: 'center',
+  },
+  Daytext: {
+    left: 5,
+    fontSize: 20,
+    color: '#4f5160',
+  },
+  calen: {
+    flex: 14,
   },
   buttonText: {
     height: '100%',
