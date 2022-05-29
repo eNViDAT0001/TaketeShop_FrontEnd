@@ -1,9 +1,10 @@
-import {PRODUCT_ITEMS_DUMMY_DATA} from '../../dummy_database/dummy-data';
+import { PRODUCT_ITEMS_DUMMY_DATA } from '../../dummy_database/dummy-data';
 import ProductModel from '../../models/product/ProductModel';
 import {
   CREATE_PRODUCT,
   SET_CATEGORIES,
   SET_PRODUCTS,
+  SET_PRODUCT_BY_CATEGORYID,
 } from '../actions/products';
 
 const initialState = {
@@ -12,6 +13,7 @@ const initialState = {
   categories: [],
   units: [],
   // userProducts: [],
+  productsByCategoryID: [],
   recommenderProducts: [],
 };
 export default (state = initialState, action) => {
@@ -27,6 +29,11 @@ export default (state = initialState, action) => {
         ...state,
         categories: action.categories,
         // userProducts: action.products.filter(prod => prod.ownerId === 5),
+      };
+    case SET_PRODUCT_BY_CATEGORYID:     
+      return {
+        ...state,      
+        productsByCategoryID: action.products,        
       };
     case CREATE_PRODUCT:
       const newProduct = new ProductModel(

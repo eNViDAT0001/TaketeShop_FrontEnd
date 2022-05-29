@@ -124,7 +124,7 @@ function AdminMainScreen() {
           <TouchableOpacity style={styles.itemContainer}
            onPress={() =>
             {            
-              dispatch(bannerActions.fetchBanner());
+              dispatch(bannerActions.fetchBanner());             
               navigation.navigate("ListBanner");
             } }>
             <FontAwesome5

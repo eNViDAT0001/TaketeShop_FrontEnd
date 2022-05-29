@@ -1,11 +1,8 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import {
-    Text,
-    StyleSheet,
-    View,
-    Image,
-    TouchableOpacity,
-    ScrollView,
+    Text, StyleSheet,
+    View, Image,
+    TouchableOpacity, ScrollView,
     FlatList,
 } from 'react-native';
 import { convertWeekToVietnamese, convertMonthToVietnamese } from '../../../ulti/Ulti';
@@ -19,20 +16,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as authActions from '../../../store/actions/auth';
 import { Dropdown } from 'react-native-element-dropdown';
 import Card from '../../../components/UI/Card';
+import * as productActions from '../../../store/actions/products';
+import VirtualizedScrollView from './FlatList';
 
-
-
-
-function BannerScreen(props) {   
+function BannerScreen(props) {
     const navigation = useNavigation();
     const dispatch = useDispatch();
-    const categoryList = useSelector(state => state.category.categorys);;
+    const categoryList = useSelector(state => state.products.categories);
     const [name, setName] = useState('');
+    const [images, setImages] = useState([]);
     const [sale, setSale] = useState();
-    const [category, setCategory] = useState();
+    let LIST_PRODUCTS = useSelector(state => state.products.productsByCategoryID);
+    const [products, setProducts] = useState();
     const [date, setDate] = useState('');
     const [displayDay, setDisplayDay] = useState([]);
-
+    const [count, setCount] = useState(0);
     const onDateChange = async day => {
         await setDate(day);
     };
@@ -48,8 +46,50 @@ function BannerScreen(props) {
     useLayoutEffect(() => {
         setDisplayDay(date.toString().split(' '));
     }, [date]);
+
+    useLayoutEffect(() => {
+        dispatch(productActions.fetchProductWithCategoryID(products));
+    }, [products]);
+
+    // productsByCategoryID
+    const Product = (item) => {       
+        return (
+            <View style={styles.container}>
+                <View style={styles.screenrow}>
+                    <TouchableOpacity
+                        onPress={() => {                           
+                            setCount(count+1);
+                            console.log(count);
+                        }}
+                        style={styles.screenrow}>
+
+                        <Text style={styles.text2}>
+                            {item.name}</Text>
+
+                        <View style={{
+                            flex: 1,
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            justifyContent: 'flex-end',
+                        }}>                             
+                            <Text style={styles.text2}>
+                                {item.productID} </Text>
+                           
+                        </View>
+                    </TouchableOpacity>
+                </View>
+            </View>
+
+        )
+    };
+    const renderProduct = (item) => {
+        return (
+            Product(item)
+        )
+    };
     return (
-        <ScrollView style={styles.screen}>
+        <ScrollView style={styles.screen}
+            nestedScrollEnabled={true} >
             <Header title="Banner"></Header>
 
             <View style={styles.inputContainer}>
@@ -73,7 +113,7 @@ function BannerScreen(props) {
                     justifyContent: 'flex-end',
                 }}>
                     <FlatList
-                        data={[]}
+                        data={images}
                         horizontal={true}
                         style={styles.imageList}
                         renderItem={itemData => (
@@ -138,27 +178,11 @@ function BannerScreen(props) {
             <View style={styles.calen}>
                 <CalendarPicker
                     weekdays={[
-                        'Chủ nhật',
-                        'Thứ hai',
-                        'Thứ ba',
-                        'Thứ tư',
-                        'Thứ năm',
-                        'Thứ sáu',
-                        'Thứ bảy',
+                        'Chủ nhật', 'Thứ hai', 'Thứ ba', 'Thứ tư', 'Thứ năm', 'Thứ sáu', 'Thứ bảy',
                     ]}
                     months={[
-                        'Tháng Một',
-                        'Tháng Hai',
-                        'Tháng Ba',
-                        'Tháng Tư',
-                        'Tháng Năm',
-                        'Tháng Sáu',
-                        'Tháng Bảy',
-                        'Tháng Tám',
-                        'Tháng Chín',
-                        'Tháng Mười',
-                        'Tháng Mười Một',
-                        'Tháng Mười Hai',
+                        'Tháng Một', 'Tháng Hai', 'Tháng Ba', 'Tháng Tư', 'Tháng Năm', 'Tháng Sáu',
+                        'Tháng Bảy', 'Tháng Tám', 'Tháng Chín', 'Tháng Mười', 'Tháng Mười Một', 'Tháng Mười Hai',
                     ]}
                     selectYearTitle={'Chọn năm'}
                     selectMonthTitle={'Chọn tháng trong năm '}
@@ -169,7 +193,7 @@ function BannerScreen(props) {
                 />
             </View>
 
-            {/* Chon san pham */}
+            {/* Chon loai san pham */}
             <View>
                 <View style={styles.inputContainer}>
                     <Text style={styles.title}>Chọn loại sản phẩm: </Text>
@@ -177,22 +201,32 @@ function BannerScreen(props) {
                         style={styles.dropdown}
                         placeholderStyle={styles.placeholderStyle}
                         selectedTextStyle={styles.selectedTextStyle}
-                        iconStyle={styles.iconStyle}
                         data={categoryList}
                         maxHeight={130}
-                        labelField="label"
-                        valueField="value"
+                        labelField="name"
+                        valueField="categoryID"
                         placeholder={'Loại sản phẩm'}
-                        value={category}
                         onChange={item => {
-                            setValue(item.value);
+                            console.log(item.categoryID);
+                            setProducts(item.categoryID);
                         }}
                     />
                 </View>
+                {/* Chon san pham */}
+                <View>
+                    <FlatList
+                        data={LIST_PRODUCTS}
+                        extraData={LIST_PRODUCTS}
+                        renderItem={itemData => (renderProduct(itemData.item))}
+                        keyExtractor={(item, index) => item.id}
+                        contentContainerStyle={{ flexGrow: 1, backgroundColor: '#D3D3D388', top: 5, marginHorizontal: 8 }}
+                    />
+                </View>
+
 
             </View>
 
-
+            {/* Xac nhan*/}
             <View style={styles.buttonContainer}>
                 <Button
                     mode="contained"
@@ -204,9 +238,11 @@ function BannerScreen(props) {
                     Xác nhận
                 </Button>
             </View>
-        </ScrollView>
+        </ScrollView >
     );
 }
+
+
 
 const styles = StyleSheet.create({
     screen: {
@@ -244,6 +280,12 @@ const styles = StyleSheet.create({
         fontFamily: 'open-sans-bold',
         fontSize: 18,
         color: '#FF9C40',
+    },
+    container: {
+        height: 50,
+        margin: 10,
+        flex: 1,
+        backgroundColor: '#ffff',
     },
     itemList: {
         flex: 4,
@@ -315,6 +357,22 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         height: '100%',
+    },
+    text1: {
+        left: 7,
+        fontSize: 20,
+        fontWeight: '900',
+        fontFamily: 'open-sans-bold',
+        textShadowRadius: 1,
+        alignItems: 'flex-start',
+    },
+    text2: {
+        left: 5,
+        fontSize: 15,
+        fontWeight: '900',
+        fontFamily: 'open-sans-bold',
+        textShadowRadius: 1,
+        alignItems: 'flex-start',
     },
 });
 export default BannerScreen;

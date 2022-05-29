@@ -1,4 +1,4 @@
-import BannerModel from "../../models/banner/BannerModel";
+import BannerModel  from "../../models/banner/BannerModel";
 
 export const ADD_BANNER = 'ADD_BANNER';
 export const SET_BANNER = 'SET_BANNER';

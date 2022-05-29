@@ -9,7 +9,6 @@ import AppNavigator from './src/navigation/AppNavigator.js';
 import productReducer from './src/store/reducers/products';
 import authReducer from './src/store/reducers/auth';
 import bannerReducer from './src/store/reducers/banner';
-import categoryReducer from './src/store/reducers/category';
 import chanelReducer from './src/store/reducers/chanel';
 import commentReducer from './src/store/reducers/comment';
 import StaffReducer from './src/store/reducers/ListStaff';
@@ -50,7 +49,6 @@ const rootReducer = combineReducers({
   chanel : chanelReducer,
   comment : commentReducer,
   staff : StaffReducer,
-  category: categoryReducer,
    //messager : messagerReducer,
 });
 

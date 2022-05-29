@@ -6,6 +6,7 @@ export const CREATE_PRODUCT = 'CREATE_PRODUCT';
 export const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
 export const SET_PRODUCTS = 'SET_PRODUCTS';
 export const SET_CATEGORIES = 'SET_CATEGORIES';
+export const SET_PRODUCT_BY_CATEGORYID = 'SET_PRODUCT_BY_CATEGORYID';
 
 export const fetchProducts = () => {
   return async dispatch => {
@@ -58,7 +59,7 @@ export const fetchProducts = () => {
           ),
         );
       }
-      dispatch({type: SET_PRODUCTS, products: loadedProducts});
+      dispatch({ type: SET_PRODUCTS, products: loadedProducts });
     } catch (err) {
       // send to custom analytics server
       console.log(err);
@@ -92,7 +93,68 @@ export const fetchCategory = () => {
         );
       }
 
-      dispatch({type: SET_CATEGORIES, categories: loadedProducts});
+      dispatch({ type: SET_CATEGORIES, categories: loadedProducts });
+    } catch (err) {
+      // send to custom analytics server
+      console.log(err);
+      throw err;
+    }
+  };
+};
+
+export const fetchProductWithCategoryID = (categoryID) => {
+  return async dispatch => {
+    // any async code you want!
+    try {
+      const response = await fetch(`http://localhost:5000/product/productList/${categoryID}`);
+
+      if (response.error) {
+        throw new Error(response.msg);
+      }
+
+      const resData = await response.json();
+      const loadedProducts = [];
+      //console.log(resData);
+      for (const key in resData) {
+        const images = [];
+        if (!resData[key].images) {
+          images.push(
+            new ImageModel(
+              -1,
+              'https://vanhoadoanhnghiepvn.vn/wp-content/uploads/2020/08/112815953-stock-vector-no-image-available-icon-flat-vector.jpg',
+            ),
+          );
+        } else {
+          const arrImage = resData[key].images.split(',');
+          for (const image in arrImage) {
+            const tempImage = arrImage[image].split(' ');
+            images.push(new ImageModel(tempImage[0], tempImage[1]));
+          }
+        }
+
+        loadedProducts.push(
+          new ProductModel(
+            resData[key].id,
+            resData[key].category_id,
+            resData[key].unit_id,
+            resData[key].user_id,
+            resData[key].name,
+            resData[key].category_name,
+            resData[key].descriptions,
+            resData[key].price,
+            resData[key].quantity,
+            resData[key].unit,
+            resData[key].discount,
+            resData[key].false,
+            resData[key].sold,
+            images,
+            resData[key].create_time,
+            resData[key].update_time,
+          ),
+        );
+      }     
+      console.log(loadedProducts);
+      dispatch({ type: SET_PRODUCT_BY_CATEGORYID, products: loadedProducts });
     } catch (err) {
       // send to custom analytics server
       console.log(err);

@@ -41,7 +41,7 @@ function ChatScreen(props) {
     }
     return (
       <View style={[styles.pdlt10, styles.mdtp10, styles.mdbt10, styles.pdtp10, state, styles.jStart]}>
-        <View View style={[styles.Chat, (item.userID == userID) ? styles.myChat : styles.frnChat]} >
+        <View style={[styles.Chat, (item.userID == userID) ? styles.myChat : styles.frnChat]} >
           <Text style={{ lineHeight: 25 }}>{item.text}</Text>
         </View>
 

@@ -26,7 +26,8 @@ function ChangePassword(props) {
   }
 
 
-  const ChangeButton = ()=> {
+  const ChangeButton = () => {
+
     if (!oldpass) {
       alert('Vui lòng nhập mật khẩu');
     } else if (!newpass) {
@@ -37,18 +38,11 @@ function ChangePassword(props) {
       alert('Xác nhận mật khẩu không chính xác, vui lòng nhập lại');
     } else if (oldpass == newpass) {
       alert('Mật khẩu mới không được trùng với mật khẩu cũ, vui lòng nhập lại');
-    } else {
-      // if (role === "ADMIN"){
-      //   dispatch(authActions.changePasswordADMIN(userID, token, oldpass, newpass));
-      // }else  if (role === "STAFF"){
-      //   dispatch(authActions.changePasswordSTAFF(userID, token, oldpass, newpass));
-      // } else {
-      //   dispatch(authActions.changePassword(userID, token, oldpass, newpass));
-      // }     
-      console.error("pas");
+    } else {        
       dispatch(authActions.changePassword(userID, token, oldpass, newpass));     
       navigation.navigate('Profile');
     } 
+  
   };
 
   return (
@@ -113,11 +107,11 @@ function ChangePassword(props) {
           color="#4F5160"
           labelStyle={{ fontSize: 20 }}
           onPress={() => {
-            if (admin) {            
+            if (admin) {                         
               dispatch(ListStaff.changePassword(userID, token, oldpass));
               navigation.navigate('Profile');
-            } else {
-              ChangeButton;              
+            } else {            
+              ChangeButton();              
             }                     
           }}>
 

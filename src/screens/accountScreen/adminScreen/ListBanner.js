@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   Image,
   TouchableOpacity,
+  ScrollView,
   FlatList,
 } from 'react-native';
 import Form1 from '../../accountScreen/Form';
@@ -16,12 +17,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as authActions from '../../../store/actions/auth'
 import * as chanelActions from '../../../store/actions/chanelActions';
-import { BANNER_SCREEN,DISCOUNT_SCREEN } from '../../../constants/NavigatorIndex';
-import * as categoryActions from '../../../store/actions/category';
+import { BANNER_SCREEN, DISCOUNT_SCREEN } from '../../../constants/NavigatorIndex';
+import * as productActions from '../../../store/actions/products';
 import { Form } from 'formik';
 
 function ListBanner() {
-  var ALL_LIST_BANNER = useSelector(state => state.banner.banners);
+  let ALL_LIST_BANNER = useSelector(state => state.banner.banners);
+  //let ALL_LIST_BANNER = useSelector(state => state.products.productsByCategoryID);
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const role = useSelector(state => state.auth.role);
@@ -38,13 +40,11 @@ function ListBanner() {
 
             }}>
 
-            <View style={{width: 290}}>
+            <View style={{ width: 290 }}>
               <Text style={styles.text1}>
-                aaaa</Text>
-              <View style={styles.text2}>
-                <Text> bbb</Text>
-
-              </View>
+                {item.title}</Text>
+              <Text style={styles.text2}>
+                {item.id}</Text>
             </View>
 
           </TouchableOpacity>
@@ -65,10 +65,7 @@ function ListBanner() {
                 size={35}
               />
             </TouchableOpacity>
-
           </View>
-
-
         </View>
       </View >
 
@@ -79,7 +76,6 @@ function ListBanner() {
       Banner(item)
     )
   };
-
   return (
 
     <SafeAreaView style={styles.screen}>
@@ -90,7 +86,7 @@ function ListBanner() {
             color={'white'}
             size={25}
             onPress={() => {
-              dispatch(categoryActions.fetchCategory());
+              dispatch(productActions.fetchCategory());
               navigation.navigate(BANNER_SCREEN)
             }}></IconButton>
         }></Header>
@@ -99,7 +95,7 @@ function ListBanner() {
         data={ALL_LIST_BANNER}
         extraData={ALL_LIST_BANNER}
         renderItem={itemData => (renderBanner(itemData.item))}
-        keyExtractor={(item, index) => item._id}
+        keyExtractor={(item, index) => item.id}
         contentContainerStyle={{ flexGrow: 1, backgroundColor: '#D3D3D388', top: 5, marginHorizontal: 8 }}
 
       />
