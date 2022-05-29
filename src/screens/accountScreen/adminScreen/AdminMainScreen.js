@@ -123,7 +123,7 @@ function AdminMainScreen() {
         <View style={styles.statusContainer}>
           <TouchableOpacity style={styles.itemContainer}
            onPress={() =>
-            {
+            {            
               dispatch(bannerActions.fetchBanner());
               navigation.navigate("ListBanner");
             } }>

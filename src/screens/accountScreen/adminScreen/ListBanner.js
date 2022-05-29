@@ -17,7 +17,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import * as authActions from '../../../store/actions/auth'
 import * as chanelActions from '../../../store/actions/chanelActions';
 import { BANNER_SCREEN,DISCOUNT_SCREEN } from '../../../constants/NavigatorIndex';
-
+import * as categoryActions from '../../../store/actions/category';
 import { Form } from 'formik';
 
 function ListBanner() {
@@ -89,7 +89,10 @@ function ListBanner() {
             icon={'plus'}
             color={'white'}
             size={25}
-            onPress={() => navigation.navigate(BANNER_SCREEN)}></IconButton>
+            onPress={() => {
+              dispatch(categoryActions.fetchCategory());
+              navigation.navigate(BANNER_SCREEN)
+            }}></IconButton>
         }></Header>
 
       <FlatList

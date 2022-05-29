@@ -263,7 +263,7 @@ export const changePassword = (userId, token, oldpass, newpass) => {
         headers: {
           'Content-Type': 'application/json',
           authorization: 'Bearer ' + token,
-        },
+        },       
         body: JSON.stringify({
           oldPass: oldpass,
           newPass: newpass,         
@@ -278,7 +278,6 @@ export const changePassword = (userId, token, oldpass, newpass) => {
     }
   };
 };
-
 
 
 const clearLogoutTimer = () => {

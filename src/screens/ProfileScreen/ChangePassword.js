@@ -16,6 +16,7 @@ function ChangePassword(props) {
   const admin = useSelector(state => state.staff.admin);
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const role = useSelector(state => state.auth.role);
   const token = useSelector(state => state.auth.token);
   let userID;
   if (admin) {
@@ -25,7 +26,7 @@ function ChangePassword(props) {
   }
 
 
-  const ChangeButton = async () => {
+  const ChangeButton = ()=> {
     if (!oldpass) {
       alert('Vui lòng nhập mật khẩu');
     } else if (!newpass) {
@@ -36,12 +37,18 @@ function ChangePassword(props) {
       alert('Xác nhận mật khẩu không chính xác, vui lòng nhập lại');
     } else if (oldpass == newpass) {
       alert('Mật khẩu mới không được trùng với mật khẩu cũ, vui lòng nhập lại');
-    } else try {
-      dispatch(authActions.changePassword(userID, token, oldpass, newpass));
+    } else {
+      // if (role === "ADMIN"){
+      //   dispatch(authActions.changePasswordADMIN(userID, token, oldpass, newpass));
+      // }else  if (role === "STAFF"){
+      //   dispatch(authActions.changePasswordSTAFF(userID, token, oldpass, newpass));
+      // } else {
+      //   dispatch(authActions.changePassword(userID, token, oldpass, newpass));
+      // }     
+      console.error("pas");
+      dispatch(authActions.changePassword(userID, token, oldpass, newpass));     
       navigation.navigate('Profile');
-    } catch (error) {
-      console.error(error);
-    }
+    } 
   };
 
   return (
@@ -108,10 +115,10 @@ function ChangePassword(props) {
           onPress={() => {
             if (admin) {            
               dispatch(ListStaff.changePassword(userID, token, oldpass));
+              navigation.navigate('Profile');
             } else {
-              ChangeButton;
-            }
-            navigation.navigate('Profile');
+              ChangeButton;              
+            }                     
           }}>
 
           Xác nhận

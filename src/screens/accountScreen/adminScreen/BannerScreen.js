@@ -23,13 +23,10 @@ import Card from '../../../components/UI/Card';
 
 
 
-function BannerScreen(props) {
-    let categoryList = [
-        { label: 'Nam', value: '1' },
-        { label: 'Nữ', value: '0' },
-    ];
+function BannerScreen(props) {   
     const navigation = useNavigation();
     const dispatch = useDispatch();
+    const categoryList = useSelector(state => state.category.categorys);;
     const [name, setName] = useState('');
     const [sale, setSale] = useState();
     const [category, setCategory] = useState();
