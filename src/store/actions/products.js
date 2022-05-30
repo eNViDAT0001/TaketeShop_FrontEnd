@@ -383,7 +383,7 @@ export const fetchCategory = () => {
         );
       }
 
-      dispatch({ type: SET_CATEGORIES, categories: loadedProducts });
+      dispatch({type: SET_CATEGORIES, categories: loadedProducts});
     } catch (err) {
       // send to custom analytics server
       console.log(err);
@@ -392,11 +392,13 @@ export const fetchCategory = () => {
   };
 };
 
-export const fetchProductWithCategoryIDByKhoaaaaaaaaa = (categoryID) => {
+export const fetchProductWithCategoryIDByKhoaaaaaaaaa = categoryID => {
   return async dispatch => {
     // any async code you want!
     try {
-      const response = await fetch(`http://localhost:5000/product/productList/${categoryID}`);
+      const response = await fetch(
+        `http://localhost:5000/product/productList/${categoryID}`,
+      );
 
       if (response.error) {
         throw new Error(response.msg);
@@ -442,9 +444,9 @@ export const fetchProductWithCategoryIDByKhoaaaaaaaaa = (categoryID) => {
             resData[key].update_time,
           ),
         );
-      }     
+      }
       console.log(loadedProducts);
-      dispatch({ type: SET_PRODUCT_BY_CATEGORYID, products: loadedProducts });
+      dispatch({type: SET_PRODUCT_BY_CATEGORYID, products: loadedProducts});
     } catch (err) {
       console.log(err);
       throw err;
@@ -522,27 +524,35 @@ export const fetchProductDetail = id => {
   return async dispatch => {
     try {
       const response = await fetch(`http://localhost:5000/product/${id}`);
+      console.log('Product detail at :',`http://localhost:5000/product/${id}`)
       if (response.error) {
         throw new Error(response.msg);
       }
       const resData = await response.json();
+      //Convert Res.images into array
+      const images = [];
+      const arrImage = resData[0].images.split(',');
+      for (const image in arrImage) {
+        const tempImage = arrImage[image].split(' ');
+        images.push(new ImageModel(tempImage[0], tempImage[1]));
+      }
       const product = new ProductModel({
-        productID: resData[key].id,
-        categoryID: resData[key].category_id,
-        unitID: resData[key].unit_id,
-        userID: resData[key].user_id,
-        name: resData[key].name,
-        category: resData[key].category_name,
-        description: resData[key].descriptions,
-        price: resData[key].price,
-        quantity: resData[key].quantity,
-        unit: resData[key].unit,
-        discount: resData[key].discount,
-        liked: resData[key].liked,
-        sold: resData[key].sold,
+        productID: resData[0].id,
+        categoryID: resData[0].category_id,
+        unitID: resData[0].unit_id,
+        userID: resData[0].user_id,
+        name: resData[0].name,
+        category: resData[0].category_name,
+        description: resData[0].descriptions,
+        price: resData[0].price,
+        quantity: resData[0].quantity,
+        unit: resData[0].unit,
+        discount: resData[0].discount,
+        liked: resData[0].liked,
+        sold: resData[0].sold,
         image: images,
-        createTime: resData[key].create_time,
-        updateTime: resData[key].update_time,
+        createTime: resData[0].create_time,
+        updateTime: resData[0].update_time,
       });
       dispatch({type: SET_CURRENT_PRODUCTS, product: product});
     } catch (error) {

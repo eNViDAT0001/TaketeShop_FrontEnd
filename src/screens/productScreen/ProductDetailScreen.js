@@ -1,5 +1,5 @@
 import {useNavigation, useRoute} from '@react-navigation/native';
-import React, {useLayoutEffect, useState, useCallback} from 'react';
+import React, {useLayoutEffect, useState, useCallback, useEffect} from 'react';
 import {
   StyleSheet,
   View,
@@ -42,7 +42,7 @@ function ProductDetailScreen(props) {
     } catch (err) {
       setError(err.msg);
     }
-  }, [dispatch, setError, productID]);
+  }, [dispatch, setError]);
   
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -74,15 +74,15 @@ function ProductDetailScreen(props) {
       ),
     });
 
-    return navigation.addListener('focus', loadProducts);
-  },[dispatch, loadProduct]);
+    return navigation.addListener('focus', loadProduct);
+  },[dispatch, loadProduct, productID]);
   useEffect(() => {
     if (error) {
       Alert.alert('An Error Occurred!', error + ', please try again!', [
         {text: 'Okay'},
       ]);
     }
-  }, [third])
+  }, [error])
   
   const cloneList = availableProducts => {
     const transformedShopItems = [];
@@ -113,7 +113,7 @@ function ProductDetailScreen(props) {
         <Text>Có lỗi, vui lòng thử lại</Text>
         <Button
           title="Thử lại"
-          onPress={loadProducts}
+          onPress={loadProduct}
           color={Colors.primaryColor}
         />
       </View>

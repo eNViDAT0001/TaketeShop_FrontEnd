@@ -1,4 +1,4 @@
-import { PRODUCT_ITEMS_DUMMY_DATA } from '../../dummy_database/dummy-data';
+import { DEFAULT_PRODUCT, PRODUCT_ITEMS_DUMMY_DATA } from '../../dummy_database/dummy-data';
 import ProductModel from '../../models/product/ProductModel';
 import {
   CREATE_PRODUCT,
@@ -18,7 +18,7 @@ import {
 } from '../actions/products';
 
 const initialState = {
-  currentProduct: {},
+  currentProduct: DEFAULT_PRODUCT,
   availableProducts: [],
   discountProducts: [],
   wishlistProducts: [],
