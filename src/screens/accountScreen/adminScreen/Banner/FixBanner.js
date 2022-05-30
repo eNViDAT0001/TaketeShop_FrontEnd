@@ -5,32 +5,30 @@ import {
     TouchableOpacity, ScrollView,
     FlatList,
 } from 'react-native';
-import { convertWeekToVietnamese, convertMonthToVietnamese } from '../../../ulti/Ulti';
+import { convertWeekToVietnamese, convertMonthToVietnamese } from '../../../../ulti/Ulti';
 import { TextInput, Button } from 'react-native-paper';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import Header from '../../../components/UI/Header';
-import Colors from '../../../constants/Colors';
+import Header from '../../../../components/UI/Header';
+import Colors from '../../../../components/UI/Header';
 import CalendarPicker from 'react-native-calendar-picker';
 import { useDispatch, useSelector } from 'react-redux';
-import * as authActions from '../../../store/actions/auth';
+import * as authActions from '../../../../store/actions/auth';
 import { Dropdown } from 'react-native-element-dropdown';
-import Card from '../../../components/UI/Card';
-import * as productActions from '../../../store/actions/products';
-import VirtualizedScrollView from './FlatList';
+import Card from '../../../../components/UI/Card';
+import * as productActions from '../../../../store/actions/products';
 
-function BannerScreen(props) {
+function FixBanner(props) {
     const navigation = useNavigation();
     const dispatch = useDispatch();
     const categoryList = useSelector(state => state.products.categories);
-    const [name, setName] = useState('');
+    const [title, setTitle] = useSelector(state => state.banner.currentBanner.title);
     const [images, setImages] = useState([]);
     const [sale, setSale] = useState();
-    let LIST_PRODUCTS = useSelector(state => state.products.productsByCategoryID);
+    let LIST_PRODUCTS = useSelector(state => state.products.availableProducts);
     const [products, setProducts] = useState();
     const [date, setDate] = useState('');
-    const [displayDay, setDisplayDay] = useState([]);
-    const [count, setCount] = useState(0);
+    const [displayDay, setDisplayDay] = useState([]);    
     const onDateChange = async day => {
         await setDate(day);
     };
@@ -48,7 +46,7 @@ function BannerScreen(props) {
     }, [date]);
 
     useLayoutEffect(() => {
-        dispatch(productActions.fetchProductWithCategoryID(products));
+        dispatch(productActions.fetchProductsWithCategoryID({value: products}));
     }, [products]);
 
     // productsByCategoryID
@@ -58,8 +56,7 @@ function BannerScreen(props) {
                 <View style={styles.screenrow}>
                     <TouchableOpacity
                         onPress={() => {                           
-                            setCount(count+1);
-                            console.log(count);
+                          
                         }}
                         style={styles.screenrow}>
 
@@ -375,4 +372,4 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
     },
 });
-export default BannerScreen;
+export default FixBanner;
