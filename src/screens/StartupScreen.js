@@ -41,6 +41,7 @@ function StartupScreen(props) {
         dispatch(authActions.authenticate(userId, token, expirationTime));
       } catch (err) {
         console.log(err);
+        navigation.navigate(LOGIN_NAVIGATOR);
       }
     };
 

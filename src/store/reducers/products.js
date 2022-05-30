@@ -18,7 +18,7 @@ import {
 } from '../actions/products';
 
 const initialState = {
-  currentProduct: null,
+  currentProduct: {},
   availableProducts: [],
   discountProducts: [],
   wishlistProducts: [],

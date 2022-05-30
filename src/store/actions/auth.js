@@ -31,9 +31,11 @@ export const authenticate = (userId, token, expiryTime) => {
 
     const resData = await response.json();
     const error = resData.error;
+    let message = 'Something went wrong!';
 
     if (error) {
-      console.log(resData.msg)
+      message = resData.msg;
+      throw new Error(message);
     }
     
     dispatch({

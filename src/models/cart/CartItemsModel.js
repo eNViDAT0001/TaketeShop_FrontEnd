@@ -1,4 +1,5 @@
 class CartItemsModel{
+    isSelected = false;
     constructor(id, cartID, productID, name, quantity , price, discount, image, createTime, updateTime){
         this.id = id;
         this.cartID = cartID;

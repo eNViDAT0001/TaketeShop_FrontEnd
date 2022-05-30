@@ -406,13 +406,6 @@ export const fetchProductsWithCategoryID = ({value, filter, sort, page}) => {
           sortConvert +
           pageConvert,
       );
-      console.log(
-        'http://localhost:5000/product/productlist?' +
-          valueConvert +
-          filterConvert +
-          sortConvert +
-          pageConvert,
-      );
       if (response.error) {
         throw new Error(response.msg);
       }
@@ -436,7 +429,6 @@ export const fetchProductsWithCategoryID = ({value, filter, sort, page}) => {
             images.push(new ImageModel(tempImage[0], tempImage[1]));
           }
         }
-        console.log(resData[key].name);
         loadedProducts.push(
           new ProductModel({
             productID: resData[key].id,
@@ -466,7 +458,6 @@ export const fetchProductsWithCategoryID = ({value, filter, sort, page}) => {
     }
   };
 };
-
 export const fetchProductDetail = id => {
   return async dispatch => {
     try {

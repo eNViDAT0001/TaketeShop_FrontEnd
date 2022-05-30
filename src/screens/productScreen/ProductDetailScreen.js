@@ -7,6 +7,7 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
+  Alert
 } from 'react-native';
 import {IconButton} from 'react-native-paper';
 import StarRating from 'react-native-star-rating';
@@ -34,14 +35,14 @@ function ProductDetailScreen(props) {
     navigation.navigate(COMMENT_SCREEN, {id: productID});
   };
 
-  const loadProducts = useCallback(async () => {
+  const loadProduct = useCallback(async () => {
     try {
       await dispatch(productActions.fetchProductDetail(productID))
       await dispatch(commentActions.fetchCommentWithProductID(productID))
     } catch (err) {
       setError(err.msg);
     }
-  }, [dispatch, setError]);
+  }, [dispatch, setError, productID]);
   
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -72,11 +73,17 @@ function ProductDetailScreen(props) {
         </View>
       ),
     });
-    const willFocusSub = navigation.addListener('focus', loadProducts);
 
-    return willFocusSub;
-  });
-
+    return navigation.addListener('focus', loadProducts);
+  },[dispatch, loadProduct]);
+  useEffect(() => {
+    if (error) {
+      Alert.alert('An Error Occurred!', error + ', please try again!', [
+        {text: 'Okay'},
+      ]);
+    }
+  }, [third])
+  
   const cloneList = availableProducts => {
     const transformedShopItems = [];
     for (const key in availableProducts) {
