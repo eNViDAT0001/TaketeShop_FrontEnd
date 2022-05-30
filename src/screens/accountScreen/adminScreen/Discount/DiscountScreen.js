@@ -8,17 +8,17 @@ import {
   ScrollView,
   FlatList,
 } from 'react-native';
-import { convertWeekToVietnamese, convertMonthToVietnamese } from '../../../ulti/Ulti';
+import { convertWeekToVietnamese, convertMonthToVietnamese } from '../../../../ulti/Ulti';
 import { TextInput, Button } from 'react-native-paper';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import Header from '../../../components/UI/Header';
-import Colors from '../../../constants/Colors';
+import Header from '../../../../components/UI/Header';
+import Colors from '../../../../constants/Colors';
 import CalendarPicker from 'react-native-calendar-picker';
 import { useDispatch, useSelector } from 'react-redux';
-import * as authActions from '../../../store/actions/auth';
+import * as authActions from '../../../../store/actions/auth';
 import { Dropdown } from 'react-native-element-dropdown';
-import Card from '../../../components/UI/Card';
+import Card from '../../../../components/UI/Card';
 
 function DiscountScreen(props) {
   const navigation = useNavigation();

@@ -9,16 +9,16 @@ import {
   ScrollView,
   FlatList,
 } from 'react-native';
-import Form1 from '../../accountScreen/Form';
 import { TextInput, Button, Colors, IconButton, Avatar } from 'react-native-paper';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
-import Header from '../../../components/UI/Header';
+import Header from '../../../../components/UI/Header';
+//import Header from '../../../../components/UI/Header';
 import { useSelector, useDispatch } from 'react-redux';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import * as authActions from '../../../store/actions/auth'
-import * as chanelActions from '../../../store/actions/chanelActions';
-import { BANNER_SCREEN, DISCOUNT_SCREEN } from '../../../constants/NavigatorIndex';
-import * as productActions from '../../../store/actions/products';
+import * as authActions from '../../../../store/actions/auth';
+import * as chanelActions from '../../../../store/actions/chanelActions';
+import { BANNER_SCREEN, DISCOUNT_SCREEN, FIX_BANNER } from '../../../../constants/NavigatorIndex';
+import * as productActions from '../../../../store/actions/products';
 import { Form } from 'formik';
 
 function ListBanner() {
@@ -37,12 +37,14 @@ function ListBanner() {
         <View style={styles.screenrow}>
           <TouchableOpacity
             onPress={() => {
-
+              dispatch(productActions.fetchCategory());
+              navigation.navigate(FIX_BANNER);
+              
             }}>
 
             <View style={{ width: 290 }}>
               <Text style={styles.text1}>
-                {item.title}</Text>
+                {item.title} </Text>
               <Text style={styles.text2}>
                 {item.id}</Text>
             </View>
@@ -57,7 +59,7 @@ function ListBanner() {
           }}>
             <TouchableOpacity
               onPress={() => {
-
+                console.log(FIX_BANNER);
               }}>
               <MaterialCommunityIcons
                 name="delete"

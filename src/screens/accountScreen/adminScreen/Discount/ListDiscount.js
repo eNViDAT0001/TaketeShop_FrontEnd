@@ -8,15 +8,15 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
-import Form1 from '../../accountScreen/Form';
 import { TextInput, Button, Colors, IconButton, Avatar } from 'react-native-paper';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
-import Header from '../../../components/UI/Header';
+// import Header from '../../../../components/UI/Header';
+import Header from '../../../../components/UI/Header';
 import { useSelector, useDispatch } from 'react-redux';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import * as authActions from '../../../store/actions/auth'
-import * as chanelActions from '../../../store/actions/chanelActions';
-import { BANNER_SCREEN,DISCOUNT_SCREEN } from '../../../constants/NavigatorIndex';
+import * as authActions from '../../../../store/actions/auth'
+import * as chanelActions from '../../../../store/actions/chanelActions';
+import { BANNER_SCREEN,DISCOUNT_SCREEN } from '../../../../constants/NavigatorIndex';
 
 import { Form } from 'formik';
 

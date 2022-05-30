@@ -41,7 +41,11 @@ export const ADMIN_SCREEN ="AdminScreen";
 export const ADMIN_PRODUCT_DETAIL_SCREEN ="AdminProductDetailScreen";
 export const ADMIN_ADD_PRODUCT_SCREEN ="AdminAddProductScreen";
 export const BANNER_SCREEN ="BannerScreen";
+export const LIST_BANNER ="ListBanner";
+export const FIX_BANNER ="FixBanner";
 export const DISCOUNT_SCREEN ="DiscountScreen";
+export const LIST_DISCOUNT ="ListDiscount";
+export const FIX_DISCOUNT ="FixDiscount";
 
 export const ADMIN_ORDER_STATUS_PAGE ="AdminOrderConfirmPage";
 export const ADMIN_ORDER_DELIVERING_PAGE ="AdminOrderDeliveringPage";
