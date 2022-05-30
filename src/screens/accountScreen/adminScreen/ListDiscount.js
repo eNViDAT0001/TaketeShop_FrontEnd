@@ -16,78 +16,86 @@ import { useSelector, useDispatch } from 'react-redux';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as authActions from '../../../store/actions/auth'
 import * as chanelActions from '../../../store/actions/chanelActions';
+import { BANNER_SCREEN,DISCOUNT_SCREEN } from '../../../constants/NavigatorIndex';
 
-function ListStaffScreen() {
-  var ALL_LIST_USER = useSelector(state => state.chanel.LIST_CHANEL);
+import { Form } from 'formik';
+
+function ListDiscount() {
+  var ALL_LIST_BANNER = useSelector(state => state.banner.banners);
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const role = useSelector(state => state.auth.role);
   let chanelID = useSelector(state => state.chanel._id);
   let img = useSelector(state => state.auth.avatar);
+  const token = useSelector(state => state.auth.token);
 
-  useEffect(() => {
-    dispatch(chanelActions.getMessagerFromChanelId(chanelID));
-
-  });
-  const Chats = (item) => {
+  const Banner = (item) => {
     return (
       <View style={styles.container}>
-        <TouchableOpacity
-          onPress={() => {
-            console.log("goi chanel userID:" + item.avatar)
-            dispatch(chanelActions.getChanel(item.userID));
-            dispatch(chanelActions.getMessagerFromChanelId(chanelID)).then(
-              navigation.navigate('ChatScreen' ,{titleHeader: item.name})
-            )
-            
+        <View style={styles.screenrow}>
+          <TouchableOpacity
+            onPress={() => {
 
-          }}>
-          <View style={styles.screenrow}>
-            <Avatar.Image
-              size={50}
-              source={{ uri: item.avatar }}
-            />
-            <View>
+            }}>
+
+            <View style={{width: 290}}>
               <Text style={styles.text1}>
-                {item.name}</Text>
+                aaaa</Text>
               <View style={styles.text2}>
-                <Text>  {item.type}</Text>
+                <Text> bbb</Text>
 
               </View>
             </View>
-            <View style={{
-              flex: 1,
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'flex-end',
-            }}>
+
+          </TouchableOpacity>
+
+          <View style={{
+            flex: 1,
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+          }}>
+            <TouchableOpacity
+              onPress={() => {
+
+              }}>
               <MaterialCommunityIcons
-                name="chevron-right"
+                name="delete"
                 color={Colors.iconColor}
-                size={40}
+                size={35}
               />
-            </View>
+            </TouchableOpacity>
 
           </View>
-        </TouchableOpacity>
+
+
+        </View>
       </View >
 
     )
   };
-  const renderMessages = (item) => {
+  const renderBanner = (item) => {
     return (
-      Chats(item)
+      Banner(item)
     )
   };
 
   return (
 
     <SafeAreaView style={styles.screen}>
-      <Header title="Danh sách nhân viên"></Header>
+      <Header title="Danh sách mã giảm giá"
+        children={
+          <IconButton
+            icon={'plus'}
+            color={'white'}
+            size={25}
+            onPress={() => navigation.navigate(DISCOUNT_SCREEN)}></IconButton>
+        }></Header>
 
       <FlatList
-        data={ALL_LIST_USER}
-        extraData={ALL_LIST_USER}
-        renderItem={itemData => (renderMessages(itemData.item))}
+        data={ALL_LIST_BANNER}
+        extraData={ALL_LIST_BANNER}
+        renderItem={itemData => (renderBanner(itemData.item))}
         keyExtractor={(item, index) => item._id}
         contentContainerStyle={{ flexGrow: 1, backgroundColor: '#D3D3D388', top: 5, marginHorizontal: 8 }}
 
@@ -104,6 +112,7 @@ const styles = StyleSheet.create({
   },
   container: {
     borderRadius: 20,
+    height: 80,
     margin: 10,
     flex: 1,
     backgroundColor: '#ffff',
@@ -137,4 +146,4 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
 });
-export default ListStaffScreen;
+export default ListDiscount;

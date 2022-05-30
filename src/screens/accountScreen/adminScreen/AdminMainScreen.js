@@ -16,13 +16,18 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Card from '../../../components/UI/Card';
 import Colors from '../../../constants/Colors';
 import { useNavigation } from '@react-navigation/native';
-import { ADMIN_ADD_PRODUCT_SCREEN, ADMIN_PRODUCT_DETAIL_SCREEN } from '../../../constants/NavigatorIndex';
+import { ADMIN_ADD_PRODUCT_SCREEN, ADMIN_PRODUCT_DETAIL_SCREEN,BANNER_SCREEN,DISCOUNT_SCREEN } from '../../../constants/NavigatorIndex';
+import {useDispatch, useSelector} from 'react-redux';
+import * as bannerActions from '../../../store/actions/banner';
+
 const ICON_SIZE = 32;
 const ICON_TITLE_SIZE = 35;
 const ICON_COLOR = '#9098B1';
 const ICON_TITLE_COLOR = '#223263';
 function AdminMainScreen() {
   const navigation = useNavigation();
+  const dispatch = useDispatch();  
+
   return (
     <View style={styles.screen}>
       <View style={styles.imageContainer}>
@@ -86,7 +91,8 @@ function AdminMainScreen() {
           <Text style={styles.contentTitle}>Sản Phẩm</Text>
         </View>
         <View style={styles.statusContainer}>
-          <TouchableOpacity style={styles.itemContainer} onPress={() => navigation.navigate(ADMIN_PRODUCT_DETAIL_SCREEN, {id: false})}>
+          <TouchableOpacity style={styles.itemContainer} 
+          onPress={() => navigation.navigate(ADMIN_PRODUCT_DETAIL_SCREEN, {id: false})}>
             <MaterialIcons
               name="add-box"
               color={ICON_COLOR}
@@ -115,13 +121,31 @@ function AdminMainScreen() {
           <Text style={styles.contentTitle}>Cửa hàng</Text>
         </View>
         <View style={styles.statusContainer}>
-          <TouchableOpacity style={styles.itemContainer}>
+          <TouchableOpacity style={styles.itemContainer}
+           onPress={() =>
+            {            
+              dispatch(bannerActions.fetchBanner());             
+              navigation.navigate("ListBanner");
+            } }>
             <FontAwesome5
               name="scroll"
               color={ICON_COLOR}
               size={ICON_SIZE}
               style={styles.icon}></FontAwesome5>
             <Text style={styles.itemTitle}>Banner</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.itemContainer}
+            onPress={() =>
+            {
+              navigation.navigate("ListDiscount")}
+            }>
+            <MaterialCommunityIcons
+              name="ticket"
+              color={ICON_COLOR}
+              size={ICON_SIZE}
+              style={styles.icon}></MaterialCommunityIcons>
+            <Text style={styles.itemTitle}>Discount</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.itemContainer}>
             <Ionicons

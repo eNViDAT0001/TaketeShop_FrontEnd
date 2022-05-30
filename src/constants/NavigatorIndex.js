@@ -5,6 +5,7 @@ export const ORDER_NAVIGATOR = "OrderNavigator";
 export const ACCOUNT_NAVIGATOR = "AccountNavigator";
 export const LOGIN_NAVIGATOR = "LoginNavigator";
 export const PROFILE_NAVIGATOR = "ProfileNavigation";
+//export const PROFILE_NAVIGATOR_FOR_ADMIN = "ProfileNavigation";
 export const PRODUCT_NAVIGATOR = "ProductNavigator";
 
 export const STARTUP_SCREEN = "StartupScreen";
@@ -39,7 +40,8 @@ export const ORDER_CANCEL_PAGE ="OrderCancelPage";
 export const ADMIN_SCREEN ="AdminScreen";
 export const ADMIN_PRODUCT_DETAIL_SCREEN ="AdminProductDetailScreen";
 export const ADMIN_ADD_PRODUCT_SCREEN ="AdminAddProductScreen";
-
+export const BANNER_SCREEN ="BannerScreen";
+export const DISCOUNT_SCREEN ="DiscountScreen";
 
 export const ADMIN_ORDER_STATUS_PAGE ="AdminOrderConfirmPage";
 export const ADMIN_ORDER_DELIVERING_PAGE ="AdminOrderDeliveringPage";
@@ -54,3 +56,4 @@ export const ADMIN_NAVIGATOR = "AdminNavigator";
 export const CHAT_SCREEN = "ChatScreen";
 export const LIST_CHANEL = "ListChanel";
 export const LIST_STAFF_SCREEN = "ListStaffScreen";
+export const ADD_STAFF_SCREEN = "AddStaff";

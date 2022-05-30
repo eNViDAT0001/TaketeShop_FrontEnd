@@ -12,14 +12,22 @@ import {
 } from '../../ulti/Ulti';
 import {useDispatch, useSelector} from 'react-redux';
 import * as authActions from '../../store/actions/auth';
+import * as ListStaff from '../../store/actions/ListStaff';
 
 function BirthScreen(props) {
   const navigation = useNavigation();
   const [date, setDate] = useState('');
   const [displayDay, setDisplayDay] = useState([]);
-  const dispatch = useDispatch();
-  const userId = useSelector(state => state.auth.userID);
+  const dispatch = useDispatch();  
   const token = useSelector(state => state.auth.token);
+  const admin = useSelector(state => state.staff.admin);
+
+  let userID;
+  if (admin) {
+    userID =useSelector(state => state.staff.userID);
+  }else {
+    userID = useSelector(state => state.auth.userID);
+  };
 
   const onDateChange = async day => {
     await setDate(day);
@@ -91,7 +99,11 @@ function BirthScreen(props) {
           color="#4F5160"
           labelStyle={{fontSize: 20}}
           onPress={() => {
-            dispatch(authActions.changeBirthday(userId, token, SQLDate(displayDay)));
+             if (admin) {            
+              dispatch(ListStaff.changeBirthday(userID, token, SQLDate(displayDay)));              
+            }else {
+              dispatch(authActions.changeBirthday(userID, token, SQLDate(displayDay)));              
+            }           
             navigation.navigate('Profile');
           }}>
           Xác nhận

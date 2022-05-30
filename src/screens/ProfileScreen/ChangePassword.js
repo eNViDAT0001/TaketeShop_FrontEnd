@@ -1,24 +1,33 @@
-import React, {useState} from 'react';
-import {Text, StyleSheet, View, Image, TouchableOpacity} from 'react-native';
-import {TextInput, Button} from 'react-native-paper';
-import {useNavigation} from '@react-navigation/native';
+import React, { useState } from 'react';
+import { Text, StyleSheet, View, Image, TouchableOpacity } from 'react-native';
+import { TextInput, Button } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
 import Header from '../../components/UI/Header';
 import Colors from '../../constants/Colors';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as authActions from '../../store/actions/auth';
-
+import * as ListStaff from '../../store/actions/ListStaff';
 
 function ChangePassword(props) {
   const [pass, setPass] = React.useState('');
   const [oldpass, setOldpass] = React.useState('');
   const [newpass, setNewpass] = React.useState('');
   const [confirmpass, setConfirmpass] = React.useState('');
+  const admin = useSelector(state => state.staff.admin);
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const userId = useSelector(state => state.auth.userID);  
+  const role = useSelector(state => state.auth.role);
   const token = useSelector(state => state.auth.token);
+  let userID;
+  if (admin) {
+    userID = useSelector(state => state.staff.userID);
+  } else {
+    userID = useSelector(state => state.auth.userID);
+  }
 
-  const ChangeButton = async () => {
+
+  const ChangeButton = () => {
+
     if (!oldpass) {
       alert('Vui lòng nhập mật khẩu');
     } else if (!newpass) {
@@ -29,47 +38,65 @@ function ChangePassword(props) {
       alert('Xác nhận mật khẩu không chính xác, vui lòng nhập lại');
     } else if (oldpass == newpass) {
       alert('Mật khẩu mới không được trùng với mật khẩu cũ, vui lòng nhập lại');
-    } else try {     
-
-      dispatch(authActions.changePassword(userId, token, oldpass, newpass));
+    } else {        
+      dispatch(authActions.changePassword(userID, token, oldpass, newpass));     
       navigation.navigate('Profile');
-
-    } catch (error) {
-      console.error(error);
-    }
+    } 
+  
   };
 
   return (
     <View style={styles.screen}>
       <Header title="Thay đổi mật khẩu"></Header>
       <View style={styles.screen1}>
-        <TextInput
-          label="Mật khẩu hiện tại"
-          placeholder={'Mời nhập mật khẩu hiện tại'}
-          style={styles.textinput}
-          mode="outlined"
-          secureTextEntry={true}
-          value={oldpass}
-          onChangeText={oldpass => setOldpass(oldpass)}
-        />
-        <TextInput
-          label="Mật khẩu mới"
-          placeholder={'Mời nhập mật khẩu mới'}
-          style={styles.textinput}
-          mode="outlined"
-          secureTextEntry={true}
-          value={newpass}
-          onChangeText={newpass => setNewpass(newpass)}
-        />
-        <TextInput
-          label="Xác nhận mật khẩu mới"
-          placeholder={'Xác nhận lại mật khẩu mới'}
-          style={styles.textinput}
-          mode="outlined"
-          secureTextEntry={true}
-          value={confirmpass}
-          onChangeText={confirmpass => setConfirmpass(confirmpass)}
-        />
+
+        {admin === true ?
+          (<TextInput
+            label="Mật khẩu mới"
+            placeholder={'Mời nhập mật khẩu hiện tại'}
+            style={styles.textinput}
+            mode="outlined"
+            secureTextEntry={true}
+            value={oldpass}
+            onChangeText={oldpass => setOldpass(oldpass)}
+          />
+          ) : (
+            <TextInput
+              label="Mật khẩu hiện tại"
+              placeholder={'Mời nhập mật khẩu hiện tại'}
+              style={styles.textinput}
+              mode="outlined"
+              secureTextEntry={true}
+              value={oldpass}
+              onChangeText={oldpass => setOldpass(oldpass)}
+            />
+          )
+        }
+
+        {admin === false ?
+          (<TextInput
+            label="Mật khẩu mới"
+            placeholder={'Mời nhập mật khẩu mới'}
+            style={styles.textinput}
+            mode="outlined"
+            secureTextEntry={true}
+            value={newpass}
+            onChangeText={newpass => setNewpass(newpass)}
+          />) : null
+        }
+        {admin === false ?
+          (
+            <TextInput
+              label="Xác nhận mật khẩu mới"
+              placeholder={'Xác nhận lại mật khẩu mới'}
+              style={styles.textinput}
+              mode="outlined"
+              secureTextEntry={true}
+              value={confirmpass}
+              onChangeText={confirmpass => setConfirmpass(confirmpass)}
+            />) : null
+        }
+
       </View>
 
       <View style={styles.buttonContainer}>
@@ -78,8 +105,16 @@ function ChangePassword(props) {
           contentStyle={styles.buttonText}
           style={styles.button}
           color="#4F5160"
-          labelStyle={{fontSize: 20}}
-          onPress={ChangeButton}>
+          labelStyle={{ fontSize: 20 }}
+          onPress={() => {
+            if (admin) {                         
+              dispatch(ListStaff.changePassword(userID, token, oldpass));
+              navigation.navigate('Profile');
+            } else {            
+              ChangeButton();              
+            }                     
+          }}>
+
           Xác nhận
         </Button>
       </View>

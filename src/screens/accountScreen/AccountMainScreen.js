@@ -1,9 +1,9 @@
 import React from 'react';
-import {View, StyleSheet, FlatList, Text, ScrollView} from 'react-native';
-import {Searchbar, IconButton} from 'react-native-paper';
-import {useSelector, useDispatch} from 'react-redux';
+import { View, StyleSheet, FlatList, Text, ScrollView } from 'react-native';
+import { Searchbar, IconButton } from 'react-native-paper';
+import { useSelector, useDispatch } from 'react-redux';
 import Colors from '../../constants/Colors';
-import {NavigationContainer, useNavigation} from '@react-navigation/native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import Form1 from './Form';
 import {
   ADDRESS_SCREEN,
@@ -16,14 +16,16 @@ import {
 } from '../../constants/NavigatorIndex';
 import * as authActions from '../../store/actions/auth';
 import * as chanelActions from '../../store/actions/chanelActions';
+import * as ListStaff from '../../store/actions/ListStaff';
+
 
 function AccountMainScreen() {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const userID = useSelector(state => state.auth.userID);
-  console.log('User ID:' + userID);
-  dispatch(chanelActions.getChanel(4));
+  console.log('User ID:' + userID); 
   const role = useSelector(state => state.auth.role);
+  const token = useSelector(state => state.auth.token);
   const chanelId = useSelector(state => state.chanel.chanelId);
   return (
     <ScrollView style={styles.screen}>
@@ -32,9 +34,11 @@ function AccountMainScreen() {
         icons="account"
         titletext="Thông tin cá nhân"
         onPress={() => {
+          dispatch(ListStaff.getUser());
+          //navigation.navigate('Profile', {type : 'user'});
           navigation.navigate(PROFILE_NAVIGATOR);
         }}
-        //titletext2 = 'xcvjkz'
+      //titletext2 = 'xcvjkz'
       />
       <Form1
         styles={styles.itemsContainer}
@@ -69,19 +73,25 @@ function AccountMainScreen() {
         }}
       />
 
-      {role !== 'CUSTOMER'  || role !== 'GUEST'? (
+      {role === 'SHOP' ? (
         <View>
           <Form1
             styles={styles.itemsContainer}
-            icons="credit-card-outline"
+            icons="account-plus"
             titletext="Thêm nhân viên"
-            onPress={() => navigation.navigate(ADMIN_NAVIGATOR)}
+            onPress={() => navigation.navigate('AddStaff')}
           />
           <Form1
             styles={styles.itemsContainer}
-            icons="credit-card-outline"
+            icons="account-multiple"
             titletext="Xóa/Sửa nhân viên"
-            onPress={() => navigation.navigate(ADMIN_NAVIGATOR)}
+            onPress={() => {
+              //dispatch(ListStaff.getStaffFromUserID(4,token));
+              dispatch(ListStaff.getAllStaff(token));
+              navigation.navigate('ListStaffScreen')
+            }
+            }
+
           />
         </View>
       ) : null}

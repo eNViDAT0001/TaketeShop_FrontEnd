@@ -13,7 +13,7 @@ const Stack = createNativeStackNavigator();
 
 function ProfileNavigator() {
   const [text, onChangeText] = React.useState(null);
-
+    
   return (
     <Stack.Navigator initialRouteName={'Profile'}>
       <Stack.Screen
@@ -42,12 +42,12 @@ function ProfileNavigator() {
         component={Email}>
       </Stack.Screen>
       <Stack.Screen
-        name={"Phone number"}
+        name={"Phone"}
         options={{ headerShown: false, }}
         component={Phone}>
       </Stack.Screen>
       <Stack.Screen
-        name={"Change Password"}
+        name={"ChangePassword"}
         options={{ headerShown: false, }}
         component={ChangePassword}>
       </Stack.Screen>

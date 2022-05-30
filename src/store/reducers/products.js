@@ -1,4 +1,4 @@
-import {PRODUCT_ITEMS_DUMMY_DATA} from '../../dummy_database/dummy-data';
+import { PRODUCT_ITEMS_DUMMY_DATA } from '../../dummy_database/dummy-data';
 import ProductModel from '../../models/product/ProductModel';
 import {
   CREATE_PRODUCT,

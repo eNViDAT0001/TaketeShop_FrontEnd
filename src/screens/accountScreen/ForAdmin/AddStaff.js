@@ -1,4 +1,4 @@
-import React, {useEffect, useLayoutEffect, useState} from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import {
   Text,
   StyleSheet,
@@ -8,26 +8,27 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
-import {TextInput, Button} from 'react-native-paper';
-import Colors from '../../constants/Colors';
-import {useNavigation} from '@react-navigation/native';
-import {Dropdown} from 'react-native-element-dropdown';
+import { useSelector, useDispatch } from 'react-redux';
+import { TextInput, Button } from 'react-native-paper';
+import Colors from '../../../constants/Colors';
+import { useNavigation } from '@react-navigation/native';
+import { Dropdown } from 'react-native-element-dropdown';
 import CalendarPicker from 'react-native-calendar-picker';
+import Header from '../../../components/UI/Header';
 import {
   convertWeekToVietnamese,
   convertMonthToVietnamese,
-} from '../../ulti/Ulti';
-import Card from '../../components/UI/Card';
+} from '../../../ulti/Ulti';
+import Card from '../../../components/UI/Card';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import * as authActions from '../../store/actions/auth';
+import * as authActions from '../../../store/actions/auth';
 
 const dataGender = [
-  {label: 'Nam', value: '1'},
-  {label: 'Nữ', value: '0'},
+  { label: 'Nam', value: '1' },
+  { label: 'Nữ', value: '0' },
 ];
 
-function SignUpScreen() {
+function AddStaff() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [showBirth, setShowBirth] = React.useState(false);
@@ -46,19 +47,17 @@ function SignUpScreen() {
   });
 
   const onDateChange = async day => {
-    await setUser({...user, birthday: day});
+    await setUser({ ...user, birthday: day });
   };
 
   const SQLDate = (date) => {
-    return `${date[3]}-${convertMonthToVietnamese(date[1])}-${
-      date[2]
-    }`
+    return `${date[3]}-${convertMonthToVietnamese(date[1])}-${date[2]
+      }`
   }
 
   const showDate = date => {
-    return `${convertWeekToVietnamese(date[0])} ${
-      date[2]
-    }/${convertMonthToVietnamese(date[1])}/${date[3]}`;
+    return `${convertWeekToVietnamese(date[0])} ${date[2]
+      }/${convertMonthToVietnamese(date[1])}/${date[3]}`;
   };
 
   useLayoutEffect(() => {
@@ -103,45 +102,45 @@ function SignUpScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.signup}>
-        <Text style={styles.maintext}>Đăng ký</Text>
+      <Header title="Thêm nhân viên mới"></Header>
+      <ScrollView style={styles.signup}>      
 
         <TextInput
-          style={{marginBottom: 10, backgroundColor: Colors.backgroundColor}}
+          style={{ marginBottom: 10, backgroundColor: Colors.backgroundColor }}
           label="Tên đăng nhập"
           mode="outlined"
           value={user.username}
-          onChangeText={txt => setUser({...user, username: txt})}
+          onChangeText={txt => setUser({ ...user, username: txt })}
         />
         <TextInput
-          style={{marginBottom: 10, backgroundColor: Colors.backgroundColor}}
+          style={{ marginBottom: 10, backgroundColor: Colors.backgroundColor }}
           label="Mật khẩu"
           mode="outlined"
           secureTextEntry={true}
           value={user.password}
-          onChangeText={txt => setUser({...user, password: txt})}
+          onChangeText={txt => setUser({ ...user, password: txt })}
         />
         <TextInput
-          style={{marginBottom: 10, backgroundColor: Colors.backgroundColor}}
+          style={{ marginBottom: 10, backgroundColor: Colors.backgroundColor }}
           label="Xác nhận mật khẩu"
           secureTextEntry={true}
           mode="outlined"
           value={user.confirmPassword}
-          onChangeText={txt => setUser({...user, confirmPassword: txt})}
+          onChangeText={txt => setUser({ ...user, confirmPassword: txt })}
         />
         <TextInput
-          style={{marginBottom: 10, backgroundColor: Colors.backgroundColor}}
+          style={{ marginBottom: 10, backgroundColor: Colors.backgroundColor }}
           label="Email"
           mode="outlined"
           value={user.email}
-          onChangeText={txt => setUser({...user, email: txt})}
+          onChangeText={txt => setUser({ ...user, email: txt })}
         />
         <TextInput
-          style={{marginBottom: 10, backgroundColor: Colors.backgroundColor}}
+          style={{ marginBottom: 10, backgroundColor: Colors.backgroundColor }}
           label="Họ và tên "
           mode="outlined"
           value={user.name}
-          onChangeText={txt => setUser({...user, name: txt})}
+          onChangeText={txt => setUser({ ...user, name: txt })}
         />
         <View
           style={{
@@ -162,13 +161,13 @@ function SignUpScreen() {
             placeholder={'Giới tính...'}
             value={user.gender}
             onChange={item => {
-              setUser({...user, gender: item.value});
+              setUser({ ...user, gender: item.value });
             }}
           />
-          <View style={{flex: 1.8}}>
+          <View style={{ flex: 1.8 }}>
             <TouchableOpacity onPress={() => setShowBirth(!showBirth)}>
               <View style={styles.birthday}>
-                <Text style={{fontSize: 17}}>
+                <Text style={{ fontSize: 17 }}>
                   {user.birthday
                     ? showDate(displayDay)
                     : 'Ngày sinh'}
@@ -215,12 +214,12 @@ function SignUpScreen() {
           </View>
         ) : null}
         <TextInput
-          style={{marginBottom: 10, backgroundColor: Colors.backgroundColor}}
+          style={{ marginBottom: 10, backgroundColor: Colors.backgroundColor }}
           keyboardType="numeric"
           label="Số điện thoại "
           mode="outlined"
           value={user.phone}
-          onChangeText={txt => setUser({...user, phone: txt})}
+          onChangeText={txt => setUser({ ...user, phone: txt })}
         />
         <TouchableOpacity
           activeOpacity={0.9}
@@ -241,19 +240,12 @@ function SignUpScreen() {
             contentStyle={styles.buttonText}
             style={styles.button}
             color="#4f5160"
-            labelStyle={{fontSize: 20}}
+            labelStyle={{ fontSize: 20 }}
             onPress={checkSignUp}>
-            Đăng ký
+            Đăng ký nhân viên mới
           </Button>
         </View>
 
-        <View style={styles.containertext}>
-          <Text style={styles.text1}>Đã có tài khoản ?</Text>
-          <TouchableOpacity
-            onPress={() => navigation.navigate(LOGIN_MAIN_SCREEN)}>
-            <Text style={styles.text2}>Đăng nhập</Text>
-          </TouchableOpacity>
-        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -297,6 +289,7 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   signup: {
+    marginVertical : 10 ,    
     paddingHorizontal: 15,
   },
   hidetext: {
@@ -364,4 +357,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignUpScreen;
+export default AddStaff;
