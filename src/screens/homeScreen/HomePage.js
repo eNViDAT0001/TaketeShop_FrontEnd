@@ -25,6 +25,7 @@ function HomePage(props) {
     setError(null);
     setIsRefreshing(true);
     try {
+      //await dispatch(productActions.fetchProductWithBannerID());
       await dispatch(bannerActions.fetchBanner());
       await dispatch(productActions.fetchCategory());
       await dispatch(productActions.fetchDiscountProducts({page: 0}));

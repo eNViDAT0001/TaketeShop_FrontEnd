@@ -1,45 +1,66 @@
-import React, {useEffect, useState} from 'react';
-import {Dropdown} from 'react-native-element-dropdown';
-import {StyleSheet, FlatList, View, Text} from 'react-native';
+import React, { useEffect, useState, useCallback } from 'react';
+import { Dropdown } from 'react-native-element-dropdown';
+import { StyleSheet, FlatList, View, Text } from 'react-native';
 import Header from '../../components/UI/Header';
 import Colors from '../../constants/Colors';
 import ShopItems from '../../components/ShopItems';
-import {useSelector} from 'react-redux';
-import {useNavigation, useRoute} from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigation, useRoute } from '@react-navigation/native';
 const BESTSELLER = 'BESTSELLER';
 const INCREASE = 'INCREASE';
 const DECREASE = 'DECREASE';
 const DATE_CATCH = 'DATE_CATCH';
 const data = [
-  {label: 'Mua nhiều', value: BESTSELLER},
-  {label: 'Giá tăng dần', value: INCREASE},
-  {label: 'Giá giảm dần', value: DECREASE},
-  {label: 'Ngày đánh bắt', value: DATE_CATCH},
+  { label: 'Mua nhiều', value: BESTSELLER },
+  { label: 'Giá tăng dần', value: INCREASE },
+  { label: 'Giá giảm dần', value: DECREASE },
+  { label: 'Ngày đánh bắt', value: DATE_CATCH },
 ];
 function CategoryDetailScreen(props) {
-  const products = useSelector(state => state.products.availableProducts);
+  let products = useSelector(state => state.products.availableProducts);
   const banners = useSelector(state => state.banner.banners);
   const id = useRoute().params.id;
+  const dispatch = useDispatch();
   const type = useRoute().params.type;
+  const title = useRoute().params.title;
+  const [displayProducts, setDisplayProducts] = useState([]);
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [error, setError] = useState();
+ 
+  // useEffect(() => {
+  //   if (type === 'NORMAL') {
+  //     return setDisplayProducts(
+  //       cloneList(products).filter(item => item.categoryID === id),
+  //     );
+  //   }
+  //   if (type === 'BANNER') {
+  //     console.log(products.length)      
+  //     return setDisplayProducts(
+  //       //cloneList(products).filter(item => productIDs.includes(item.productID)),
+  //       cloneList(products),
+  //     );
+  //   }
+  //   return setDisplayProducts(cloneList(products));
+  // }, [products]);
+
   useEffect(() => {
     if (type === 'NORMAL') {
       return setDisplayProducts(
         cloneList(products).filter(item => item.categoryID === id),
       );
     }
-    if (type === 'BANNER') {
-      const productIDs = banners.find(item => item.id == id).productID;
-      console.log('Banner list:', productIDs);
+    if (type === 'BANNER') {          
       return setDisplayProducts(
-        cloneList(products).filter(item => productIDs.includes(item.productID)),
+        //cloneList(products).filter(item => productIDs.includes(item.productID)),
+        cloneList(products),
       );
     }
-
     return setDisplayProducts(cloneList(products));
-  }, [products]);
-
-  const title = useRoute().params.title;
-  const [displayProducts, setDisplayProducts] = useState([]);
+    //Sua cho nay
+  }, [id]); 
+ 
 
   const loadBanner = useCallback(async () => {
     setError(null);
@@ -51,6 +72,7 @@ function CategoryDetailScreen(props) {
     }
     setIsRefreshing(false);
   }, [dispatch, setIsLoading, setError]);
+
   const cloneList = availableProducts => {
     const transformedShopItems = [];
     for (const key in availableProducts) {
@@ -64,7 +86,7 @@ function CategoryDetailScreen(props) {
         discountPrice:
           availableProducts[key].price -
           (availableProducts[key].discount / 100).toFixed(2) *
-            availableProducts[key].price,
+          availableProducts[key].price,
         unit: availableProducts[key].unit,
         image: availableProducts[key].image[0].image,
         category: availableProducts[key].category,
@@ -104,10 +126,10 @@ function CategoryDetailScreen(props) {
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
   return (
-    <View style={{...styles.container, ...props.style}}>
+    <View style={{ ...styles.container, ...props.style }}>
       <Header title={title}></Header>
       <Dropdown
-        style={[styles.dropdown, isFocus && {borderColor: 'blue'}]}
+        style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
         placeholderStyle={styles.placeholderStyle}
         selectedTextStyle={styles.selectedTextStyle}
         iconStyle={styles.iconStyle}

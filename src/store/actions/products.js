@@ -98,8 +98,7 @@ export const fetchProductWithBannerID = (bannerID) => {
         throw new Error(response.msg);
       }
       const resData = await response.json();
-      const loadedProducts = [];
-
+      const loadedProducts = [];     
       for (const key in resData) {
         const images = [];
         if (!resData[key].images) {
@@ -136,6 +135,7 @@ export const fetchProductWithBannerID = (bannerID) => {
             updateTime: resData[key].update_time,
           }),
         );
+        console.log(resData[key].name);
       }
       dispatch({type: SET_PRODUCTS, products: loadedProducts});
     } catch (err) {
