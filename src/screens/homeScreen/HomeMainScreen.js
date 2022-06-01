@@ -1,32 +1,58 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useState,
+  useRef,
+} from 'react';
 import {View, StyleSheet, FlatList} from 'react-native';
 import {Searchbar, IconButton} from 'react-native-paper';
 import {useSelector, useDispatch} from 'react-redux';
 import Colors from '../../constants/Colors';
 import SearchPage from './SearchPage';
 import HomePage from './HomePage';
-import { SEARCH_BAR_HEIGHT } from '../../constants/fontsize';
-import { useNavigation } from '@react-navigation/native';
-import { NOTIFICATION_SCREEN, WISHLIST_SCREEN } from '../../constants/NavigatorIndex';
+import {SEARCH_BAR_HEIGHT} from '../../constants/fontsize';
+import {useNavigation} from '@react-navigation/native';
+import {
+  NOTIFICATION_SCREEN,
+  WISHLIST_SCREEN,
+} from '../../constants/NavigatorIndex';
+import * as productActions from '../../store/actions/products';
+
+let timeOutID;
+const debounce = (func, delay) => {
+  return (...args) => {
+    if (timeOutID) clearTimeout(timeOutID);
+    timeOutID = setTimeout(() => {
+      func.apply(nul, args);
+    }, delay);
+  };
+};
 
 function HomeMainScreen() {
-  const products = useSelector(state => state.products.availableProducts);
   const dispatch = useDispatch();
+  const products = useSelector(state => state.products.availableProducts);
+  let typingTimeOutRef = useRef();
+
   const navigation = useNavigation();
   const [searchQuery, setSearchQuery] = React.useState('');
+  const [error, setError] = useState();
 
-  const onChangeSearch = query => setSearchQuery(query);
+  const onChangeSearch = async query => {
+    setSearchQuery(query);
+    if (typingTimeOutRef.current) {
+      clearTimeout(typingTimeOutRef.current);
+    }
+    typingTimeOutRef.current = setTimeout(() => {
+      console.log(query)
+      dispatch(productActions.fetchProductsWithSearchKeyWords({value: query}));
+    },1000)
+  };
 
-  const onSelectedCategory = (id, type) =>
-    navigation.navigate(CATEGORY_DETAIL_SCREEN, {id: id, type: type});
-
-
-  const Page =
-    searchQuery === '' ? <HomePage /> : <SearchPage keyword={searchQuery} />;
+  const Page = searchQuery === '' ? <HomePage /> : <SearchPage />;
 
   const onNotifyClickHandler = () => navigation.navigate(NOTIFICATION_SCREEN);
   const onWishlistClickHandler = () => navigation.navigate(WISHLIST_SCREEN);
-
 
   return (
     <View style={styles.screen}>

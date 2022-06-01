@@ -1,6 +1,5 @@
-import {View, FlatList, StyleSheet} from 'react-native';
+import {View, FlatList, Text, StyleSheet} from 'react-native';
 import React from 'react';
-import {FORYOU_DUMMY_DATA} from '../../dummy_database/dummy-data';
 import ShopItems from '../../components/ShopItems';
 import Colors from '../../constants/Colors';
 import {removeVietnameseTones} from '../../ulti/Ulti';
@@ -8,17 +7,20 @@ import {useSelector} from 'react-redux';
 function SearchPage(props) {
   const products = useSelector(state => state.products.availableProducts);
 
+  if (!products.length)
+    return (
+      <View style={styles.screen}>
+        <Text>Không tìm thấy sản phẩm...</Text>
+      </View>
+    );
+
   return (
     <View style={{...styles.screen, ...props.style}}>
       <FlatList
         keyExtractor={(item, index) => item.productID}
         style={styles.itemList}
         numColumns={2}
-        data={products.filter(item =>
-          removeVietnameseTones(item.name)
-            .toLowerCase()
-            .includes(props.keyword.toLowerCase()),
-        )}
+        data={products}
         extraData={props.keyword}
         refreshing={true}
         renderItem={itemData => (

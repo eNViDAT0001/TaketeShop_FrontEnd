@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react'
 export const removeVietnameseTones = (str) => {
     str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g,"a"); 
     str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g,"e"); 
@@ -50,3 +51,21 @@ export const convertMonthToVietnamese= (str) => {
     if (str === 'Nov') return "11";
     if (str === 'Dec') return "12";
 }
+
+export function useDebounce(text, delay) {
+    delay = delay || 500;
+    const [debounced, setDebounced] = useState(text);
+  
+    useEffect(() => {
+      const handler = setTimeout(() => {
+        setDebounced(text);
+      }, delay);
+  
+      return () => {
+        setDebounced(text)
+        clearTimeout(handler);
+      };
+    }, [text, delay]);
+  
+    return debounced;
+  }

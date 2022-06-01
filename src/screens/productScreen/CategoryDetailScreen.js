@@ -41,6 +41,16 @@ function CategoryDetailScreen(props) {
   const title = useRoute().params.title;
   const [displayProducts, setDisplayProducts] = useState([]);
 
+  const loadBanner = useCallback(async () => {
+    setError(null);
+    setIsRefreshing(true);
+    try {
+      await dispatch(bannerActions.fetchBanner());
+    } catch (err) {
+      setError(err.msg);
+    }
+    setIsRefreshing(false);
+  }, [dispatch, setIsLoading, setError]);
   const cloneList = availableProducts => {
     const transformedShopItems = [];
     for (const key in availableProducts) {

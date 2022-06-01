@@ -100,6 +100,10 @@ export const fetchWishListProducts = ({filter, sort, page}) => {
           sortConvert +
           pageConvert,
       );
+      console.log('http://localhost:5000/product/all?field=liked&value=1&' +
+      filterConvert +
+      sortConvert +
+      pageConvert,)
 
       if (response.error) {
         throw new Error(response.msg);
@@ -450,7 +454,77 @@ export const fetchProductsWithCategoryID = ({value, filter, sort, page}) => {
           }),
         );
       }
-      console.log(loadedProducts);
+      dispatch({type: SET_PRODUCTS, products: loadedProducts});
+    } catch (err) {
+      // send to custom analytics server
+      console.log(err);
+      throw err;
+    }
+  };
+};
+export const fetchProductsWithSearchKeyWords = ({value, filter, sort, page}) => {
+  return async dispatch => {
+    try {
+      const valueConvert = value ? `value=${value}&` : '';
+      const filterConvert = filter ? `filter=${filter}&` : '';
+      const sortConvert = sort ? `sort=${sort}&` : '';
+      const pageConvert = page ? `page=${page}&` : '';
+      const response = await fetch(
+        'http://localhost:5000/product/search?' +
+          valueConvert +
+          filterConvert +
+          sortConvert +
+          pageConvert,
+      );
+      console.log('http://localhost:5000/product/search?' +
+      valueConvert +
+      filterConvert +
+      sortConvert +
+      pageConvert,)
+      if (response.error) {
+        throw new Error(response.msg);
+      }
+
+      const resData = await response.json();
+      const loadedProducts = [];
+
+      for (const key in resData) {
+        const images = [];
+        if (!resData[key].images) {
+          images.push(
+            new ImageModel(
+              -1,
+              'https://vanhoadoanhnghiepvn.vn/wp-content/uploads/2020/08/112815953-stock-vector-no-image-available-icon-flat-vector.jpg',
+            ),
+          );
+        } else {
+          const arrImage = resData[key].images.split(',');
+          for (const image in arrImage) {
+            const tempImage = arrImage[image].split(' ');
+            images.push(new ImageModel(tempImage[0], tempImage[1]));
+          }
+        }
+        loadedProducts.push(
+          new ProductModel({
+            productID: resData[key].id,
+            categoryID: resData[key].category_id,
+            unitID: resData[key].unit_id,
+            userID: resData[key].user_id,
+            name: resData[key].name,
+            category: resData[key].category_name,
+            description: resData[key].descriptions,
+            price: resData[key].price,
+            quantity: resData[key].quantity,
+            unit: resData[key].unit,
+            discount: resData[key].discount,
+            liked: resData[key].liked,
+            sold: resData[key].sold,
+            image: images,
+            createTime: resData[key].create_time,
+            updateTime: resData[key].update_time,
+          }),
+        );
+      }
       dispatch({type: SET_PRODUCTS, products: loadedProducts});
     } catch (err) {
       // send to custom analytics server

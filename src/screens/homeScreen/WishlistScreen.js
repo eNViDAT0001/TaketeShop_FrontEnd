@@ -1,4 +1,5 @@
-import React, {useCallback, useEffect} from 'react';
+import { useNavigation } from '@react-navigation/native';
+import React, {useCallback, useEffect, useState, useLayoutEffect} from 'react';
 import {StyleSheet, View, FlatList, Text} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import ShopItems from '../../components/ShopItems';
@@ -6,6 +7,7 @@ import Header from '../../components/UI/Header';
 import * as productAction from '../../store/actions/products';
 function WishlistScreen(props) {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
   const wishlist = useSelector(state => state.products.wishlistProducts);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -24,8 +26,6 @@ function WishlistScreen(props) {
   }, [dispatch, setIsLoading, setError]);
 
   useEffect(() => {
-    // const willFocusSub = navigation.addListener('focus', loadWishlist);
-
     return navigation.addListener('focus', loadWishlist);
   }, [loadWishlist]);
 
@@ -59,6 +59,30 @@ function WishlistScreen(props) {
       </View>
     );
   }
+
+  const shopItems = availableProducts => {
+    const transformedShopItems = [];
+    for (const key in availableProducts) {
+      transformedShopItems.push({
+        productID: availableProducts[key].productID,
+        categoryID: availableProducts[key].categoryID,
+        name: availableProducts[key].name,
+        price: availableProducts[key].price,
+        quantity: availableProducts[key].quantity,
+        discount: availableProducts[key].discount,
+        discountPrice:
+          availableProducts[key].price -
+          (availableProducts[key].discount / 100).toFixed(2) *
+            availableProducts[key].price,
+        unit: availableProducts[key].unit,
+        image: availableProducts[key].image[0].image,
+        category: availableProducts[key].category,
+        provider: availableProducts[key].provider,
+        liked: availableProducts[key].liked,
+      });
+    }
+    return transformedShopItems
+  };
   return (
     <View style={styles.screen}>
       <Header title={'Yêu thích'}></Header>
@@ -68,7 +92,7 @@ function WishlistScreen(props) {
         keyExtractor={(item, index) => item.productID}
         style={styles.itemList}
         numColumns={2}
-        data={wishlist}
+        data={shopItems(wishlist)}
         renderItem={itemData => (
           <ShopItems item={itemData.item}></ShopItems>
         )}></FlatList>

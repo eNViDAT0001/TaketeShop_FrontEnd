@@ -6,11 +6,11 @@ import { ADMIN_ADD_PRODUCT_SCREEN, ADMIN_PRODUCT_DETAIL_SCREEN,
 import AdminMainScreen from '../screens/accountScreen/adminScreen/AdminMainScreen';
 import AdminProductDetailScreen from '../screens/accountScreen/adminScreen/AdminProductDetailScreen';
 import AdminProductScreen from '../screens/accountScreen/adminScreen/AdminProductScreen';
-import BannerScreen from '../screens/accountScreen/adminScreen/Banner/BannerScreen';
 import DiscountScreen from '../screens/accountScreen/adminScreen/Discount/DiscountScreen';
 import ListBanner from '../screens/accountScreen/adminScreen/Banner/ListBanner';
 import ListDiscount from '../screens/accountScreen/adminScreen/Discount/ListDiscount';
 import FixBanner from '../screens/accountScreen/adminScreen/Banner/FixBanner';
+import BannerScreen from '../screens/accountScreen/adminScreen/Banner/BannerScreen';
 
 
 const StackNavigator = createNativeStackNavigator();
