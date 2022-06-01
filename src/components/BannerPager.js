@@ -6,8 +6,7 @@ import {BANNER_DUMMY_DATA} from '../dummy_database/dummy-data';
 import Banner from './UI/Banner';
 
 function BannerPager(props) {
-  const banners = useSelector(state => state.banner.banners);
-  
+  const banners = useSelector(state => state.banner.banners);  
 
   return (
     <PagerView

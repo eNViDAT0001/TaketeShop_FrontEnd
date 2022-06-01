@@ -10,10 +10,17 @@ import {
 import Countdown from 'react-native-countdown-component';
 import Colors from '../../constants/Colors';
 import {CATEGORY_DETAIL_SCREEN} from '../../constants/NavigatorIndex';
+import {useDispatch, useSelector} from 'react-redux';
+import * as productActions from '../../store/actions/products';
+//import * as bannerActions from '../../store/actions/banner';
 
 function Banner(props) {
   const navigation = useNavigation();
-  const onClickHandler = (id, type) => {
+  const dispatch = useDispatch();
+  const onClickHandler = async (id, type) => {
+
+    console.log("bannerID: "+id); 
+    await dispatch(productActions.fetchProductWithBannerID(id));   
     navigation.navigate(CATEGORY_DETAIL_SCREEN, {id: id, type: type, title: props.title});
   }
   const endTime = () => {
@@ -25,7 +32,9 @@ function Banner(props) {
     <TouchableOpacity
       style={{...styles.container, ...props.style}}
       activeOpacity={1}
-      onPress={() => onClickHandler(props.id, "BANNER")}>
+      onPress={() => {              
+        onClickHandler(props.id, "BANNER")        
+      }}>
       <ImageBackground
         style={styles.image}
         source={{
