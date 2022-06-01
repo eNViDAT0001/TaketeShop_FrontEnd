@@ -30,7 +30,6 @@ function StartupScreen(props) {
         const expirationDate = await new Date(expiryDate);
 
         if (expirationDate <= new Date() || !token || !userId) {
-
           navigation.navigate(LOGIN_NAVIGATOR);
           return;
         }

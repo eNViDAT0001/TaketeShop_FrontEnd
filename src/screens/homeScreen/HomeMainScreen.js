@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import {View, StyleSheet, FlatList} from 'react-native';
 import {Searchbar, IconButton} from 'react-native-paper';
-import {useSelector, useDispatch} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import Colors from '../../constants/Colors';
 import SearchPage from './SearchPage';
 import HomePage from './HomePage';

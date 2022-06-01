@@ -1,10 +1,27 @@
+import { DELETE_CART_ITEMS, SET_CART_ITEMS} from "../actions/cart";
+
 const initialState = {
-    cart: null,
     cartItems: [],
 }
 
 const cartReducer = (state = initialState, action) => {
-    return state;
+    switch(action.type){
+        case SET_CART_ITEMS:{
+            return {
+                ...state,
+                cartItems: action.cartItems
+            }
+        }
+        case DELETE_CART_ITEMS:{
+            return {
+                ...state,
+                cartItems: state.cartItems.filter(item => item.id != action.id)
+            }
+        }
+        default:{
+            return state;
+        }
+    }
 }
 
 export default cartReducer;

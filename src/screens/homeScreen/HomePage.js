@@ -37,8 +37,6 @@ function HomePage(props) {
   }, [dispatch, setIsLoading, setError]);
 
   useEffect(() => {
-    // const willFocusSub = navigation.addListener('focus', loadProducts);
-
     return navigation.addListener('focus', loadProducts);
   }, [loadProducts]);
 

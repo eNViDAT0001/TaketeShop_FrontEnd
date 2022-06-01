@@ -1,14 +1,15 @@
 class CartItemsModel{
     isSelected = false;
-    constructor(id, cartID, productID, name, quantity , price, discount, image, createTime, updateTime){
+    constructor({id, userID, productID, name, quantity , price, discount, images, createTime, updateTime}){
         this.id = id;
-        this.cartID = cartID;
+        this.userID = userID;
         this.productID = productID;
         this.name = name;
         this.quantity = quantity;
         this.price = price;
         this.discount = discount;
-        this.image = image;
+        this.discountPrice = price - (discount / 100).toFixed(2) * price;
+        this.images = images;
         this.createTime = createTime;
         this.updateTime = updateTime;
     }

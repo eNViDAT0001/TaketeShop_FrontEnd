@@ -11,7 +11,7 @@ import {
 } from '../actions/auth';
 
 const initialState = {
-  userID: '0000',
+  userID: '00',
   name: 'Khách',
   gender: '1',
   birthday: '0001/01/01',

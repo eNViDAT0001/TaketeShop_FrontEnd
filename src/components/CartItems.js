@@ -1,5 +1,5 @@
 import {useNavigation} from '@react-navigation/native';
-import React, {useLayoutEffect} from 'react';
+import React, {useLayoutEffect, useRef, useState} from 'react';
 import {
   StyleSheet,
   Image,
@@ -15,20 +15,39 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Colors from '../constants/Colors';
 import {PRODUCT_DETAIL_SCREEN} from '../constants/NavigatorIndex';
 import Card from './UI/Card';
-
-const IMAGE_TEMP = 'https://kangaroovietnam.vn/Uploads/sinh-to-bo.jpg';
+import * as cartActions from '../store/actions/cart';
+import {useDispatch, useSelector} from 'react-redux';
 
 function CartItems(props) {
   const navigation = useNavigation();
-  const onItemClick = () => {
-    // navigation.navigate(PRODUCT_DETAIL_SCREEN, {product: props.item});
+  const dispatch = useDispatch();
+  const token = useSelector(state => state.auth.token);
+  const [quantity, setQuantity] = useState(+props.item.quantity);
+
+  let typingTimeOutRef = useRef();
+
+  const onChangeQuantity = async count => {
+    if (quantity + count <= 0) {
+      setQuantity(0);
+      dispatch(cartActions.deleteCartItemByID(token, props.item.id));
+    } else {
+      setQuantity(quantity + count);
+    }
+
+    if (typingTimeOutRef.current) {
+      clearTimeout(typingTimeOutRef.current);
+    }
+    typingTimeOutRef.current = setTimeout(() => {
+      dispatch(
+        cartActions.updateCartItemQuantityByID(
+          token,
+          props.item.id,
+          quantity + count,
+        ),
+      );
+    }, 1000);
   };
 
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerTitle: 'Cart',
-    });
-  });
   let TouchableCmp = TouchableOpacity;
 
   if (Platform.OS === 'android' && Platform.Version >= 21) {
@@ -37,20 +56,27 @@ function CartItems(props) {
 
   return (
     <View style={{...styles.screen, ...props.style}}>
-      <TouchableCmp onPress={onItemClick} useForeground>
+      <TouchableCmp
+        onPress={() =>
+          navigation.navigate(PRODUCT_DETAIL_SCREEN, {
+            id: props.item.productID,
+          })
+        }
+        useForeground>
         <View style={styles.container}>
           <Card style={styles.product}>
             <View style={styles.imageContainer}>
-              <Image style={styles.image} source={{uri: IMAGE_TEMP}}></Image>
+              <Image
+                style={styles.image}
+                source={{uri: props.item.images[0].image}}></Image>
             </View>
             <View style={styles.titleContainer}>
-              <Text style={styles.name}>Item Name</Text>
-              <Text style={styles.price}>ItemPrice</Text>
+              <Text style={styles.name}>{props.item.name}</Text>
+              <Text style={styles.price}>{props.item.discountPrice}</Text>
             </View>
 
             <View style={styles.actionContainer}>
               <View style={styles.iconContainer}>
-
                 <TouchableCmp
                   onPress={() => console.log('Icon heart clickkkk')}>
                   <View style={styles.icon}>
@@ -74,8 +100,7 @@ function CartItems(props) {
                 </TouchableCmp>
               </View>
               <View style={styles.addContainer}>
-                <TouchableCmp
-                  onPress={() => console.log('Icon delete clickkkk')}>
+                <TouchableCmp onPress={() => onChangeQuantity(-1)}>
                   <View
                     style={{
                       ...styles.icon,
@@ -99,10 +124,9 @@ function CartItems(props) {
                     fontWeight: 'bold',
                     alignSelf: 'center',
                   }}>
-                  324
+                  {quantity}
                 </Text>
-                <TouchableCmp
-                  onPress={() => console.log('Icon delete clickkkk')}>
+                <TouchableCmp onPress={() => onChangeQuantity(+1)}>
                   <View
                     style={{
                       ...styles.icon,
@@ -130,7 +154,6 @@ function CartItems(props) {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    
   },
   container: {
     flex: 1,

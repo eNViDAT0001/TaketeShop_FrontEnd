@@ -28,11 +28,9 @@ function CategoryDetailScreen(props) {
       );
     }
     if (type === 'BANNER') {
-      const productIDs = banners.find(item => item.id == id).productID;
-      console.log('Banner list:', productIDs);
-      return setDisplayProducts(
-        cloneList(products).filter(item => productIDs.includes(item.productID)),
-      );
+      
+      //Code o day
+      return setDisplayProducts(cloneList(products));
     }
 
     return setDisplayProducts(cloneList(products));
@@ -41,16 +39,16 @@ function CategoryDetailScreen(props) {
   const title = useRoute().params.title;
   const [displayProducts, setDisplayProducts] = useState([]);
 
-  const loadBanner = useCallback(async () => {
-    setError(null);
-    setIsRefreshing(true);
-    try {
-      await dispatch(bannerActions.fetchBanner());
-    } catch (err) {
-      setError(err.msg);
-    }
-    setIsRefreshing(false);
-  }, [dispatch, setIsLoading, setError]);
+  // const loadBanner = useCallback(async () => {
+  //   setError(null);
+  //   setIsRefreshing(true);
+  //   try {
+  //     await dispatch(bannerActions.fetchBanner());
+  //   } catch (err) {
+  //     setError(err.msg);
+  //   }
+  //   setIsRefreshing(false);
+  // }, [dispatch, setIsLoading, setError]);
   const cloneList = availableProducts => {
     const transformedShopItems = [];
     for (const key in availableProducts) {
