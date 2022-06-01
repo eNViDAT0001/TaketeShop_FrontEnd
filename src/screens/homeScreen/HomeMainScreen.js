@@ -18,26 +18,12 @@ import {
   WISHLIST_SCREEN,
 } from '../../constants/NavigatorIndex';
 import * as productActions from '../../store/actions/products';
-
-let timeOutID;
-const debounce = (func, delay) => {
-  return (...args) => {
-    if (timeOutID) clearTimeout(timeOutID);
-    timeOutID = setTimeout(() => {
-      func.apply(nul, args);
-    }, delay);
-  };
-};
-
 function HomeMainScreen() {
   const dispatch = useDispatch();
-  const products = useSelector(state => state.products.availableProducts);
-  let typingTimeOutRef = useRef();
-
   const navigation = useNavigation();
+  
   const [searchQuery, setSearchQuery] = React.useState('');
-  const [error, setError] = useState();
-
+  let typingTimeOutRef = useRef();
   const onChangeSearch = async query => {
     setSearchQuery(query);
     if (typingTimeOutRef.current) {

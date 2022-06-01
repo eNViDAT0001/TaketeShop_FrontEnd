@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
@@ -7,15 +7,27 @@ import ShopPage from './ShopPage';
 import Colors from '../../constants/Colors';
 import { Searchbar } from 'react-native-paper';
 import { SEARCH_BAR_HEIGHT } from '../../constants/fontsize';
+import * as productActions from '../../store/actions/products'
 
 function ShopMainScreen(props) {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState('');
+  let typingTimeOutRef = useRef();
 
-  const onChangeSearch = query => setSearchQuery(query);
+  const onChangeSearch = async query => {
+    setSearchQuery(query);
+    if (typingTimeOutRef.current) {
+      clearTimeout(typingTimeOutRef.current);
+    }
+    typingTimeOutRef.current = setTimeout(() => {
+      console.log(query)
+      dispatch(productActions.fetchProductsWithSearchKeyWords({value: query}));
+    },1000)
+  };
 
   const Page =
-    searchQuery === '' ? <ShopPage style={styles.page}/> : <SearchPage style={styles.page} keyword={searchQuery} />;
+    searchQuery === '' ? <ShopPage style={styles.page}/> : <SearchPage style={styles.page}/>;
 
   return (
     <View style={styles.screen}>
