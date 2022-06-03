@@ -7,6 +7,9 @@ export const DELETE_CART_ITEMS = 'DELETE_CART_ITEMS';
 export const UPDATE_CART_ITEMS = 'UPDATE_CART_ITEMS';
 export const SELECT_CART_ITEMS = 'SELECT_CART_ITEMS';
 export const CHECK_ALL_CART_ITEMS = 'CHECK_ALL_CART_ITEMS';
+export const PICK_CART_ITEMS = 'BUY_CART_ITEMS';
+export const PICK_ADDRESS = 'PICK_ADDRESS';
+export const MAKE_ORDER = 'MAKE_ORDER';
 
 export const fetchCartWithUserID = id => {
   return async dispatch => {
@@ -41,6 +44,7 @@ export const fetchCartWithUserID = id => {
           new CartItemsModel({
             id: resData[key].id,
             userID: resData[key].user_id,
+            categoryID: resData[key].categoryID,
             productID: resData[key].product_id,
             name: resData[key].product_name,
             quantity: resData[key].quantity,

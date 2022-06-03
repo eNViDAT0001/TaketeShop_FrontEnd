@@ -1,9 +1,10 @@
 class CartItemsModel{
     isSelected = false;
-    constructor({id, userID, productID, name, quantity , price, discount, images, createTime, updateTime}){
+    constructor({id, userID, productID, categoryID, name, quantity , price, discount, images, createTime, updateTime}){
         this.id = id;
         this.userID = userID;
         this.productID = productID;
+        this.categoryID = categoryID;
         this.name = name;
         this.quantity = quantity;
         this.price = price;

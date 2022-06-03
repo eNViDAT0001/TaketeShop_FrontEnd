@@ -8,6 +8,15 @@ import {
 
 const initialState = {
   cartItems: [],
+  cartDetail: {
+    items: [],
+    addressID: null,
+    province: '',
+    district: '',
+    ward: '',
+    quantity: 0,
+    totalBill: 0,
+  }
 };
 
 const cartReducer = (state = initialState, action) => {

@@ -1,6 +1,12 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {useCallback, useEffect, useLayoutEffect, useState} from 'react';
-import {Text, View, FlatList, StyleSheet, ActivityIndicator} from 'react-native';
+import {
+  Text,
+  View,
+  FlatList,
+  StyleSheet,
+  ActivityIndicator,
+} from 'react-native';
 import {Button, IconButton} from 'react-native-paper';
 import {useSelector, useDispatch} from 'react-redux';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -14,25 +20,25 @@ function CartMainScreen() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const cartItems = useSelector(state => state.cart.cartItems);
-  const selectedCartItem = cartItems.filter(item => item.isSelected === true)
+  const selectedCartItem = cartItems.filter(item => item.isSelected === true);
   const userID = useSelector(state => state.auth.userID);
   const onConfirmHandler = () => navigation.navigate(ADDRESS_SCREEN);
   const [flag, setFlag] = useState(true);
-  const shippingFee = selectedCartItem.length? SHIPPING_VALUE : 0;
-  const onCheckAllHandler = () =>{
-    dispatch(cartActions.checkAllCartItems(flag))
+  const shippingFee = selectedCartItem.length ? SHIPPING_VALUE : 0;
+  const onCheckAllHandler = () => {
+    dispatch(cartActions.checkAllCartItems(flag));
     setFlag(!flag);
-  }
-  const displayCount = () =>{
+  };
+  const displayCount = () => {
     let count = 0;
-    selectedCartItem.map(item => (count += item.quantity))
+    selectedCartItem.map(item => (count += item.quantity));
     return count;
-  }
-  const displayTotal = () =>{
+  };
+  const displayTotal = () => {
     let total = 0;
-    selectedCartItem.map(item => (total += item.quantity*item.discountPrice))
+    selectedCartItem.map(item => (total += item.quantity * item.discountPrice));
     return total;
-  }
+  };
 
   const [isLoading, setIsLoading] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -80,11 +86,19 @@ function CartMainScreen() {
   return (
     <View style={styles.screen}>
       <Header title={'Giỏ hàng'} back={true}>
-        <IconButton
-          icon="playlist-check"
-          onPress={onCheckAllHandler}
-          color={Colors.iconColor}
-        />
+        {flag ? (
+          <IconButton
+            icon="checkbox-blank-circle-outline"
+            onPress={onCheckAllHandler}
+            color={Colors.backgroundColor}
+          />
+        ) : (
+          <IconButton
+            icon="checkbox-blank-circle"
+            onPress={onCheckAllHandler}
+            color={Colors.backgroundColor}
+          />
+        )}
       </Header>
       {cartItems.length ? (
         <>
@@ -108,11 +122,13 @@ function CartMainScreen() {
             </View>
             <View style={styles.row}>
               <Text style={styles.title}>Thuế VAT (8%):</Text>
-              <Text style={styles.value}>{(displayTotal()/100)*5}</Text>
+              <Text style={styles.value}>{(displayTotal() / 100) * 5}</Text>
             </View>
             <View style={styles.rowTotal}>
               <Text style={styles.titleTotal}>Tổng cộng</Text>
-              <Text style={styles.valueTotal}>{(displayTotal()/100)*5 + shippingFee + displayTotal()}</Text>
+              <Text style={styles.valueTotal}>
+                {(displayTotal() / 100) * 5 + shippingFee + displayTotal()}
+              </Text>
             </View>
           </View>
           <View style={styles.buttonContainer}>
