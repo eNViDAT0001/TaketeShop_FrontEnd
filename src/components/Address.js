@@ -1,39 +1,50 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {Button, IconButton} from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useDispatch, useSelector } from 'react-redux';
 import Colors from '../constants/Colors';
 import Header from './UI/Header';
-function Address() {
+import * as addressActions from '../store/actions/address'
+import { useNavigation } from '@react-navigation/native';
+import { ADD_ADDRESS_SCREEN } from '../constants/NavigatorIndex';
+function Address(props) {
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+  const token = useSelector(state => state.auth.token);
+  const isSelectedBorder = props.item.isSelected? Colors.iconColor : '#9098B1';
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Title</Text>
-      <Text style={styles.address}>Title</Text>
-      <Text style={styles.number}>Title</Text>
+    <View>
+      <TouchableOpacity activeOpacity={0.8} onPress={() => dispatch(addressActions.selectAddressItem(props.item.addressID))}>
+      <View style={{...styles.container, borderColor: isSelectedBorder}}>
+      <Text style={styles.title}>{props.item.name}</Text>
+      <Text style={styles.address}>{`${props.item.street}, ${props.item.ward}, ${props.item.district}, ${props.item.province}`}</Text>
+      <Text style={styles.number}>{props.item.phone}</Text>
       <View style={styles.actionContainer}>
-        <Button
+        {/* <Button
           mode="contained"
           contentStyle={styles.buttonText}
           style={styles.button}
           color={Colors.primaryColor}
           labelStyle={{fontSize: 15}}
-          onPress={() => console.log('Butttoonn')}>
+          onPress={() => navigation.navigate(ADD_ADDRESS_SCREEN, {id: props.item.addressID})}>
           Sửa
-        </Button>
+        </Button> */}
         <IconButton
           icon={'delete-outline'}
           color={'#9098B1'}
-          onPress={() => console.log('Butttoonn')}></IconButton>
+          onPress={() => dispatch(addressActions.deleteAddressByID(token, props.item.addressID))}></IconButton>
       </View>
+    </View>
+      </TouchableOpacity>
     </View>
   );
 }
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    borderColor: '#9098B1',
     borderRadius: 5,
-    borderWidth: 1,
+    borderWidth: 2,
     padding: 15,
     margin: 15,
     marginVertical: 5,

@@ -1,5 +1,5 @@
 class ProvinceModel{
-    constructor(provinceID, name, code, createTime, updateTime){
+    constructor({provinceID, name, code, createTime, updateTime}){
         this.provinceID = provinceID;
         this.name = name;
         this.code = code;
@@ -7,3 +7,4 @@ class ProvinceModel{
         this.updateTime = updateTime;
     }
 }
+export default ProvinceModel;

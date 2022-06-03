@@ -1,40 +1,146 @@
-import {useNavigation} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import {useNavigation, useRoute} from '@react-navigation/native';
+import React, {useCallback, useEffect, useLayoutEffect, useState} from 'react';
+import {StyleSheet, View, Text, ActivityIndicator} from 'react-native';
 import {Dropdown} from 'react-native-element-dropdown';
 import {Button, TextInput} from 'react-native-paper';
+import {useDispatch, useSelector} from 'react-redux';
 import Header from '../../components/UI/Header';
 import Colors from '../../constants/Colors';
 import {SUCCESS_SCREEN} from '../../constants/NavigatorIndex';
-import PickLocation from './PickLocation'
+import * as addressActions from '../../store/actions/address';
 
-const data = [
-  {label: 'Mua nhiều', value: 'BESTSELLER'},
-  {label: 'Giá tăng dần', value: 'INCREASE'},
-  {label: 'Giá giảm dần', value: 'DECREASE'},
-  {label: 'Ngày đánh bắt', value: 'DATE_CATCH'},
-];
 function AddAddressPage() {
-
+  const dispatch = useDispatch();
   const navigation = useNavigation();
-  const [value, setValue] = useState(null);
+
+  const provinces = useSelector(state => state.address.provinces);
+  const districts = useSelector(state => state.address.districts);
+  const wards = useSelector(state => state.address.wards);
+  const userID = useSelector(state => state.auth.userID);
+  const token = useSelector(state => state.auth.token);
+
+  const [street, setStreet] = useState('');
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
   const [isFocus, setIsFocus] = useState(false);
-  
+  const [address, setAddress] = useState({
+    provinceID: null,
+    districtID: null,
+    wardID: null,
+  });
+  const [error, setError] = useState();
+  // let flag = id;
+
+  const loadProvinces = useCallback(async () => {
+    setError(null);
+    try {
+      await dispatch(addressActions.fetchProvinces());
+    } catch (err) {
+      setError(err.msg);
+    }
+  });
+  const loadDistricts = useCallback(async () => {
+    setError(null);
+    try {
+      await dispatch(
+        addressActions.fetchDistrictsWithProvinceID(address.provinceID),
+      );
+    } catch (err) {
+      setError(err.msg);
+    }
+  });
+  const loadWards = useCallback(async () => {
+    setError(null);
+    try {
+      await dispatch(
+        addressActions.fetchWardWithProvinceIDAndProvinceID(
+          address.provinceID,
+          address.districtID,
+        ),
+      );
+    } catch (err) {
+      setError(err.msg);
+    }
+  });
+
   useEffect(() => {
-    // First-load logic
-  }, []);
+    if (!address.wardID) {
+      if (!address.districtID) {
+        if (!address.provinceID) {
+          loadProvinces().then(() => {
+            console.log('Fetch Provinces success');
+          });
+        } else {
+          loadDistricts().then(() => {
+            console.log('Fetch Districts success');
+          });
+        }
+      } else {
+        loadWards().then(() => {
+          console.log('Fetch Wards success');
+        });
+      }
+    }
+  }, [dispatch, address]);
 
-  function onCitySelect(option) {
-    // Logic khi chọn Tỉnh/Thành
+  if (error) {
+    return (
+      <View style={styles.centered}>
+        <Text>Có lỗi, vui lòng thử lại</Text>
+        <Button
+          title="Thử lại"
+          onPress={loadProvinces}
+          color={Colors.primaryColor}
+        />
+      </View>
+    );
   }
 
-  function onDistrictSelect(option) {
-    // Logic khi chọn Phường/Xã
-  }
+  const onCitySelect = option => {
+    setAddress({
+      provinceID: option,
+      districtID: null,
+      wardID: null,
+    });
+  };
 
-  function onWardSelect(option) {
-    // Logic khi chọn Quận/Huyện
-  }
+  const onDistrictSelect = option => {
+    setAddress({
+      ...address,
+      districtID: option,
+      wardID: null,
+    });
+  };
+
+  const onWardSelect = option => {
+    setAddress({
+      ...address,
+      wardID: option,
+    });
+  };
+
+  const validateInput = () => {
+    //check Input Data ở đây
+    return true;
+  };
+
+  const onConfirm = () => {
+    if (validateInput()) {
+      dispatch(
+        addressActions.addAddress(
+          token,
+          userID,
+          phone,
+          address.provinceID,
+          address.districtID,
+          address.wardID,
+          street,
+          name,
+        ),
+      );
+    }
+  };
+
   return (
     <View style={styles.screen}>
       <Header title={'Thêm địa chỉ'}></Header>
@@ -45,16 +151,16 @@ function AddAddressPage() {
             placeholderStyle={styles.placeholderStyle}
             selectedTextStyle={styles.selectedTextStyle}
             iconStyle={styles.iconStyle}
-            data={data}
+            data={provinces}
             maxHeight={230}
-            labelField="label"
-            valueField="value"
+            labelField="name"
+            valueField="provinceID"
             placeholder={!isFocus ? 'Tỉnh/Thành Phố' : '...'}
-            value={value}
+            value={address.provinceID}
             onFocus={() => setIsFocus(true)}
             onBlur={() => setIsFocus(false)}
             onChange={item => {
-              setValue(item.value);
+              onCitySelect(item.provinceID);
               setIsFocus(false);
             }}
           />
@@ -65,16 +171,16 @@ function AddAddressPage() {
             placeholderStyle={styles.placeholderStyle}
             selectedTextStyle={styles.selectedTextStyle}
             iconStyle={styles.iconStyle}
-            data={data}
+            data={districts}
             maxHeight={230}
-            labelField="label"
-            valueField="value"
+            labelField="name"
+            valueField="districtID"
             placeholder={!isFocus ? 'Quận/Huyện' : '...'}
-            value={value}
+            value={address.districtID}
             onFocus={() => setIsFocus(true)}
             onBlur={() => setIsFocus(false)}
             onChange={item => {
-              setValue(item.value);
+              onDistrictSelect(item.districtID);
               setIsFocus(false);
             }}
           />
@@ -85,30 +191,53 @@ function AddAddressPage() {
             placeholderStyle={styles.placeholderStyle}
             selectedTextStyle={styles.selectedTextStyle}
             iconStyle={styles.iconStyle}
-            data={data}
+            data={wards}
             maxHeight={230}
-            labelField="label"
-            valueField="value"
+            labelField="name"
+            valueField="wardID"
             placeholder={!isFocus ? 'Phường/Xã' : '...'}
-            value={value}
+            value={address.wardID}
             onFocus={() => setIsFocus(true)}
             onBlur={() => setIsFocus(false)}
             onChange={item => {
-              setValue(item.value);
+              onWardSelect(item.wardID);
               setIsFocus(false);
             }}
           />
         </View>
-
         <TextInput
           style={styles.address}
           label={'Địa chỉ'}
           mode="outlined"
+          value={street}
+          onChangeText={txt => setStreet(txt)}
           selectionColor={Colors.primaryColor}
           activeOutlineColor={Colors.primaryColor}
           outlineColor={Colors.primaryColor}
-          underlineColorAndroid={Colors.primaryColor}
-          colo></TextInput>
+          underlineColorAndroid={Colors.primaryColor}></TextInput>
+        <View style={styles.infoContainer}>
+          <TextInput
+            style={styles.address}
+            label={'Tên'}
+            mode="outlined"
+            value={name}
+            onChangeText={txt => setName(txt)}
+            selectionColor={Colors.primaryColor}
+            activeOutlineColor={Colors.primaryColor}
+            outlineColor={Colors.primaryColor}
+            underlineColorAndroid={Colors.primaryColor}></TextInput>
+          <TextInput
+            style={styles.address}
+            label={'Số Điện Thoại'}
+            mode="outlined"
+            keyboardType="numeric"
+            value={phone}
+            onChangeText={num => setPhone(num)}
+            selectionColor={Colors.primaryColor}
+            activeOutlineColor={Colors.primaryColor}
+            outlineColor={Colors.primaryColor}
+            underlineColorAndroid={Colors.primaryColor}></TextInput>
+        </View>
       </View>
       <View style={styles.buttonContainer}>
         <Button
@@ -117,7 +246,10 @@ function AddAddressPage() {
           style={styles.button}
           color={Colors.iconColor}
           labelStyle={{fontSize: 20}}
-          onPress={() => navigation.navigate(SUCCESS_SCREEN)}>
+          onPress={() => {
+            onConfirm();
+            navigation.navigate(SUCCESS_SCREEN);
+          }}>
           Xác nhận
         </Button>
       </View>
@@ -126,6 +258,11 @@ function AddAddressPage() {
 }
 
 const styles = StyleSheet.create({
+  centered: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   screen: {
     flex: 1,
     backgroundColor: Colors.backgroundColor,

@@ -98,7 +98,9 @@ function HomePage(props) {
         <Card style={styles.cardContainer}>
           <CategoryHolder
             onRefresh={loadProducts}
-            onCategorySelect={onSelectedCategory}
+            onCategorySelect={() => {
+              navigation.navigate(CATEGORY_DETAIL_SCREEN, {title: "Giảm giá", type: "DISCOUNT"})
+            }}
             refreshing={isRefreshing}
             style={styles.bestSeller}
             title={'Giảm giá'}
@@ -110,7 +112,9 @@ function HomePage(props) {
         <Card style={styles.cardContainer}>
           <CategoryHolder
             onRefresh={loadProducts}
-            onCategorySelect={onSelectedCategory}
+            onCategorySelect={() => {
+              navigation.navigate(CATEGORY_DETAIL_SCREEN, {title: "Bán chạy", type: "BEST_SELLER"})
+            }}
             refreshing={isRefreshing}
             style={styles.bestSeller}
             title={'Bán chạy'}
@@ -122,7 +126,9 @@ function HomePage(props) {
         <Card style={styles.cardContainer}>
           <CategoryHolder
             onRefresh={loadProducts}
-            onCategorySelect={onSelectedCategory}
+            onCategorySelect={() => {
+              navigation.navigate(CATEGORY_DETAIL_SCREEN, {title: "Dành cho bạn", type: "RECOMMENDER"})
+            }}
             refreshing={isRefreshing}
             style={styles.forYou}
             title={'Dành cho bạn'}

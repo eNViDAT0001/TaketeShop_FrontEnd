@@ -4,6 +4,9 @@ import ImageModel from '../../models/image/imageModel';
 
 export const SET_CART_ITEMS = 'SET_CART_ITEMS';
 export const DELETE_CART_ITEMS = 'DELETE_CART_ITEMS';
+export const UPDATE_CART_ITEMS = 'UPDATE_CART_ITEMS';
+export const SELECT_CART_ITEMS = 'SELECT_CART_ITEMS';
+export const CHECK_ALL_CART_ITEMS = 'CHECK_ALL_CART_ITEMS';
 
 export const fetchCartWithUserID = id => {
   return async dispatch => {
@@ -56,10 +59,10 @@ export const fetchCartWithUserID = id => {
     }
   };
 };
-export const updateCartItemQuantityByID = (token, cartID, quantity) => {
+export const updateCartItemQuantityByID = (token, itemID, quantity) => {
   return async dispatch => {
     try {
-      await fetch(`http://localhost:5000/cart/item/${cartID}`, {
+      await fetch(`http://localhost:5000/cart/item/${itemID}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -68,11 +71,21 @@ export const updateCartItemQuantityByID = (token, cartID, quantity) => {
         body: JSON.stringify({
           quantity: quantity,
         }),
-      }).then(console.log("Cart Item left:",quantity));
+      }).then(dispatch({type: UPDATE_CART_ITEMS, id: itemID, quantity: quantity}));
     } catch (err) {
       console.log(err);
       throw err;
     }
+  };
+};
+export const selectCartItem = (itemID, flag) => {
+  return async dispatch => {
+    dispatch({type: SELECT_CART_ITEMS, id: itemID, flag: flag})
+  };
+};
+export const checkAllCartItems = (flag) => {
+  return async dispatch => {
+    dispatch({type: CHECK_ALL_CART_ITEMS, flag: flag})
   };
 };
 export const deleteCartItemByID = (token, cartID) => {

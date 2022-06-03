@@ -1,5 +1,5 @@
 import {useNavigation} from '@react-navigation/native';
-import React, {useLayoutEffect, useRef, useState} from 'react';
+import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {
   StyleSheet,
   Image,
@@ -23,6 +23,11 @@ function CartItems(props) {
   const dispatch = useDispatch();
   const token = useSelector(state => state.auth.token);
   const [quantity, setQuantity] = useState(+props.item.quantity);
+  const [selected, setSelected] = useState(props.item.isSelected);
+
+  useLayoutEffect(() => {
+    setSelected(props.item.isSelected)
+  }, [props.item.isSelected])
 
   let typingTimeOutRef = useRef();
 
@@ -45,9 +50,12 @@ function CartItems(props) {
           quantity + count,
         ),
       );
-    }, 1000);
+    }, 500);
   };
-
+  const onSelect = () => {
+    setSelected(!selected);
+    dispatch(cartActions.selectCartItem(props.item.id, selected))
+  }
   let TouchableCmp = TouchableOpacity;
 
   if (Platform.OS === 'android' && Platform.Version >= 21) {
@@ -77,19 +85,8 @@ function CartItems(props) {
 
             <View style={styles.actionContainer}>
               <View style={styles.iconContainer}>
-                <TouchableCmp
-                  onPress={() => console.log('Icon heart clickkkk')}>
-                  <View style={styles.icon}>
-                    <MaterialCommunityIcons
-                      name="heart"
-                      color={'#FB7181'}
-                      size={26}
-                    />
-                  </View>
-                </TouchableCmp>
-
-                <TouchableCmp
-                  onPress={() => console.log('Icon delete clickkkk')}>
+              <TouchableCmp
+                  onPress={() => dispatch(cartActions.deleteCartItemByID(token, props.item.id))}>
                   <View style={styles.icon}>
                     <MaterialCommunityIcons
                       name="delete"
@@ -98,6 +95,29 @@ function CartItems(props) {
                     />
                   </View>
                 </TouchableCmp>
+                {selected ? (
+                  <TouchableCmp
+                    onPress={onSelect}>
+                    <View style={styles.icon}>
+                      <MaterialCommunityIcons
+                        name="checkbox-blank-circle"
+                        color={'#9098B1'}
+                        size={26}
+                      />
+                    </View>
+                  </TouchableCmp>
+                ) : (
+                  <TouchableCmp
+                    onPress={onSelect}>
+                    <View style={styles.icon}>
+                      <MaterialCommunityIcons
+                        name="checkbox-blank-circle-outline"
+                        color={'#9098B1'}
+                        size={26}
+                      />
+                    </View>
+                  </TouchableCmp>
+                )}
               </View>
               <View style={styles.addContainer}>
                 <TouchableCmp onPress={() => onChangeQuantity(-1)}>

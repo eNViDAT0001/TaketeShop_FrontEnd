@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import AppLoading from 'expo-app-loading';
 import * as Font from 'expo-font';
-import {Provider} from 'react-redux'
+import {Provider} from 'react-redux';
 import {createStore, combineReducers, applyMiddleware} from 'redux';
-import ReduxThunk from 'redux-thunk'
-import { LogBox, StatusBar } from "react-native";
+import ReduxThunk from 'redux-thunk';
+import {LogBox, StatusBar} from 'react-native';
 import AppNavigator from './src/navigation/AppNavigator.js';
 import productReducer from './src/store/reducers/products';
 import authReducer from './src/store/reducers/auth';
@@ -13,10 +13,9 @@ import chanelReducer from './src/store/reducers/chanel';
 import commentReducer from './src/store/reducers/comment';
 import StaffReducer from './src/store/reducers/ListStaff';
 import cartReducer from './src/store/reducers/cart';
+import addressReducer from './src/store/reducers/address';
 
-LogBox.ignoreLogs(["EventEmitter.removeListener"]);
-
-
+LogBox.ignoreLogs(['EventEmitter.removeListener']);
 
 //
 //                       _oo0oo_
@@ -41,30 +40,26 @@ LogBox.ignoreLogs(["EventEmitter.removeListener"]);
 //
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-
-
 const rootReducer = combineReducers({
   products: productReducer,
   auth: authReducer,
   banner: bannerReducer,
-  chanel : chanelReducer,
-  comment : commentReducer,
-  staff : StaffReducer,
+  chanel: chanelReducer,
+  comment: commentReducer,
+  staff: StaffReducer,
+  address: addressReducer,
   cart: cartReducer,
-   //messager : messagerReducer,
+  //messager : messagerReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
 
-
 const fetchFonts = () => {
   return Font.loadAsync({
     'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),
-    'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf')
+    'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf'),
   });
 };
-
-
 
 function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
@@ -74,22 +69,17 @@ function App() {
       <AppLoading
         startAsync={fetchFonts}
         onFinish={() => setFontLoaded(true)}
-        onError={(err) => console.log(err)}
+        onError={err => console.log(err)}
       />
     );
   }
 
-
-  return ( 
+  return (
     <Provider store={store}>
-
-      <StatusBar
-        style="auto" 
-        animated={true}
-        showHideTransition={'fade'}/>
+      <StatusBar style="auto" animated={true} showHideTransition={'fade'} />
       <AppNavigator></AppNavigator>
     </Provider>
-   );
+  );
 }
 
 export default App;

@@ -1,6 +1,6 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {useCallback, useEffect, useLayoutEffect, useState} from 'react';
-import {Text, View, FlatList, StyleSheet} from 'react-native';
+import {Text, View, FlatList, StyleSheet, ActivityIndicator} from 'react-native';
 import {Button, IconButton} from 'react-native-paper';
 import {useSelector, useDispatch} from 'react-redux';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -9,13 +9,30 @@ import Header from '../../components/UI/Header';
 import Colors from '../../constants/Colors';
 import {ADDRESS_SCREEN} from '../../constants/NavigatorIndex';
 import * as cartActions from '../../store/actions/cart';
-
+const SHIPPING_VALUE = +50000;
 function CartMainScreen() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const cartItems = useSelector(state => state.cart.cartItems);
+  const selectedCartItem = cartItems.filter(item => item.isSelected === true)
   const userID = useSelector(state => state.auth.userID);
   const onConfirmHandler = () => navigation.navigate(ADDRESS_SCREEN);
+  const [flag, setFlag] = useState(true);
+  const shippingFee = selectedCartItem.length? SHIPPING_VALUE : 0;
+  const onCheckAllHandler = () =>{
+    dispatch(cartActions.checkAllCartItems(flag))
+    setFlag(!flag);
+  }
+  const displayCount = () =>{
+    let count = 0;
+    selectedCartItem.map(item => (count += item.quantity))
+    return count;
+  }
+  const displayTotal = () =>{
+    let total = 0;
+    selectedCartItem.map(item => (total += item.quantity*item.discountPrice))
+    return total;
+  }
 
   const [isLoading, setIsLoading] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -52,13 +69,20 @@ function CartMainScreen() {
       </View>
     );
   }
-
+  if (isLoading) {
+    return (
+      <View style={styles.centered}>
+        <ActivityIndicator></ActivityIndicator>
+        <Text>Đang tải sản phẩm...</Text>
+      </View>
+    );
+  }
   return (
     <View style={styles.screen}>
       <Header title={'Giỏ hàng'} back={true}>
         <IconButton
-          icon="bell-outline"
-          onPress={() => console.log('Check all')}
+          icon="playlist-check"
+          onPress={onCheckAllHandler}
           color={Colors.iconColor}
         />
       </Header>
@@ -68,7 +92,6 @@ function CartMainScreen() {
             <FlatList
               onRefresh={loadCartItems}
               refreshing={isRefreshing}
-              keyExtractor={(item, index) => item.id}
               data={cartItems}
               renderItem={itemData => (
                 <CartItems item={itemData.item}></CartItems>
@@ -76,20 +99,20 @@ function CartMainScreen() {
           </View>
           <View style={styles.cartDetail}>
             <View style={styles.row}>
-              <Text style={styles.title}>Items (count)</Text>
-              <Text style={styles.value}>Value</Text>
+              <Text style={styles.title}>Sản phẩm ({displayCount()}):</Text>
+              <Text style={styles.value}>{displayTotal()}</Text>
             </View>
             <View style={styles.row}>
-              <Text style={styles.title}>Shipping</Text>
-              <Text style={styles.value}>Value</Text>
+              <Text style={styles.title}>Phí giao hàng:</Text>
+              <Text style={styles.value}>{shippingFee}</Text>
             </View>
             <View style={styles.row}>
-              <Text style={styles.title}>Import Charges</Text>
-              <Text style={styles.value}>Value</Text>
+              <Text style={styles.title}>Thuế VAT (8%):</Text>
+              <Text style={styles.value}>{(displayTotal()/100)*5}</Text>
             </View>
             <View style={styles.rowTotal}>
-              <Text style={styles.titleTotal}>Total Value</Text>
-              <Text style={styles.valueTotal}>Value</Text>
+              <Text style={styles.titleTotal}>Tổng cộng</Text>
+              <Text style={styles.valueTotal}>{(displayTotal()/100)*5 + shippingFee + displayTotal()}</Text>
             </View>
           </View>
           <View style={styles.buttonContainer}>

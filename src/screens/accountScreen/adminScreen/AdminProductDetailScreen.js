@@ -30,13 +30,15 @@ function AdminProductDetailScreen(props) {
   const categories = useSelector(state => state.products.categories);
   const units = useSelector(state => state.products.unit);
   const id = useRoute().params.id;
-  const product = useSelector(state => state.products.availableProducts.find(item => item.productID === id));
+  const product = useSelector(state =>
+    state.products.availableProducts.find(item => item.productID === id),
+  );
   useLayoutEffect(() => {
     if (id) {
       setName(product.name);
       setDetail(product.description);
       setQuantity(product.quantity);
-      setCategory(product.categoryID)
+      setCategory(product.categoryID);
       setPrice(product.price);
       setUnit(product.unit);
     }
@@ -275,7 +277,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   buttonContainer: {
-    margin:5,
+    margin: 5,
     marginHorizontal: 20,
     borderRadius: 40,
     color: '#4f5160',

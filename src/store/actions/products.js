@@ -135,7 +135,6 @@ export const fetchProductWithBannerID = (bannerID) => {
             updateTime: resData[key].update_time,
           }),
         );
-        console.log(resData[key].name);
       }
       dispatch({type: SET_PRODUCTS, products: loadedProducts});
     } catch (err) {
@@ -594,7 +593,6 @@ export const fetchProductDetail = id => {
   return async dispatch => {
     try {
       const response = await fetch(`http://localhost:5000/product/${id}`);
-      console.log('Product detail at :',`http://localhost:5000/product/${id}`)
       if (response.error) {
         throw new Error(response.msg);
       }

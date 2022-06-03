@@ -1,5 +1,5 @@
 class DistrictModel{
-    constructor(districtID, province, name, prefix, createTime, updateTime){
+    constructor({districtID, province, name, prefix, createTime, updateTime}){
         this.districtID = districtID;
         this.province = province;
         this.name = name;
@@ -8,3 +8,4 @@ class DistrictModel{
         this.updateTime = updateTime;
     }
 }
+export default DistrictModel;

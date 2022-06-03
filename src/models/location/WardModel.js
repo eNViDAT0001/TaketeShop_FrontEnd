@@ -1,5 +1,5 @@
 class WardModel{
-    constructor(wardID, district, province, name, prefix, createTime, updateTime){
+    constructor({wardID, district, province, name, prefix, createTime, updateTime}){
         this.wardID = wardID;
         this.district = district;
         this.province = province;
@@ -9,3 +9,4 @@ class WardModel{
         this.updateTime = updateTime;
     }
 }
+export default WardModel;
