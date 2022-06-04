@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import React, {useCallback, useEffect, useState, useLayoutEffect} from 'react';
 import {StyleSheet, View, FlatList, Text} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
@@ -9,6 +9,7 @@ function WishlistScreen(props) {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const wishlist = useSelector(state => state.products.wishlistProducts);
+  const userID = useSelector(state => state.auth.userID);
 
   const [isLoading, setIsLoading] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -18,7 +19,7 @@ function WishlistScreen(props) {
     setError(null);
     setIsRefreshing(true);
     try {
-      await dispatch(productAction.fetchWishListProducts({page: 0}));
+      await dispatch(productAction.fetchWishListProducts({userID: userID,page: 0}));
     } catch (err) {
       setError(err.msg);
     }
@@ -70,18 +71,13 @@ function WishlistScreen(props) {
         price: availableProducts[key].price,
         quantity: availableProducts[key].quantity,
         discount: availableProducts[key].discount,
-        discountPrice:
-          availableProducts[key].price -
-          (availableProducts[key].discount / 100).toFixed(2) *
-            availableProducts[key].price,
+        discountPrice: availableProducts[key].discountPrice,
         unit: availableProducts[key].unit,
         image: availableProducts[key].image[0].image,
-        category: availableProducts[key].category,
-        provider: availableProducts[key].provider,
         liked: availableProducts[key].liked,
       });
     }
-    return transformedShopItems
+    return transformedShopItems;
   };
   return (
     <View style={styles.screen}>
@@ -92,7 +88,7 @@ function WishlistScreen(props) {
         keyExtractor={(item, index) => item.productID}
         style={styles.itemList}
         numColumns={2}
-        data={shopItems(wishlist)}
+        data={wishlist}
         renderItem={itemData => (
           <ShopItems item={itemData.item}></ShopItems>
         )}></FlatList>

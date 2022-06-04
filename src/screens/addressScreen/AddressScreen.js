@@ -15,6 +15,7 @@ import Colors from '../../constants/Colors';
 import {useNavigation} from '@react-navigation/native';
 import {ADD_ADDRESS_SCREEN} from '../../constants/NavigatorIndex';
 import * as addressActions from '../../store/actions/address';
+import * as cartActions from '../../store/actions/cart';
 import {useDispatch, useSelector} from 'react-redux';
 function AddressScreen() {
   const navigation = useNavigation();
@@ -46,7 +47,9 @@ function AddressScreen() {
       setIsLoading(false);
     });
   }, [dispatch, loadAddress]);
-
+  const onConfirm = () => {
+    dispatch(cartActions.pickAddress(addresses.find(item => item.isSelected)))
+  }
   if (error) {
     return (
       <View style={styles.centered}>
@@ -91,7 +94,7 @@ function AddressScreen() {
                 style={styles.button}
                 color={Colors.iconColor}
                 labelStyle={{fontSize: 20}}
-                onPress={() => console.log('Butttoonn')}>
+                onPress={onConfirm}>
                 Xác nhận
               </Button>
             </View>

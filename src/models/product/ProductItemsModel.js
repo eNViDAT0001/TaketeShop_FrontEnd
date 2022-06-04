@@ -3,10 +3,11 @@ class ProductItemsModel{
     liked = false;
 
 
-    constructor(productID, categoryID, name, price, quantity, discount, liked, image){
+    constructor({productID, categoryID, name, unit, price, quantity, discount, liked, image}){
         this.productID = productID;
         this.categoryID = categoryID;
         this.name = name;
+        this.unit = unit;
         this.price = price;
         this.quantity = quantity;
         this.discount = discount;

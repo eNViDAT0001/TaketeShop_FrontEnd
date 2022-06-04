@@ -9,6 +9,8 @@ import Colors from '../../constants/Colors';
 import * as productActions from '../../store/actions/products';
 function ShopPage(props) {
   const products = useSelector(state => state.products.availableProducts);
+  const page = useSelector(state => state.products.page);
+
   const dispatch = useDispatch();
   const [categoryHolder, setCategoryHolder] = useState(
     useSelector(state => state.products.categories)[0],
@@ -22,6 +24,7 @@ function ShopPage(props) {
     setError(null);
     setIsRefreshing(true);
     try {
+      await dispatch(productActions.updatePage(0))
       await dispatch(
         productActions.fetchProductsWithCategoryID({
           value: categoryHolder.categoryID,

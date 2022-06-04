@@ -1,11 +1,14 @@
 import ImageModel from '../../models/image/imageModel';
 import CategoryModel from '../../models/product/CategoryModels';
+import ProductItemsModel from '../../models/product/ProductItemsModel';
 import ProductModel from '../../models/product/ProductModel';
 export const DELETE_PRODUCT = 'DELETE_PRODUCT';
 export const CREATE_PRODUCT = 'CREATE_PRODUCT';
 export const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
+export const UPDATE_FAV_PRODUCT = 'UPDATE_FAV_PRODUCT';
 export const SET_CURRENT_PRODUCTS = 'SET_CURRENT_PRODUCTS';
 export const SET_PRODUCTS = 'SET_PRODUCTS';
+export const UPDATE_PRODUCTS = 'UPDATE_PRODUCTS';
 export const PAGING_PRODUCTS = 'PAGING_PRODUCTS';
 export const PAGING_WISHLIST_PRODUCTS = 'PAGING_WISHLIST_PRODUCTS';
 export const PAGING_DISCOUNT_PRODUCTS = 'PAGING_DISCOUNT_PRODUCTS';
@@ -16,6 +19,7 @@ export const SET_WISHLIST_PRODUCTS = 'SET_WISHLIST_PRODUCTS';
 export const SET_BEST_SELLER_PRODUCTS = 'SET_BEST_SELLER_PRODUCTS';
 export const SET_RECOMMENDER_PRODUCTS = 'SET_BEST_SELLER_PRODUCTS';
 export const SET_CATEGORIES = 'SET_CATEGORIES';
+export const UPDATE_PAGE = 'UPDATE_PAGE';
 
 export const fetchProducts = ({field, value, filter, sort, page}) => {
   return async dispatch => {
@@ -72,7 +76,6 @@ export const fetchProducts = ({field, value, filter, sort, page}) => {
             quantity: resData[key].quantity,
             unit: resData[key].unit,
             discount: resData[key].discount,
-            liked: resData[key].liked,
             sold: resData[key].sold,
             image: images,
             createTime: resData[key].create_time,
@@ -88,17 +91,17 @@ export const fetchProducts = ({field, value, filter, sort, page}) => {
     }
   };
 };
-
-export const fetchProductWithBannerID = (bannerID) => {
+export const fetchProductWithBannerID = bannerID => {
   return async dispatch => {
-    try {     
+    try {
       const response = await fetch(
-        'http://localhost:5000/product/productlist/banner/' +bannerID);
+        'http://localhost:5000/product/productlist/banner/' + bannerID,
+      );
       if (response.error) {
         throw new Error(response.msg);
       }
       const resData = await response.json();
-      const loadedProducts = [];     
+      const loadedProducts = [];
       for (const key in resData) {
         const images = [];
         if (!resData[key].images) {
@@ -128,7 +131,6 @@ export const fetchProductWithBannerID = (bannerID) => {
             quantity: resData[key].quantity,
             unit: resData[key].unit,
             discount: resData[key].discount,
-            liked: resData[key].liked,
             sold: resData[key].sold,
             image: images,
             createTime: resData[key].create_time,
@@ -144,22 +146,13 @@ export const fetchProductWithBannerID = (bannerID) => {
     }
   };
 };
-export const fetchWishListProducts = ({filter, sort, page}) => {
-  const filterConvert = filter ? `filter=${filter}&` : '';
-  const sortConvert = sort ? `filter=discount&sort=${sort}&` : '';
+export const fetchWishListProducts = ({userID, page}) => {
   const pageConvert = page ? `page=${page}&` : '';
   return async dispatch => {
     try {
       const response = await fetch(
-        'http://localhost:5000/product/all?field=liked&value=1&' +
-          filterConvert +
-          sortConvert +
-          pageConvert,
+        `http://localhost:5000/wishlist/user/${userID}?${pageConvert}`,
       );
-      console.log('http://localhost:5000/product/all?field=liked&value=1&' +
-      filterConvert +
-      sortConvert +
-      pageConvert,)
 
       if (response.error) {
         throw new Error(response.msg);
@@ -186,23 +179,17 @@ export const fetchWishListProducts = ({filter, sort, page}) => {
         }
 
         loadedProducts.push(
-          new ProductModel({
+          new ProductItemsModel({
             productID: resData[key].id,
             categoryID: resData[key].category_id,
-            unitID: resData[key].unit_id,
-            userID: resData[key].user_id,
             name: resData[key].name,
+            unit: resData[key].unit,
             category: resData[key].category_name,
             description: resData[key].descriptions,
             price: resData[key].price,
             quantity: resData[key].quantity,
-            unit: resData[key].unit,
             discount: resData[key].discount,
-            liked: resData[key].liked,
-            sold: resData[key].sold,
-            image: images,
-            createTime: resData[key].create_time,
-            updateTime: resData[key].update_time,
+            image: images[0].image,
           }),
         );
       }
@@ -259,7 +246,6 @@ export const fetchDiscountProducts = ({page}) => {
             quantity: resData[key].quantity,
             unit: resData[key].unit,
             discount: resData[key].discount,
-            liked: resData[key].liked,
             sold: resData[key].sold,
             image: images,
             createTime: resData[key].create_time,
@@ -322,7 +308,6 @@ export const fetchBestSellerProducts = ({page}) => {
             quantity: resData[key].quantity,
             unit: resData[key].unit,
             discount: resData[key].discount,
-            liked: resData[key].liked,
             sold: resData[key].sold,
             image: images,
             createTime: resData[key].create_time,
@@ -399,7 +384,6 @@ export const fetchRecommenderProducts = ({
             quantity: resData[key].quantity,
             unit: resData[key].unit,
             discount: resData[key].discount,
-            liked: resData[key].liked,
             sold: resData[key].sold,
             image: images,
             createTime: resData[key].create_time,
@@ -450,7 +434,6 @@ export const fetchCategory = () => {
     }
   };
 };
-
 export const fetchProductsWithCategoryID = ({value, filter, sort, page}) => {
   return async dispatch => {
     try {
@@ -502,7 +485,6 @@ export const fetchProductsWithCategoryID = ({value, filter, sort, page}) => {
             quantity: resData[key].quantity,
             unit: resData[key].unit,
             discount: resData[key].discount,
-            liked: resData[key].liked,
             sold: resData[key].sold,
             image: images,
             createTime: resData[key].create_time,
@@ -518,25 +500,21 @@ export const fetchProductsWithCategoryID = ({value, filter, sort, page}) => {
     }
   };
 };
-export const fetchProductsWithSearchKeyWords = ({value, filter, sort, page}) => {
+export const updateProductsWithCategoryID = ({value, filter, sort, page}) => {
   return async dispatch => {
     try {
       const valueConvert = value ? `value=${value}&` : '';
       const filterConvert = filter ? `filter=${filter}&` : '';
       const sortConvert = sort ? `sort=${sort}&` : '';
       const pageConvert = page ? `page=${page}&` : '';
+
       const response = await fetch(
-        'http://localhost:5000/product/search?' +
+        'http://localhost:5000/product/productlist?' +
           valueConvert +
           filterConvert +
           sortConvert +
           pageConvert,
       );
-      console.log('http://localhost:5000/product/search?' +
-      valueConvert +
-      filterConvert +
-      sortConvert +
-      pageConvert,)
       if (response.error) {
         throw new Error(response.msg);
       }
@@ -573,7 +551,83 @@ export const fetchProductsWithSearchKeyWords = ({value, filter, sort, page}) => 
             quantity: resData[key].quantity,
             unit: resData[key].unit,
             discount: resData[key].discount,
-            liked: resData[key].liked,
+            sold: resData[key].sold,
+            image: images,
+            createTime: resData[key].create_time,
+            updateTime: resData[key].update_time,
+          }),
+        );
+      }
+      dispatch({type: UPDATE_PRODUCTS, products: loadedProducts});
+    } catch (err) {
+      // send to custom analytics server
+      console.log(err);
+      throw err;
+    }
+  };
+};
+export const fetchProductsWithSearchKeyWords = ({
+  value,
+  filter,
+  sort,
+  page,
+}) => {
+  return async dispatch => {
+    try {
+      const valueConvert = value ? `value=${value}&` : '';
+      const filterConvert = filter ? `filter=${filter}&` : '';
+      const sortConvert = sort ? `sort=${sort}&` : '';
+      const pageConvert = page ? `page=${page}&` : '';
+      const response = await fetch(
+        'http://localhost:5000/product/search?' +
+          valueConvert +
+          filterConvert +
+          sortConvert +
+          pageConvert,
+      );
+      console.log(
+        'http://localhost:5000/product/search?' +
+          valueConvert +
+          filterConvert +
+          sortConvert +
+          pageConvert,
+      );
+      if (response.error) {
+        throw new Error(response.msg);
+      }
+
+      const resData = await response.json();
+      const loadedProducts = [];
+
+      for (const key in resData) {
+        const images = [];
+        if (!resData[key].images) {
+          images.push(
+            new ImageModel(
+              -1,
+              'https://vanhoadoanhnghiepvn.vn/wp-content/uploads/2020/08/112815953-stock-vector-no-image-available-icon-flat-vector.jpg',
+            ),
+          );
+        } else {
+          const arrImage = resData[key].images.split(',');
+          for (const image in arrImage) {
+            const tempImage = arrImage[image].split(' ');
+            images.push(new ImageModel(tempImage[0], tempImage[1]));
+          }
+        }
+        loadedProducts.push(
+          new ProductModel({
+            productID: resData[key].id,
+            categoryID: resData[key].category_id,
+            unitID: resData[key].unit_id,
+            userID: resData[key].user_id,
+            name: resData[key].name,
+            category: resData[key].category_name,
+            description: resData[key].descriptions,
+            price: resData[key].price,
+            quantity: resData[key].quantity,
+            unit: resData[key].unit,
+            discount: resData[key].discount,
             sold: resData[key].sold,
             image: images,
             createTime: resData[key].create_time,
@@ -616,14 +670,53 @@ export const fetchProductDetail = id => {
         quantity: resData[0].quantity,
         unit: resData[0].unit,
         discount: resData[0].discount,
-        liked: resData[0].liked,
         sold: resData[0].sold,
         image: images,
         createTime: resData[0].create_time,
         updateTime: resData[0].update_time,
       });
+
       dispatch({type: SET_CURRENT_PRODUCTS, product: product});
     } catch (error) {
+      console.log(err);
+      throw err;
+    }
+  };
+};
+export const updateFavProduct = ({userID, token, productID, liked}) => {
+  return async dispatch => {
+    const productIDConvert = productID ? `productID=${userID}&` : '';
+    const userIDConvert = userID ? `userID=${userID}&` : '';
+    console.log(liked);
+    try {
+      if (liked) {
+        await fetch(
+          `http://localhost:5000/wishlist/item?${userIDConvert}${productIDConvert}`,
+          {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+              authorization: 'Bearer ' + token,
+            },
+            // }).then(() => console.log('Delete from Wishlist'));
+          },
+        );
+        dispatch({type: UPDATE_FAV_PRODUCT});
+      } else {
+        await fetch(`http://localhost:5000/wishlist/add`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            authorization: 'Bearer ' + token,
+          },
+          body: JSON.stringify({
+            userID: userID,
+            productID: productID,
+          }),
+        }).then(() => console.log('Add to Wishlist'));
+        dispatch({type: UPDATE_FAV_PRODUCT});
+      }
+    } catch (err) {
       console.log(err);
       throw err;
     }
@@ -678,5 +771,11 @@ export const createProduct = (
         user_id,
       },
     });
+  };
+};
+
+export const updatePage = page => {
+  return async dispatch => {
+    dispatch({type: UPDATE_PAGE, page: page});
   };
 };

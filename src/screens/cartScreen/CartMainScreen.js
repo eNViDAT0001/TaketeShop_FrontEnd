@@ -6,6 +6,7 @@ import {
   FlatList,
   StyleSheet,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
 import {Button, IconButton} from 'react-native-paper';
 import {useSelector, useDispatch} from 'react-redux';
@@ -22,7 +23,16 @@ function CartMainScreen() {
   const cartItems = useSelector(state => state.cart.cartItems);
   const selectedCartItem = cartItems.filter(item => item.isSelected === true);
   const userID = useSelector(state => state.auth.userID);
-  const onConfirmHandler = () => navigation.navigate(ADDRESS_SCREEN);
+  const onConfirmHandler = () => {
+    if (selectedCartItem.length) {
+      dispatch(cartActions.pickCartItems(selectedCartItem, displayCount(), (displayTotal() / 100) * 5 + shippingFee + displayTotal()));
+      navigation.navigate(ADDRESS_SCREEN);
+    } else {
+      Alert.alert('Giỏ hàng trống','Vui lòng chọn sản phẩm trong giỏ hàng!', [
+        {text: 'Okay'},
+      ]);
+    }
+  };
   const [flag, setFlag] = useState(true);
   const shippingFee = selectedCartItem.length ? SHIPPING_VALUE : 0;
   const onCheckAllHandler = () => {

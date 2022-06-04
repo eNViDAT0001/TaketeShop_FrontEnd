@@ -34,6 +34,7 @@ export const fetchAddress = userID => {
             wardID: resData[key].ward_id,
             userID: resData[key].user_id,
             name: resData[key].name,
+            gender: resData[key].gender,
             phone: resData[key].phone,
             province: resData[key].province,
             district: resData[key].district,
@@ -119,6 +120,7 @@ export const updateAddress = (
   districtID,
   wardID,
   street,
+  gender,
   name,
 ) => {
   return async dispatch => {
@@ -135,6 +137,7 @@ export const updateAddress = (
         districtID: districtID,
         wardID: wardID,
         street: street,
+        gender: gender,
         name: name,
       }),
     });

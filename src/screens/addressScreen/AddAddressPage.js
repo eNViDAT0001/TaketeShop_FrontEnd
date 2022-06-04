@@ -1,6 +1,6 @@
-import {useNavigation, useRoute} from '@react-navigation/native';
-import React, {useCallback, useEffect, useLayoutEffect, useState} from 'react';
-import {StyleSheet, View, Text, ActivityIndicator} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import React, {useCallback, useEffect, useState} from 'react';
+import {StyleSheet, View, Text} from 'react-native';
 import {Dropdown} from 'react-native-element-dropdown';
 import {Button, TextInput} from 'react-native-paper';
 import {useDispatch, useSelector} from 'react-redux';
@@ -9,6 +9,10 @@ import Colors from '../../constants/Colors';
 import {SUCCESS_SCREEN} from '../../constants/NavigatorIndex';
 import * as addressActions from '../../store/actions/address';
 
+const dataGender = [
+  {label: 'Nam', value: '1'},
+  {label: 'Nữ', value: '0'},
+];
 function AddAddressPage() {
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -23,6 +27,7 @@ function AddAddressPage() {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [isFocus, setIsFocus] = useState(false);
+  const [gender, setGender] = useState(dataGender[0]);
   const [address, setAddress] = useState({
     provinceID: null,
     districtID: null,
@@ -135,6 +140,7 @@ function AddAddressPage() {
           address.districtID,
           address.wardID,
           street,
+          gender,
           name,
         ),
       );
@@ -226,17 +232,38 @@ function AddAddressPage() {
             activeOutlineColor={Colors.primaryColor}
             outlineColor={Colors.primaryColor}
             underlineColorAndroid={Colors.primaryColor}></TextInput>
-          <TextInput
-            style={styles.address}
-            label={'Số Điện Thoại'}
-            mode="outlined"
-            keyboardType="numeric"
-            value={phone}
-            onChangeText={num => setPhone(num)}
-            selectionColor={Colors.primaryColor}
-            activeOutlineColor={Colors.primaryColor}
-            outlineColor={Colors.primaryColor}
-            underlineColorAndroid={Colors.primaryColor}></TextInput>
+          <View
+            style={{
+              flexDirection: 'row',
+            }}>
+            <TextInput
+              style={styles.phone}
+              label={'Số Điện Thoại'}
+              mode="outlined"
+              keyboardType="numeric"
+              value={phone}
+              onChangeText={num => setPhone(num)}
+              selectionColor={Colors.primaryColor}
+              activeOutlineColor={Colors.primaryColor}
+              outlineColor={Colors.primaryColor}
+              underlineColorAndroid={Colors.primaryColor}></TextInput>
+            <Dropdown
+              style={styles.gender}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              // containerStyle={styles.gender}
+              iconStyle={styles.iconStyle}
+              data={dataGender}
+              maxHeight={130}
+              labelField="label"
+              valueField="value"
+              placeholder={'Giới tính...'}
+              value={gender.value}
+              onChange={item => {
+                setGender(item);
+              }}
+            />
+          </View>
         </View>
       </View>
       <View style={styles.buttonContainer}>
@@ -316,7 +343,21 @@ const styles = StyleSheet.create({
     padding: 10,
     flex: 1,
     alignContent: 'flex-end',
-    flex: 1,
+  },
+  phone:{
+    backgroundColor: Colors.backgroundColor,
+    marginTop: 10,
+    flex: 2
+  },
+  gender:{
+    height: 50,
+    borderColor: 'gray',
+    borderWidth: 0.5,
+    paddingHorizontal: 10,
+    backgroundColor: Colors.backgroundColor,
+    marginTop: 20,
+    marginLeft: 10,
+    flex: 1
   },
   button: {
     height: 50,

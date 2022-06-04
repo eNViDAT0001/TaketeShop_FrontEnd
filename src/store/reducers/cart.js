@@ -1,6 +1,8 @@
 import {
   CHECK_ALL_CART_ITEMS,
   DELETE_CART_ITEMS,
+  PICK_ADDRESS,
+  PICK_CART_ITEMS,
   SELECT_CART_ITEMS,
   SET_CART_ITEMS,
   UPDATE_CART_ITEMS,
@@ -10,13 +12,10 @@ const initialState = {
   cartItems: [],
   cartDetail: {
     items: [],
-    addressID: null,
-    province: '',
-    district: '',
-    ward: '',
-    quantity: 0,
-    totalBill: 0,
-  }
+    address: {},
+    quantity: +0,
+    totalBill: +0,
+  },
 };
 
 const cartReducer = (state = initialState, action) => {
@@ -50,7 +49,7 @@ const cartReducer = (state = initialState, action) => {
         ...state,
         cartItems: [
           ...state.cartItems.map(item => {
-              return {...item, isSelected: action.flag};
+            return {...item, isSelected: action.flag};
           }),
         ],
       };
@@ -65,6 +64,42 @@ const cartReducer = (state = initialState, action) => {
             return item;
           }),
         ],
+      };
+    }
+    case PICK_CART_ITEMS: {
+      return {
+        ...state,
+        cartDetail: {
+          ...state.cartDetail,
+          items: action.items,
+          quantity: action.quantity,
+          totalBill: action.totalBill,
+        },
+      };
+    }
+    case PICK_ADDRESS: {
+      console.log({
+        ...state.cartDetail,
+        address: action.address,
+      }.address);
+      console.log({
+        ...state.cartDetail,
+        address: action.address,
+      }.items);
+      console.log({
+        ...state.cartDetail,
+        address: action.address,
+      }.quantity);console.log({
+        ...state.cartDetail,
+        address: action.address,
+      }.totalBill);
+
+      return {
+        ...state,
+        cartDetail: {
+          ...state.cartDetail,
+          address: action.address,
+        },
       };
     }
     default: {

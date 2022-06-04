@@ -7,7 +7,7 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
-  Alert
+  Alert,
 } from 'react-native';
 import {IconButton} from 'react-native-paper';
 import StarRating from 'react-native-star-rating';
@@ -16,10 +16,10 @@ import CategoryHolder from '../../components/CategoryHolder';
 import Comment from '../../components/Comment';
 import Card from '../../components/UI/Card';
 import Colors from '../../constants/Colors';
-import {COMMENT_SCREEN} from '../../constants/NavigatorIndex';
+import {CART_MAIN_SCREEN, COMMENT_SCREEN} from '../../constants/NavigatorIndex';
 import PagerView from 'react-native-pager-view';
-import * as commentActions from '../../store/actions/comment'
-import * as productActions from '../../store/actions/products'
+import * as commentActions from '../../store/actions/comment';
+import * as productActions from '../../store/actions/products';
 
 function ProductDetailScreen(props) {
   const route = useRoute();
@@ -27,23 +27,44 @@ function ProductDetailScreen(props) {
   const navigation = useNavigation();
   const product = useSelector(state => state.products.currentProduct);
   const comments = useSelector(state => state.comment.productComments);
-  const recommenderProducts = useSelector(state => state.products.availableProducts);
+  const userID = useSelector(state => state.auth.userID);
+  const token = useSelector(state => state.auth.token);
+  console.log(product.liked)
+  const [liked, setLiked] = useState(product.liked)
+  const recommenderProducts = useSelector(
+    state => state.products.availableProducts,
+  );
   const productID = route.params.id;
   const [error, setError] = useState();
 
   const onCommentPress = () => {
     navigation.navigate(COMMENT_SCREEN, {id: productID});
   };
+  const onCartPress = () => {
+    navigation.navigate(CART_MAIN_SCREEN);
+  };
+  const onHeartPress = async () => {
+    await setLiked(!liked);
+    await dispatch(
+      productActions.updateFavProduct({
+        userID: userID,
+        token: token,
+        productID: productID,
+        liked: product.liked,
+      }),
+    );
+
+  };
 
   const loadProduct = useCallback(async () => {
     try {
-      await dispatch(productActions.fetchProductDetail(productID))
-      await dispatch(commentActions.fetchCommentWithProductID(productID))
+      await dispatch(productActions.fetchProductDetail(productID));
+      await dispatch(commentActions.fetchCommentWithProductID(productID));
     } catch (err) {
       setError(err.msg);
     }
-  }, [dispatch, setError]);
-  
+  }, [dispatch, setError, productID]);
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: '',
@@ -62,28 +83,36 @@ function ProductDetailScreen(props) {
             icon="cart-outline"
             color={Colors.primaryColor}
             size={20}
-            onPress={() => console.log('Cart Cart')}
+            onPress={onCartPress}
           />
-          <IconButton
-            icon="heart-outline"
-            color={Colors.primaryColor}
-            size={20}
-            onPress={() => console.log('Love Love')}
-          />
+          {product.liked ? (
+            <IconButton
+              icon="heart"
+              color={Colors.primaryColor}
+              size={20}
+              onPress={onHeartPress}
+            />
+          ) : (
+            <IconButton
+              icon="heart-outline"
+              color={Colors.primaryColor}
+              size={20}
+              onPress={onHeartPress}
+            />
+          )}
         </View>
       ),
     });
-
     return navigation.addListener('focus', loadProduct);
-  },[dispatch, loadProduct, productID]);
+  }, [dispatch, loadProduct, productID]);
   useEffect(() => {
     if (error) {
       Alert.alert('An Error Occurred!', error + ', please try again!', [
         {text: 'Okay'},
       ]);
     }
-  }, [error])
-  
+  }, [error]);
+
   const cloneList = availableProducts => {
     const transformedShopItems = [];
     for (const key in availableProducts) {
@@ -171,7 +200,11 @@ function ProductDetailScreen(props) {
               <Text style={styles.titleComment}> Bình luận về sản phẩm</Text>
               <Text style={styles.expandComment}> {'>'} </Text>
             </View>
-            {!comments.length? <Text>   Không có bình luận</Text> : <Comment data={comments[0]}></Comment>}
+            {!comments.length ? (
+              <Text> Không có bình luận</Text>
+            ) : (
+              <Comment data={comments[0]}></Comment>
+            )}
           </TouchableOpacity>
         </View>
         <Card style={styles.cardContainer}>

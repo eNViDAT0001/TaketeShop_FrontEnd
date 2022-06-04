@@ -1,56 +1,84 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { Dropdown } from 'react-native-element-dropdown';
-import { StyleSheet, FlatList, View, Text } from 'react-native';
+import React, {useEffect, useState, useCallback, useLayoutEffect} from 'react';
+import {Dropdown} from 'react-native-element-dropdown';
+import {StyleSheet, FlatList, View, Text} from 'react-native';
 import Header from '../../components/UI/Header';
 import Colors from '../../constants/Colors';
 import ShopItems from '../../components/ShopItems';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import {useDispatch, useSelector} from 'react-redux';
+import {useNavigation, useRoute} from '@react-navigation/native';
+import * as productActions from '../../store/actions/products';
 const BESTSELLER = 'BESTSELLER';
 const INCREASE = 'INCREASE';
 const DECREASE = 'DECREASE';
 const DATE_CATCH = 'DATE_CATCH';
 const data = [
-  { label: 'Mua nhiều', value: BESTSELLER },
-  { label: 'Giá tăng dần', value: INCREASE },
-  { label: 'Giá giảm dần', value: DECREASE },
-  { label: 'Ngày đánh bắt', value: DATE_CATCH },
+  {label: 'Mua nhiều', value: BESTSELLER},
+  {label: 'Giá tăng dần', value: INCREASE},
+  {label: 'Giá giảm dần', value: DECREASE},
+  {label: 'Ngày đánh bắt', value: DATE_CATCH},
 ];
 function CategoryDetailScreen(props) {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
   let products = useSelector(state => state.products.availableProducts);
+  const page = useSelector(state => state.products.page);
   const id = useRoute().params.id;
   const type = useRoute().params.type;
   const title = useRoute().params.title;
   const [displayProducts, setDisplayProducts] = useState([]);
 
+  const [isLoading, setIsLoading] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [error, setError] = useState();
+
+  const loadProducts = useCallback(async () => {
+    setError(null);
+    setIsRefreshing(true);
+    try {
+      await dispatch(
+        productActions.updateProductsWithCategoryID({
+          value: id,
+          page: page,
+        }),
+      );
+    } catch (err) {
+      setError(err.msg);
+    }
+    setIsRefreshing(false);
+  }, [dispatch, setIsLoading, setError, page]);
+
+  useLayoutEffect(() => {
+    return navigation.addListener('focus', loadProducts);
+  }, [loadProducts]);
 
   useEffect(() => {
-    switch(type){
-      case "DISCOUNT":{
+    switch (type) {
+      case 'DISCOUNT': {
         return console.log('Discount');
       }
-      case "BEST_SELLER":{
+      case 'BEST_SELLER': {
         return console.log('Best Seller');
       }
-      case "RECOMMENDER":{
+      case 'RECOMMENDER': {
         return console.log('Recommender');
       }
-      case "BANNER":{
+      case 'BANNER': {
         return console.log('Banner');
       }
-      case "CATEGORY":{
+      case 'CATEGORY': {
         return console.log('Category');
       }
-      default:{
+      default: {
+        setIsLoading(true);
+        loadProducts().then(() => {
+          setIsLoading(false);
+        });
         return setDisplayProducts(cloneList(products));
       }
     }
 
     //Sua cho nay
-  }, [title, id]); 
-
-
+  }, [title, id, dispatch, loadProducts]);
 
   const cloneList = availableProducts => {
     const transformedShopItems = [];
@@ -65,7 +93,7 @@ function CategoryDetailScreen(props) {
         discountPrice:
           availableProducts[key].price -
           (availableProducts[key].discount / 100).toFixed(2) *
-          availableProducts[key].price,
+            availableProducts[key].price,
         unit: availableProducts[key].unit,
         image: availableProducts[key].image[0].image,
         category: availableProducts[key].category,
@@ -105,10 +133,10 @@ function CategoryDetailScreen(props) {
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
   return (
-    <View style={{ ...styles.container, ...props.style }}>
+    <View style={{...styles.container, ...props.style}}>
       <Header title={title}></Header>
       <Dropdown
-        style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
+        style={[styles.dropdown, isFocus && {borderColor: 'blue'}]}
         placeholderStyle={styles.placeholderStyle}
         selectedTextStyle={styles.selectedTextStyle}
         iconStyle={styles.iconStyle}
@@ -126,13 +154,16 @@ function CategoryDetailScreen(props) {
         }}
       />
       <FlatList
+        onRefresh={loadProducts}
+        refreshing={isRefreshing}
+        onEndReachedThreshold={0.5}
+        onEndReached={() => dispatch(productActions.updatePage(page + 1))}
         style={styles.itemList}
         horizontal={false}
         numColumns={2}
         data={filter(value)}
         renderItem={itemData => (
-          <ShopItems
-            item={itemData.item}></ShopItems>
+          <ShopItems item={itemData.item}></ShopItems>
         )}></FlatList>
     </View>
   );

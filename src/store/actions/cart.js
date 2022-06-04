@@ -75,7 +75,9 @@ export const updateCartItemQuantityByID = (token, itemID, quantity) => {
         body: JSON.stringify({
           quantity: quantity,
         }),
-      }).then(dispatch({type: UPDATE_CART_ITEMS, id: itemID, quantity: quantity}));
+      }).then(
+        dispatch({type: UPDATE_CART_ITEMS, id: itemID, quantity: quantity}),
+      );
     } catch (err) {
       console.log(err);
       throw err;
@@ -84,12 +86,12 @@ export const updateCartItemQuantityByID = (token, itemID, quantity) => {
 };
 export const selectCartItem = (itemID, flag) => {
   return async dispatch => {
-    dispatch({type: SELECT_CART_ITEMS, id: itemID, flag: flag})
+    dispatch({type: SELECT_CART_ITEMS, id: itemID, flag: flag});
   };
 };
-export const checkAllCartItems = (flag) => {
+export const checkAllCartItems = flag => {
   return async dispatch => {
-    dispatch({type: CHECK_ALL_CART_ITEMS, flag: flag})
+    dispatch({type: CHECK_ALL_CART_ITEMS, flag: flag});
   };
 };
 export const deleteCartItemByID = (token, cartID) => {
@@ -107,5 +109,40 @@ export const deleteCartItemByID = (token, cartID) => {
       console.log(error);
       throw error;
     }
+  };
+};
+export const pickCartItems = (items, quantity, totalBill) => {
+  return async dispatch => {
+    dispatch({type: PICK_CART_ITEMS, items: items, quantity: quantity, totalBill: totalBill });
+  };
+};
+export const pickAddress = address => {
+  return async dispatch => {
+    dispatch({type: PICK_ADDRESS, address: address});
+  };
+};
+
+export const makeOrder = (token, user, items, address, quantity, totalBill, payment) => {
+  return async dispatch => {
+    await fetch(`http://localhost:5000/order/add`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: 'Bearer ' + token,
+      },
+      body: JSON.stringify({
+        userID: user.userID,
+        addressID: address.addressID,
+        name: user.name,
+        gender: user.gender,
+        phone: user.phone,
+        province: address.province,
+        district: address.district,
+        ward: address.province,
+        quantity: quantity,
+        totalCost: totalBill,
+        payment: payment,
+      }),
+    }).then(() => console.log("Make order Success"));
   };
 };

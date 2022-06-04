@@ -17,7 +17,7 @@ function Address(props) {
     <View>
       <TouchableOpacity activeOpacity={0.8} onPress={() => dispatch(addressActions.selectAddressItem(props.item.addressID))}>
       <View style={{...styles.container, borderColor: isSelectedBorder}}>
-      <Text style={styles.title}>{props.item.name}</Text>
+      <Text style={styles.title}>{props.item.name} ({props.item.gender? "Nam" : "Nữ"})</Text>
       <Text style={styles.address}>{`${props.item.street}, ${props.item.ward}, ${props.item.district}, ${props.item.province}`}</Text>
       <Text style={styles.number}>{props.item.phone}</Text>
       <View style={styles.actionContainer}>

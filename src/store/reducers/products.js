@@ -1,4 +1,7 @@
-import { DEFAULT_PRODUCT, PRODUCT_ITEMS_DUMMY_DATA } from '../../dummy_database/dummy-data';
+import {
+  DEFAULT_PRODUCT,
+  PRODUCT_ITEMS_DUMMY_DATA,
+} from '../../dummy_database/dummy-data';
 import ProductModel from '../../models/product/ProductModel';
 import {
   CREATE_PRODUCT,
@@ -15,6 +18,9 @@ import {
   SET_PRODUCT_WITH_CATEGORY_ID,
   SET_RECOMMENDER_PRODUCTS,
   SET_WISHLIST_PRODUCTS,
+  UPDATE_FAV_PRODUCT,
+  UPDATE_PAGE,
+  UPDATE_PRODUCTS,
 } from '../actions/products';
 
 const initialState = {
@@ -26,6 +32,7 @@ const initialState = {
   categories: [],
   units: [],
   recommenderProducts: [],
+  page: 0,
 };
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -33,6 +40,19 @@ export default (state = initialState, action) => {
       return {
         ...state,
         availableProducts: action.products,
+      };
+    case UPDATE_PRODUCTS:
+      const products = action.products;
+      let updateProducts = [...state.availableProducts];
+      if (products.length)
+        updateProducts = [
+          ...state.availableProducts
+            .splice(state.availableProducts.length - 1, 1)
+            .concat(action.products),
+        ];
+      return {
+        ...state,
+        availableProducts: updateProducts,
       };
     case SET_WISHLIST_PRODUCTS:
       return {
@@ -85,9 +105,30 @@ export default (state = initialState, action) => {
         recommenderProducts: state.recommenderProducts.concat(action.products),
       };
     case SET_CURRENT_PRODUCTS:
+      const index = state.wishlistProducts.findIndex(
+        item => item.productID === action.product.productID,
+      );
+      if (index >= 0) {
+        action.product.liked = true;
+      } else {
+        action.product.liked = false;
+      }
       return {
         ...state,
         currentProduct: action.product,
+      };
+    case UPDATE_FAV_PRODUCT:
+      return {
+        ...state,
+        currentProduct: {
+          ...state.currentProduct,
+          liked: !state.currentProduct.liked,
+        },
+      };
+    case UPDATE_PAGE:
+      return {
+        ...state,
+        page: action.page,
       };
     case CREATE_PRODUCT:
       const newProduct = new ProductModel({
@@ -102,7 +143,7 @@ export default (state = initialState, action) => {
         quantity: action.productData.quantity,
         unit: action.productData.unit,
         discount: action.productData.discount,
-        liked: 0,
+        liked: false,
         sold: 0,
         image: action.productData.image,
       });
