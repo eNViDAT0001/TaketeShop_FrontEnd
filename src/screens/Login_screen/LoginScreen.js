@@ -19,10 +19,12 @@ import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import {
   FORGOT_PASSWORD_SCREEN,
   BOTTOM_BAR_NAVIGATOR,
+  LOGIN_BY_GOOGLE,
 } from '../../constants/NavigatorIndex';
 import ImageShow from '../../components/ImageShow';
 import Colors from '../../constants/Colors';
 import * as authActions from '../../store/actions/auth';
+import firebase from 'react-native-firebase';
 
 function LoginScreen() {
   const [username, setUsername] = React.useState('');
@@ -128,13 +130,15 @@ function LoginScreen() {
       </View>
 
       <View style={styles.bottom}>
-        <Text style={styles.text3}>Đăng nhập với</Text>
+        <Text style={styles.text3}>Đăng ký bằng</Text>
         <View style={styles.ggfb}>
           <IconButton
             icon="google"
             color="red"
             size={20}
-            onPress={() => console.log('Pressed')}
+            onPress={() => {              
+              navigation.navigate(LOGIN_BY_GOOGLE);
+            }}
           />
           <IconButton
             icon="facebook"

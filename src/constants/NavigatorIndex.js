@@ -5,6 +5,7 @@ export const ORDER_NAVIGATOR = "OrderNavigator";
 export const ACCOUNT_NAVIGATOR = "AccountNavigator";
 export const LOGIN_NAVIGATOR = "LoginNavigator";
 export const PROFILE_NAVIGATOR = "ProfileNavigation";
+export const LOGIN_BY_GOOGLE = "LoginByGoogle";
 //export const PROFILE_NAVIGATOR_FOR_ADMIN = "ProfileNavigation";
 export const PRODUCT_NAVIGATOR = "ProductNavigator";
 
