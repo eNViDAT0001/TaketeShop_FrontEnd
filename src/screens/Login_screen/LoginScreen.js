@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useReducer, useState} from 'react';
+import React, { useCallback, useEffect, useReducer, useState } from 'react';
 import {
   Text,
   StyleSheet,
@@ -8,14 +8,9 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
-import {
-  TextInput,
-  Button,
-  IconButton,
-  ActivityIndicator,
-} from 'react-native-paper';
-import {NavigationContainer, useNavigation} from '@react-navigation/native';
+import { useSelector, useDispatch } from 'react-redux';
+import {  TextInput,  Button,  IconButton,  ActivityIndicator} from 'react-native-paper';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import {
   FORGOT_PASSWORD_SCREEN,
   BOTTOM_BAR_NAVIGATOR,
@@ -23,6 +18,9 @@ import {
 import ImageShow from '../../components/ImageShow';
 import Colors from '../../constants/Colors';
 import * as authActions from '../../store/actions/auth';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import auth from '@react-native-firebase/auth';
+import { LoginManager, AccessToken } from 'react-native-fbsdk-next';
 
 function LoginScreen() {
   const [username, setUsername] = React.useState('');
@@ -33,10 +31,47 @@ function LoginScreen() {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
+  const onGoogleButtonPress = async () => {
+    // Get the users ID token
+    await GoogleSignin.configure({
+      webClientId: '944233241292-cnfpm288mpi0prteomo0eig20tcuiobu.apps.googleusercontent.com',
+      //iosClientId: Config.IOS_CLIENT_ID,
+      //offlineAccess: true,
+    })
+    const { idToken } = await GoogleSignin.signIn();
+
+    // Create a Google credential with the token
+    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+
+    // Sign-in the user with the credential
+    return auth().signInWithCredential(googleCredential);
+  }
+  const onFacebookButtonPress = async () => {
+    // Attempt login with permissions
+    const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
+
+    if (result.isCancelled) {
+      throw 'User cancelled the login process';
+    }
+
+    // Once signed in, get the users AccesToken
+    const data = await AccessToken.getCurrentAccessToken();
+
+    if (!data) {
+      throw 'Something went wrong obtaining access token';
+    }
+
+    // Create a Firebase credential with the AccessToken
+    const facebookCredential = auth.FacebookAuthProvider.credential(data.accessToken);
+
+    // Sign-in the user with the credential
+    return auth().signInWithCredential(facebookCredential);
+  }
+
   useEffect(() => {
     if (error) {
       Alert.alert('An Error Occurred!', error + ', please try again!', [
-        {text: 'Okay'},
+        { text: 'Okay' },
       ]);
     }
   }, [error]);
@@ -72,7 +107,7 @@ function LoginScreen() {
             label="Tên đăng nhập"
             mode="outlined"
             value={username}
-            style={{backgroundColor: Colors.backgroundColor}}
+            style={{ backgroundColor: Colors.backgroundColor }}
             autoCapitalize="none"
             errorText="Định dạng tên đăng nhập không đúng"
             onChangeText={(txt) => setUsername(txt)}
@@ -86,7 +121,7 @@ function LoginScreen() {
             secureTextEntry
             required
             minLength={5}
-            style={{backgroundColor: Colors.backgroundColor}}
+            style={{ backgroundColor: Colors.backgroundColor }}
             autoCapitalize="none"
             errorText="Định dạng mật khẩu không đúng"
             onChangeText={(txt) => setPassword(txt)}
@@ -111,7 +146,7 @@ function LoginScreen() {
               contentStyle={styles.buttonText}
               style={styles.button}
               color={Colors.primaryColor}
-              labelStyle={{fontSize: 20}}
+              labelStyle={{ fontSize: 20 }}
               onPress={authHandler}>
               Đăng nhập
             </Button>
@@ -128,19 +163,20 @@ function LoginScreen() {
       </View>
 
       <View style={styles.bottom}>
-        <Text style={styles.text3}>Đăng nhập với</Text>
+        <Text style={styles.text3}>Đăng ký bằng</Text>
         <View style={styles.ggfb}>
           <IconButton
             icon="google"
             color="red"
             size={20}
-            onPress={() => console.log('Pressed')}
+            onPress={() => onGoogleButtonPress().then(() => console.log('Signed in with Google!'))}
           />
           <IconButton
             icon="facebook"
             color="blue"
             size={20}
-            onPress={() => console.log('Pressed')}
+            //onPress={() => console.log('Pressed')}
+            onPress={() => onFacebookButtonPress().then(() => console.log('Signed in with Google!'))}
           />
         </View>
       </View>
