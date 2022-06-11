@@ -7,6 +7,7 @@ export const DELETE_CART_ITEMS = 'DELETE_CART_ITEMS';
 export const UPDATE_CART_ITEMS = 'UPDATE_CART_ITEMS';
 export const SELECT_CART_ITEMS = 'SELECT_CART_ITEMS';
 export const CHECK_ALL_CART_ITEMS = 'CHECK_ALL_CART_ITEMS';
+export const ADD_CART = 'MAKE_ORDER';
 export const PICK_CART_ITEMS = 'BUY_CART_ITEMS';
 export const PICK_ADDRESS = 'PICK_ADDRESS';
 export const MAKE_ORDER = 'MAKE_ORDER';
@@ -44,15 +45,15 @@ export const fetchCartWithUserID = id => {
           new CartItemsModel({
             id: resData[key].id,
             userID: resData[key].user_id,
-            categoryID: resData[key].categoryID,
+            categoryID: resData[key].category_id,
             productID: resData[key].product_id,
             name: resData[key].product_name,
             quantity: resData[key].quantity,
             price: resData[key].price,
             discount: resData[key].discount,
             images: images,
-            createTime: resData[key].createTime,
-            updateTime: resData[key].updateTime,
+            createTime: resData[key].create_time,
+            updateTime: resData[key].update_time,
           }),
         );
       }
@@ -113,16 +114,29 @@ export const deleteCartItemByID = (token, cartID) => {
 };
 export const pickCartItems = (items, quantity, totalBill) => {
   return async dispatch => {
-    dispatch({type: PICK_CART_ITEMS, items: items, quantity: quantity, totalBill: totalBill });
+    dispatch({
+      type: PICK_CART_ITEMS,
+      items: items,
+      quantity: quantity,
+      totalBill: totalBill,
+    });
   };
 };
-export const pickAddress = address => {
+export const pickAddress = (address, userID) => {
   return async dispatch => {
-    dispatch({type: PICK_ADDRESS, address: address});
+    dispatch({type: PICK_ADDRESS, address: address, userID: userID});
   };
 };
-
-export const makeOrder = (token, user, items, address, quantity, totalBill, payment) => {
+export const makeOrder = ({
+  token,
+  userID,
+  items,
+  address,
+  quantity,
+  totalBill,
+  payment,
+  paid,
+}) => {
   return async dispatch => {
     await fetch(`http://localhost:5000/order/add`, {
       method: 'POST',
@@ -131,18 +145,36 @@ export const makeOrder = (token, user, items, address, quantity, totalBill, paym
         authorization: 'Bearer ' + token,
       },
       body: JSON.stringify({
-        userID: user.userID,
-        addressID: address.addressID,
-        name: user.name,
-        gender: user.gender,
-        phone: user.phone,
+        userID: userID,
+        name: address.name,
+        gender: address.gender ? 'MALE' : 'FEMALE',
+        phone: address.phone,
         province: address.province,
         district: address.district,
-        ward: address.province,
+        ward: address.ward,
+        street: address.street,
         quantity: quantity,
         totalCost: totalBill,
         payment: payment,
+        paid: paid ? 1 : 0,
+        items: items,
       }),
-    }).then(() => console.log("Make order Success"));
+    });
+  };
+};
+export const addCartItem = ({userID, productID, quantity}) => {
+  return async dispatch => {
+    await fetch(`http://localhost:5000/cart/item/add`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: 'Bearer ' + token,
+      },
+      body: JSON.stringify({
+        userID: userID,
+        productID: productID,
+        quantity: quantity,
+      }),
+    });
   };
 };

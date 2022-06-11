@@ -13,7 +13,7 @@ import * as bannerActions from '../../store/actions/banner';
 function HomePage(props) {
   const bestSellerProducts = useSelector(state => state.products.bestSellerProducts);
   const discountProducts = useSelector(state => state.products.discountProducts);
-  const recommenderProducts = useSelector(state => state.products.availableProducts);
+  const recommenderProducts = useSelector(state => state.products.recommenderProducts);
   const dispatch = useDispatch();
   const navigation = useNavigation();
 

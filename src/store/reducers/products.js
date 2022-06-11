@@ -15,6 +15,7 @@ import {
   SET_CURRENT_PRODUCTS,
   SET_DISCOUNT_PRODUCTS,
   SET_PRODUCTS,
+  SET_PRODUCTS_WITH_SEARCHKEY,
   SET_PRODUCT_WITH_CATEGORY_ID,
   SET_RECOMMENDER_PRODUCTS,
   SET_WISHLIST_PRODUCTS,
@@ -26,6 +27,7 @@ import {
 const initialState = {
   currentProduct: DEFAULT_PRODUCT,
   availableProducts: [],
+  searchedProducts: [],
   discountProducts: [],
   wishlistProducts: [],
   bestSellerProducts: [],
@@ -41,18 +43,21 @@ export default (state = initialState, action) => {
         ...state,
         availableProducts: action.products,
       };
-    case UPDATE_PRODUCTS:
-      const products = action.products;
-      let updateProducts = [...state.availableProducts];
-      if (products.length)
-        updateProducts = [
-          ...state.availableProducts
-            .splice(state.availableProducts.length - 1, 1)
-            .concat(action.products),
-        ];
+    case SET_PRODUCTS_WITH_SEARCHKEY:
       return {
         ...state,
-        availableProducts: updateProducts,
+        searchedProducts: action.products,
+      };
+    case UPDATE_PRODUCTS:
+      console.log(':::productLength: ', action.products.length);
+      const arr = [];
+      [...state.availableProducts, action.products].map(item => arr.push(item.productID));
+      action.products.map(item => arr.push(item.productID));
+      console.log(arr);
+
+      return {
+        ...state,
+        availableProducts: [...state.availableProducts, action.products],
       };
     case SET_WISHLIST_PRODUCTS:
       return {

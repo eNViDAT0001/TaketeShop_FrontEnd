@@ -17,6 +17,7 @@ import {
   SUCCESS_SCREEN,
   WISHLIST_SCREEN,
   PRODUCT_NAVIGATOR,
+  PAYMENT_SCREEN,
   //PROFILE_NAVIGATOR_FOR_ADMIN,
 } from '../constants/NavigatorIndex';
 import BottomBarNavigator from './BottomBarNavigator';
@@ -34,6 +35,7 @@ import NotificationScreen from '../screens/homeScreen/NotificationScreen';
 import StartupScreen from '../screens/StartupScreen';
 import WishlistScreen from '../screens/homeScreen/WishlistScreen';
 import AdminNavigator from './AdminNavigator';
+import PaymentScreens from '../screens/cartScreen/PaymentScreens';
 
 const StackNavigator = createNativeStackNavigator();
 function AppNavigator() {
@@ -114,6 +116,12 @@ function AppNavigator() {
         <StackNavigator.Screen
           name={ADD_ADDRESS_SCREEN}
           component={AddAddressPage}
+          options={{
+            headerShown: false,
+          }}></StackNavigator.Screen>
+          <StackNavigator.Screen
+          name={PAYMENT_SCREEN}
+          component={PaymentScreens}
           options={{
             headerShown: false,
           }}></StackNavigator.Screen>

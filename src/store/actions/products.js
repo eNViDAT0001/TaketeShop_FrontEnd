@@ -8,6 +8,7 @@ export const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
 export const UPDATE_FAV_PRODUCT = 'UPDATE_FAV_PRODUCT';
 export const SET_CURRENT_PRODUCTS = 'SET_CURRENT_PRODUCTS';
 export const SET_PRODUCTS = 'SET_PRODUCTS';
+export const SET_PRODUCTS_WITH_SEARCHKEY = 'SET_PRODUCTS_WITH_SEARCHKEY';
 export const UPDATE_PRODUCTS = 'UPDATE_PRODUCTS';
 export const PAGING_PRODUCTS = 'PAGING_PRODUCTS';
 export const PAGING_WISHLIST_PRODUCTS = 'PAGING_WISHLIST_PRODUCTS';
@@ -489,7 +490,7 @@ export const fetchProductsWithCategoryID = ({value, filter, sort, page}) => {
             image: images,
             createTime: resData[key].create_time,
             updateTime: resData[key].update_time,
-          }),
+          })
         );
       }
       dispatch({type: SET_PRODUCTS, products: loadedProducts});
@@ -558,7 +559,12 @@ export const updateProductsWithCategoryID = ({value, filter, sort, page}) => {
           }),
         );
       }
-      dispatch({type: UPDATE_PRODUCTS, products: loadedProducts});
+      if (loadedProducts.length) {
+        const arr = [];
+        loadedProducts.map(item => arr.push(item.productID));
+        console.log(arr);
+        dispatch({type: UPDATE_PRODUCTS, products: loadedProducts});
+      } else updatePage(page - 1);
     } catch (err) {
       // send to custom analytics server
       console.log(err);
@@ -579,13 +585,6 @@ export const fetchProductsWithSearchKeyWords = ({
       const sortConvert = sort ? `sort=${sort}&` : '';
       const pageConvert = page ? `page=${page}&` : '';
       const response = await fetch(
-        'http://localhost:5000/product/search?' +
-          valueConvert +
-          filterConvert +
-          sortConvert +
-          pageConvert,
-      );
-      console.log(
         'http://localhost:5000/product/search?' +
           valueConvert +
           filterConvert +
@@ -635,7 +634,7 @@ export const fetchProductsWithSearchKeyWords = ({
           }),
         );
       }
-      dispatch({type: SET_PRODUCTS, products: loadedProducts});
+      dispatch({type: SET_PRODUCTS_WITH_SEARCHKEY, products: loadedProducts});
     } catch (err) {
       // send to custom analytics server
       console.log(err);

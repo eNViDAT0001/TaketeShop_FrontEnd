@@ -23,7 +23,7 @@ function ShopMainScreen(props) {
     typingTimeOutRef.current = setTimeout(() => {
       console.log(query)
       dispatch(productActions.fetchProductsWithSearchKeyWords({value: query}));
-    },1000)
+    },500)
   };
 
   const Page =

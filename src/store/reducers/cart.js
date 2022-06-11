@@ -11,6 +11,7 @@ import {
 const initialState = {
   cartItems: [],
   cartDetail: {
+    userID: null,
     items: [],
     address: {},
     quantity: +0,
@@ -78,27 +79,12 @@ const cartReducer = (state = initialState, action) => {
       };
     }
     case PICK_ADDRESS: {
-      console.log({
-        ...state.cartDetail,
-        address: action.address,
-      }.address);
-      console.log({
-        ...state.cartDetail,
-        address: action.address,
-      }.items);
-      console.log({
-        ...state.cartDetail,
-        address: action.address,
-      }.quantity);console.log({
-        ...state.cartDetail,
-        address: action.address,
-      }.totalBill);
-
       return {
         ...state,
         cartDetail: {
           ...state.cartDetail,
           address: action.address,
+          userID: action.userID
         },
       };
     }

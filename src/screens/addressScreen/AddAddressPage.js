@@ -140,7 +140,7 @@ function AddAddressPage() {
           address.districtID,
           address.wardID,
           street,
-          gender,
+          gender.value,
           name,
         ),
       );

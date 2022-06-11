@@ -77,6 +77,7 @@ export const addAddress = (
   districtID,
   wardID,
   street,
+  gender,
   name,
 ) => {
   return async dispatch => {
@@ -93,6 +94,7 @@ export const addAddress = (
         districtID: districtID,
         wardID: wardID,
         street: street,
+        gender: gender,
         name: name,
       }),
     });

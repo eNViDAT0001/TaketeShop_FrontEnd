@@ -75,7 +75,7 @@ function CommentScreen(props) {
                     ? styles.filterClickedItems
                     : styles.filterItems
                 }>
-                <Text style={styles.filterText}>Tất cả sản phẩm</Text>
+                <Text style={styles.filterText}>Tất cả</Text>
               </Card>
             </TouchableOpacity>
             <TouchableOpacity activeOpacity={1}  onPress={() => onFilterClickHandler(1)}>
@@ -156,20 +156,20 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   filterItems: {
-    margin: 10,
+    marginVertical: 10,
+    marginLeft: 10,
     padding: 5,
     flexDirection: 'row',
-    width: '100%',
-    flex: 1,
     backgroundColor: Colors.backgroundColor,
+    borderWidth: 0.5
   },
   filterClickedItems: {
-    margin: 10,
+    marginVertical: 10,
+    marginLeft: 10,
     padding: 5,
     flexDirection: 'row',
-    width: '100%',
-    flex: 1,
     backgroundColor: "#97a832",
+    borderWidth: 1
   },
   bottomBar: {
     flex: 1,

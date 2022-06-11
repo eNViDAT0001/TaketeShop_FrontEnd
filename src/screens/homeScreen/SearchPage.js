@@ -5,7 +5,7 @@ import Colors from '../../constants/Colors';
 import {removeVietnameseTones} from '../../ulti/Ulti';
 import {useSelector} from 'react-redux';
 function SearchPage(props) {
-  const products = useSelector(state => state.products.availableProducts);
+  const products = useSelector(state => state.products.searchedProducts);
 
   if (!products.length)
     return (

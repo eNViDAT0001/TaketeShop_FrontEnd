@@ -29,8 +29,7 @@ function ProductDetailScreen(props) {
   const comments = useSelector(state => state.comment.productComments);
   const userID = useSelector(state => state.auth.userID);
   const token = useSelector(state => state.auth.token);
-  console.log(product.liked)
-  const [liked, setLiked] = useState(product.liked)
+  const [liked, setLiked] = useState(() => product.liked)
   const recommenderProducts = useSelector(
     state => state.products.availableProducts,
   );

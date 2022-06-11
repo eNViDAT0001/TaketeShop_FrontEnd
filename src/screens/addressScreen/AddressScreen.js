@@ -13,7 +13,7 @@ import Address from '../../components/Address';
 import Header from '../../components/UI/Header';
 import Colors from '../../constants/Colors';
 import {useNavigation} from '@react-navigation/native';
-import {ADD_ADDRESS_SCREEN} from '../../constants/NavigatorIndex';
+import {ADD_ADDRESS_SCREEN, PAYMENT_SCREEN} from '../../constants/NavigatorIndex';
 import * as addressActions from '../../store/actions/address';
 import * as cartActions from '../../store/actions/cart';
 import {useDispatch, useSelector} from 'react-redux';
@@ -48,7 +48,8 @@ function AddressScreen() {
     });
   }, [dispatch, loadAddress]);
   const onConfirm = () => {
-    dispatch(cartActions.pickAddress(addresses.find(item => item.isSelected)))
+    dispatch(cartActions.pickAddress(addresses.find(item => item.isSelected), userID));
+    navigation.navigate(PAYMENT_SCREEN);
   }
   if (error) {
     return (

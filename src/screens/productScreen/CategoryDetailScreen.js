@@ -36,9 +36,9 @@ function CategoryDetailScreen(props) {
     setIsRefreshing(true);
     try {
       await dispatch(
-        productActions.updateProductsWithCategoryID({
+        productActions.fetchProductsWithCategoryID({
           value: id,
-          page: page,
+          // page: page,
         }),
       );
     } catch (err) {
@@ -78,7 +78,7 @@ function CategoryDetailScreen(props) {
     }
 
     //Sua cho nay
-  }, [title, id, dispatch, loadProducts]);
+  }, [title, dispatch, loadProducts]);
 
   const cloneList = availableProducts => {
     const transformedShopItems = [];

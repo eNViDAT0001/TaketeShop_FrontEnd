@@ -9,6 +9,7 @@ export const PROFILE_NAVIGATOR = "ProfileNavigation";
 export const PRODUCT_NAVIGATOR = "ProductNavigator";
 
 export const STARTUP_SCREEN = "StartupScreen";
+export const PAYMENT_SCREEN = "PaymentScreen";
 
 
 export const LOGIN_MAIN_SCREEN = "LoginScreen";
@@ -35,6 +36,7 @@ export const ORDER_CONFIRM_PAGE ="OrderConfirmPage";
 export const ORDER_DELIVERING_PAGE ="OrderDeliveringPage";
 export const ORDER_DELIVERED_PAGE ="OrderDeliveredPage";
 export const ORDER_CANCEL_PAGE ="OrderCancelPage";
+export const ORDER_DETAIL_PAGE ="OrderDetailPage";
 
 
 export const ADMIN_SCREEN ="AdminScreen";
