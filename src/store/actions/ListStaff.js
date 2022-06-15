@@ -121,17 +121,35 @@ export const changeName = (userId, token, value) => {
       await fetch(
         `http://localhost:5000/user/addmin/staff/${userId}`,
         {
-          method: 'DELETE',
+          method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
             authorization: 'Bearer ' + token,
-          },         
+          },
+          body: JSON.stringify({
+            type: 'BANNED'
+          })
         },
-      );
-     // getAllStaff(token);
+      );  
       
     };
   };
+  // export const deleteStaff = (userId, token) => {
+  //   return async dispatch => {
+  //     await fetch(
+  //       `http://localhost:5000/user/addmin/staff/${userId}`,
+  //       {
+  //         method: 'DELETE',
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //           authorization: 'Bearer ' + token,
+  //         },         
+  //       },
+  //     );
+  //    // getAllStaff(token);
+      
+  //   };
+  // };
 
   export const changeGender = (userId, token, value) => {
     return async dispatch => {
