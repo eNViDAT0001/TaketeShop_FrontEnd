@@ -19,3 +19,4 @@ class OrderModel{
         this.updateTime = updateTime;
     }
 }
+export default OrderModel;

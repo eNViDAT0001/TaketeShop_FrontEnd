@@ -1,5 +1,5 @@
 class OrderItemsModel{
-    constructor(orderItemsID, orderID, categoryID, productID, name, price, quantity, discount, image, createTime, updateTime){
+    constructor({orderItemsID, orderID, categoryID, productID, name, price, quantity, discount, image, createTime, updateTime}){
         this.orderItemsID = orderItemsID;
         this.orderID = orderID;
         this.categoryID = categoryID;
@@ -14,3 +14,5 @@ class OrderItemsModel{
 
     }
 }
+
+export default OrderItemsModel;
