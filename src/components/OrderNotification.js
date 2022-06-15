@@ -1,39 +1,61 @@
-import React, { useState } from 'react';
-import {View, Text, TouchableOpacity, Image, StyleSheet, Button} from 'react-native';
+import React, {useState} from 'react';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  StyleSheet,
+  Button,
+} from 'react-native';
 import Card from './UI/Card';
 function OrderNotification(props) {
   const [type, setType] = useState({
     confirmVisible: false,
-    cancelVisible: false
-  })
+    cancelVisible: false,
+  });
   return (
-    <TouchableOpacity activeOpacity={0.9}>
-      <Card styles={{...styles.container, ...props.style}}>
-          <Text>Ngày - Mã đơn hàng</Text>
-          <Text>Giá</Text>
+    <View style={{...styles.container, ...props.style}}>
+      <TouchableOpacity activeOpacity={0.9}>
+        <Card style={styles.notificationContainer}>
+          <Text style={styles.text}>Ngày - Mã đơn hàng</Text>
+
           <View style={styles.buttonContainer}>
-            <Button style={styles.button} title='Xác nhận'></Button>
-            <Button title='Hủy'></Button>
+            <Text style={styles.textPrice}>Giá</Text>
+            <Button
+              style={styles.button}
+              color={'#CD5C5C'}
+              title="Hủy Đơn Hàng"></Button>
           </View>
-      </Card>
-    </TouchableOpacity>
+        </Card>
+      </TouchableOpacity>
+    </View>
   );
 }
 const styles = StyleSheet.create({
   container: {
-    margin: 10,
+    flex: 1,
+    padding: 10,
+  },
+  notificationContainer: {
+    padding: 10,
   },
   buttonContainer: {
     flexDirection: 'row',
-    justifyContent: 'flex-end'
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginRight: 10,
   },
-  button: {
-    marginRight: 10
+  button: {},
+  text: {
+    fontSize: 15,
+    fontWeight: 'bold',
   },
-  contentContainer: {},
-  quantity: {},
-  priceContainer: {},
-  discount: {},
-  price: {},
+  textPrice: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  textContainer: {
+    justifyContent: 'space-between',
+  },
 });
 export default OrderNotification;
