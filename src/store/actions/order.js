@@ -10,12 +10,18 @@ export const SET_CANCEL_ORDERS = 'SET_CANCEL_ORDERS';
 export const SET_CURRENT_ORDER = 'SET_CURRENT_ORDER';
 export const SET_CURRENT_ORDER_ITEMS = 'SET_CURRENT_ORDER_ITEMS';
 
+export const REMOVE_WAITING_ORDERS = 'REMOVE_WAITING_ORDERS';
+export const REMOVE_CONFIRMED_ORDERS = 'REMOVE_CONFIRMED_ORDERS';
+export const REMOVE_DELIVERING_ORDERS = 'REMOVE_DELIVERING_ORDERS';
+export const REMOVE_DELIVERED_ORDERS = 'REMOVE_DELIVERED_ORDERS';
+
+
 const ORDER_STATUS = {
-  WAITING: 0,
-  CONFIRMED: 1,
-  DELIVERING: 2,
-  DELIVERED: 2,
-  CANCEL: 3,
+  WAITING: 1,
+  CONFIRMED: 2,
+  DELIVERING: 3,
+  DELIVERED: 4,
+  CANCEL: 5,
 };
 
 
@@ -111,7 +117,7 @@ export const fetchOrderItemsWithOrderID = ({id, token}) => {
 ////////Customer
 export const fetchWaitingOrdersWithUserID = ({id, token, page}) => {
   return async dispatch => {
-    const loadOrders = fetchOrders({
+    const loadOrders = await fetchOrders({
       id: id,
       token: token,
       status: ORDER_STATUS.WAITING,
@@ -122,7 +128,7 @@ export const fetchWaitingOrdersWithUserID = ({id, token, page}) => {
 };
 export const fetchConfirmedOrdersWithUserID = ({id, token, page}) => {
   return async dispatch => {
-    const loadOrders = fetchOrders({
+    const loadOrders = await fetchOrders({
       id: id,
       token: token,
       status: ORDER_STATUS.CONFIRMED,
@@ -133,7 +139,7 @@ export const fetchConfirmedOrdersWithUserID = ({id, token, page}) => {
 };
 export const fetchDeliveringOrdersWithUserID = ({id, token, page}) => {
   return async dispatch => {
-    const loadOrders = fetchOrders({
+    const loadOrders = await fetchOrders({
       id: id,
       token: token,
       status: ORDER_STATUS.DELIVERING,
@@ -144,7 +150,7 @@ export const fetchDeliveringOrdersWithUserID = ({id, token, page}) => {
 };
 export const fetchDeliveredOrdersWithUserID = ({id, token, page}) => {
   return async dispatch => {
-    const loadOrders = fetchOrders({
+    const loadOrders = await fetchOrders({
       id: id,
       token: token,
       status: ORDER_STATUS.DELIVERED,
@@ -155,7 +161,7 @@ export const fetchDeliveredOrdersWithUserID = ({id, token, page}) => {
 };
 export const fetchCancelOrdersWithUserID = ({id, token, page}) => {
   return async dispatch => {
-    const loadOrders = fetchOrders({
+    const loadOrders = await fetchOrders({
       id: id,
       token: token,
       status: ORDER_STATUS.CANCEL,
@@ -164,23 +170,24 @@ export const fetchCancelOrdersWithUserID = ({id, token, page}) => {
     dispatch({type: SET_CANCEL_ORDERS, orderItems: loadOrders});
   };
 };
-export const cancelOrdersWithUserID = ({id, token}) => {
+export const cancelOrdersWithOrderID = ({orderID, token}) => {
   return async dispatch => {
-    await fetch(`http://localhost:5000/order/update/${id}`, {
+    await fetch(`http://localhost:5000/order/update/${orderID}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
         authorization: 'Bearer ' + token,
       },
       body: JSON.stringify({
-        status: 'CANCEL',
+        status: ORDER_STATUS.CANCEL,
       }),
-    });
+    }).then(dispatch({type: REMOVE_WAITING_ORDERS, orderID: orderID}));
+    
   };
 };
 export const fetchAllOrdersWithUserID = ({id, token}) => {
   return async dispatch => {
-    const loadOrders = fetchOrders({
+    const loadOrders = await fetchOrders({
       id: id,
       token: token,
       page: page,
@@ -191,7 +198,7 @@ export const fetchAllOrdersWithUserID = ({id, token}) => {
 ////////Admin
 export const fetchCancelOrdersWithAdminRoles = ({token, page}) => {
   return async dispatch => {
-    const loadOrders = fetchOrdersWithAdminRole({
+    const loadOrders = await fetchOrdersWithAdminRole({
       token: token,
       status: ORDER_STATUS.CANCEL,
       page: page,
@@ -201,7 +208,7 @@ export const fetchCancelOrdersWithAdminRoles = ({token, page}) => {
 };
 export const fetchWaitingOrdersWithAdminRoles = ({token, page}) => {
   return async dispatch => {
-    const loadOrders = fetchOrdersWithAdminRole({
+    const loadOrders = await fetchOrdersWithAdminRole({
       token: token,
       status: ORDER_STATUS.WAITING,
       page: page,
@@ -211,7 +218,7 @@ export const fetchWaitingOrdersWithAdminRoles = ({token, page}) => {
 };
 export const fetchConfirmedOrdersWithAdminRoles = ({token, page}) => {
   return async dispatch => {
-    const loadOrders = fetchOrdersWithAdminRole({
+    const loadOrders = await fetchOrdersWithAdminRole({
       token: token,
       status: ORDER_STATUS.CONFIRMED,
       page: page,
@@ -221,7 +228,7 @@ export const fetchConfirmedOrdersWithAdminRoles = ({token, page}) => {
 };
 export const fetchDeliveringOrdersWithAdminRoles = ({token, page}) => {
   return async dispatch => {
-    const loadOrders = fetchOrdersWithAdminRole({
+    const loadOrders = await fetchOrdersWithAdminRole({
       token: token,
       status: ORDER_STATUS.DELIVERING,
       page: page,
@@ -231,7 +238,7 @@ export const fetchDeliveringOrdersWithAdminRoles = ({token, page}) => {
 };
 export const fetchDeliveredOrdersWithAdminRoles = ({token, page}) => {
   return async dispatch => {
-    const loadOrders = fetchOrdersWithAdminRole({
+    const loadOrders = await fetchOrdersWithAdminRole({
       token: token,
       status: ORDER_STATUS.DELIVERED,
       page: page,
@@ -308,12 +315,12 @@ export const updateOrdersWithAdminRoles  = ({
   };
 };
 ////////
-const fetchOrdersWithAdminRole = ({token, status, page}) => {
+const fetchOrdersWithAdminRole = async ({token, status, page}) => {
   try {
     const statusConvert = status ? `status=${status}&` : '';
-  const pageConvert = page ? `page=${page}&` : '';
+    const pageConvert = page ? `page=${page}&` : '';
     const response = await fetch(
-      `http://localhost:5000/order/admin?${statusConvert}&${pageConvert}`,
+      `http://localhost:5000/order/admin?${statusConvert}${pageConvert}`,
       {
         method: 'GET',
         headers: {
@@ -341,7 +348,7 @@ const fetchOrdersWithAdminRole = ({token, status, page}) => {
           ward: resData[key].ward,
           street: resData[key].street,
           quantity: resData[key].quantity,
-          totalCost: resData[key].totalCost,
+          totalCost: resData[key].total_cost,
           status: resData[key].status,
           payment: resData[key].payment,
           paid: resData[key].paid,
@@ -356,7 +363,7 @@ const fetchOrdersWithAdminRole = ({token, status, page}) => {
     throw error;
   }
 };
-const fetchOrders = ({id, token, status, page}) => {
+const fetchOrders = async ({id, token, status, page}) => {
   const statusConvert = status ? `status=${status}&` : '';
   const pageConvert = page ? `page=${page}&` : '';
   try {
@@ -370,6 +377,7 @@ const fetchOrders = ({id, token, status, page}) => {
         },
       },
     );
+    console.log(`http://localhost:5000/order/user/${id}?${statusConvert}&${pageConvert}`)
     if (response.error) {
       throw new Error(response.msg);
     }
@@ -389,7 +397,7 @@ const fetchOrders = ({id, token, status, page}) => {
           ward: resData[key].ward,
           street: resData[key].street,
           quantity: resData[key].quantity,
-          totalCost: resData[key].totalCost,
+          totalCost: resData[key].total_cost,
           status: resData[key].status,
           payment: resData[key].payment,
           paid: resData[key].paid,
@@ -404,7 +412,7 @@ const fetchOrders = ({id, token, status, page}) => {
     throw error;
   }
 };
-const updateOrderWithAdminRole = ({
+const updateOrderWithAdminRole = async ({
   token,
   orderID,
   userID,
@@ -448,3 +456,13 @@ const updateOrderWithAdminRole = ({
     console.log(err)
   }
 };
+export const setCurrentOrder = (order) => {
+  return async dispatch => {
+    try {
+      dispatch({type: SET_CURRENT_ORDER, order: order});
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+};
+}

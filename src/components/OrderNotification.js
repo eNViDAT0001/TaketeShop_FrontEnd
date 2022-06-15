@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -7,24 +7,52 @@ import {
   StyleSheet,
   Button,
 } from 'react-native';
+import {useDispatch} from 'react-redux';
 import Card from './UI/Card';
+import * as orderActions from '../store/actions/order';
+import {useNavigation} from '@react-navigation/native';
+import {ORDER_DETAIL_SCREEN} from '../constants/NavigatorIndex';
+import Colors from '../constants/Colors';
+
 function OrderNotification(props) {
-  const [type, setType] = useState({
-    confirmVisible: false,
-    cancelVisible: false,
-  });
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+  const bttClickHandler = () => {
+    dispatch(
+      orderActions.cancelOrdersWithOrderID({
+        orderID: props.item.orderID,
+        token: props.token,
+      }),
+    );
+  };
+  const onItemClickHandler = () => {
+    dispatch(orderActions.setCurrentOrder(props.item));
+    navigation.navigate(ORDER_DETAIL_SCREEN);
+  };
+  const date = props.item.createTime.slice(0, 10).split('-');
   return (
     <View style={{...styles.container, ...props.style}}>
-      <TouchableOpacity activeOpacity={0.9}>
+      <TouchableOpacity activeOpacity={0.9} onPress={onItemClickHandler}>
         <Card style={styles.notificationContainer}>
-          <Text style={styles.text}>Ngày - Mã đơn hàng</Text>
+          <Text style={styles.text}>
+            {date[2]}/{date[1]}/{date[0]} - {props.item.orderID} ({props.item.quantity} sản phẩm)
+          </Text>
 
           <View style={styles.buttonContainer}>
-            <Text style={styles.textPrice}>Giá</Text>
-            <Button
-              style={styles.button}
-              color={'#CD5C5C'}
-              title="Hủy Đơn Hàng"></Button>
+            <Text style={styles.textPrice}>{props.item.totalCost} đ</Text>
+            {props.item.status != 'WAITING' ? (
+              <Button
+                style={styles.button}
+                color={Colors.primaryColor}
+                title="Chi tiết đơn hàng"
+                onPress={onItemClickHandler}></Button>
+            ) : (
+              <Button
+                style={styles.button}
+                color={'#CD5C5C'}
+                title="Hủy Đơn Hàng"
+                onPress={bttClickHandler}></Button>
+            )}
           </View>
         </Card>
       </TouchableOpacity>
@@ -53,6 +81,7 @@ const styles = StyleSheet.create({
   textPrice: {
     fontSize: 18,
     fontWeight: 'bold',
+    color: Colors.primaryColor
   },
   textContainer: {
     justifyContent: 'space-between',

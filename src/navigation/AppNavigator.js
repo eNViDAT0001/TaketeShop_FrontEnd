@@ -12,12 +12,11 @@ import {
   LOGIN_NAVIGATOR,
   NOTIFICATION_SCREEN,
   PRODUCT_DETAIL_SCREEN,
- 
   STARTUP_SCREEN,
   SUCCESS_SCREEN,
   WISHLIST_SCREEN,
-  PRODUCT_NAVIGATOR,
   PAYMENT_SCREEN,
+  ORDER_DETAIL_SCREEN,
   //PROFILE_NAVIGATOR_FOR_ADMIN,
 } from '../constants/NavigatorIndex';
 import BottomBarNavigator from './BottomBarNavigator';
@@ -36,6 +35,7 @@ import StartupScreen from '../screens/StartupScreen';
 import WishlistScreen from '../screens/homeScreen/WishlistScreen';
 import AdminNavigator from './AdminNavigator';
 import PaymentScreens from '../screens/cartScreen/PaymentScreens';
+import OrderDetailScreen from '../screens/orderScreen/OrderDetailScreen';
 
 const StackNavigator = createNativeStackNavigator();
 function AppNavigator() {
@@ -128,6 +128,13 @@ function AppNavigator() {
         <StackNavigator.Screen
           name={SUCCESS_SCREEN}
           component={SuccessScreen}
+          options={{
+            headerTitle: 'Thêm Địa Chỉ',
+            headerShown: false,
+          }}></StackNavigator.Screen>
+          <StackNavigator.Screen
+          name={ORDER_DETAIL_SCREEN}
+          component={OrderDetailScreen}
           options={{
             headerTitle: 'Thêm Địa Chỉ',
             headerShown: false,

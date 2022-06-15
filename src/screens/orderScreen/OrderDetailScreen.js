@@ -1,9 +1,10 @@
 import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {View, Text, TouchableOpacity, Image, FlatList} from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet, FlatList} from 'react-native';
 import {useDispatch} from 'react-redux';
+import Card from '../../components/UI/Card';
 import Header from '../../components/UI/Header';
-import Card from './UI/Card';
+import Colors from '../../constants/Colors';
 function OrderDetailScreen(props) {
   const navigation = useNavigation();
   const dispatch = useDispatch();

@@ -32,11 +32,12 @@ export const WISHLIST_SCREEN ="WISHLIST_SCREEN";
 export const ADD_PRODUCT ="AddProductScreen";
 export const FIX_PRODUCT ="FixProduct";
 
+export const ORDER_WAITING_PAGE ="OrderWaitingPage";
 export const ORDER_CONFIRM_PAGE ="OrderConfirmPage";
 export const ORDER_DELIVERING_PAGE ="OrderDeliveringPage";
 export const ORDER_DELIVERED_PAGE ="OrderDeliveredPage";
 export const ORDER_CANCEL_PAGE ="OrderCancelPage";
-export const ORDER_DETAIL_PAGE ="OrderDetailPage";
+export const ORDER_DETAIL_SCREEN ="OrderDetailScreen";
 
 
 export const ADMIN_SCREEN ="AdminScreen";
