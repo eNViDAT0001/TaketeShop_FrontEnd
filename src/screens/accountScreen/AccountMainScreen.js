@@ -61,14 +61,13 @@ function AccountMainScreen() {
         icons="face-agent"
         titletext="Hỗ trợ khách hàng"
         onPress={() => {
-          if (role != 'CUSTOMER') {
+          if (role === 'CUSTOMER') {
             console.log('chanel get :' + chanelId);
-
             dispatch(chanelActions.getMessagerFromChanelId(chanelId));
             navigation.navigate('ChatScreen');
           } else {
-            dispatch(chanelActions.getAllChanel(userID));
-            navigation.navigate('ChatScreen');
+            dispatch(chanelActions.getAllChanel());
+            navigation.navigate('ListChanel');
           }
         }}
       />

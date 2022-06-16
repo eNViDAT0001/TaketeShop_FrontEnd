@@ -1,4 +1,4 @@
-import React, { useState, useRoute } from 'react';
+import React, { useState, useRoute, useEffect } from 'react';
 import {
   Text, StyleSheet, View, Image, TouchableOpacity, ScrollView, TextInput,
   FlatList,
@@ -12,36 +12,42 @@ import Header from '../../../components/UI/Header';
 import { useDispatch, useSelector } from 'react-redux';
 import * as chanelActions from '../../../store/actions/chanelActions';
 
-
 const { width, height } = Dimensions.get('window');
-function ChatScreen(props) {
+function ChatScreen({route}) {
   var DATA_MESSAGES = useSelector(state => state.chanel.DATA_MESSAGES);
+  //var DATA_MESS = useSelector(state => state.chanel.LIST_CHANEL);
   const [messages, setMessages] = useState(null);
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const role = useSelector(state => state.auth.role);
   const userID = useSelector(state => state.auth.userID);
+  const flatListRef = React.useRef();
   const chanelId = useSelector(state => state.chanel._id);
   const userChanelId = useSelector(state => state.chanel.userID);
-  //const [isFetching, setIsFetching] = useState(false);
-
+  const token = useSelector(state => state.auth.token);
+  const {titleHeader}  =  route.params;   
+  let state;
   let isStaff = false;
-  if (role != 'CUSTOMER') {
-    isStaff = true;
-  };
 
-
+  //  useEffect(() => {
+     
+  //  });
+  
+  if (role === 'CUSTOMER') {
+    dispatch(chanelActions.getMessagerFromChanelId(chanelId,token));
+  } else  {    
+    isStaff = true;      
+  } 
   const Chats = (item) => {
-    //var state = item.sender === "Me"
-    var state;
+
     if (isStaff) {
       (item.userID == userID) ? (state = styles.frowrev) : (state = styles.frow);
     } else {
-      (item.userID == userID) ? (state = styles.frow) : (state = styles.frowrev);
+      (item.userID == userChanelId) ? (state = styles.frowrev) : (state = styles.frow);
     }
     return (
       <View style={[styles.pdlt10, styles.mdtp10, styles.mdbt10, styles.pdtp10, state, styles.jStart]}>
-        <View style={[styles.Chat, (item.userID == userID) ? styles.myChat : styles.frnChat]} >
+        <View View style={[styles.Chat, (item.userID == userID) ? styles.myChat : styles.frnChat]} >
           <Text style={{ lineHeight: 25 }}>{item.text}</Text>
         </View>
 
@@ -54,19 +60,15 @@ function ChatScreen(props) {
       Chats(item)
     )
   };
-  const flatListRef = React.useRef();
+
 
   return (
     <SafeAreaView style={styles.screen}>
-      <Header title="Hỗ trợ khách hàng"></Header>
-
+     <Header title={titleHeader}></Header>
       <FlatList
-        // data={DATA_MESSAGES}
         ref={flatListRef}
-        data={useSelector(state => state.chanel.DATA_MESSAGES)}
-        extraData ={DATA_MESSAGES}
-        //onRefresh = {useSelector(state => state.chanel.DATA_MESSAGES)}  
-        //refreshing={useSelector(state => state.chanel.DATA_MESSAGES)}
+        data={DATA_MESSAGES}
+        extraData={DATA_MESSAGES}
         renderItem={itemData => (renderMessages(itemData.item))}
         keyExtractor={(item, index) => item._id}
         onLayout={() => flatListRef.current.scrollToEnd({ animated: true })}
@@ -90,24 +92,14 @@ function ChatScreen(props) {
           icon="send"
           color='#2196f3'
           size={25}
-          onPress={() => {
-            if (messages != "") {
-              // console.log(chanelId)
-              // console.log(userID)
-              // console.log(messages)
-              // console.log(isStaff)
-              dispatch(chanelActions.createChanel(113));    
-             // dispatch(chanelActions.addMessager(chanelId, userID, messages, isStaff));
-              // dispatch(chanelActions.getMessagerFromChanelId(chanelId)).
-              setMessages("")
-            }
+          onPress={() => {           
+            dispatch(chanelActions.addMessager(chanelId, userID, messages, isStaff));
+            setMessages("")
+
           }} />
       </View>
 
     </SafeAreaView>
-
-
-
 
   );
 }
