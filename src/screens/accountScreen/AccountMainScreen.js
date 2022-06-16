@@ -63,6 +63,7 @@ function AccountMainScreen() {
         onPress={() => {
           if (role === 'CUSTOMER') {
             console.log('chanel get :' + chanelId);
+            dispatch(chanelActions.getChanel(userID));  
             dispatch(chanelActions.getMessagerFromChanelId(chanelId));
             navigation.navigate('ChatScreen');
           } else {

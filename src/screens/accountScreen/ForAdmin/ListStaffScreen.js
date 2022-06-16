@@ -81,7 +81,7 @@ function ListStaffScreen() {
         data={ALL_LIST_STAFF}
         extraData={ALL_LIST_STAFF}
         renderItem={itemData => (renderMessages(itemData.item))}
-        keyExtractor={(item, index) => item._id}
+        keyExtractor={(item, index) => item.userID}
         contentContainerStyle={{ flexGrow: 1, backgroundColor: '#D3D3D388', top: 5, marginHorizontal: 8 }}
 
       />

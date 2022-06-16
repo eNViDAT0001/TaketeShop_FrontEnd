@@ -19,14 +19,15 @@ import * as chanelActions from '../../../store/actions/chanelActions';
 import { Form } from 'formik';
 
 function ListChanel() {
-  var ALL_LIST_CHANEL = useSelector(state => state.chanel.LIST_CHANEL);
+  let ALL_LIST_STAFF = useSelector(state => state.staff.LIST_STAFF);
+  let ALL_LIST_CHANEL = useSelector(state => state.chanel.LIST_CHANEL);
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const role = useSelector(state => state.auth.role);
   let chanelID = useSelector(state => state.chanel._id);
   let img = useSelector(state => state.auth.avatar);
   const token = useSelector(state => state.auth.token);
-
+  const userId = useSelector(state => state.auth.userID);
   useEffect(() => {
     if (role === 'CUSTOMER') {
       dispatch(chanelActions.getMessagerFromChanelId(chanelID,token));
@@ -41,7 +42,7 @@ function ListChanel() {
       <View style={styles.container}>
         <TouchableOpacity
           onPress={() => {
-            console.log("goi chanel userID:" + item.avatar)
+            
             dispatch(chanelActions.getChanel(item.userID));           
             if (role === 'CUSTOMER') {
               dispatch(chanelActions.getMessagerFromChanelId(chanelID,token));
@@ -86,7 +87,8 @@ function ListChanel() {
     )
   };
   const renderMessages = (item) => {
-    return (
+    if (item.userID != userId)
+    return (     
       Chats(item)
     )
   };
@@ -100,7 +102,7 @@ function ListChanel() {
         data={ALL_LIST_CHANEL}
         extraData={ALL_LIST_CHANEL}
         renderItem={itemData => (renderMessages(itemData.item))}
-        keyExtractor={(item, index) => item.id}
+        keyExtractor={(item, index) => item.userID}
         contentContainerStyle={{ flexGrow: 1, backgroundColor: '#D3D3D388', top: 5, marginHorizontal: 8 }}
 
       />

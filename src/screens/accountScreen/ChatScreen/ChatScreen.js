@@ -71,8 +71,7 @@ function ChatScreen({route}) {
         extraData={DATA_MESSAGES}
         renderItem={itemData => (renderMessages(itemData.item))}
         keyExtractor={(item, index) => item._id}
-        onLayout={() => flatListRef.current.scrollToEnd({ animated: true })}
-        //stickyHeaderIndices={[0]}
+        onLayout={() => flatListRef.current.scrollToEnd({ animated: true })}        
         contentContainerStyle={{ flexGrow: 1, backgroundColor: '#D3D3D388', top: 5, marginHorizontal: 8 }}
 
       />

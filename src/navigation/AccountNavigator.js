@@ -4,11 +4,11 @@ import { ACCOUNT_MAIN_SCREEN, CHAT_SCREEN, LIST_CHANEL, LIST_STAFF_SCREEN, ADD_S
 import AccountMainScreen from '../screens/accountScreen/AccountMainScreen';
 import ChatScreen from '../screens/accountScreen/ChatScreen/ChatScreen';
 import ListChanel from '../screens/accountScreen/ChatScreen/ListChanel';
-import ListStaffScreen from '../screens/accountScreen/ForAdmin/ListStaffScreen';
+
 import AddStaff from '../screens/accountScreen/ForAdmin/AddStaff';
+import ListStaffScreen from '../screens/accountScreen/ForAdmin/ListStaffScreen';
 import ProfileNavigator from './ProfileNavigator';
 import SuccesScreen from '../screens/Login_screen/SuccesScreen';
-import ListChanel from '../screens/accountScreen/ChatScreen/ListChanel';
 
 const Stack = createNativeStackNavigator();
 
@@ -24,12 +24,7 @@ function AccountNavigator() {
         options={{ headerShown: false }}
         component={ChatScreen}>
       </Stack.Screen>
-      <Stack.Screen
-        name={"ListChanel"}
-        component={ListChanel}
-        options={{
-          headerShown: false,
-        }}></Stack.Screen>
+      
       <Stack.Screen
         name={PROFILE_NAVIGATOR}
         component={ProfileNavigator}
@@ -46,12 +41,13 @@ function AccountNavigator() {
       <Stack.Screen
         name={LIST_STAFF_SCREEN}
         options={{ headerShown: false }}
-        component={ListStaffScreen}>
-      </Stack.Screen>
+        component={ListStaffScreen} />
+     
       <Stack.Screen
         name={ADD_STAFF_SCREEN}
         options={{ headerShown: false }}
         component={AddStaff} />
+
       <Stack.Screen
         name={"SuccesScreen"}
         options={{ headerShown: false }}
