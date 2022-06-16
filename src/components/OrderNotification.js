@@ -72,6 +72,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginRight: 10,
+    marginVertical: 2,
   },
   button: {},
   text: {

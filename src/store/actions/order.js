@@ -31,7 +31,7 @@ export const fetchOrderWithOrderID = ({id, token}) => {
   return async dispatch => {
     try {
       const response = await fetch(
-        `http://localhost:5000/order/&${id}`,
+        `http://localhost:5000/order/${id}`,
         {
           method: 'GET',
           headers: {
@@ -48,7 +48,7 @@ export const fetchOrderWithOrderID = ({id, token}) => {
       const order = new OrderModel({
         orderID: resData.id,
         userID: resData.user_id,
-        name: resData.product_name,
+        name: resData.name,
         gender: resData.gender,
         phone: resData.phone,
         province: resData.province,
@@ -340,7 +340,7 @@ const fetchOrdersWithAdminRole = async ({token, status, page}) => {
         new OrderModel({
           orderID: resData[key].id,
           userID: resData[key].user_id,
-          name: resData[key].product_name,
+          name: resData[key].name,
           gender: resData[key].gender,
           phone: resData[key].phone,
           province: resData[key].province,
@@ -368,7 +368,7 @@ const fetchOrders = async ({id, token, status, page}) => {
   const pageConvert = page ? `page=${page}&` : '';
   try {
     const response = await fetch(
-      `http://localhost:5000/order/user/${id}?${statusConvert}&${pageConvert}`,
+      `http://localhost:5000/order/user/${id}?${statusConvert}${pageConvert}`,
       {
         method: 'GET',
         headers: {
@@ -377,7 +377,6 @@ const fetchOrders = async ({id, token, status, page}) => {
         },
       },
     );
-    console.log(`http://localhost:5000/order/user/${id}?${statusConvert}&${pageConvert}`)
     if (response.error) {
       throw new Error(response.msg);
     }
@@ -389,7 +388,7 @@ const fetchOrders = async ({id, token, status, page}) => {
         new OrderModel({
           orderID: resData[key].id,
           userID: resData[key].user_id,
-          name: resData[key].product_name,
+          name: resData[key].name,
           gender: resData[key].gender,
           phone: resData[key].phone,
           province: resData[key].province,

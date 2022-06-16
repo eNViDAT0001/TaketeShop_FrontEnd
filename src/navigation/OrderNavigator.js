@@ -26,12 +26,12 @@ function OrderNavigator() {
         screenOptions={{
           tabBarScrollEnabled: true,
           tabBarLabelStyle: {fontSize: 14},
-          tabBarStyle: {backgroundColor: Colors.backgroundColor, height: 50, width: '100%'},
+          tabBarStyle: {backgroundColor: Colors.backgroundColor, height: 50, width: '100%',},
         }}>
         <Tab.Screen
           name={ORDER_WAITING_PAGE}
           component={OrderWaitingPage}
-          options={{tabBarLabel: 'Chờ xác nhận'}}
+          options={{tabBarLabel: 'Chờ xác nhận',}}
         />
         <Tab.Screen
           name={ORDER_CONFIRM_PAGE}
