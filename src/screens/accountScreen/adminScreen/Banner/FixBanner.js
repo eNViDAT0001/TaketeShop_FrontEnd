@@ -13,7 +13,7 @@ import Header from '../../../../components/UI/Header';
 import Colors from '../../../../components/UI/Header';
 import CalendarPicker from 'react-native-calendar-picker';
 import { useDispatch, useSelector } from 'react-redux';
-import * as authActions from '../../../../store/actions/auth';
+import * as bannerActions from '../../../../store/actions/banner';
 import { Dropdown } from 'react-native-element-dropdown';
 import Card from '../../../../components/UI/Card';
 import * as productActions from '../../../../store/actions/products';
@@ -22,7 +22,11 @@ function FixBanner(props) {
     const navigation = useNavigation();
     const dispatch = useDispatch();
     const categoryList = useSelector(state => state.products.categories);
-    const [title, setTitle] = useSelector(state => state.banner.currentBanner.title);
+    const [id, setId] = useSelector(state => state.banner.currentBanner.id);
+    const [title, setTitle] = useSelector(state => state.banner.currentBanner.title);   
+    const [discount, setDiscount] = useSelector(state => state.banner.currentBanner.discount); 
+    
+    const [productID, setProductID] = useSelector(state => state.banner.currentBanner.id);
     const [images, setImages] = useState([]);
     const [sale, setSale] = useState();
     let LIST_PRODUCTS = useSelector(state => state.products.availableProducts);

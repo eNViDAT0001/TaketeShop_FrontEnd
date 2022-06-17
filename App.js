@@ -14,6 +14,7 @@ import commentReducer from './src/store/reducers/comment';
 import StaffReducer from './src/store/reducers/ListStaff';
 import cartReducer from './src/store/reducers/cart';
 import addressReducer from './src/store/reducers/address';
+import discountReducer from './src/store/reducers/discount';
 
 LogBox.ignoreLogs(['EventEmitter.removeListener']);
 
@@ -44,6 +45,7 @@ const rootReducer = combineReducers({
   products: productReducer,
   auth: authReducer,
   banner: bannerReducer,
+  discount : discountReducer ,
   chanel: chanelReducer,
   comment: commentReducer,
   staff: StaffReducer,

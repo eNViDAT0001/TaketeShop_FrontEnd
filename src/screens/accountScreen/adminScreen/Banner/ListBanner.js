@@ -19,6 +19,7 @@ import * as authActions from '../../../../store/actions/auth';
 import * as chanelActions from '../../../../store/actions/chanelActions';
 import { BANNER_SCREEN, DISCOUNT_SCREEN, FIX_BANNER } from '../../../../constants/NavigatorIndex';
 import * as productActions from '../../../../store/actions/products';
+import * as bannerActions from '../../../../store/actions/banner';
 import { Form } from 'formik';
 
 function ListBanner() {
@@ -37,7 +38,7 @@ function ListBanner() {
         <View style={styles.screenrow}>
           <TouchableOpacity
             onPress={() => {
-              dispatch(productActions.fetchCategory());
+              dispatch(bannerActions.getBannerByID(item.id));
               navigation.navigate(FIX_BANNER);
               
             }}>
@@ -59,7 +60,7 @@ function ListBanner() {
           }}>
             <TouchableOpacity
               onPress={() => {
-                console.log(FIX_BANNER);
+                console.log("Delete banner");
               }}>
               <MaterialCommunityIcons
                 name="delete"

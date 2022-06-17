@@ -68,14 +68,15 @@ function ChatScreen({route}) {
      <Header title={titleHeader}></Header> 
     
       <FlatList
-        ref={flatListRef}
+        ref={flatListRef}        
         data={DATA_MESSAGES}
         extraData={DATA_MESSAGES}
         renderItem={itemData => (renderMessages(itemData.item))}
         keyExtractor={(item, index) => item._id}
         onLayout={() => flatListRef.current.scrollToEnd({ animated: true })}        
-        contentContainerStyle={{ flexGrow: 1, backgroundColor: '#D3D3D388', top: 5, marginHorizontal: 8 }}
-
+        contentContainerStyle={{ 
+          flexGrow: 1, backgroundColor:Colors.backgroundColor, top: 5, marginHorizontal: 8 
+        }}
       />
 
       <View style={styles.sendChatcontainer}>
@@ -110,6 +111,7 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: Colors.backgroundColor,
+    color: Colors.backgroundColor,
   },
   chatScreen: {
 

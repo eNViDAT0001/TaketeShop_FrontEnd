@@ -1,15 +1,11 @@
-class DiscountModel{
-    productID = [];
-    constructor(id, title, discount, endTime, image, productID, createTime, updateTime){
+class DiscountModel{   
+    constructor(id, categoryId, voucher,discount, membership, endTime){
         this.id = id;
-        this.title = title;
+        this.categoryId = categoryId;
+        this.voucher = voucher;       
         this.discount = discount;
-        this.endTime = endTime;
-        this.image = image;
-        this.productID = productID;
-        this.createTime = createTime;
-        this.updateTime = updateTime;
+        this.membership = membership;
+        this.endTime = endTime;                  
     }
 }
-
 export default DiscountModel;
