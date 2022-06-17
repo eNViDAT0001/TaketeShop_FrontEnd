@@ -16,7 +16,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Card from '../../../components/UI/Card';
 import Colors from '../../../constants/Colors';
 import { useNavigation } from '@react-navigation/native';
-import { ADMIN_ADD_PRODUCT_SCREEN, ADMIN_PRODUCT_DETAIL_SCREEN,BANNER_SCREEN,DISCOUNT_SCREEN } from '../../../constants/NavigatorIndex';
+import { ADMIN_ADD_PRODUCT_SCREEN, ADMIN_ORDER_NAVIGATOR, ADMIN_PRODUCT_DETAIL_SCREEN,BANNER_SCREEN,DISCOUNT_SCREEN } from '../../../constants/NavigatorIndex';
 import {useDispatch, useSelector} from 'react-redux';
 import * as bannerActions from '../../../store/actions/banner';
 
@@ -46,7 +46,7 @@ function AdminMainScreen() {
           <Text style={styles.contentTitle}>Đơn Hàng</Text>
         </View>
         <View style={styles.statusContainer}>
-          <TouchableOpacity style={styles.itemContainer}>
+          <TouchableOpacity style={styles.itemContainer} onPress={() => navigation.navigate(ADMIN_ORDER_NAVIGATOR, {status: 'WAITING'})}>
             <Entypo
               name="text-document"
               style={styles.icon}
@@ -54,7 +54,7 @@ function AdminMainScreen() {
               size={ICON_SIZE}></Entypo>
             <Text style={styles.itemTitle}>Chờ xác nhận</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.itemContainer}>
+          <TouchableOpacity style={styles.itemContainer} onPress={() => navigation.navigate(ADMIN_ORDER_NAVIGATOR, {status: 'CONFIRMED'})}>
             <MaterialCommunityIcons
               name="store"
               color={ICON_COLOR}
@@ -62,7 +62,7 @@ function AdminMainScreen() {
               style={styles.icon}></MaterialCommunityIcons>
             <Text style={styles.itemTitle}>Chờ giao hàng</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.itemContainer}>
+          <TouchableOpacity style={styles.itemContainer} onPress={() => navigation.navigate(ADMIN_ORDER_NAVIGATOR, {status: 'DELIVERING'})}>
             <MaterialCommunityIcons
               name="truck-cargo-container"
               size={ICON_SIZE}
@@ -70,7 +70,7 @@ function AdminMainScreen() {
               style={styles.icon}></MaterialCommunityIcons>
             <Text style={styles.itemTitle}>Đang giao</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.itemContainer}>
+          <TouchableOpacity style={styles.itemContainer} onPress={() => navigation.navigate(ADMIN_ORDER_NAVIGATOR, {status: 'DELIVERED'})}>
             <MaterialCommunityIcons
               name="star-outline"
               size={ICON_SIZE}

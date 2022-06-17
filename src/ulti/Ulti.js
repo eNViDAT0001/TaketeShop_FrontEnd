@@ -81,22 +81,38 @@ export function convertOrderStatusToVietnameseWithDetail(status) {
       };
     case 'CONFIRMED':
       return {
-        status: 'đã xác nhận',
+        status: 'đã được xác nhận',
         detail: 'Đơn hàng của bạn sẽ được giao ngay trong hôm nay',
       };
     case 'DELIVERING':
       return {
-        status: 'đang vận chuyển',
+        status: 'đang được vận chuyển',
         detail: 'Đơn hàng của bạn đang được giao đến địa chỉ của bạn',
       };
     case 'DELIVERED':
       return {
-        status: 'đã vận chuyển',
+        status: 'đã được vận chuyển thành công',
         detail: 'Đơn hàng của bạn đã được giao đến địa chỉ của bạn',
       };
     case 'CANCEL':
       return {status: 'đã bị hủy', detail: 'Đơn hàng của bạn đã bị hủy'};
     default:
       return {status: 'đã bị hủy', detail: 'Đơn hàng của bạn đã bị hủy'};
+  }
+}
+export function convertOrderStatusToNavigatorIndex(status) {
+  switch (status) {
+    case 'WAITING':
+      return ;
+    case 'CONFIRMED':
+      return ;
+    case 'DELIVERING':
+      return ;
+    case 'DELIVERED':
+      return ;
+    case 'CANCEL':
+      return ;
+    default:
+      return ;
   }
 }

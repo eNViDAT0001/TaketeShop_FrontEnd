@@ -26,8 +26,9 @@ function CartItems(props) {
   const [selected, setSelected] = useState(props.item.isSelected);
 
   useLayoutEffect(() => {
-    setSelected(props.item.isSelected)
-  }, [props.item.isSelected])
+    setSelected(props.item.isSelected);
+    setQuantity(props.item.quantity)
+  }, [props.item.isSelected, props.item.quantity])
 
   let typingTimeOutRef = useRef();
 

@@ -5,7 +5,6 @@ import {
   ACCOUNT_NAVIGATOR,
   CART_MAIN_SCREEN,
   HOME_MAIN_SCREEN,
-  ORDER_MAIN_SCREEN,
   ORDER_NAVIGATOR,
   SHOP_MAIN_SCREEN,
 } from '../constants/NavigatorIndex';

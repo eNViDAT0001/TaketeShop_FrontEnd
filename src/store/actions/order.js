@@ -170,7 +170,54 @@ export const fetchCancelOrdersWithUserID = ({id, token, page}) => {
     dispatch({type: SET_CANCEL_ORDERS, orderItems: loadOrders});
   };
 };
-export const cancelOrdersWithOrderID = ({orderID, token}) => {
+/////////////// Update Status With Admin Roles
+export const confirmOrdersWithOrderID = ({orderID, token}) => {
+  return async dispatch => {
+    await fetch(`http://localhost:5000/order/update/${orderID}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: 'Bearer ' + token,
+      },
+      body: JSON.stringify({
+        status: ORDER_STATUS.CONFIRMED,
+      }),
+    }).then(dispatch({type: REMOVE_WAITING_ORDERS, orderID: orderID}));
+    
+  };
+};
+export const deliveryOrdersWithOrderID = ({orderID, token}) => {
+  return async dispatch => {
+    await fetch(`http://localhost:5000/order/update/${orderID}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: 'Bearer ' + token,
+      },
+      body: JSON.stringify({
+        status: ORDER_STATUS.DELIVERING,
+      }),
+    }).then(dispatch({type: REMOVE_CONFIRMED_ORDERS, orderID: orderID}));
+    
+  };
+};
+export const deliveredOrdersWithOrderID = ({orderID, token}) => {
+  return async dispatch => {
+    await fetch(`http://localhost:5000/order/update/${orderID}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: 'Bearer ' + token,
+      },
+      body: JSON.stringify({
+        status: ORDER_STATUS.DELIVERED,
+      }),
+    }).then(dispatch({type: REMOVE_DELIVERING_ORDERS, orderID: orderID}));
+    
+  };
+};
+/////////////// Cancel Status With Admin Roles
+export const cancelWaitingOrdersWithOrderID = ({orderID, token}) => {
   return async dispatch => {
     await fetch(`http://localhost:5000/order/update/${orderID}`, {
       method: 'PATCH',
@@ -185,6 +232,55 @@ export const cancelOrdersWithOrderID = ({orderID, token}) => {
     
   };
 };
+export const cancelConfirmOrdersWithOrderID = ({orderID, token}) => {
+  return async dispatch => {
+    await fetch(`http://localhost:5000/order/update/${orderID}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: 'Bearer ' + token,
+      },
+      body: JSON.stringify({
+        status: ORDER_STATUS.CANCEL,
+      }),
+    }).then(dispatch({type: REMOVE_CONFIRMED_ORDERS, orderID: orderID}));
+    
+  };
+};
+export const cancelDeliveryOrdersWithOrderID = ({orderID, token}) => {
+  return async dispatch => {
+    await fetch(`http://localhost:5000/order/update/${orderID}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: 'Bearer ' + token,
+      },
+      body: JSON.stringify({
+        status: ORDER_STATUS.CANCEL,
+      }),
+    }).then(dispatch({type: REMOVE_DELIVERING_ORDERS, orderID: orderID}));
+    
+  };
+};
+export const cancelDeliveredOrdersWithOrderID = ({orderID, token}) => {
+  return async dispatch => {
+    await fetch(`http://localhost:5000/order/update/${orderID}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: 'Bearer ' + token,
+      },
+      body: JSON.stringify({
+        status: ORDER_STATUS.CANCEL,
+      }),
+    }).then(dispatch({type: REMOVE_DELIVERED_ORDERS, orderID: orderID}));
+    
+  };
+};
+
+///////////////
+
+
 export const fetchAllOrdersWithUserID = ({id, token}) => {
   return async dispatch => {
     const loadOrders = await fetchOrders({
@@ -319,6 +415,8 @@ const fetchOrdersWithAdminRole = async ({token, status, page}) => {
   try {
     const statusConvert = status ? `status=${status}&` : '';
     const pageConvert = page ? `page=${page}&` : '';
+    console.log(`http://localhost:5000/order/admin?${statusConvert}${pageConvert}`)
+
     const response = await fetch(
       `http://localhost:5000/order/admin?${statusConvert}${pageConvert}`,
       {

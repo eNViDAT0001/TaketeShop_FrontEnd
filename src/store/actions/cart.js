@@ -7,7 +7,7 @@ export const DELETE_CART_ITEMS = 'DELETE_CART_ITEMS';
 export const UPDATE_CART_ITEMS = 'UPDATE_CART_ITEMS';
 export const SELECT_CART_ITEMS = 'SELECT_CART_ITEMS';
 export const CHECK_ALL_CART_ITEMS = 'CHECK_ALL_CART_ITEMS';
-export const ADD_CART = 'MAKE_ORDER';
+export const ADD_CART = 'ADD_CART';
 export const PICK_CART_ITEMS = 'BUY_CART_ITEMS';
 export const PICK_ADDRESS = 'PICK_ADDRESS';
 export const MAKE_ORDER = 'MAKE_ORDER';
@@ -162,7 +162,7 @@ export const makeOrder = ({
     });
   };
 };
-export const addCartItem = ({userID, productID, quantity}) => {
+export const addCartItem = ({userID, productID, quantity, token}) => {
   return async dispatch => {
     await fetch(`http://localhost:5000/cart/item/add`, {
       method: 'POST',
@@ -175,6 +175,6 @@ export const addCartItem = ({userID, productID, quantity}) => {
         productID: productID,
         quantity: quantity,
       }),
-    });
+    }).then(dispatch({type: ADD_CART, productID: productID, userID: userID, quantity: quantity}));
   };
 };

@@ -8,10 +8,10 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
-import OrderNotification from '../../components/OrderNotification';
-import * as orderActions from '../../store/actions/order';
+import OrderAdminNotification from '../../../components/OrderAdminNotification';
+import * as orderActions from '../../../store/actions/order';
 
-function OrderWaitingPage() {
+function OrderAdminWaitingPage() {
   const dispatch = useDispatch();
   const orders = useSelector(state => state.order.waitingOrders);
   const userID = useSelector(state => state.auth.userID);
@@ -27,7 +27,7 @@ function OrderWaitingPage() {
     setIsRefreshing(true);
     try {
       await dispatch(
-        orderActions.fetchWaitingOrdersWithUserID({id: userID, token: token}),
+        orderActions.fetchWaitingOrdersWithAdminRoles({token: token}),
       );
     } catch (err) {
       setError(err.msg);
@@ -75,10 +75,10 @@ function OrderWaitingPage() {
           refreshing={isRefreshing}
           data={orders}
           renderItem={itemData => (
-            <OrderNotification
+            <OrderAdminNotification
               item={itemData.item}
               userID={userID}
-              token={token}></OrderNotification>
+              token={token}></OrderAdminNotification>
           )}></FlatList>
       ) : (
         <View style={styles.centered}>
@@ -93,4 +93,4 @@ const styles = StyleSheet.create({
   centered: {flex: 1, justifyContent: 'center', alignItems: 'center'},
 });
 
-export default OrderWaitingPage;
+export default OrderAdminWaitingPage;

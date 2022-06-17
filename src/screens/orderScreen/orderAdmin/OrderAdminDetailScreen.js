@@ -16,9 +16,8 @@ import * as orderActions from '../../store/actions/order';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {convertOrderStatusToVietnameseWithDetail} from '../../ulti/Ulti';
-import OrderItem from '../../components/OrderItem';
-import { ORDER_WAITING_PAGE } from '../../constants/NavigatorIndex';
-function OrderDetailScreen(props) {
+import OrderAdminNotification from '../../../components/OrderAdminNotification';
+function OrderAdminDetailScreen(props) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const order = useSelector(state => state.order.currentOrder);
@@ -262,4 +261,4 @@ const styles = StyleSheet.create({
     color: 'white',
   },
 });
-export default OrderDetailScreen;
+export default OrderAdminDetailScreen;

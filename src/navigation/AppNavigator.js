@@ -1,6 +1,6 @@
 import React from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { NavigationContainer } from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {NavigationContainer} from '@react-navigation/native';
 import {
   ADDRESS_SCREEN,
   ADD_ADDRESS_SCREEN,
@@ -17,6 +17,7 @@ import {
   WISHLIST_SCREEN,
   PAYMENT_SCREEN,
   ORDER_DETAIL_SCREEN,
+  ADMIN_ORDER_NAVIGATOR,
   //PROFILE_NAVIGATOR_FOR_ADMIN,
 } from '../constants/NavigatorIndex';
 import BottomBarNavigator from './BottomBarNavigator';
@@ -36,6 +37,7 @@ import WishlistScreen from '../screens/homeScreen/WishlistScreen';
 import AdminNavigator from './AdminNavigator';
 import PaymentScreens from '../screens/cartScreen/PaymentScreens';
 import OrderDetailScreen from '../screens/orderScreen/OrderDetailScreen';
+import OrderAdminNavigator from './OrderAdminNavigator';
 
 const StackNavigator = createNativeStackNavigator();
 function AppNavigator() {
@@ -48,6 +50,7 @@ function AppNavigator() {
             backgroundColor: Colors.primaryColor,
           },
         }}>
+
         <StackNavigator.Screen
           name={STARTUP_SCREEN}
           component={StartupScreen}
@@ -77,6 +80,7 @@ function AppNavigator() {
             headerTitle: 'Yêu Thích',
             headerShown: false,
           }}></StackNavigator.Screen>
+
         <StackNavigator.Screen
           name={CATEGORY_DETAIL_SCREEN}
           component={CategoryDetailScreen}
@@ -107,24 +111,28 @@ function AppNavigator() {
             headerTitle: 'Viết đánh giá',
             headerShown: false,
           }}></StackNavigator.Screen>
+
         <StackNavigator.Screen
           name={ADDRESS_SCREEN}
           component={AddressScreen}
           options={{
             headerShown: false,
           }}></StackNavigator.Screen>
+
         <StackNavigator.Screen
           name={ADD_ADDRESS_SCREEN}
           component={AddAddressPage}
           options={{
             headerShown: false,
           }}></StackNavigator.Screen>
-          <StackNavigator.Screen
+
+        <StackNavigator.Screen
           name={PAYMENT_SCREEN}
           component={PaymentScreens}
           options={{
             headerShown: false,
           }}></StackNavigator.Screen>
+
         <StackNavigator.Screen
           name={SUCCESS_SCREEN}
           component={SuccessScreen}
@@ -132,13 +140,23 @@ function AppNavigator() {
             headerTitle: 'Thêm Địa Chỉ',
             headerShown: false,
           }}></StackNavigator.Screen>
-          <StackNavigator.Screen
+
+        <StackNavigator.Screen
           name={ORDER_DETAIL_SCREEN}
           component={OrderDetailScreen}
           options={{
             headerTitle: 'Thêm Địa Chỉ',
             headerShown: false,
           }}></StackNavigator.Screen>
+
+        <StackNavigator.Screen
+          name={ADMIN_ORDER_NAVIGATOR}
+          component={OrderAdminNavigator}
+          options={{
+            headerTitle: 'Quản lý đơn hàng Admin',
+            headerShown: false,
+          }}></StackNavigator.Screen>
+
         <StackNavigator.Screen
           name={NOTIFICATION_SCREEN}
           component={NotificationScreen}

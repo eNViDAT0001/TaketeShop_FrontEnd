@@ -19,7 +19,7 @@ function OrderNotification(props) {
   const navigation = useNavigation();
   const bttClickHandler = () => {
     dispatch(
-      orderActions.cancelOrdersWithOrderID({
+      orderActions.cancelWaitingOrdersWithOrderID({
         orderID: props.item.orderID,
         token: props.token,
       }),

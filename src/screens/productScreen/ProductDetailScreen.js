@@ -20,6 +20,7 @@ import {CART_MAIN_SCREEN, COMMENT_SCREEN} from '../../constants/NavigatorIndex';
 import PagerView from 'react-native-pager-view';
 import * as commentActions from '../../store/actions/comment';
 import * as productActions from '../../store/actions/products';
+import * as cartActions from '../../store/actions/cart';
 
 function ProductDetailScreen(props) {
   const route = useRoute();
@@ -29,7 +30,7 @@ function ProductDetailScreen(props) {
   const comments = useSelector(state => state.comment.productComments);
   const userID = useSelector(state => state.auth.userID);
   const token = useSelector(state => state.auth.token);
-  const [liked, setLiked] = useState(() => product.liked)
+  const [liked, setLiked] = useState(() => product.liked);
   const recommenderProducts = useSelector(
     state => state.products.availableProducts,
   );
@@ -52,7 +53,6 @@ function ProductDetailScreen(props) {
         liked: product.liked,
       }),
     );
-
   };
 
   const loadProduct = useCallback(async () => {
@@ -106,9 +106,7 @@ function ProductDetailScreen(props) {
   }, [dispatch, loadProduct, productID]);
   useEffect(() => {
     if (error) {
-      Alert.alert('An Error Occurred!', error + ', please try again!', [
-        {text: 'Okay'},
-      ]);
+      Alert.alert('Có lỗi', error + ', vui lòng thử lại!', [{text: 'Okay'}]);
     }
   }, [error]);
 
@@ -147,6 +145,31 @@ function ProductDetailScreen(props) {
       </View>
     );
   }
+
+  const onBuyHandler = () =>
+    Alert.alert(
+      'Xác nhận mua sản phẩm',
+      `Bạn muốn thêm "${product.name}" vào giỏ hàng chứ?`,
+      [
+        {
+          text: 'Không',
+          onPress: () => console.log('Không mua nựa'),
+          style: 'cancel',
+        },
+        {
+          text: 'Có',
+          onPress: () =>
+            dispatch(
+              cartActions.addCartItem({
+                userID: userID,
+                productID: productID,
+                quantity: 1,
+                token: token,
+              }),
+            ),
+        },
+      ],
+    );
   return (
     <View style={styles.screen}>
       <ScrollView>
@@ -218,7 +241,7 @@ function ProductDetailScreen(props) {
         </Card>
       </ScrollView>
       <Card style={styles.bottomBar}>
-        <TouchableOpacity style={styles.bottomButton}>
+        <TouchableOpacity style={styles.bottomButton} onPress={onBuyHandler}>
           <Text style={styles.bottomText}>Chọn Mua</Text>
         </TouchableOpacity>
       </Card>

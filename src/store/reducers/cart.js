@@ -1,4 +1,5 @@
 import {
+  ADD_CART,
   CHECK_ALL_CART_ITEMS,
   DELETE_CART_ITEMS,
   PICK_ADDRESS,
@@ -86,6 +87,18 @@ const cartReducer = (state = initialState, action) => {
           address: action.address,
           userID: action.userID
         },
+      };
+    }
+    case ADD_CART: {
+      return {
+        ...state,
+        cartItems: [
+          ...state.cartItems.map(item => {
+            if (item.id == action.id)
+              return {...item, quantity: action.quantity + item.quantity};
+            return item;
+          }),
+        ],
       };
     }
     default: {

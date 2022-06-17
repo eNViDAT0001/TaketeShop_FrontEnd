@@ -17,7 +17,6 @@ export const FORGOT_PASSWORD_SCREEN = "ForgotPassword";
 export const HOME_MAIN_SCREEN = "HomeMainScreen";
 export const SHOP_MAIN_SCREEN = "ShopMainScreen";
 export const CART_MAIN_SCREEN = "CartMainScreen";
-export const ORDER_MAIN_SCREEN = "OrderMainScreen";
 export const ACCOUNT_MAIN_SCREEN = "AccountMainScreen";
 export const PRODUCT_DETAIL_SCREEN = "ProductDetailScreen";
 export const COMMENT_SCREEN = "CommentScreen";
@@ -39,6 +38,13 @@ export const ORDER_DELIVERED_PAGE ="OrderDeliveredPage";
 export const ORDER_CANCEL_PAGE ="OrderCancelPage";
 export const ORDER_DETAIL_SCREEN ="OrderDetailScreen";
 
+export const ORDER_ADMIN_WAITING_PAGE ="OrderAdminWaitingPage";
+export const ORDER_ADMIN_CONFIRM_PAGE ="OrderAdminConfirmPage";
+export const ORDER_ADMIN_DELIVERING_PAGE ="OrderAdminDeliveringPage";
+export const ORDER_ADMIN_DELIVERED_PAGE ="OrderAdminDeliveredPage";
+export const ORDER_ADMIN_CANCEL_PAGE ="OrderAdminCancelPage";
+export const ORDER_ADMIN_DETAIL_SCREEN ="OrderAdminDetailScreen";
+
 
 export const ADMIN_SCREEN ="AdminScreen";
 export const ADMIN_PRODUCT_DETAIL_SCREEN ="AdminProductDetailScreen";
@@ -54,6 +60,7 @@ export const ADMIN_ORDER_STATUS_PAGE ="AdminOrderConfirmPage";
 export const ADMIN_ORDER_DELIVERING_PAGE ="AdminOrderDeliveringPage";
 export const ADMIN_ORDER_DELIVERED_PAGE ="AdminOrderDeliveredPage";
 export const ADMIN_ORDER_CANCEL_PAGE ="AdminOrderCancelPage";
+export const ADMIN_ORDER_NAVIGATOR ="AdminOrderNavigator";
 
 
 

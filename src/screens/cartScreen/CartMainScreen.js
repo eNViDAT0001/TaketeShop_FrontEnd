@@ -7,6 +7,8 @@ import {
   StyleSheet,
   ActivityIndicator,
   Alert,
+  Modal,
+  TouchableOpacity,
 } from 'react-native';
 import {Button, IconButton} from 'react-native-paper';
 import {useSelector, useDispatch} from 'react-redux';
@@ -16,6 +18,8 @@ import Header from '../../components/UI/Header';
 import Colors from '../../constants/Colors';
 import {ADDRESS_SCREEN} from '../../constants/NavigatorIndex';
 import * as cartActions from '../../store/actions/cart';
+import {ColorSpace} from 'react-native-reanimated';
+import DiscountModal from '../../components/Modal/DiscoutModal';
 const SHIPPING_VALUE = +50000;
 function CartMainScreen() {
   const navigation = useNavigation();
@@ -23,12 +27,20 @@ function CartMainScreen() {
   const cartItems = useSelector(state => state.cart.cartItems);
   const selectedCartItem = cartItems.filter(item => item.isSelected === true);
   const userID = useSelector(state => state.auth.userID);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [discount, setDiscount] = useState(0);
   const onConfirmHandler = () => {
     if (selectedCartItem.length) {
-      dispatch(cartActions.pickCartItems(selectedCartItem, displayCount(), (displayTotal() / 100) * 5 + shippingFee + displayTotal()));
-      navigation.navigate(ADDRESS_SCREEN);
+      dispatch(
+        cartActions.pickCartItems(
+          selectedCartItem,
+          displayCount(),
+          (displayTotal() / 100) * 5 + shippingFee + displayTotal(),
+        ),
+      );
+      navigation.navigate(ADDRESS_SCREEN, {makeOrder: true});
     } else {
-      Alert.alert('Giỏ hàng trống','Vui lòng chọn sản phẩm trong giỏ hàng!', [
+      Alert.alert('Giỏ hàng trống', 'Vui lòng chọn sản phẩm trong giỏ hàng!', [
         {text: 'Okay'},
       ]);
     }
@@ -38,6 +50,9 @@ function CartMainScreen() {
   const onCheckAllHandler = () => {
     dispatch(cartActions.checkAllCartItems(flag));
     setFlag(!flag);
+  };
+  const onDiscountHandler = () => {
+    setModalVisible(!modalVisible);
   };
   const displayCount = () => {
     let count = 0;
@@ -96,20 +111,48 @@ function CartMainScreen() {
   return (
     <View style={styles.screen}>
       <Header title={'Giỏ hàng'} back={true}>
+        <IconButton
+          icon="brightness-percent"
+          onPress={onDiscountHandler}
+          color={Colors.backgroundColor}
+        />
+      </Header>
+      <View style={styles.chooseAllContainer}>
+        <Text style={styles.title}>
+          Chọn tất cả ({selectedCartItem.length}):
+        </Text>
         {flag ? (
           <IconButton
             icon="checkbox-blank-circle-outline"
             onPress={onCheckAllHandler}
-            color={Colors.backgroundColor}
+            color={Colors.primaryColor}
           />
         ) : (
           <IconButton
             icon="checkbox-blank-circle"
             onPress={onCheckAllHandler}
-            color={Colors.backgroundColor}
+            color={Colors.primaryColor}
           />
         )}
-      </Header>
+      </View>
+      {/* <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}>
+        <TouchableOpacity
+          onPress={() => {
+            setModalVisible(!modalVisible);
+          }}>
+          <View style={{flex: 1, padding: 200}}>
+            <View style={{backgroundColor: 'white', flex: 1}}>
+
+            </View>
+          </View>
+        </TouchableOpacity>
+      </Modal> */}
       {cartItems.length ? (
         <>
           <View style={styles.cartItemsList}>
@@ -129,6 +172,10 @@ function CartMainScreen() {
             <View style={styles.row}>
               <Text style={styles.title}>Phí giao hàng:</Text>
               <Text style={styles.value}>{shippingFee}</Text>
+            </View>
+            <View style={styles.row}>
+              <Text style={styles.title}>Giảm giá:</Text>
+              <Text style={styles.value}>{discount}</Text>
             </View>
             <View style={styles.row}>
               <Text style={styles.title}>Thuế VAT (8%):</Text>
@@ -191,7 +238,12 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingTop: 0,
     margin: 15,
-    marginVertical: 5,
+  },
+  chooseAllContainer: {
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    paddingLeft: 15,
   },
   row: {
     flexDirection: 'row',

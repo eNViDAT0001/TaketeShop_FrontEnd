@@ -12,20 +12,34 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Address from '../../components/Address';
 import Header from '../../components/UI/Header';
 import Colors from '../../constants/Colors';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {ADD_ADDRESS_SCREEN, PAYMENT_SCREEN} from '../../constants/NavigatorIndex';
 import * as addressActions from '../../store/actions/address';
 import * as cartActions from '../../store/actions/cart';
 import {useDispatch, useSelector} from 'react-redux';
 function AddressScreen() {
   const navigation = useNavigation();
+  const route = useRoute();
   const dispatch = useDispatch();
   const addresses = useSelector(state => state.address.addresses);
   const userID = useSelector(state => state.auth.userID);
+  const makeOrderPhase = route.params.makeOrder;
 
   const [isLoading, setIsLoading] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [error, setError] = useState();
+
+  const confirmButton = makeOrderPhase? (<View style={styles.buttonContainer}>
+    <Button
+      mode="contained"
+      contentStyle={styles.buttonText}
+      style={styles.button}
+      color={Colors.iconColor}
+      labelStyle={{fontSize: 20}}
+      onPress={onConfirm}>
+      Xác nhận
+    </Button>
+  </View>) : <View></View>;
 
   const loadAddress = useCallback(async () => {
     setError(null);
@@ -88,17 +102,7 @@ function AddressScreen() {
           data={addresses}
           renderItem={itemData => <Address item={itemData.item}></Address>}
           ListFooterComponent={
-            <View style={styles.buttonContainer}>
-              <Button
-                mode="contained"
-                contentStyle={styles.buttonText}
-                style={styles.button}
-                color={Colors.iconColor}
-                labelStyle={{fontSize: 20}}
-                onPress={onConfirm}>
-                Xác nhận
-              </Button>
-            </View>
+            confirmButton
           }></FlatList>
       ) : (
           <View style={styles.centered}>

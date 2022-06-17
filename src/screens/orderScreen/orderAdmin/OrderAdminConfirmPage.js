@@ -8,12 +8,12 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
-import OrderNotification from '../../components/OrderNotification';
-import * as orderActions from '../../store/actions/order';
+import OrderAdminNotification from '../../../components/OrderAdminNotification';
+import * as orderActions from '../../../store/actions/order';
 
-function OrderWaitingPage() {
+function OrderAdminConfirmPage() {
   const dispatch = useDispatch();
-  const orders = useSelector(state => state.order.waitingOrders);
+  const orders = useSelector(state => state.order.confirmedOrders);
   const userID = useSelector(state => state.auth.userID);
   const token = useSelector(state => state.auth.token);
 
@@ -27,7 +27,7 @@ function OrderWaitingPage() {
     setIsRefreshing(true);
     try {
       await dispatch(
-        orderActions.fetchWaitingOrdersWithUserID({id: userID, token: token}),
+        orderActions.fetchConfirmedOrdersWithAdminRoles({token: token}),
       );
     } catch (err) {
       setError(err.msg);
@@ -75,14 +75,14 @@ function OrderWaitingPage() {
           refreshing={isRefreshing}
           data={orders}
           renderItem={itemData => (
-            <OrderNotification
+            <OrderAdminNotification
               item={itemData.item}
               userID={userID}
-              token={token}></OrderNotification>
+              token={token}></OrderAdminNotification>
           )}></FlatList>
       ) : (
         <View style={styles.centered}>
-          <Text>Hiện đang không có đơn hàng nào chờ xác nhận</Text>
+          <Text>Hiện đang không có đơn hàng nào đã được xác nhận</Text>
         </View>
       )}
     </View>
@@ -93,4 +93,4 @@ const styles = StyleSheet.create({
   centered: {flex: 1, justifyContent: 'center', alignItems: 'center'},
 });
 
-export default OrderWaitingPage;
+export default OrderAdminConfirmPage;
