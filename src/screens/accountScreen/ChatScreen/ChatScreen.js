@@ -5,12 +5,13 @@ import {
   Dimensions,
   SafeAreaView,
 } from 'react-native'
-import { Colors, IconButton, Button } from 'react-native-paper';
+import { IconButton, Button } from 'react-native-paper';
 import { Dropdown } from 'react-native-element-dropdown';
 import { useNavigation } from '@react-navigation/native';
 import Header from '../../../components/UI/Header';
 import { useDispatch, useSelector } from 'react-redux';
 import * as chanelActions from '../../../store/actions/chanelActions';
+import Colors from '../../../constants/Colors';
 
 const { width, height } = Dimensions.get('window');
 function ChatScreen({route}) {
@@ -64,7 +65,8 @@ function ChatScreen({route}) {
 
   return (
     <SafeAreaView style={styles.screen}>
-     <Header title={titleHeader}></Header>
+     <Header title={titleHeader}></Header> 
+    
       <FlatList
         ref={flatListRef}
         data={DATA_MESSAGES}
@@ -107,7 +109,7 @@ function ChatScreen({route}) {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: '#d4d4d4',
+    backgroundColor: Colors.backgroundColor,
   },
   chatScreen: {
 

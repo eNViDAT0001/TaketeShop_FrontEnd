@@ -65,7 +65,7 @@ function AccountMainScreen() {
             console.log('chanel get :' + chanelId);
             dispatch(chanelActions.getChanel(userID));  
             dispatch(chanelActions.getMessagerFromChanelId(chanelId));
-            navigation.navigate('ChatScreen');
+            navigation.navigate('ChatScreen',{titleHeader: "Hỗ trợ khách hàng"});
           } else {
             dispatch(chanelActions.getAllChanel());
             navigation.navigate('ListChanel');
