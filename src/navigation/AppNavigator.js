@@ -18,6 +18,7 @@ import {
   PAYMENT_SCREEN,
   ORDER_DETAIL_SCREEN,
   ADMIN_ORDER_NAVIGATOR,
+  ORDER_ADMIN_DETAIL_SCREEN,
   //PROFILE_NAVIGATOR_FOR_ADMIN,
 } from '../constants/NavigatorIndex';
 import BottomBarNavigator from './BottomBarNavigator';
@@ -38,6 +39,7 @@ import AdminNavigator from './AdminNavigator';
 import PaymentScreens from '../screens/cartScreen/PaymentScreens';
 import OrderDetailScreen from '../screens/orderScreen/OrderDetailScreen';
 import OrderAdminNavigator from './OrderAdminNavigator';
+import OrderAdminDetailScreen from '../screens/orderScreen/orderAdmin/OrderAdminDetailScreen';
 
 const StackNavigator = createNativeStackNavigator();
 function AppNavigator() {
@@ -50,7 +52,6 @@ function AppNavigator() {
             backgroundColor: Colors.primaryColor,
           },
         }}>
-
         <StackNavigator.Screen
           name={STARTUP_SCREEN}
           component={StartupScreen}
@@ -144,6 +145,14 @@ function AppNavigator() {
         <StackNavigator.Screen
           name={ORDER_DETAIL_SCREEN}
           component={OrderDetailScreen}
+          options={{
+            headerTitle: 'Thêm Địa Chỉ',
+            headerShown: false,
+          }}></StackNavigator.Screen>
+
+        <StackNavigator.Screen
+          name={ORDER_ADMIN_DETAIL_SCREEN}
+          component={OrderAdminDetailScreen}
           options={{
             headerTitle: 'Thêm Địa Chỉ',
             headerShown: false,

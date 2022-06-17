@@ -71,7 +71,7 @@ function OrderDetailScreen(props) {
 
   const onCancelRequest = () => {
     dispatch(
-      orderActions.cancelOrdersWithOrderID({
+      orderActions.cancelWaitingOrdersWithOrderID({
         orderID: order.orderID,
         token: token,
       }),

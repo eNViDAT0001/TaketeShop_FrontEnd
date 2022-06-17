@@ -9,14 +9,14 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import Card from '../../components/UI/Card';
-import Header from '../../components/UI/Header';
-import Colors from '../../constants/Colors';
-import * as orderActions from '../../store/actions/order';
+import Card from '../../../components/UI/Card';
+import Header from '../../../components/UI/Header';
+import Colors from '../../../constants/Colors';
+import * as orderActions from '../../../store/actions/order';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
-import {convertOrderStatusToVietnameseWithDetail} from '../../ulti/Ulti';
-import OrderAdminNotification from '../../../components/OrderAdminNotification';
+import {convertOrderStatusToVietnameseWithDetail} from '../../../ulti/Ulti';
+import OrderItem from '../../../components/OrderItem';
+import {ADMIN_ORDER_NAVIGATOR} from '../../../constants/NavigatorIndex';
 function OrderAdminDetailScreen(props) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -68,15 +68,101 @@ function OrderAdminDetailScreen(props) {
     );
   }
 
-  const onCancelRequest = () => {
-    dispatch(
-      orderActions.cancelOrdersWithOrderID({
-        orderID: order.orderID,
-        token: token,
-      }),
-    );
-    navigation.navigate(ORDER_WAITING_PAGE);
-  }
+  const [statusAction, setStatusAction] = useState(() => {
+    switch (order.status) {
+      case 'WAITING':
+        return {
+          title: 'Xác nhận đơn hàng',
+          func: () => {
+            dispatch(
+              orderActions.confirmOrdersWithOrderID({
+                orderID: order.orderID,
+                token: token,
+              }),
+            );
+            navigation.goBack();
+          },
+          cancelFunc: () => {
+            dispatch(
+              orderActions.cancelWaitingOrdersWithOrderID({
+                orderID: order.orderID,
+                token: token,
+              }),
+            );
+            navigation.goBack();
+          },
+        };
+      case 'CONFIRMED':
+        return {
+          title: 'Giao hàng',
+          func: () => {
+            dispatch(
+              orderActions.deliveryOrdersWithOrderID({
+                orderID: order.orderID,
+                token: token,
+              }),
+            );
+            navigation.goBack();
+          },
+          cancelFunc: () => {
+            dispatch(
+              orderActions.cancelConfirmOrdersWithOrderID({
+                orderID: order.orderID,
+                token: token,
+              }),
+            );
+            navigation.goBack();
+          },
+        };
+      case 'DELIVERING':
+        return {
+          title: 'Đã giao thành công',
+          func: () => {
+            dispatch(
+              orderActions.deliveredOrdersWithOrderID({
+                orderID: order.orderID,
+                token: order.token,
+              }),
+            );
+            navigation.goBack();
+          },
+          cancelFunc: () => {
+            dispatch(
+              orderActions.cancelDeliveryOrdersWithOrderID({
+                orderID: order.orderID,
+                token: order.token,
+              }),
+            );
+            navigation.goBack();
+          },
+        };
+      case 'DELIVERED':
+        return {
+          title: 'Trở về',
+          func: () => {
+            navigation.navigate(ADMIN_ORDER_NAVIGATOR);
+          },
+          cancelFunc: () => {
+            dispatch(
+              orderActions.cancelDeliveredOrdersWithOrderID({
+                orderID: order.orderID,
+                token: token,
+              }),
+            );
+            navigation.goBack();
+          },
+        };
+      default:
+        return {
+          title: 'Trở về',
+          func: () => {
+            dispatch(orderActions.setCurrentOrder(props.item));
+            navigation.navigate(ADMIN_ORDER_NAVIGATOR);
+          },
+          cancelFunc: () => console.log('Cancel nè'),
+        };
+    }
+  });
   return (
     <View style={{flex: 1}}>
       <FlatList
@@ -167,14 +253,23 @@ function OrderAdminDetailScreen(props) {
             </Card>
           </View>
         }></FlatList>
-      {order.status == 'WAITING' ? (
-        <Card style={styles.bottomBar}>
-          <TouchableOpacity style={styles.bottomButton} onPress={onCancelRequest}>
-            <Text style={styles.bottomText}>Hủy đơn hàng</Text>
-          </TouchableOpacity>
-        </Card>
-      ) : (
+      {order.status == 'CANCEL' ? (
         <></>
+      ) : (
+        <>
+          <Card style={styles.bottomBar}>
+            <TouchableOpacity
+              style={styles.bottomStatusButton}
+              onPress={statusAction.func}>
+              <Text style={styles.bottomText}>{statusAction.title}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.bottomButton}
+              onPress={statusAction.cancelFunc}>
+              <Text style={styles.bottomText}>Hủy đơn hàng</Text>
+            </TouchableOpacity>
+          </Card>
+        </>
       )}
     </View>
   );
@@ -193,7 +288,7 @@ const styles = StyleSheet.create({
   },
   statusTextContainer: {
     padding: 5,
-    width: '70%'
+    width: '70%',
   },
   icon: {
     marginRight: 10,
@@ -243,9 +338,10 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   bottomBar: {
-    height: 60,
+    height: 70,
     padding: 10,
     borderRadius: 0,
+    flexDirection: 'row',
   },
   bottomButton: {
     flex: 1,
@@ -254,6 +350,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#CD5C5C',
     borderRadius: 5,
     borderWidth: 1,
+    marginLeft: 5,
+  },
+  bottomStatusButton: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Colors.primaryColor,
+    borderRadius: 5,
+    borderWidth: 1,
+    marginLeft: 5,
   },
   bottomText: {
     fontSize: 18,

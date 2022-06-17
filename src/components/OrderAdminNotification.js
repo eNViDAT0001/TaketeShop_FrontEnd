@@ -11,7 +11,7 @@ import {useDispatch} from 'react-redux';
 import Card from './UI/Card';
 import * as orderActions from '../store/actions/order';
 import {useNavigation} from '@react-navigation/native';
-import {ORDER_DETAIL_SCREEN} from '../constants/NavigatorIndex';
+import {ORDER_ADMIN_DETAIL_SCREEN, ORDER_DETAIL_SCREEN} from '../constants/NavigatorIndex';
 import Colors from '../constants/Colors';
 
 function OrderAdminNotification(props) {
@@ -107,7 +107,7 @@ function OrderAdminNotification(props) {
   };
   const onItemClickHandler = () => {
     dispatch(orderActions.setCurrentOrder(props.item));
-    navigation.navigate(ORDER_DETAIL_SCREEN);
+    navigation.navigate(ORDER_ADMIN_DETAIL_SCREEN);
   };
 
   const date = props.item.createTime.slice(0, 10).split('-');
@@ -118,7 +118,7 @@ function OrderAdminNotification(props) {
         <Card style={styles.notificationContainer}>
           <Text style={styles.text}>
             {date[2]}/{date[1]}/{date[0]} - {props.item.orderID} (
-            {props.item.quantity} sản phẩm)
+            {props.item.quantity} sản phẩm): {props.item.name}
           </Text>
 
           {props.item.status == 'CANCEL'? (
