@@ -78,3 +78,23 @@ export const getBannerByID = (bannerID) => {
     }
   };
 };
+
+export const deleteBanner = (bannerID) => {
+  return async dispatch => {
+    // any async code you want!
+    try {
+      const response = await fetch('http://localhost:5000/banner/' + bannerID, 
+      {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },       
+      });
+      dispatch({ type: DELETE_BANNER, banners: bannerID });
+    } catch (err) {
+      // send to custom analytics server
+      console.log(err);
+      throw err;
+    }
+  };
+};

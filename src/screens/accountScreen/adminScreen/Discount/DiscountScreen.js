@@ -9,24 +9,27 @@ import {
   FlatList,
 } from 'react-native';
 import { convertWeekToVietnamese, convertMonthToVietnamese } from '../../../../ulti/Ulti';
-import { TextInput, Button } from 'react-native-paper';
+import { TextInput, Button, Checkbox } from 'react-native-paper';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Header from '../../../../components/UI/Header';
 import Colors from '../../../../constants/Colors';
 import CalendarPicker from 'react-native-calendar-picker';
 import { useDispatch, useSelector } from 'react-redux';
-import * as authActions from '../../../../store/actions/auth';
 import { Dropdown } from 'react-native-element-dropdown';
 import Card from '../../../../components/UI/Card';
+import * as discountActions from '../../../../store/actions/discount';
+import { LIST_DISCOUNT } from '../../../../constants/NavigatorIndex';
 
 function DiscountScreen(props) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const [name, setName] = useState('');
-  const [categoryID, setCategoryID] = useState('');
-  const [sale, setSale] = useState('');
-  const [membership, setMembership] = useState('');
+  const categoryList = useSelector(state => state.products.categories);
+  const [categoryID, setCategoryID] = useState();
+  const [voucher, setVoucher] = useState('');
+  const [discount, setDiscount] = useState('');
+  const [membership, setMembership] = useState(false);
+  let check = 0 ;
   const [date, setDate] = useState('');
   const [displayDay, setDisplayDay] = useState([]);
 
@@ -41,50 +44,56 @@ function DiscountScreen(props) {
     return `${convertWeekToVietnamese(date[0])} ${date[2]
       }/${convertMonthToVietnamese(date[1])}/${date[3]}`;
   };
+ 
+  const AddDiscount = () => {
+    if (membership) 
+      check = 1 ;
+    else check = 0;
+    dispatch(discountActions.createDiscount(categoryID, voucher, discount, check, SQLDate(displayDay))) ;
+    navigation.navigate(LIST_DISCOUNT);
+  };
 
   useLayoutEffect(() => {
     setDisplayDay(date.toString().split(' '));
   }, [date]);
-
   return (
     <ScrollView style={styles.screen}>
-      <Header title="Discount"></Header>
+      <Header title="Thêm giảm giá"></Header>
 
       <View style={styles.inputContainer}>
-        <Text style={styles.title}>Mã voucher: </Text>
+        <Text style={styles.title}>Mã giảm giá: </Text>
         <TextInput
-          label="Nhập mã voucher"          
+          label="Nhập mã voucher"
           style={{ backgroundColor: Colors.backgroundColor }}
           mode="outlined"
-          value={name}
-          onChangeText={txt => setName(txt)}
+          value={voucher}
+          onChangeText={txt => setVoucher(txt)}
         />
       </View>
+      
+      {/* Chon loai san pham */}
+      <View>
+        <View style={styles.inputContainer}>
+          <Text style={styles.title}>Chọn loại sản phẩm sử dụng mã giảm giá: </Text>
+          <Dropdown
+            style={styles.dropdown}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            data={categoryList}
+            maxHeight={130}
+            labelField="name"
+            valueField="categoryID"
+            placeholder={'Loại sản phẩm'}
+            onChange={item => {
+              setCategoryID(item.categoryID);
+              console.log(item.categoryID);             
+            }}
+          />
+        </View>       
 
-      <View style={styles.inputContainer}>
-        <Text style={styles.title}>Mã sản phẩm giảm giá: </Text>
-        <TextInput
-          label="Mã sản phẩm giảm giá:"        
-          style={{ backgroundColor: Colors.backgroundColor }}
-          keyboardType="numeric"
-          mode="outlined"
-          value={categoryID}
-          onChangeText={txt => setCategoryID(txt)}
-        />
+
       </View>
-
-      <View style={styles.inputContainer}>
-        <Text style={styles.title}>Membership: </Text>
-        <TextInput
-          label="Membership:"         
-          style={{ backgroundColor: Colors.backgroundColor }}
-          keyboardType="numeric"
-          mode="outlined"
-          value={membership}
-          onChangeText={txt => setMembership(txt)}
-        />
-      </View>
-
+      {/* Discount */}
       <View style={styles.inputContainer}>
         <Text style={styles.title}>Giảm giá (%): </Text>
         <TextInput
@@ -92,22 +101,40 @@ function DiscountScreen(props) {
           style={{ backgroundColor: Colors.backgroundColor }}
           keyboardType="numeric"
           mode="outlined"
-          value={sale}
-          onChangeText={txt => setSale(txt)}
+          value={discount}
+          onChangeText={txt => setDiscount(txt)}
         />
       </View>
+
+      {/* membership */}
+      <View style={{
+        padding: 10,
+        flex: 14,
+        backgroundColor: Colors.backgroundColor,
+        flexDirection: 'row',
+      }}>
+        <Text style={styles.title}>Membership: </Text>
+        <Checkbox
+          status={membership ? 'checked' : 'unchecked'}
+          color="#4086ef"
+          onPress={() => {
+            setMembership(!membership);
+          }}
+        />
+      </View>
+
 
       {/* end date */}
       <View style={styles.inputContainer}>
         <Text style={styles.title}>Ngày hết hạn: </Text>
         <TextInput
-          disabled = "false"
+          disabled="false"
           style={{ backgroundColor: Colors.backgroundColor }}
           keyboardType="numeric"
           mode="outlined"
-          value= {date ? showDate(displayDay) : 'Vui lòng chọn ngày'}
+          value={date ? showDate(displayDay) : 'Vui lòng chọn ngày'}
           onChangeText={txt => setDate(txt)}
-        />      
+        />
       </View>
       <View style={styles.calen}>
         <CalendarPicker
@@ -152,7 +179,9 @@ function DiscountScreen(props) {
           style={styles.button}
           color="#40bfff"
           labelStyle={{ fontSize: 20 }}
-          onPress={null}>
+          onPress={() => {
+            AddDiscount();
+          }}>
           Xác nhận
         </Button>
       </View>

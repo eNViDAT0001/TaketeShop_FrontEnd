@@ -13,7 +13,7 @@ import Header from '../../../../components/UI/Header';
 import Colors from '../../../../constants/Colors';
 import CalendarPicker from 'react-native-calendar-picker';
 import { useDispatch, useSelector } from 'react-redux';
-import * as authActions from '../../../../store/actions/auth';
+import * as bannerActions from '../../../../store/actions/banner';
 import { Dropdown } from 'react-native-element-dropdown';
 import Card from '../../../../components/UI/Card';
 import * as productActions from '../../../../store/actions/products';
@@ -113,6 +113,7 @@ function BannerScreen(props) {
                         data={images}
                         horizontal={true}
                         style={styles.imageList}
+                        keyExtractor={(item, index) => item.id}
                         renderItem={itemData => (
                             <Card style={styles.imageContainer}>
                                 <Image

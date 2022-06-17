@@ -11,7 +11,7 @@ import ListBanner from '../screens/accountScreen/adminScreen/Banner/ListBanner';
 import ListDiscount from '../screens/accountScreen/adminScreen/Discount/ListDiscount';
 import FixBanner from '../screens/accountScreen/adminScreen/Banner/FixBanner';
 import BannerScreen from '../screens/accountScreen/adminScreen/Banner/BannerScreen';
-
+import FixDiscount from '../screens/accountScreen/adminScreen/Discount/FixDiscount';
 
 const StackNavigator = createNativeStackNavigator();
 function AdminNavigator() {
@@ -22,10 +22,10 @@ function AdminNavigator() {
     <StackNavigator.Screen name={BANNER_SCREEN} component={BannerScreen} />
     <StackNavigator.Screen name={LIST_BANNER} component={ListBanner} />
     <StackNavigator.Screen name={FIX_BANNER} component={FixBanner} />
-    <StackNavigator.Screen name={DISCOUNT_SCREEN} component={DiscountScreen} />
-    
-    <StackNavigator.Screen name={LIST_DISCOUNT} component={ListDiscount} />
 
+    <StackNavigator.Screen name={DISCOUNT_SCREEN} component={DiscountScreen} />    
+    <StackNavigator.Screen name={LIST_DISCOUNT} component={ListDiscount} />
+    <StackNavigator.Screen name={FIX_DISCOUNT} component={FixDiscount} />
   </StackNavigator.Navigator>;
 }
 

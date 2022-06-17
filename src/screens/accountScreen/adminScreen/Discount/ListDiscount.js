@@ -6,7 +6,7 @@ import {
   SafeAreaView,
   Image,
   TouchableOpacity,
-  FlatList,
+  FlatList, Alert,
 } from 'react-native';
 import { TextInput, Button, Colors, IconButton, Avatar } from 'react-native-paper';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
@@ -14,37 +14,43 @@ import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import Header from '../../../../components/UI/Header';
 import { useSelector, useDispatch } from 'react-redux';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import * as authActions from '../../../../store/actions/auth'
-import * as chanelActions from '../../../../store/actions/chanelActions';
-import { BANNER_SCREEN,DISCOUNT_SCREEN } from '../../../../constants/NavigatorIndex';
+import * as discountActions from '../../../../store/actions/discount';
+import { BANNER_SCREEN, DISCOUNT_SCREEN, FIX_DISCOUNT } from '../../../../constants/NavigatorIndex';
 
 import { Form } from 'formik';
 
 function ListDiscount() {
-  var ALL_LIST_BANNER = useSelector(state => state.banner.banners);
+  let ALL_LIST_DISCOUNT = useSelector(state => state.discount.discounts);
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const role = useSelector(state => state.auth.role);
-  let chanelID = useSelector(state => state.chanel._id);
-  let img = useSelector(state => state.auth.avatar);
-  const token = useSelector(state => state.auth.token);
 
+  useEffect(() => {
+    dispatch(discountActions.fetchDiscount());
+  }, [ALL_LIST_DISCOUNT]);
+
+  const getDiscount = async (dID) => {
+    await dispatch(discountActions.getDiscountByID(dID)) ;
+    navigation.navigate(FIX_DISCOUNT) ;
+  }
   const Banner = (item) => {
     return (
       <View style={styles.container}>
         <View style={styles.screenrow}>
           <TouchableOpacity
             onPress={() => {
-
+              getDiscount(item.id)               
             }}>
 
-            <View style={{width: 290}}>
+            <View style={{ width: 290 }}>
               <Text style={styles.text1}>
-                aaaa</Text>
-              <View style={styles.text2}>
-                <Text> bbb</Text>
-
+                {item.voucher} </Text>
+              <View style={{
+                flexDirection: 'row',
+              }}>
+                <Text style={styles.text2}>
+                  Tỉ lệ giảm giá: {item.discount}%</Text>
               </View>
+
             </View>
 
           </TouchableOpacity>
@@ -57,7 +63,24 @@ function ListDiscount() {
           }}>
             <TouchableOpacity
               onPress={() => {
-
+                Alert.alert(
+                  "Xóa mã khuyến mãi",
+                  "Bạn có chắc muốn xóa mã khuyến mãi này không?",
+                  [
+                    {
+                      text: "Không",
+                      onPress: () => {
+                        console.log("Cancel delete")
+                      },
+                      style: "cancel"
+                    },
+                    {
+                      text: "Có", onPress: () => {
+                        dispatch(discountActions.deleteDiscount(item.id));                                           
+                      }
+                    }
+                  ]
+                );
               }}>
               <MaterialCommunityIcons
                 name="delete"
@@ -93,12 +116,11 @@ function ListDiscount() {
         }></Header>
 
       <FlatList
-        data={ALL_LIST_BANNER}
-        extraData={ALL_LIST_BANNER}
+        data={ALL_LIST_DISCOUNT}
+        extraData={ALL_LIST_DISCOUNT}
         renderItem={itemData => (renderBanner(itemData.item))}
-        keyExtractor={(item, index) => item._id}
+        keyExtractor={(item, index) => item.id}
         contentContainerStyle={{ flexGrow: 1, backgroundColor: '#D3D3D388', top: 5, marginHorizontal: 8 }}
-
       />
 
     </SafeAreaView>

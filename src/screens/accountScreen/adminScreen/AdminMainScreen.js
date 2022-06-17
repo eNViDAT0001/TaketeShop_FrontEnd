@@ -16,9 +16,11 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Card from '../../../components/UI/Card';
 import Colors from '../../../constants/Colors';
 import { useNavigation } from '@react-navigation/native';
-import { ADMIN_ADD_PRODUCT_SCREEN, ADMIN_ORDER_NAVIGATOR, ADMIN_PRODUCT_DETAIL_SCREEN,BANNER_SCREEN,DISCOUNT_SCREEN } from '../../../constants/NavigatorIndex';
+import { ADMIN_ADD_PRODUCT_SCREEN, ADMIN_ORDER_NAVIGATOR, ADMIN_PRODUCT_DETAIL_SCREEN,BANNER_SCREEN,DISCOUNT_SCREEN, LIST_DISCOUNT } from '../../../constants/NavigatorIndex';
+
 import {useDispatch, useSelector} from 'react-redux';
 import * as bannerActions from '../../../store/actions/banner';
+import * as discountActions from '../../../store/actions/discount';
 
 const ICON_SIZE = 32;
 const ICON_TITLE_SIZE = 35;
@@ -138,7 +140,8 @@ function AdminMainScreen() {
           <TouchableOpacity style={styles.itemContainer}
             onPress={() =>
             {
-              navigation.navigate("ListDiscount")}
+              dispatch(discountActions.fetchDiscount());        
+              navigation.navigate(LIST_DISCOUNT)}
             }>
             <MaterialCommunityIcons
               name="ticket"
