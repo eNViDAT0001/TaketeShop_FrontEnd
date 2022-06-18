@@ -31,6 +31,7 @@ function HomePage(props) {
       await dispatch(productActions.fetchDiscountProducts({page: 0}));
       await dispatch(productActions.fetchBestSellerProducts({page: 0}));
       await dispatch(productActions.fetchProducts({}));
+      await dispatch(productActions.fetchUnit());
     } catch (err) {
       setError(err.msg);
     }

@@ -28,7 +28,11 @@ function AddressScreen() {
   const [isLoading, setIsLoading] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [error, setError] = useState();
-
+  
+  const onConfirm = () => {
+    dispatch(cartActions.pickAddress(addresses.find(item => item.isSelected), userID));
+    navigation.navigate(PAYMENT_SCREEN);
+  }
   const confirmButton = makeOrderPhase? (<View style={styles.buttonContainer}>
     <Button
       mode="contained"
@@ -61,10 +65,7 @@ function AddressScreen() {
       setIsLoading(false);
     });
   }, [dispatch, loadAddress]);
-  const onConfirm = () => {
-    dispatch(cartActions.pickAddress(addresses.find(item => item.isSelected), userID));
-    navigation.navigate(PAYMENT_SCREEN);
-  }
+
   if (error) {
     return (
       <View style={styles.centered}>

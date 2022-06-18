@@ -19,6 +19,7 @@ import {
   ORDER_DETAIL_SCREEN,
   ADMIN_ORDER_NAVIGATOR,
   ORDER_ADMIN_DETAIL_SCREEN,
+  ADMIN_PRODUCT_SCREEN,
   //PROFILE_NAVIGATOR_FOR_ADMIN,
 } from '../constants/NavigatorIndex';
 import BottomBarNavigator from './BottomBarNavigator';
@@ -40,6 +41,7 @@ import PaymentScreens from '../screens/cartScreen/PaymentScreens';
 import OrderDetailScreen from '../screens/orderScreen/OrderDetailScreen';
 import OrderAdminNavigator from './OrderAdminNavigator';
 import OrderAdminDetailScreen from '../screens/orderScreen/orderAdmin/OrderAdminDetailScreen';
+import AdminProductScreen from '../screens/accountScreen/adminScreen/AdminProductScreen';
 
 const StackNavigator = createNativeStackNavigator();
 function AppNavigator() {
@@ -177,6 +179,14 @@ function AppNavigator() {
         <StackNavigator.Screen
           name={ADMIN_NAVIGATOR}
           component={AdminNavigator}
+          options={{
+            headerTitle: 'Admin',
+            headerShown: false,
+          }}></StackNavigator.Screen>
+
+        <StackNavigator.Screen
+          name={ADMIN_PRODUCT_SCREEN}
+          component={AdminProductScreen}
           options={{
             headerTitle: 'Admin',
             headerShown: false,

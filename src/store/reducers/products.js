@@ -18,6 +18,7 @@ import {
   SET_PRODUCTS_WITH_SEARCHKEY,
   SET_PRODUCT_WITH_CATEGORY_ID,
   SET_RECOMMENDER_PRODUCTS,
+  SET_UNIT,
   SET_WISHLIST_PRODUCTS,
   UPDATE_FAV_PRODUCT,
   UPDATE_PAGE,
@@ -43,6 +44,11 @@ export default (state = initialState, action) => {
         ...state,
         availableProducts: action.products,
       };
+      case SET_UNIT:
+        return {
+          ...state,
+          units: action.units,
+        };
     case SET_PRODUCTS_WITH_SEARCHKEY:
       return {
         ...state,

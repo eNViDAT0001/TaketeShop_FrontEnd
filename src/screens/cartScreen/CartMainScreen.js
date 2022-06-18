@@ -30,6 +30,7 @@ function CartMainScreen() {
   const [modalVisible, setModalVisible] = useState(false);
   const [discount, setDiscount] = useState(0);
   const onConfirmHandler = () => {
+
     if (selectedCartItem.length) {
       dispatch(
         cartActions.pickCartItems(

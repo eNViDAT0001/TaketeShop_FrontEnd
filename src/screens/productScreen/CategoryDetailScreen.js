@@ -21,7 +21,14 @@ function CategoryDetailScreen(props) {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   let products = useSelector(state => state.products.availableProducts);
+  const bestSellerProducts = useSelector(
+    state => state.products.bestSellerProducts,
+  );
+  const discountProducts = useSelector(
+    state => state.products.discountProducts,
+  );
   const page = useSelector(state => state.products.page);
+  const banner = useSelector(state => state.banner.banners);
   const id = useRoute().params.id;
   const type = useRoute().params.type;
   const title = useRoute().params.title;
@@ -54,16 +61,22 @@ function CategoryDetailScreen(props) {
   useEffect(() => {
     switch (type) {
       case 'DISCOUNT': {
-        return console.log('Discount');
+        return setDisplayProducts(cloneList(discountProducts));
       }
       case 'BEST_SELLER': {
-        return console.log('Best Seller');
+        return setDisplayProducts(cloneList(bestSellerProducts));
       }
       case 'RECOMMENDER': {
         return console.log('Recommender');
       }
       case 'BANNER': {
-        return console.log('Banner');
+        return setDisplayProducts(
+          cloneList(
+            products.filter(item =>
+              banner.find(i => i.id == id).productID.includes(item.id),
+            ),
+          ),
+        );
       }
       case 'CATEGORY': {
         return console.log('Category');

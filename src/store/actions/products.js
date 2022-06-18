@@ -21,6 +21,7 @@ export const SET_BEST_SELLER_PRODUCTS = 'SET_BEST_SELLER_PRODUCTS';
 export const SET_RECOMMENDER_PRODUCTS = 'SET_BEST_SELLER_PRODUCTS';
 export const SET_CATEGORIES = 'SET_CATEGORIES';
 export const UPDATE_PAGE = 'UPDATE_PAGE';
+export const SET_UNIT = 'SET_UNIT';
 
 export const fetchProducts = ({field, value, filter, sort, page}) => {
   return async dispatch => {
@@ -716,6 +717,32 @@ export const updateFavProduct = ({userID, token, productID, liked}) => {
         dispatch({type: UPDATE_FAV_PRODUCT});
       }
     } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  };
+};
+export const fetchUnit = () => {
+  return async dispatch => {
+    try {
+      const response = await fetch(`http://localhost:5000/product/${id}`);
+      if (response.error) {
+        throw new Error(response.msg);
+      }
+      const resData = await response.json();
+      const loadedUnits = [];
+
+      for (const key in resData) {
+        loadedUnits.push(
+          {
+            id: resData[key].id,
+            name: resData[key].name,
+          }
+        );
+      }
+      
+      dispatch({type: SET_UNIT, units: loadedUnits});
+    } catch (error) {
       console.log(err);
       throw err;
     }

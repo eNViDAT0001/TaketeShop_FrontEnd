@@ -23,30 +23,32 @@ function AdminProductDetailScreen(props) {
   const dispatch = useDispatch();
   const [name, setName] = useState('');
   const [detail, setDetail] = useState('');
-  const [quantity, setQuantity] = useState();
-  const [price, setPrice] = useState();
+  const [quantity, setQuantity] = useState(0);
+  const [price, setPrice] = useState(0);
   const [category, setCategory] = useState(null);
   const [unit, setUnit] = useState(null);
+  const [header, setHeader] = useState('Thêm sản phẩm');
   const categories = useSelector(state => state.products.categories);
-  const units = useSelector(state => state.products.unit);
+  const units = useSelector(state => state.products.units);
   const id = useRoute().params.id;
   const product = useSelector(state =>
-    state.products.availableProducts.find(item => item.productID === id),
+    state.products.availableProducts.find(item => item.productID == id),
   );
   useLayoutEffect(() => {
     if (id) {
+      setHeader("Chi tiết sản phẩm");
       setName(product.name);
       setDetail(product.description);
-      setQuantity(product.quantity);
+      setQuantity(+product.quantity);
       setCategory(product.categoryID);
-      setPrice(product.price);
-      setUnit(product.unit);
+      setPrice(+product.price);
+      setUnit(product.unitID);
     }
   }, [id]);
 
   return (
     <ScrollView style={styles.screen}>
-      <Header title="Thêm sản phẩm"></Header>
+      <Header title={header}></Header>
 
       <View style={styles.inputContainer}>
         <Text style={styles.title}>Tên sản phẩm: </Text>
@@ -131,7 +133,7 @@ function AdminProductDetailScreen(props) {
             data={units}
             maxHeight={200}
             labelField="name"
-            valueField="unitID"
+            valueField="id"
             placeholder={'Chọn Đơn vị'}
             value={unit}
             onChange={item => {

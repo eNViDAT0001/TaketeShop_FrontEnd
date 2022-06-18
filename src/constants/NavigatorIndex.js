@@ -49,6 +49,7 @@ export const ORDER_ADMIN_DETAIL_SCREEN ="OrderAdminDetailScreen";
 export const ADMIN_SCREEN ="AdminScreen";
 export const ADMIN_PRODUCT_DETAIL_SCREEN ="AdminProductDetailScreen";
 export const ADMIN_ADD_PRODUCT_SCREEN ="AdminAddProductScreen";
+export const ADMIN_PRODUCT_SCREEN ="AdminProductScreen";
 export const BANNER_SCREEN ="BannerScreen";
 export const LIST_BANNER ="ListBanner";
 export const FIX_BANNER ="FixBanner";

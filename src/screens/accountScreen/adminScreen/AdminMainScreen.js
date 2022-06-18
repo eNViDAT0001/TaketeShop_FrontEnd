@@ -16,7 +16,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Card from '../../../components/UI/Card';
 import Colors from '../../../constants/Colors';
 import { useNavigation } from '@react-navigation/native';
-import { ADMIN_ADD_PRODUCT_SCREEN, ADMIN_ORDER_NAVIGATOR, ADMIN_PRODUCT_DETAIL_SCREEN,BANNER_SCREEN,DISCOUNT_SCREEN, LIST_DISCOUNT } from '../../../constants/NavigatorIndex';
+import { ADMIN_ADD_PRODUCT_SCREEN, ADMIN_ORDER_NAVIGATOR, ADMIN_PRODUCT_DETAIL_SCREEN,ADMIN_PRODUCT_SCREEN,BANNER_SCREEN,DISCOUNT_SCREEN, LIST_DISCOUNT } from '../../../constants/NavigatorIndex';
 
 import {useDispatch, useSelector} from 'react-redux';
 import * as bannerActions from '../../../store/actions/banner';
@@ -102,7 +102,7 @@ function AdminMainScreen() {
               style={styles.icon}></MaterialIcons>
             <Text style={styles.itemTitle}>Thêm sản phẩm</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.itemContainer}>
+          <TouchableOpacity style={styles.itemContainer} onPress={() => navigation.navigate(ADMIN_PRODUCT_SCREEN)}>
             <MaterialIcons
               name="computer"
               color={ICON_COLOR}
