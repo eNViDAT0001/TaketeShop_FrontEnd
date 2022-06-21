@@ -15,34 +15,77 @@ import Header from '../../../components/UI/Header';
 import Colors from '../../../constants/Colors';
 import {useDispatch, useSelector} from 'react-redux';
 import * as authActions from '../../../store/actions/auth';
+import * as productActions from '../../../store/actions/products';
 import {Dropdown} from 'react-native-element-dropdown';
 import Card from '../../../components/UI/Card';
+import {ADMIN_NAVIGATOR, ADMIN_PRODUCT_SCREEN} from '../../../constants/NavigatorIndex';
 
 function AdminProductDetailScreen(props) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const [name, setName] = useState('');
-  const [detail, setDetail] = useState('');
-  const [quantity, setQuantity] = useState(0);
-  const [price, setPrice] = useState(0);
-  const [category, setCategory] = useState(null);
-  const [unit, setUnit] = useState(null);
+  const [productDisplay, setProductDisplay] = useState({
+    name: '',
+    detail: '',
+    quantity: 0,
+    price: 0,
+    category: 0,
+    unit: 0,
+    discount: 0,
+  });
   const [header, setHeader] = useState('Thêm sản phẩm');
   const categories = useSelector(state => state.products.categories);
   const units = useSelector(state => state.products.units);
+  const token = useSelector(state => state.auth.token);
+  const userID = useSelector(state => state.auth.userID);
+
   const id = useRoute().params.id;
   const product = useSelector(state =>
     state.products.availableProducts.find(item => item.productID == id),
   );
+  let onConfirmHandler = () => {
+    dispatch(
+      productActions.createProduct({
+        token: token,
+        productID: id,
+        userID: userID,
+        name: productDisplay.name,
+        descriptions: productDisplay.detail,
+        price: productDisplay.price,
+        quantity: productDisplay.quantity,
+        unitID: productDisplay.unit,
+        discount: productDisplay.discount,
+      }),
+    );
+    navigation.navigate(ADMIN_NAVIGATOR);
+  };
   useLayoutEffect(() => {
     if (id) {
-      setHeader("Chi tiết sản phẩm");
-      setName(product.name);
-      setDetail(product.description);
-      setQuantity(product.quantity);
-      setCategory(product.categoryID);
-      setPrice(product.price);
-      setUnit(product.unitID);
+      setHeader('Chi tiết sản phẩm');
+      setProductDisplay({
+        name: product.name,
+        detail: product.detail,
+        quantity: product.quantity,
+        price: product.price,
+        category: product.categoryID,
+        unit: product.unitID,
+        discount: product.discount,
+      });
+      onConfirmHandler = () => {
+        dispatch(
+          productActions.createProduct({
+            token: token,
+            userID: userID,
+            categoryID: productDisplay.category,
+            name: productDisplay.name,
+            descriptions: productDisplay.detail,
+            price: productDisplay.price,
+            quantity: productDisplay.quantity,
+            unitID: productDisplay.unit,
+            discount: productDisplay.discount,
+          }),
+        );
+        navigation.navigate(ADMIN_NAVIGATOR);
+      };
     }
   }, [id]);
 
@@ -57,8 +100,10 @@ function AdminProductDetailScreen(props) {
           placeholder={'Mời nhập tên sản phẩm'}
           style={{backgroundColor: Colors.backgroundColor}}
           mode="outlined"
-          value={name}
-          onChangeText={txt => setName(txt)}
+          value={productDisplay.name}
+          onChangeText={txt =>
+            setProductDisplay({...productDisplay, name: txt})
+          }
         />
       </View>
 
@@ -71,8 +116,10 @@ function AdminProductDetailScreen(props) {
           mode="outlined"
           multiline
           numberOfLines={4}
-          value={detail}
-          onChangeText={txt => setDetail(txt)}
+          value={productDisplay.detail}
+          onChangeText={txt =>
+            setProductDisplay({...productDisplay, detail: txt})
+          }
         />
       </View>
       {/* quantity san pham + price SP */}
@@ -84,8 +131,11 @@ function AdminProductDetailScreen(props) {
             placeholder={'Mời nhập số lượng'}
             style={{backgroundColor: Colors.backgroundColor}}
             mode="outlined"
-            value={quantity}
-            onChangeText={txt => setQuantity(txt)}
+            keyboardType={'number-pad'}
+            value={productDisplay.quantity.toString()}
+            onChangeText={txt =>
+              setProductDisplay({...productDisplay, quantity: txt})
+            }
           />
         </View>
         <View style={styles.inputContainer}>
@@ -95,8 +145,11 @@ function AdminProductDetailScreen(props) {
             placeholder={'Mời nhập giá'}
             style={{backgroundColor: Colors.backgroundColor}}
             mode="outlined"
-            value={price}
-            onChangeText={txt => setPrice(txt)}
+            keyboardType={'number-pad'}
+            value={productDisplay.price.toString()}
+            onChangeText={txt =>
+              setProductDisplay({...productDisplay, price: txt})
+            }
           />
         </View>
       </View>
@@ -115,9 +168,9 @@ function AdminProductDetailScreen(props) {
             labelField="name"
             valueField="categoryID"
             placeholder={'Chọn loại sản phẩm'}
-            value={category}
+            value={productDisplay.category}
             onChange={item => {
-              setCategory(item.categoryID);
+              setProductDisplay({...productDisplay, category: item.categoryID});
             }}
           />
         </View>
@@ -133,9 +186,10 @@ function AdminProductDetailScreen(props) {
             labelField="name"
             valueField="id"
             placeholder={'Chọn Đơn vị'}
-            value={unit}
+            value={productDisplay.unit}
             onChange={item => {
-              setUnit(item.unitID);
+              setProductDisplay({...productDisplay, unit: item.id});
+              console.log(productDisplay.unit)
             }}
           />
         </View>
@@ -145,14 +199,14 @@ function AdminProductDetailScreen(props) {
       <View style={styles.inputContainer}>
         <Text style={styles.title}> Ảnh chi tiết </Text>
         <FlatList
-          data={[]}
+          data={id? product.image : []}
           horizontal={true}
           style={styles.imageList}
           renderItem={itemData => (
             <Card style={styles.imageContainer}>
               <Image
                 style={styles.image}
-                source={{uri: itemData.item.imagePath}}></Image>
+                source={{uri: itemData.item.image}}></Image>
             </Card>
           )}
           ListFooterComponent={
@@ -178,7 +232,36 @@ function AdminProductDetailScreen(props) {
           style={styles.button}
           color="#40bfff"
           labelStyle={{fontSize: 20}}
-          onPress={null}>
+          onPress={id? (() => {        dispatch(
+            productActions.updateProductByProductID({
+              token: token,
+              productID: id,
+              userID: userID,
+              name: productDisplay.name,
+              descriptions: productDisplay.detail,
+              price: productDisplay.price,
+              quantity: productDisplay.quantity,
+              unitID: productDisplay.unit,
+              discount: productDisplay.discount,
+            }),
+          );
+          navigation.navigate(ADMIN_PRODUCT_SCREEN);}) : (() => {
+            console.log('asdfsadf')
+            dispatch(
+              productActions.createProduct({
+                token: token,
+                userID: userID,
+                categoryID: productDisplay.category,
+                name: productDisplay.name,
+                descriptions: productDisplay.detail,
+                price: productDisplay.price,
+                quantity: productDisplay.quantity,
+                unitID: productDisplay.unit,
+                discount: productDisplay.discount,
+              }),
+            );
+            navigation.navigate(ADMIN_NAVIGATOR);
+          })}>
           Xác nhận
         </Button>
       </View>

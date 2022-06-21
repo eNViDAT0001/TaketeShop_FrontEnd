@@ -325,11 +325,11 @@ export const fetchBestSellerProducts = ({page}) => {
     }
   };
 };
-export const fetchRecommenderProducts = (id) => {
+export const fetchRecommenderProducts = id => {
   return async dispatch => {
     try {
       const response = await fetch(
-        'http://localhost:5000/product/recommender/' + id
+        'http://localhost:5000/product/recommender/' + id,
       );
 
       if (response.error) {
@@ -338,9 +338,9 @@ export const fetchRecommenderProducts = (id) => {
 
       const resData = await response.json();
       const loadedProducts = [];
-      
+
       for (const key in resData) {
-        console.log(resData[key].id)
+        console.log(resData[key].id);
         const images = [];
         if (!resData[key].images) {
           images.push(
@@ -356,7 +356,7 @@ export const fetchRecommenderProducts = (id) => {
             images.push(new ImageModel(tempImage[0], tempImage[1]));
           }
         }
-        
+
         loadedProducts.push(
           new ProductModel({
             productID: resData[key].id,
@@ -374,7 +374,7 @@ export const fetchRecommenderProducts = (id) => {
             image: images,
             createTime: resData[key].create_time,
             updateTime: resData[key].update_time,
-          })
+          }),
         );
       }
 
@@ -475,7 +475,7 @@ export const fetchProductsWithCategoryID = ({value, filter, sort, page}) => {
             image: images,
             createTime: resData[key].create_time,
             updateTime: resData[key].update_time,
-          })
+          }),
         );
       }
       dispatch({type: SET_PRODUCTS, products: loadedProducts});
@@ -709,7 +709,7 @@ export const updateFavProduct = ({userID, token, productID, liked}) => {
 export const fetchUnit = () => {
   return async dispatch => {
     try {
-      const response = await fetch(`http://localhost:5000/product/${id}`);
+      const response = await fetch(`http://localhost:5000/product/unit`);
       if (response.error) {
         throw new Error(response.msg);
       }
@@ -717,14 +717,12 @@ export const fetchUnit = () => {
       const loadedUnits = [];
 
       for (const key in resData) {
-        loadedUnits.push(
-          {
-            id: resData[key].id,
-            name: resData[key].name,
-          }
-        );
+        loadedUnits.push({
+          id: resData[key].id,
+          name: resData[key].name,
+        });
       }
-      
+
       dispatch({type: SET_UNIT, units: loadedUnits});
     } catch (error) {
       console.log(err);
@@ -733,57 +731,80 @@ export const fetchUnit = () => {
   };
 };
 
-export const createProduct = (
+export const createProduct = ({
+  token,
+  categoryID,
+  userID,
   name,
-  description,
+  descriptions,
   price,
   quantity,
-  image,
-  unit_id,
   discount,
-  category_id,
-  user_id,
-) => {
+  unitID,
+}) => {
   return async dispatch => {
     // any async code you want!
-    const response = await fetch('http://localhost:5000/product/add', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        name,
-        description,
-        price,
-        quantity,
-        image,
-        unit_id,
-        discount,
-        category_id,
-        user_id,
-      }),
-    });
-
-    const resData = await response.json();
-
-    dispatch({
-      type: CREATE_PRODUCT,
-      productData: {
-        id: resData.id,
-        name,
-        description,
-        price,
-        quantity,
-        image,
-        unit_id,
-        discount,
-        category_id,
-        user_id,
-      },
-    });
+    try {
+      await fetch('http://localhost:5000/product/addWthImage', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: 'Bearer ' + token,
+        },
+        body: JSON.stringify({
+          name: name,
+          descriptions: descriptions,
+          price: price,
+          quantity: quantity,
+          unitID: unitID,
+          discount: discount,
+          categoryID: categoryID,
+          userID: userID,
+        }),
+      });
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
   };
 };
-
+export const updateProductByProductID = ({
+  token,
+  productID,
+  categoryID,
+  userID,
+  name,
+  descriptions,
+  price,
+  quantity,
+  unitID,
+  discount,
+}) => {
+  return async dispatch => {
+    try {
+      await fetch(`http://localhost:5000/product/update/${productID}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: 'Bearer ' + token,
+        },
+        body: JSON.stringify({
+          categoryID: categoryID,
+          userID: userID,
+          name: name,
+          descriptions: descriptions,
+          price: price,
+          quantity: quantity,
+          unitID: unitID,
+          discount: discount,
+        }),
+      });
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  };
+};
 export const updatePage = page => {
   return async dispatch => {
     dispatch({type: UPDATE_PAGE, page: page});

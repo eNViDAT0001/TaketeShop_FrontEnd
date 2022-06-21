@@ -12,6 +12,7 @@ import * as commentActions from '../../store/actions/comment';
 import {useDispatch, useSelector} from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { PRODUCT_DETAIL_SCREEN } from '../../constants/NavigatorIndex';
+import { uploadImagesToCloudinary } from '../../ulti/Cloudinary';
 function AddCommentScreen(props) {
   const [star, setStar] = useState(0);
   const [images, setImages] = useState([]);
@@ -25,15 +26,16 @@ function AddCommentScreen(props) {
   const dispatch = useDispatch();
   const onSetImageHandler = () => {
     console.log('--------------------------------');
-    const imagePickers = ImagePicker.openPicker({
+    ImagePicker.openPicker({
       multiple: true,
     }).then(images => {
-      // images.forEach(image => console.log(image.path))
       setImages(images);
+      console.log(Image.resolveAssetSource(images[0]).uri);
     });
-    images.forEach(image => console.log(image.path));
   };
   const onConfirmHandler = () => {
+    // const pictures = uploadImagesToCloudinary(images);
+    console.log(pictures);
     dispatch(
       commentActions.addComment({
         token: token,
@@ -41,7 +43,7 @@ function AddCommentScreen(props) {
         userID: userID,
         comment: comment,
         rating: star,
-        images: images,
+        images: pictures,
       }),
     );
     navigation.navigate(PRODUCT_DETAIL_SCREEN, {id: product.productID});
