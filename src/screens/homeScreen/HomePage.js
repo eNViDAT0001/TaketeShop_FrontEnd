@@ -11,9 +11,14 @@ import {useDispatch, useSelector} from 'react-redux';
 import * as productActions from '../../store/actions/products';
 import * as bannerActions from '../../store/actions/banner';
 function HomePage(props) {
-  const bestSellerProducts = useSelector(state => state.products.bestSellerProducts);
-  const discountProducts = useSelector(state => state.products.discountProducts);
-  const recommenderProducts = useSelector(state => state.products.recommenderProducts);
+  const discountProducts = useSelector(
+    state => state.products.discountProducts,
+  );
+  const recommenderProducts = useSelector(
+    state => state.products.recommenderProducts,
+  );
+  const userID = useSelector(state => state.auth.userID);
+
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
@@ -29,7 +34,7 @@ function HomePage(props) {
       await dispatch(bannerActions.fetchBanner());
       await dispatch(productActions.fetchCategory());
       await dispatch(productActions.fetchDiscountProducts({page: 0}));
-      await dispatch(productActions.fetchBestSellerProducts({page: 0}));
+      await dispatch(productActions.fetchRecommenderProducts(userID));
       await dispatch(productActions.fetchProducts({}));
       await dispatch(productActions.fetchUnit());
     } catch (err) {
@@ -90,17 +95,18 @@ function HomePage(props) {
     );
   };
 
-
   return (
     <View>
-      <BannerPager
-        style={styles.banner}></BannerPager>
+      <BannerPager style={styles.banner}></BannerPager>
       <View style={styles.container}>
         <Card style={styles.cardContainer}>
           <CategoryHolder
             onRefresh={loadProducts}
             onCategorySelect={() => {
-              navigation.navigate(CATEGORY_DETAIL_SCREEN, {title: "Giảm giá", type: "DISCOUNT"})
+              navigation.navigate(CATEGORY_DETAIL_SCREEN, {
+                title: 'Giảm giá',
+                type: 'DISCOUNT',
+              });
             }}
             refreshing={isRefreshing}
             style={styles.bestSeller}
@@ -113,31 +119,21 @@ function HomePage(props) {
         <Card style={styles.cardContainer}>
           <CategoryHolder
             onRefresh={loadProducts}
-            onCategorySelect={() => {
-              navigation.navigate(CATEGORY_DETAIL_SCREEN, {title: "Bán chạy", type: "BEST_SELLER"})
-            }}
+             onCategorySelect={() => {
+                navigation.navigate(CATEGORY_DETAIL_SCREEN, {
+                  title: 'Dành cho bạn',
+                  type: 'RECOMMENDER',
+                });
+              }}
             refreshing={isRefreshing}
             style={styles.bestSeller}
-            title={'Bán chạy'}
+            title={'Dành cho bạn'}
             horizontal={true}
             numColum={1}
-            itemList={shopItems(bestSellerProducts)}
-          />
-        </Card>
-        <Card style={styles.cardContainer}>
-          <CategoryHolder
-            onRefresh={loadProducts}
-            onCategorySelect={() => {
-              navigation.navigate(CATEGORY_DETAIL_SCREEN, {title: "Dành cho bạn", type: "RECOMMENDER"})
-            }}
-            refreshing={isRefreshing}
-            style={styles.forYou}
-            title={'Dành cho bạn'}
-            horizontal={false}
-            numColum={2}
             itemList={shopItems(recommenderProducts)}
           />
         </Card>
+
       </View>
     </View>
   );

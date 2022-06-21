@@ -27,6 +27,9 @@ function CategoryDetailScreen(props) {
   const discountProducts = useSelector(
     state => state.products.discountProducts,
   );
+  const recommenderProducts = useSelector(
+    state => state.products.recommenderProducts,
+  );
   const page = useSelector(state => state.products.page);
   const banner = useSelector(state => state.banner.banners);
   const id = useRoute().params.id;
@@ -67,7 +70,7 @@ function CategoryDetailScreen(props) {
         return setDisplayProducts(cloneList(bestSellerProducts));
       }
       case 'RECOMMENDER': {
-        return console.log('Recommender');
+        return setDisplayProducts(cloneList(recommenderProducts));
       }
       case 'BANNER': {
         return setDisplayProducts(

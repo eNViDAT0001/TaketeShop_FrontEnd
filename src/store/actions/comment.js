@@ -50,3 +50,25 @@ export const fetchCommentWithProductID = (id) => {
     }
   };
 };
+export const addComment = ({token, productID, userID, comment, rating, images}) => {
+  return async dispatch => {
+    try {
+      await fetch(`http://localhost:5000/comment/add`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: 'Bearer ' + token,
+        },
+        body: JSON.stringify({
+          productID: productID,
+          userID: userID,
+          comment: comment,
+          rating: rating,
+        }),
+      });
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  };
+};

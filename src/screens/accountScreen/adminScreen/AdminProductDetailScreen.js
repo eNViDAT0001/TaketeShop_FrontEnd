@@ -39,9 +39,9 @@ function AdminProductDetailScreen(props) {
       setHeader("Chi tiết sản phẩm");
       setName(product.name);
       setDetail(product.description);
-      setQuantity(+product.quantity);
+      setQuantity(product.quantity);
       setCategory(product.categoryID);
-      setPrice(+product.price);
+      setPrice(product.price);
       setUnit(product.unitID);
     }
   }, [id]);
@@ -84,7 +84,6 @@ function AdminProductDetailScreen(props) {
             placeholder={'Mời nhập số lượng'}
             style={{backgroundColor: Colors.backgroundColor}}
             mode="outlined"
-            keyboardType="numeric"
             value={quantity}
             onChangeText={txt => setQuantity(txt)}
           />
@@ -96,7 +95,6 @@ function AdminProductDetailScreen(props) {
             placeholder={'Mời nhập giá'}
             style={{backgroundColor: Colors.backgroundColor}}
             mode="outlined"
-            keyboardType="numeric"
             value={price}
             onChangeText={txt => setPrice(txt)}
           />

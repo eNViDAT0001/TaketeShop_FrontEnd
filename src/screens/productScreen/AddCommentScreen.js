@@ -8,23 +8,44 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Colors from '../../constants/Colors';
 import Header from '../../components/UI/Header';
 import ImagePicker from 'react-native-image-crop-picker';
+import * as commentActions from '../../store/actions/comment';
+import {useDispatch, useSelector} from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
+import { PRODUCT_DETAIL_SCREEN } from '../../constants/NavigatorIndex';
 function AddCommentScreen(props) {
   const [star, setStar] = useState(0);
   const [images, setImages] = useState([]);
   const [comment, setComment] = useState('');
   const [response, setResponse] = useState();
+  const token = useSelector(state => state.auth.token);
+  const product = useSelector(state => state.products.currentProduct);
+  const userID = useSelector(state => state.auth.userID);
+  const navigation = useNavigation();
+
+  const dispatch = useDispatch();
   const onSetImageHandler = () => {
     console.log('--------------------------------');
     const imagePickers = ImagePicker.openPicker({
-      multiple: true
+      multiple: true,
     }).then(images => {
       // images.forEach(image => console.log(image.path))
-      setImages(images)
+      setImages(images);
     });
-    images.forEach(image => console.log(image.path))
-
+    images.forEach(image => console.log(image.path));
   };
-  const onConfirmHandler = () => {};
+  const onConfirmHandler = () => {
+    dispatch(
+      commentActions.addComment({
+        token: token,
+        productID: product.productID,
+        userID: userID,
+        comment: comment,
+        rating: star,
+        images: images,
+      }),
+    );
+    navigation.navigate(PRODUCT_DETAIL_SCREEN, {id: product.productID});
+  };
   return (
     <View style={styles.screen}>
       <Header title={'Viết đánh giá'} style={styles.header}></Header>
@@ -64,7 +85,9 @@ function AddCommentScreen(props) {
             style={styles.imageList}
             renderItem={itemData => (
               <Card style={styles.imageContainer}>
-                <Image style={styles.image} source={{uri: itemData.item.path}}></Image>
+                <Image
+                  style={styles.image}
+                  source={{uri: itemData.item.path}}></Image>
               </Card>
             )}
             ListFooterComponent={
@@ -89,7 +112,7 @@ function AddCommentScreen(props) {
             style={styles.button}
             color={Colors.primaryColor}
             labelStyle={{fontSize: 20}}
-            onPress={() => console.log('Button Clickkk')}>
+            onPress={onConfirmHandler}>
             Xác nhận
           </Button>
         </View>

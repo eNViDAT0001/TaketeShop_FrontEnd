@@ -18,7 +18,7 @@ export const PAGING_RECOMMENDER_PRODUCTS = 'PAGING_RECOMMENDER_PRODUCTS';
 export const SET_DISCOUNT_PRODUCTS = 'SET_DISCOUNT_PRODUCTS';
 export const SET_WISHLIST_PRODUCTS = 'SET_WISHLIST_PRODUCTS';
 export const SET_BEST_SELLER_PRODUCTS = 'SET_BEST_SELLER_PRODUCTS';
-export const SET_RECOMMENDER_PRODUCTS = 'SET_BEST_SELLER_PRODUCTS';
+export const SET_RECOMMENDER_PRODUCTS = 'SET_RECOMMENDER_PRODUCTS';
 export const SET_CATEGORIES = 'SET_CATEGORIES';
 export const UPDATE_PAGE = 'UPDATE_PAGE';
 export const SET_UNIT = 'SET_UNIT';
@@ -325,28 +325,11 @@ export const fetchBestSellerProducts = ({page}) => {
     }
   };
 };
-export const fetchRecommenderProducts = ({
-  field,
-  value,
-  filter,
-  sort,
-  page,
-}) => {
+export const fetchRecommenderProducts = (id) => {
   return async dispatch => {
     try {
-      const fieldConvert = field ? `field=${field}&` : '';
-      const valueConvert = value ? `value=${value}&` : '';
-      const filterConvert = filter ? `filter=${filter}&` : '';
-      const sortConvert = sort ? `sort=${sort}&` : '';
-      const pageConvert = page ? `page=${page}&` : '';
-
       const response = await fetch(
-        'http://localhost:5000/product/recommender?' +
-          fieldConvert +
-          valueConvert +
-          filterConvert +
-          sortConvert +
-          pageConvert,
+        'http://localhost:5000/product/recommender/' + id
       );
 
       if (response.error) {
@@ -355,8 +338,9 @@ export const fetchRecommenderProducts = ({
 
       const resData = await response.json();
       const loadedProducts = [];
-
+      
       for (const key in resData) {
+        console.log(resData[key].id)
         const images = [];
         if (!resData[key].images) {
           images.push(
@@ -372,7 +356,7 @@ export const fetchRecommenderProducts = ({
             images.push(new ImageModel(tempImage[0], tempImage[1]));
           }
         }
-
+        
         loadedProducts.push(
           new ProductModel({
             productID: resData[key].id,
@@ -390,11 +374,11 @@ export const fetchRecommenderProducts = ({
             image: images,
             createTime: resData[key].create_time,
             updateTime: resData[key].update_time,
-          }),
+          })
         );
       }
 
-      dispatch({type: SET_PRODUCTS, products: loadedProducts});
+      dispatch({type: SET_RECOMMENDER_PRODUCTS, products: loadedProducts});
     } catch (err) {
       // send to custom analytics server
       console.log(err);
