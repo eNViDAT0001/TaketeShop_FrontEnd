@@ -28,7 +28,7 @@ function ProductAdmin(props) {
               />
             </View>
           </View>
-          <Text style={styles.title}>#{props.item.productID}: {props.item.name} - {props.item.price} đ</Text>
+          <Text style={styles.title}>#{props.item.productID}: {props.item.name} - {props.item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} đ</Text>
 
           <Card style={styles.bottomBar}>
             <TouchableOpacity

@@ -18,7 +18,10 @@ import * as authActions from '../../../store/actions/auth';
 import * as productActions from '../../../store/actions/products';
 import {Dropdown} from 'react-native-element-dropdown';
 import Card from '../../../components/UI/Card';
-import {ADMIN_NAVIGATOR, ADMIN_PRODUCT_SCREEN} from '../../../constants/NavigatorIndex';
+import {
+  ADMIN_NAVIGATOR,
+  ADMIN_PRODUCT_SCREEN,
+} from '../../../constants/NavigatorIndex';
 
 function AdminProductDetailScreen(props) {
   const navigation = useNavigation();
@@ -63,7 +66,7 @@ function AdminProductDetailScreen(props) {
       setHeader('Chi tiết sản phẩm');
       setProductDisplay({
         name: product.name,
-        detail: product.detail,
+        detail: product.description,
         quantity: product.quantity,
         price: product.price,
         category: product.categoryID,
@@ -122,6 +125,20 @@ function AdminProductDetailScreen(props) {
           }
         />
       </View>
+      <View style={styles.inputContainer}>
+        <Text style={styles.title}>Giảm giá</Text>
+        <TextInput
+          label="Giảm giá"
+          placeholder={'Giảm giá'}
+          style={{backgroundColor: Colors.backgroundColor}}
+          mode="outlined"
+          keyboardType={'number-pad'}
+          value={productDisplay.discount? productDisplay.discount.toString() : ''}
+          onChangeText={txt =>
+            setProductDisplay({...productDisplay, discount: txt})
+          }
+        />
+      </View>
       {/* quantity san pham + price SP */}
       <View style={styles.rowContainer}>
         <View style={styles.inputContainer}>
@@ -132,7 +149,7 @@ function AdminProductDetailScreen(props) {
             style={{backgroundColor: Colors.backgroundColor}}
             mode="outlined"
             keyboardType={'number-pad'}
-            value={productDisplay.quantity.toString()}
+            value={productDisplay.quantity.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
             onChangeText={txt =>
               setProductDisplay({...productDisplay, quantity: txt})
             }
@@ -146,7 +163,7 @@ function AdminProductDetailScreen(props) {
             style={{backgroundColor: Colors.backgroundColor}}
             mode="outlined"
             keyboardType={'number-pad'}
-            value={productDisplay.price.toString()}
+            value={productDisplay.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
             onChangeText={txt =>
               setProductDisplay({...productDisplay, price: txt})
             }
@@ -189,7 +206,7 @@ function AdminProductDetailScreen(props) {
             value={productDisplay.unit}
             onChange={item => {
               setProductDisplay({...productDisplay, unit: item.id});
-              console.log(productDisplay.unit)
+              console.log(productDisplay.unit);
             }}
           />
         </View>
@@ -199,7 +216,7 @@ function AdminProductDetailScreen(props) {
       <View style={styles.inputContainer}>
         <Text style={styles.title}> Ảnh chi tiết </Text>
         <FlatList
-          data={id? product.image : []}
+          data={id ? product.image : []}
           horizontal={true}
           style={styles.imageList}
           renderItem={itemData => (
@@ -232,36 +249,41 @@ function AdminProductDetailScreen(props) {
           style={styles.button}
           color="#40bfff"
           labelStyle={{fontSize: 20}}
-          onPress={id? (() => {        dispatch(
-            productActions.updateProductByProductID({
-              token: token,
-              productID: id,
-              userID: userID,
-              name: productDisplay.name,
-              descriptions: productDisplay.detail,
-              price: productDisplay.price,
-              quantity: productDisplay.quantity,
-              unitID: productDisplay.unit,
-              discount: productDisplay.discount,
-            }),
-          );
-          navigation.navigate(ADMIN_PRODUCT_SCREEN);}) : (() => {
-            console.log('asdfsadf')
-            dispatch(
-              productActions.createProduct({
-                token: token,
-                userID: userID,
-                categoryID: productDisplay.category,
-                name: productDisplay.name,
-                descriptions: productDisplay.detail,
-                price: productDisplay.price,
-                quantity: productDisplay.quantity,
-                unitID: productDisplay.unit,
-                discount: productDisplay.discount,
-              }),
-            );
-            navigation.navigate(ADMIN_NAVIGATOR);
-          })}>
+          onPress={
+            id
+              ? () => {
+                  dispatch(
+                    productActions.updateProductByProductID({
+                      token: token,
+                      productID: id,
+                      userID: userID,
+                      name: productDisplay.name,
+                      descriptions: productDisplay.detail,
+                      price: productDisplay.price,
+                      quantity: productDisplay.quantity,
+                      unitID: productDisplay.unit,
+                      discount: productDisplay.discount,
+                    }),
+                  );
+                  navigation.navigate(ADMIN_PRODUCT_SCREEN);
+                }
+              : () => {
+                  dispatch(
+                    productActions.createProduct({
+                      token: token,
+                      userID: userID,
+                      categoryID: productDisplay.category,
+                      name: productDisplay.name,
+                      descriptions: productDisplay.detail,
+                      price: productDisplay.price,
+                      quantity: productDisplay.quantity,
+                      unitID: productDisplay.unit,
+                      discount: productDisplay.discount,
+                    }),
+                  );
+                  navigation.navigate(ADMIN_NAVIGATOR);
+                }
+          }>
           Xác nhận
         </Button>
       </View>

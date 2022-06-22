@@ -35,7 +35,7 @@ function AddCommentScreen(props) {
   };
   const onConfirmHandler = () => {
     // const pictures = uploadImagesToCloudinary(images);
-    console.log(pictures);
+    // console.log(pictures);
     dispatch(
       commentActions.addComment({
         token: token,
@@ -43,7 +43,7 @@ function AddCommentScreen(props) {
         userID: userID,
         comment: comment,
         rating: star,
-        images: pictures,
+        // images: pictures? p,
       }),
     );
     navigation.navigate(PRODUCT_DETAIL_SCREEN, {id: product.productID});
