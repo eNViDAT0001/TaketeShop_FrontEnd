@@ -1,7 +1,7 @@
 # ECOMMERCE APP WITH RECOMMENDER SYSTEM
  A mobile application which have admin and user UI all in one, using Recommender System APIs to recommend products to user.
  
- ⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅![image](https://user-images.githubusercontent.com/73453940/177814358-42302a33-b20a-412c-b47c-46ca6cd5e541.png)⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅
+![image](https://user-images.githubusercontent.com/73453940/177814358-42302a33-b20a-412c-b47c-46ca6cd5e541.png)
 
 ## Technical
 + Front-end: React - Native (Using Redux to manage state).
