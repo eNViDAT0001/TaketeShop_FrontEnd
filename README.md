@@ -7,7 +7,7 @@
 + Front-end: React - Native (Using Redux to manage state).
 + Back-end: NodeJs with MongoDB ("Chat" function), MySQL
 (Main database) with phpMyAdmin (Docker compose).
-## Usecase list
+## Use cases 
 ![image](https://user-images.githubusercontent.com/73453940/177813674-988c73d4-5762-4343-8ee1-b09cb83cf29b.png)
 ## Structural design 
 ![image](https://user-images.githubusercontent.com/73453940/177813819-22db4019-1ab9-4617-a1b5-99e06cf447d9.png)
